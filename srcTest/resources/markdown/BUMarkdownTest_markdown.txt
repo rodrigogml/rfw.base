@@ -1,0 +1,40 @@
+= Título de Nível 1
+Texto 1 - com caracteres especials de escape:
+Ecomercial: &
+Menor Que: <
+== Título de Nível 2
+Texto 2 - com lista numerada
++#
+** Item 1
+** Item 2
++#
+** Item 2.1
+** Item 2.2
+-#
+-#
+=== Título de Nível 3
+Texto 3 - com lista não numerada
++*
+** Item 1
+** Item 2
++*
+** Item 2.1
+** Item 2.2
+-*
+-*
+==== Título de Nível 4
+Texto 4 com quebra de linha
+e com '''''itálido e negrito'''''
+tudo junto e misturado!
+===== Título de Nível 5
+Texto 5 Tudo junto na mesma linha
+Diversas '''''formatações''''' em '''várias''' ordens, ''será'' que vai 'se' confundir?
+Diversas '''formatações''' em ''várias'' ordens, '''''será''''' que vai 'se' confundir?
+Diversas ''formatações'' em '''''várias''''' ordens, '''será''' que vai 'se' confundir?
+--
+Forçando a quebra de 3 linhas
+ 
+ 
+ 
+Fim da quebra
+--
