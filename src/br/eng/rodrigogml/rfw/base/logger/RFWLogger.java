@@ -245,32 +245,49 @@ public class RFWLogger {
    * @param tags permite que se adicione tags particulares ao Log. Tenha em mente que Tags são utilizadas para ajudar a filtrar vários eventos de uma mesma natureza, não jogue informações que só aparecerão em um único evento por vez nas tags. Cria um log de debug ou info para isso.
    */
   private final static void log(RFWLogSeverity severity, String msg, String content, String exPoint, String... tags) {
-    if (RFWLogger.cleannerThread == null) startCleannerThread();
+    RFWLogEntry log = null;
+    try {
+      if (RFWLogger.cleannerThread == null) startCleannerThread();
 
-    RFWLogEntry log = new RFWLogEntry();
+      log = new RFWLogEntry();
+      log.setTime(RFW.getDateTime());
+      log.setSeverity(severity);
+      log.setExPoint(exPoint);
+      log.setMessage(msg);
+      log.setContent(content);
 
-    log.setTime(RFW.getDateTime());
-    log.setSeverity(severity);
-    log.setExPoint(exPoint);
-    log.setMessage(msg);
-    log.setContent(content);
-
-    if (tags != null) {
-      for (String tag : tags) {
-        log.addTag(tag);
+      if (tags != null) {
+        for (String tag : tags) {
+          log.addTag(tag);
+        }
       }
+
+      // Cria tags automaticamente
+      if (RFW.getSystemName() != null) log.addTag(RFW.getSystemName());
+      log.addTag("Thread:" + Thread.currentThread().getId() + "-" + Thread.currentThread().toString());
+
+      // Sincroniza a adição do Log para que gerenciar a concorrência com a remoção dos logs já persistidos.
+      synchronized (RFWLogger.entriesList) {
+        RFWLogger.entriesList.add(log);
+      }
+      RFW.pDev(log.toString());
+    } catch (Throwable e) {
+      System.out.println("###############################################################");
+      System.out.println("###################### ERRO NO RFWLOGGER ######################");
+      System.out.println("###############################################################");
+      if (log != null) {
+        try {
+          // RFW.pDev(log.toString());
+        } catch (Throwable e1) {
+        }
+      }
+      System.out.println("---------------------------------------------------------------");
+      // e.printStackTrace();
+
+      System.out.println("###############################################################");
+      System.out.println("###############################################################");
     }
 
-    // Cria tags automaticamente
-    if (RFW.getSystemName() != null) log.addTag(RFW.getSystemName());
-    log.addTag("Thread:" + Thread.currentThread().getId() + "-" + Thread.currentThread().toString());
-
-    // Sincroniza a adição do Log para que gerenciar a concorrência com a remoção dos logs já persistidos.
-    synchronized (RFWLogger.entriesList) {
-      RFWLogger.entriesList.add(log);
-    }
-
-    RFW.pDev(log.toString());
   }
 
   /**
