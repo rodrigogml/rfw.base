@@ -5,7 +5,7 @@ import java.util.Locale;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.base.utils.BUDocValidation;
-import br.eng.rodrigogml.rfw.base.utils.BUString;
+import br.eng.rodrigogml.rfw.base.utils.RUString;
 
 /**
  * Description: Classe que formata e valida o código numérico de um boleto de cobrança.<br>
@@ -23,7 +23,7 @@ public class RFWNumericCodeBoletoDataFormatter implements RFWDataFormatter<Strin
     String result = "";
     try {
       if (value != null && !"".equals(value.toString().trim())) {
-        result = BUString.removeNonDigits(value);
+        result = RUString.removeNonDigits(value);
         if (result.length() == 47) {
           // Boleto de Cobrança
           result = result.substring(0, 5) + "." + result.substring(5, 10) + " " + result.substring(10, 15) + "." + result.substring(15, 21) + " " + result.substring(21, 26) + "." + result.substring(26, 32) + " " + result.substring(32, 33) + " " + result.substring(33, 47);

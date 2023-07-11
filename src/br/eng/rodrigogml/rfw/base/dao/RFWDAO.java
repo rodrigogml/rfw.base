@@ -46,7 +46,7 @@ import br.eng.rodrigogml.rfw.base.utils.BUArray;
 import br.eng.rodrigogml.rfw.base.utils.BUEncrypter;
 import br.eng.rodrigogml.rfw.base.utils.BUFile;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
-import br.eng.rodrigogml.rfw.base.utils.BUString;
+import br.eng.rodrigogml.rfw.base.utils.RUString;
 import br.eng.rodrigogml.rfw.base.vo.RFWField;
 import br.eng.rodrigogml.rfw.base.vo.RFWMO;
 import br.eng.rodrigogml.rfw.base.vo.RFWOrderBy;
@@ -2310,50 +2310,50 @@ public final class RFWDAO<VO extends RFWVO> {
     StringBuilder buff = new StringBuilder();
     buff.append(System.lineSeparator()).append(System.lineSeparator());
     buff.append("MAPEAMENTO DAS ENTIDADES").append(System.lineSeparator());
-    buff.append(BUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
-    buff.append(BUString.completeUntilLengthRight(" ", "Path", 100));
-    buff.append(BUString.completeUntilLengthRight(" ", "Schema.Table", 60));
-    buff.append(BUString.completeUntilLengthRight(" ", "Alias", 10));
-    buff.append(BUString.completeUntilLengthRight(" ", "Column", 30));
-    buff.append(BUString.completeUntilLengthRight(" ", "Join", 10));
-    buff.append(BUString.completeUntilLengthRight(" ", "JoinColumn", 30));
-    buff.append(BUString.completeUntilLengthRight(" ", "Entity", 0));
+    buff.append(RUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
+    buff.append(RUString.completeUntilLengthRight(" ", "Path", 100));
+    buff.append(RUString.completeUntilLengthRight(" ", "Schema.Table", 60));
+    buff.append(RUString.completeUntilLengthRight(" ", "Alias", 10));
+    buff.append(RUString.completeUntilLengthRight(" ", "Column", 30));
+    buff.append(RUString.completeUntilLengthRight(" ", "Join", 10));
+    buff.append(RUString.completeUntilLengthRight(" ", "JoinColumn", 30));
+    buff.append(RUString.completeUntilLengthRight(" ", "Entity", 0));
     buff.append(System.lineSeparator());
-    buff.append(BUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
+    buff.append(RUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
 
     for (DAOMapTable mTable : map.getMapTable()) {
-      buff.append(BUString.completeUntilLengthRight(" ", mTable.path, 100));
-      buff.append(BUString.completeUntilLengthRight(" ", mTable.schema + "." + mTable.table, 60));
-      buff.append(BUString.completeUntilLengthRight(" ", mTable.alias, 10));
-      buff.append(BUString.completeUntilLengthRight(" ", mTable.column, 30));
-      buff.append(BUString.completeUntilLengthRight(" ", mTable.joinAlias, 10));
-      buff.append(BUString.completeUntilLengthRight(" ", mTable.joinColumn, 30));
-      buff.append(BUString.completeUntilLengthRight(" ", (mTable.type != null ? mTable.type.getCanonicalName() : "null"), 0));
+      buff.append(RUString.completeUntilLengthRight(" ", mTable.path, 100));
+      buff.append(RUString.completeUntilLengthRight(" ", mTable.schema + "." + mTable.table, 60));
+      buff.append(RUString.completeUntilLengthRight(" ", mTable.alias, 10));
+      buff.append(RUString.completeUntilLengthRight(" ", mTable.column, 30));
+      buff.append(RUString.completeUntilLengthRight(" ", mTable.joinAlias, 10));
+      buff.append(RUString.completeUntilLengthRight(" ", mTable.joinColumn, 30));
+      buff.append(RUString.completeUntilLengthRight(" ", (mTable.type != null ? mTable.type.getCanonicalName() : "null"), 0));
       buff.append(System.lineSeparator());
     }
 
-    buff.append(BUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
+    buff.append(RUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
 
     // Escreve Tabela de Fields
     buff.append(System.lineSeparator());
     buff.append("MAPEAMENTO DOS ATRIBUTOS").append(System.lineSeparator());
-    buff.append(BUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
-    buff.append(BUString.completeUntilLengthRight(" ", "Path", 100));
-    buff.append(BUString.completeUntilLengthRight(" ", "Field", 50));
-    buff.append(BUString.completeUntilLengthRight(" ", "Schema.Table", 120));
-    buff.append(BUString.completeUntilLengthRight(" ", "Column", 0));
+    buff.append(RUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
+    buff.append(RUString.completeUntilLengthRight(" ", "Path", 100));
+    buff.append(RUString.completeUntilLengthRight(" ", "Field", 50));
+    buff.append(RUString.completeUntilLengthRight(" ", "Schema.Table", 120));
+    buff.append(RUString.completeUntilLengthRight(" ", "Column", 0));
     buff.append(System.lineSeparator());
-    buff.append(BUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
+    buff.append(RUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
 
     for (DAOMapField mField : map.getMapField()) {
-      buff.append(BUString.completeUntilLengthRight(" ", mField.path, 100));
-      buff.append(BUString.completeUntilLengthRight(" ", mField.field, 50));
-      buff.append(BUString.completeUntilLengthRight(" ", "(" + mField.table.alias + ") " + mField.table.schema + "." + mField.table.table, 120));
-      buff.append(BUString.completeUntilLengthRight(" ", mField.column, 0));
+      buff.append(RUString.completeUntilLengthRight(" ", mField.path, 100));
+      buff.append(RUString.completeUntilLengthRight(" ", mField.field, 50));
+      buff.append(RUString.completeUntilLengthRight(" ", "(" + mField.table.alias + ") " + mField.table.schema + "." + mField.table.table, 120));
+      buff.append(RUString.completeUntilLengthRight(" ", mField.column, 0));
       buff.append(System.lineSeparator());
     }
 
-    buff.append(BUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
+    buff.append(RUString.completeUntilLengthRight("-", "", 365)).append(System.lineSeparator());
 
     // imprime e retorna
     final String s = buff.toString();

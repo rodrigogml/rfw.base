@@ -4,7 +4,7 @@ import java.util.Locale;
 
 import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
-import br.eng.rodrigogml.rfw.base.utils.BUString;
+import br.eng.rodrigogml.rfw.base.utils.RUString;
 
 /**
  * Description: Classe que formata e valida um código CEST, de acordo com a quantidade de dígitos fornecida no campo.<br>
@@ -23,7 +23,7 @@ public class RFWCESTCodeDataFormatter implements RFWDataFormatter<String, Object
     if (value != null && !"".equals(value.toString().trim())) {
       result = value.toString().trim();
       result = result.replaceAll("[^0-9]", "");
-      BUString.completeUntilLengthLeft("0", result, 7);
+      RUString.completeUntilLengthLeft("0", result, 7);
       result = result.substring(0, 2) + "." + result.substring(2, 5) + "." + result.substring(5, 7);
     }
     return result;

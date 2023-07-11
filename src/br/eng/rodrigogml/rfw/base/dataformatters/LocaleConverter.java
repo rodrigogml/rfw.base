@@ -13,7 +13,7 @@ import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.base.utils.BUNumber;
-import br.eng.rodrigogml.rfw.base.utils.BUString;
+import br.eng.rodrigogml.rfw.base.utils.RUString;
 
 /**
  * Description: Classe utilitária que converte os valores padroes do java no formato configurado de locale do usuário, e vice-versa.<br>
@@ -157,10 +157,10 @@ public class LocaleConverter {
         if (!newvalue.matches(regexp)) {
           throw new RFWValidationException("RFW_ERR_000277");
         }
-        newvalue = BUString.replaceAll(newvalue, groupsymbol, "");
+        newvalue = RUString.replaceAll(newvalue, groupsymbol, "");
         boolean negative = !ignoresignal && newvalue.indexOf("-") != -1;
-        newvalue = BUString.replaceAll(newvalue, "-", "");
-        newvalue = BUString.replaceAll(newvalue, "+", "");
+        newvalue = RUString.replaceAll(newvalue, "-", "");
+        newvalue = RUString.replaceAll(newvalue, "+", "");
 
         parsedvalue = new Integer(newvalue);
         if (negative) {
@@ -224,10 +224,10 @@ public class LocaleConverter {
         if (!newvalue.matches(regexp)) {
           throw new RFWValidationException("RFW_ERR_000277");
         }
-        newvalue = BUString.replaceAll(newvalue, groupsymbol, "");
+        newvalue = RUString.replaceAll(newvalue, groupsymbol, "");
         boolean negative = !ignoresignal && newvalue.indexOf("-") != -1;
-        newvalue = BUString.replaceAll(newvalue, "-", "");
-        newvalue = BUString.replaceAll(newvalue, "+", "");
+        newvalue = RUString.replaceAll(newvalue, "-", "");
+        newvalue = RUString.replaceAll(newvalue, "+", "");
 
         parsedvalue = new Long(newvalue);
         if (negative) {
@@ -440,10 +440,10 @@ public class LocaleConverter {
           throw new RFWValidationException("RFW_ERR_000276");
         }
         boolean negative = !ignoresignal && newvalue.indexOf("-") != -1;
-        newvalue = BUString.replaceAll(newvalue, groupsymbol, "");
-        newvalue = BUString.replaceAll(newvalue, "-", "");
-        newvalue = BUString.replaceAll(newvalue, "+", "");
-        newvalue = BUString.replaceAll(newvalue, decimalsymbol, ".");
+        newvalue = RUString.replaceAll(newvalue, groupsymbol, "");
+        newvalue = RUString.replaceAll(newvalue, "-", "");
+        newvalue = RUString.replaceAll(newvalue, "+", "");
+        newvalue = RUString.replaceAll(newvalue, decimalsymbol, ".");
         try {
           parsedvalue = new BigDecimal(newvalue);
         } catch (NumberFormatException e) {
@@ -557,10 +557,10 @@ public class LocaleConverter {
           throw new RFWValidationException("RFW_ERR_000276");
         }
         boolean negative = !ignoresignal && newvalue.indexOf("-") != -1;
-        newvalue = BUString.replaceAll(newvalue, groupsymbol, "");
-        newvalue = BUString.replaceAll(newvalue, "-", "");
-        newvalue = BUString.replaceAll(newvalue, "+", "");
-        newvalue = BUString.replaceAll(newvalue, decimalsymbol, ".");
+        newvalue = RUString.replaceAll(newvalue, groupsymbol, "");
+        newvalue = RUString.replaceAll(newvalue, "-", "");
+        newvalue = RUString.replaceAll(newvalue, "+", "");
+        newvalue = RUString.replaceAll(newvalue, decimalsymbol, ".");
         if (!"".equals(newvalue)) {
           parsedvalue = new Double(newvalue);
           if (decimals != null) {
@@ -612,10 +612,10 @@ public class LocaleConverter {
           throw new RFWValidationException("RFW_ERR_000276");
         }
         boolean negative = !ignoresignal && newvalue.indexOf("-") != -1;
-        newvalue = BUString.replaceAll(newvalue, groupsymbol, "");
-        newvalue = BUString.replaceAll(newvalue, "-", "");
-        newvalue = BUString.replaceAll(newvalue, "+", "");
-        newvalue = BUString.replaceAll(newvalue, decimalsymbol, ".");
+        newvalue = RUString.replaceAll(newvalue, groupsymbol, "");
+        newvalue = RUString.replaceAll(newvalue, "-", "");
+        newvalue = RUString.replaceAll(newvalue, "+", "");
+        newvalue = RUString.replaceAll(newvalue, decimalsymbol, ".");
         parsedvalue = new Float(newvalue);
         if (decimals != null) {
           if (ROUNDPOLICY.BESTROUND.equals(roundpolicy)) {
@@ -711,10 +711,10 @@ public class LocaleConverter {
           throw new RFWValidationException("RFW_ERR_000276");
         }
         boolean negative = !ignoresignal && newvalue.indexOf("-") != -1;
-        newvalue = BUString.replaceAll(newvalue, groupsymbol, "");
-        newvalue = BUString.replaceAll(newvalue, "-", "");
-        newvalue = BUString.replaceAll(newvalue, "+", "");
-        newvalue = BUString.replaceAll(newvalue, decimalsymbol, ".");
+        newvalue = RUString.replaceAll(newvalue, groupsymbol, "");
+        newvalue = RUString.replaceAll(newvalue, "-", "");
+        newvalue = RUString.replaceAll(newvalue, "+", "");
+        newvalue = RUString.replaceAll(newvalue, decimalsymbol, ".");
         parsedvalue = new Double(newvalue);
         if (decimals != null) {
           double decimalratio = Math.pow(10, decimals);
@@ -876,11 +876,11 @@ public class LocaleConverter {
           throw new RFWValidationException("RFW_ERR_000276");
         }
         boolean negative = !ignoresignal && newvalue.indexOf("-") != -1;
-        newvalue = BUString.replaceAll(newvalue, groupsymbol, "");
-        newvalue = BUString.replaceAll(newvalue, "-", "");
-        newvalue = BUString.replaceAll(newvalue, "+", "");
-        newvalue = BUString.replaceAll(newvalue, "%", "");
-        newvalue = BUString.replaceAll(newvalue, decimalsymbol, ".");
+        newvalue = RUString.replaceAll(newvalue, groupsymbol, "");
+        newvalue = RUString.replaceAll(newvalue, "-", "");
+        newvalue = RUString.replaceAll(newvalue, "+", "");
+        newvalue = RUString.replaceAll(newvalue, "%", "");
+        newvalue = RUString.replaceAll(newvalue, decimalsymbol, ".");
         if (!"".equals(newvalue)) {
           parsedvalue = new Double(newvalue);
           if (decimals != null) {

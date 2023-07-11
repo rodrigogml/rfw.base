@@ -5,7 +5,7 @@ import java.util.Locale;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.base.utils.BUDocValidation;
-import br.eng.rodrigogml.rfw.base.utils.BUString;
+import br.eng.rodrigogml.rfw.base.utils.RUString;
 
 /**
  * Description: Classe que formata e valida um número de CPF.<br>
@@ -30,7 +30,7 @@ public class RFWCPFDataFormatter implements RFWDataFormatter<String, String> {
     if (value != null && !"".equals(value.toString().trim())) {
       result = value.toString().trim();
       result = result.replaceAll("[^0-9]", "");
-      BUString.completeUntilLengthLeft("0", result, 11);
+      RUString.completeUntilLengthLeft("0", result, 11);
       if (result.length() == 11) {
         result = result.substring(0, 3) + "." + result.substring(3, 6) + "." + result.substring(6, 9) + "-" + result.substring(9, 11);
       }

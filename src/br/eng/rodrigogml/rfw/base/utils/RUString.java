@@ -33,7 +33,7 @@ import br.eng.rodrigogml.rfw.base.preprocess.PreProcess;
  * @since 1.0.0 (AGO / 2007)
  * @version 4.1.0 (23/06/2011) - rodrigogml - Nome alterado de StringUtils, para ficar no padrão do sistema.
  */
-public class BUString {
+public class RUString {
 
   /**
    * Array com os digitos: 0-9.
@@ -492,7 +492,7 @@ public class BUString {
   public static String genString(int length) {
     StringBuilder buf = new StringBuilder(length);
     while (buf.length() < length) {
-      buf.append(BUString.simplechars[(int) (Math.random() * BUString.simplechars.length)]);
+      buf.append(RUString.simplechars[(int) (Math.random() * RUString.simplechars.length)]);
     }
     return buf.toString();
   }
@@ -506,7 +506,7 @@ public class BUString {
   public static String genStringDigits(int length) {
     StringBuilder buf = new StringBuilder(length);
     while (buf.length() < length) {
-      buf.append(BUString.digits[(int) (BUString.digits.length - (Math.random() * 10))]);
+      buf.append(RUString.digits[(int) (RUString.digits.length - (Math.random() * 10))]);
     }
     return buf.toString();
   }
@@ -558,7 +558,7 @@ public class BUString {
    * @return String com o valor em HexaDecimal com as letras em lowercase.
    */
   public static String toHexFromBase64(byte[] bytearray) throws RFWException {
-    return BUString.toHex(Base64.getEncoder().encodeToString(bytearray));
+    return RUString.toHex(Base64.getEncoder().encodeToString(bytearray));
   }
 
   /**
@@ -570,7 +570,7 @@ public class BUString {
    * @return String com o valor em HexaDecimal com as letras em lowercase.
    */
   public static byte[] fromHexToByteArrayBase64(String hexstring) throws RFWException {
-    return Base64.getDecoder().decode(BUString.fromHexToByteArray(hexstring));
+    return Base64.getDecoder().decode(RUString.fromHexToByteArray(hexstring));
   }
 
   /**
@@ -1584,7 +1584,7 @@ public class BUString {
       // "(?:(?:0[1-9]|1[0-9]|2[0-9]|30)/(?:04|06|09|11)/(19|20)[0-9]{2})"; // Meses com 30 dias
       // "(?:(?:0[1-9]|1[0-9]|2[0-9])/(?:02)/(19|20)[0-9]{2})"; // Fevereiro com 29 dias
       String regExp = "((?:(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])/(?:01|03|05|07|08|10|12)/(19|20)[0-9]{2})|(?:(?:0[1-9]|1[0-9]|2[0-9]|30)/(?:04|06|09|11)/(19|20)[0-9]{2})|(?:(?:0[1-9]|1[0-9]|2[0-9])/(?:02)/(19|20)[0-9]{2}))";
-      return BUString.extract(text, regExp, groupID);
+      return RUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }
@@ -1603,7 +1603,7 @@ public class BUString {
   public static String extractDateMMYYYY(String text, int groupID) {
     try {
       String regExp = "(?:^|[^/])((?:0[0-9]|1[0-2])/(?:(19|20)[0-9]{2}))(?:$|[^/])";
-      return BUString.extract(text, regExp, groupID);
+      return RUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }
@@ -1623,7 +1623,7 @@ public class BUString {
     try {
       String regExp = "((?:[01][0-9]|2[0-3])\\:(?:[0-5][0-9])\\:(?:[0-5][0-9]))";
       // String regExp = "((?:(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])/(?:01|03|05|07|08|10|12)/(19|20)[0-9]{2})|(?:(?:0[1-9]|1[0-9]|2[0-9]|30)/(?:04|06|09|11)/(19|20)[0-9]{2})|(?:(?:0[1-9]|1[0-9]|2[0-9])/(?:02)/(19|20)[0-9]{2}))";
-      return BUString.extract(text, regExp, groupID);
+      return RUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }
@@ -1642,7 +1642,7 @@ public class BUString {
   public static String extractCodes(String text, int digitsCount, int groupID) {
     try {
       String regExp = "(?:^|[ ])([0-9]{4})(?:$|[ ])";
-      return BUString.extract(text, regExp, groupID);
+      return RUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }
@@ -1660,7 +1660,7 @@ public class BUString {
   public static String extracCNPJ(String text, int groupID) {
     try {
       String regExp = "(?:^|[^\\d])([0-9]{2}\\.?[0-9]{3}\\.?[0-9]{3}/?[0-9]{4}\\-?[0-9]{2})(?:$|[^\\d])";
-      return BUString.extract(text, regExp, groupID);
+      return RUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }
@@ -1688,7 +1688,7 @@ public class BUString {
         thousands = ",";
       }
       String regExp = "(?:^|[^0-9" + decimals + "])([0-9]{1,3}(?:[" + thousands + "]?[0-9]{3})*[" + decimals + "][0-9]+)(?:$|[^0-9" + decimals + "])";
-      String t = BUString.extract(text, regExp, groupID);
+      String t = RUString.extract(text, regExp, groupID);
       return t;
     } catch (RFWException e) {
       RFWLogger.logException(e);
@@ -1707,7 +1707,7 @@ public class BUString {
   public static String extractServiceNumericCode(String text, int groupID) {
     try {
       String regExp = "(?:^|[^0-9])((?:[0-9]{11}[ \\.-]*[0-9][ \\.-]*){4})(?:$|[^0-9])";
-      return BUString.extract(text, regExp, groupID);
+      return RUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }

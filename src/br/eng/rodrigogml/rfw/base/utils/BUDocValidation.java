@@ -1630,7 +1630,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static void isBoletoBarCodeValid(String codebar) throws RFWException {
-    codebar = BUString.removeNonDigits(codebar);
+    codebar = RUString.removeNonDigits(codebar);
 
     // Tamanho exato de 44 algarismos
     if (codebar.length() != 44) {
@@ -1663,7 +1663,7 @@ public class BUDocValidation {
    * @throws RFWException the RFW exception
    */
   public static void isBoletoNumericCodeValid(String numericLine) throws RFWException {
-    numericLine = BUString.removeNonDigits(numericLine);
+    numericLine = RUString.removeNonDigits(numericLine);
 
     // Se o tamanho está correto
     if (!(numericLine.length() == 33 || (numericLine.length() > 33 && numericLine.length() <= 36 && numericLine.substring(33) == "0000") || numericLine.length() >= 37 && numericLine.length() <= 47)) {
@@ -1715,7 +1715,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static String convertNumericCodeToBarCode(String numericCode) throws RFWException {
-    numericCode = BUString.removeNonDigits(numericCode);
+    numericCode = RUString.removeNonDigits(numericCode);
 
     String barCode = null;
     final BankBillCodeType type = getCodeType(numericCode, false);
@@ -1731,7 +1731,7 @@ public class BUDocValidation {
         break;
       case BOLETO_NUMERICCODE: {
         // Completa com zeros o código caso ele não esteja no tamaho correto para facilitar a conversão
-        numericCode = BUString.completeUntilLengthRight("0", numericCode, 47);
+        numericCode = RUString.completeUntilLengthRight("0", numericCode, 47);
 
         barCode = numericCode.substring(0, 4);
         barCode += numericCode.substring(32, 33);
@@ -1771,7 +1771,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   private static BankBillCodeType getCodeType(String code, boolean test) throws RFWException {
-    code = BUString.removeNonDigits(code);
+    code = RUString.removeNonDigits(code);
     if (code.length() == 44) { // Provavelmente é código de barras
       if (code.startsWith("8")) { // Provavelmente código de arrecadação
         try {
@@ -1814,7 +1814,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static void isServiceBarCodeValid(String codeBar) throws RFWException {
-    codeBar = BUString.removeNonDigits(codeBar);
+    codeBar = RUString.removeNonDigits(codeBar);
 
     // Tamanho exato deve ser de 44 algarismos
     if (codeBar.length() != 44) {
@@ -1866,7 +1866,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static void isServiceNumericCodeValid(String numericCode) throws RFWException {
-    numericCode = BUString.removeNonDigits(numericCode);
+    numericCode = RUString.removeNonDigits(numericCode);
 
     // Tamanho exato de 48 algarismos
     if (numericCode.length() != 48) {
@@ -1941,7 +1941,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static void isCodeValid(String code) throws RFWException {
-    code = BUString.removeNonDigits(code);
+    code = RUString.removeNonDigits(code);
     final BankBillCodeType type = getCodeType(code);
     if (type == null) throw new RFWValidationException("Código inválido ou não reconhecido pelo RFW!");
     switch (type) {
@@ -1969,7 +1969,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static String convertBarCodeToNumericCode(String barCode) throws RFWException {
-    barCode = BUString.removeNonDigits(barCode);
+    barCode = RUString.removeNonDigits(barCode);
 
     String numericCode = null;
     final BankBillCodeType type = getCodeType(barCode);
@@ -2033,7 +2033,7 @@ public class BUDocValidation {
         break;
       case BOLETO_BARCODE: {
         // Completa com zeros o código caso ele não esteja no tamaho correto para facilitar a conversão
-        barCode = BUString.completeUntilLengthRight("0", barCode, 47);
+        barCode = RUString.completeUntilLengthRight("0", barCode, 47);
 
         String block = null;
         // Bloco 1

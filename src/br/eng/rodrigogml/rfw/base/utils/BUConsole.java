@@ -75,7 +75,7 @@ public class BUConsole {
   public static void pCenter(String content) throws RFWException {
     int offset = (consoleWidth - content.length()) / 2;
     offset = Math.max(offset, 0);
-    write(BUString.completeUntilLengthLeft(" ", "", offset) + content);
+    write(RUString.completeUntilLengthLeft(" ", "", offset) + content);
   }
 
   /**
@@ -271,7 +271,7 @@ public class BUConsole {
       pMenuHeader(title);
     }
     pColumns(menuOptions);
-    if (title != null) write(BUString.completeUntilLengthLeft("-", "", consoleWidth) + lineBreak);
+    if (title != null) write(RUString.completeUntilLengthLeft("-", "", consoleWidth) + lineBreak);
   }
 
   /**
@@ -281,9 +281,9 @@ public class BUConsole {
    * @throws RFWException
    */
   public static void pMenuHeader(String title) throws RFWException {
-    String bars = BUString.completeUntilLengthLeft("#", "", consoleWidth);
+    String bars = RUString.completeUntilLengthLeft("#", "", consoleWidth);
     write(bars + lineBreak);
-    write(BUString.completeUntilLengthRight(" ", "# " + title, consoleWidth - 1) + "#" + lineBreak);
+    write(RUString.completeUntilLengthRight(" ", "# " + title, consoleWidth - 1) + "#" + lineBreak);
     write(bars + lineBreak);
   }
 
@@ -302,7 +302,7 @@ public class BUConsole {
     }
     for (int r = 0; r < content.length; r++) {
       for (int c = 0; c < content[r].length; c++) {
-        write(BUString.completeOrTruncateUntilLengthRight(" ", content[r][c], cols[c]));
+        write(RUString.completeOrTruncateUntilLengthRight(" ", content[r][c], cols[c]));
       }
       write(lineBreak);
     }
@@ -324,6 +324,6 @@ public class BUConsole {
    * @throws RFWException
    */
   public static void pSep(String sepChars) throws RFWException {
-    write(BUString.truncate(BUString.completeOrTruncateUntilLengthRight(sepChars, "", consoleWidth), consoleWidth) + lineBreak);
+    write(RUString.truncate(RUString.completeOrTruncateUntilLengthRight(sepChars, "", consoleWidth), consoleWidth) + lineBreak);
   }
 }

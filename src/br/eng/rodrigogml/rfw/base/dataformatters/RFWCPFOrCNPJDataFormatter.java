@@ -5,7 +5,7 @@ import java.util.Locale;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.base.utils.BUDocValidation;
-import br.eng.rodrigogml.rfw.base.utils.BUString;
+import br.eng.rodrigogml.rfw.base.utils.RUString;
 
 /**
  * Description: Classe que formata e valida um número de CPF ou CNPJ.<br>
@@ -28,7 +28,7 @@ public class RFWCPFOrCNPJDataFormatter implements RFWDataFormatter<String, Strin
   public String toPresentation(String value, Locale locale) {
     String result = "";
     if (value != null && !"".equals(value.toString().trim())) {
-      result = BUString.removeNonDigits(value);
+      result = RUString.removeNonDigits(value);
 
       if (result.length() == 11) {
         result = result.substring(0, 3) + "." + result.substring(3, 6) + "." + result.substring(6, 9) + "-" + result.substring(9, 11);
@@ -44,7 +44,7 @@ public class RFWCPFOrCNPJDataFormatter implements RFWDataFormatter<String, Strin
     String result = null;
     validate(formattedvalue, locale);
     if (formattedvalue != null) {
-      result = BUString.removeNonDigits(formattedvalue);
+      result = RUString.removeNonDigits(formattedvalue);
     }
     return result;
   }
@@ -52,7 +52,7 @@ public class RFWCPFOrCNPJDataFormatter implements RFWDataFormatter<String, Strin
   @Override
   public void validate(Object value, Locale locale) throws RFWException {
     if (value != null && !"".equals(value.toString().trim())) {
-      String v = BUString.removeNonDigits((String) value);
+      String v = RUString.removeNonDigits((String) value);
       try {
         // Valida como CPF
         BUDocValidation.validateCPF(v);

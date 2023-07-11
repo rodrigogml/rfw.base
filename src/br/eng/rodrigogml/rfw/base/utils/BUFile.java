@@ -494,7 +494,7 @@ public class BUFile {
    */
   public static File createFileInTemporaryPathWithDelete(String fileName, String content, Charset charSet, long delayToDelete) throws RFWException {
     try {
-      String mix = BUString.genString(4) + System.currentTimeMillis();
+      String mix = RUString.genString(4) + System.currentTimeMillis();
       Path path = Files.createTempDirectory(mix);
       String fullpath = path.toString();
       if (!File.separator.equals(fullpath.substring(fullpath.length() - 1, fullpath.length()))) {
@@ -561,7 +561,7 @@ public class BUFile {
    */
   public static File createFileInTemporaryPath(String fileName, String content, Charset charSet) throws RFWException {
     try {
-      String mix = BUString.genString(4) + System.currentTimeMillis();
+      String mix = RUString.genString(4) + System.currentTimeMillis();
       Path path = Files.createTempDirectory(mix);
       String fullpath = path.toString();
       if (!File.separator.equals(fullpath.substring(fullpath.length() - 1, fullpath.length()))) {
@@ -587,7 +587,7 @@ public class BUFile {
    */
   public static File createFileInTemporaryPath(String fileName, byte[] content) throws RFWException {
     try {
-      String mix = BUString.genString(4) + System.currentTimeMillis();
+      String mix = RUString.genString(4) + System.currentTimeMillis();
       Path path = Files.createTempDirectory(mix);
       String fullpath = path.toString();
       if (!File.separator.equals(fullpath.substring(fullpath.length() - 1, fullpath.length()))) {

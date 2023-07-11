@@ -116,7 +116,7 @@ public class BUNumber {
    * @return
    */
   public static String removeNonSignificantZeros(BigDecimal number, Locale locale, int maxdecimals) {
-    String pattern = BUString.completeUntilLengthRight("#", "0.", maxdecimals + 2);
+    String pattern = RUString.completeUntilLengthRight("#", "0.", maxdecimals + 2);
     DecimalFormat df = new DecimalFormat(pattern, new DecimalFormatSymbols(locale));
     return df.format(number);
   }

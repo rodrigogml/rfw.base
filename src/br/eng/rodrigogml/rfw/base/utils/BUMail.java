@@ -287,7 +287,7 @@ public class BUMail {
   public static String loadMessageTemplate(String templateResourceName, HashMap<String, String> fieldContents) throws RFWException {
     String content = BUIO.readToString(BUReflex.getResourceAsStream(templateResourceName), StandardCharsets.UTF_8);
     for (Entry<String, String> entry : fieldContents.entrySet()) {
-      content = BUString.replaceAll(content, "${" + entry.getKey() + "}", entry.getValue());
+      content = RUString.replaceAll(content, "${" + entry.getKey() + "}", entry.getValue());
     }
     return content;
   }

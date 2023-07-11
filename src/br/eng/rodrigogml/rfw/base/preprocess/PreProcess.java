@@ -12,13 +12,13 @@ import java.util.Map;
 
 import br.eng.rodrigogml.rfw.base.RFW;
 import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaRelationshipField;
-import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaStringField;
 import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaRelationshipField.RelationshipTypes;
+import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaStringField;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
-import br.eng.rodrigogml.rfw.base.utils.BUString;
+import br.eng.rodrigogml.rfw.base.utils.RUString;
 import br.eng.rodrigogml.rfw.base.vo.RFWVO;
 
 /**
@@ -110,7 +110,7 @@ public final class PreProcess {
                     } else {
                       throw new RFWCriticalException("O preProcess '${0}' não é tem suporte para a annotation '${3}' do atributo '${1}' da classe '${2}'", new String[] { preProcess.toString(), field.getName(), vo.getClass().getCanonicalName(), ann.getClass().getCanonicalName() });
                     }
-                    value = BUString.truncate((String) value, maxLength);
+                    value = RUString.truncate((String) value, maxLength);
                   }
                   break;
                 case STRING_UPPERCASE:
@@ -172,9 +172,9 @@ public final class PreProcess {
    */
   public static String processStringToNull(String value) {
     if (value != null) {
-      value = BUString.replaceFakeSpacesByUniqueSpace(value);
-      value = BUString.replaceTabsByUniqueSpace(value);
-      value = BUString.replaceDoubleSpaces(value);
+      value = RUString.replaceFakeSpacesByUniqueSpace(value);
+      value = RUString.replaceTabsByUniqueSpace(value);
+      value = RUString.replaceDoubleSpaces(value);
       value = value.trim();
       if (value.length() == 0) {
         value = null;
@@ -193,7 +193,7 @@ public final class PreProcess {
     if (value == null) {
       value = "";
     } else {
-      value = BUString.replaceDoubleSpaces(value).trim();
+      value = RUString.replaceDoubleSpaces(value).trim();
     }
     return value;
   }

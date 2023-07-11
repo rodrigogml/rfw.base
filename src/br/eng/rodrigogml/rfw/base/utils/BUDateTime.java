@@ -798,10 +798,10 @@ public class BUDateTime {
     final long s = TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.HOURS.toSeconds(h) - TimeUnit.MINUTES.toSeconds(m);
     final long ms = millis % 1000;
     StringBuilder sb = new StringBuilder();
-    if (h > 0) sb.append(BUString.completeUntilLengthLeft("0", "" + h, 2)).append(":");
-    if (h > 0 || m > 0) sb.append(BUString.completeUntilLengthLeft("0", "" + m, 2)).append(":");
-    if (h > 0 || m > 0 || s > 0) sb.append(BUString.completeUntilLengthLeft("0", "" + s, 2)).append("'");
-    sb.append(BUString.completeUntilLengthLeft("0", "" + ms, 3)).append("\"");
+    if (h > 0) sb.append(RUString.completeUntilLengthLeft("0", "" + h, 2)).append(":");
+    if (h > 0 || m > 0) sb.append(RUString.completeUntilLengthLeft("0", "" + m, 2)).append(":");
+    if (h > 0 || m > 0 || s > 0) sb.append(RUString.completeUntilLengthLeft("0", "" + s, 2)).append("'");
+    sb.append(RUString.completeUntilLengthLeft("0", "" + ms, 3)).append("\"");
     return sb.toString();
   }
 
