@@ -10,16 +10,17 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
-import br.eng.rodrigogml.rfw.base.RFW;
+import br.eng.rodrigogml.rfw.base.RFWDeprec;
 import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaRelationshipField;
 import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaRelationshipField.RelationshipTypes;
 import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaStringField;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
 import br.eng.rodrigogml.rfw.base.utils.RUString;
 import br.eng.rodrigogml.rfw.base.vo.RFWVO;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
  * Description: Classe com métodos de pré processamento de variáveis para facilitar o processamento dos objetos.<br>
@@ -381,7 +382,7 @@ public final class PreProcess {
   }
 
   /**
-   * Processa qualquer número BigDecimal para conter apenas duas casas decimais. Arredonda usando a definição padrão do sistema (classe {@link RFW}).
+   * Processa qualquer número BigDecimal para conter apenas duas casas decimais. Arredonda usando a definição padrão do sistema (classe {@link RFWDeprec}).
    *
    * @param value Valor a ser arredondado.
    * @return Valor arredondado.

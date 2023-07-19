@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
 
-import br.eng.rodrigogml.rfw.base.RFW;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.base.sessionmanager.interfaces.SessionBackOperation;
 import br.eng.rodrigogml.rfw.base.sessionmanager.interfaces.SessionVO;
-import br.eng.rodrigogml.rfw.base.utils.BUGenerators;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
 
 /**
  * Description: Classe utilizada para gerenciar as sessões de usuários através da Thread.<br>
@@ -184,7 +184,7 @@ public class SessionManager {
 
     String uuid = null;
     do {
-      uuid = BUGenerators.generateUUID();
+      uuid = RUGenerators.generateUUID();
     } while (sessionsByUUID.containsKey(uuid));
 
     SessionVO ssVO = null;
@@ -226,7 +226,7 @@ public class SessionManager {
     try {
       return getSession(sessionsByThread.get(Thread.currentThread()));
     } catch (RFWException e) {
-      if (e.getExceptioncode().equals("RFW_ERR_000005")) return null;
+      if (e.getExceptionCode().equals("RFW_ERR_000005")) return null;
       throw e;
     }
   }

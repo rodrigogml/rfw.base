@@ -18,8 +18,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
  * Description: Classe utilitária para conter métodos de auxílio do serviço de e-mail.<BR>

@@ -3,7 +3,7 @@ package br.eng.rodrigogml.rfw.base.dataformatters;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import br.eng.rodrigogml.rfw.base.RFW;
+import br.eng.rodrigogml.rfw.kernel.RFW;
 
 /**
  * Description: Formata um numero qualquer como valor monetário.<br>

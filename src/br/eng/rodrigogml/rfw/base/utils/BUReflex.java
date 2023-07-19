@@ -38,14 +38,14 @@ import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAOEncrypt;
 import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaCollectionField;
 import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaRelationshipField;
 import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaStringField;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWRunTimeException;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.preprocess.PreProcess.PreProcessOption;
 import br.eng.rodrigogml.rfw.base.vo.GVO;
 import br.eng.rodrigogml.rfw.base.vo.RFWMO;
 import br.eng.rodrigogml.rfw.base.vo.RFWVO;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWRunTimeException;
 
 /**
  * Description: Classe com utilitários para tratar objetos apartir de reflexão.<br>
@@ -363,7 +363,7 @@ public class BUReflex {
   }
 
   /**
-   * Este método retorna o tipo (classe) de um atributo, navegando por Neasted Properties no padrão do RFW, semelhante ao {@link #getPropertyTypeByType(Class, String)} mas ignorando as Listas/Hashs. Isto é, sempre que encontramos uma {@link List} ou {@link Map} no caminho o RFW retornará o tipo de objeto que é armazenado dentro dessas coleções. Para outros tipos, o tipo do objeto é retornado
+   * Este método retorna o tipo (classe) de um atributo, navegando por Neasted Properties no padrão do RFWDeprec, semelhante ao {@link #getPropertyTypeByType(Class, String)} mas ignorando as Listas/Hashs. Isto é, sempre que encontramos uma {@link List} ou {@link Map} no caminho o RFWDeprec retornará o tipo de objeto que é armazenado dentro dessas coleções. Para outros tipos, o tipo do objeto é retornado
    * normalmente.<br>
    * <br>
    * A resolução de qual é o objeto dentro da collection é feito da seguinte maneira:
@@ -1275,7 +1275,7 @@ public class BUReflex {
   /**
    * Transforma uma Coleção de VOs em um Array contendo todos os IDs dos vos recebidos.
    *
-   * @param <VO> Qualquer classe de VO do RFW (extenda RFWVO).
+   * @param <VO> Qualquer classe de VO do RFWDeprec (extenda RFWVO).
    * @param vos Array com os VOs
    * @return Array contendo todos os IDs dos VOs recebidos.
    * @throws RFWException
@@ -1287,7 +1287,7 @@ public class BUReflex {
   /**
    * Transforma uma Coleção de GVO em um Array contendo todos os IDs dos vos recebidos.
    *
-   * @param <VO> Qualquer classe de VO do RFW (extenda RFWVO).
+   * @param <VO> Qualquer classe de VO do RFWDeprec (extenda RFWVO).
    * @param vos Array com os VOs
    * @return Array contendo todos os IDs dos VOs recebidos.
    * @throws RFWException
@@ -1299,7 +1299,7 @@ public class BUReflex {
   /**
    * Transforma uma Coleção de GVO em uma Lista contendo todos os IDs dos vos recebidos.
    *
-   * @param <VO> Qualquer classe de VO do RFW (extenda RFWVO).
+   * @param <VO> Qualquer classe de VO do RFWDeprec (extenda RFWVO).
    * @param vos Array com os VOs
    * @return Lista contendo todos os IDs dos VOs recebidos.
    * @throws RFWException
@@ -1311,7 +1311,7 @@ public class BUReflex {
   /**
    * Transforma um Array de VOs em um Array contendo todos os IDs dos vos recebidos.
    *
-   * @param <VO> Qualquer classe de VO do RFW (extenda RFWVO).
+   * @param <VO> Qualquer classe de VO do RFWDeprec (extenda RFWVO).
    * @param vos Array com os VOs
    * @return Array contendo todos os IDs dos VOs recebidos.
    * @throws RFWException
@@ -1323,7 +1323,7 @@ public class BUReflex {
   /**
    * Transforma um Array de VOs em uma Lista contendo todos os IDs dos vos recebidos.
    *
-   * @param <VO> Qualquer classe de VO do RFW (extenda RFWVO).
+   * @param <VO> Qualquer classe de VO do RFWDeprec (extenda RFWVO).
    * @param vos Array com os VOs
    * @return Lista contendo todos os IDs dos VOs recebidos.
    * @throws RFWException

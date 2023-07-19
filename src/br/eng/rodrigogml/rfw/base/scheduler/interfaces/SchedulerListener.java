@@ -1,6 +1,6 @@
 package br.eng.rodrigogml.rfw.base.scheduler.interfaces;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Listener de eventos do Scheduler.<br>

@@ -7,8 +7,6 @@ import java.io.FileReader;
 
 import org.junit.Test;
 
-import br.eng.rodrigogml.rfw.base.utils.BUFile;
-
 /**
  * Description: Classe de teste da classe {@link BUFile}.<br>
  *

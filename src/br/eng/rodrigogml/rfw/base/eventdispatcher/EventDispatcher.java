@@ -6,10 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.preprocess.PreProcess;
-import br.eng.rodrigogml.rfw.base.utils.BUGenerators;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
 
 /**
  * Description: Classe de lógica/controle dos disparos dos eventos do sistema.<br>
@@ -28,7 +28,7 @@ public class EventDispatcher {
   /*
    * Nome da propriedade temporária utilizada para salvar o ID do evento dentro da própria hash de parâmetros do evento. Esse artifício foi utilizado para não termos de complicar a estrutura de objetos dos eventos do escopo.
    */
-  private static final String eventIDUUID = BUGenerators.generateUUID();
+  private static final String eventIDUUID = RUGenerators.generateUUID();
 
   /**
    * HashMap utilizado para armezanar a pilha de escopos associados a Thread.<br>

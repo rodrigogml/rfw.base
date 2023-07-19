@@ -5,9 +5,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-import br.eng.rodrigogml.rfw.base.RFW;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWRunTimeException;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWRunTimeException;
 
 /**
  * Description: Classe que formata dados de Data e Horário. não valida pois não é utilizado em campos, só para formatação em relatórios e campos de exibição.<br>

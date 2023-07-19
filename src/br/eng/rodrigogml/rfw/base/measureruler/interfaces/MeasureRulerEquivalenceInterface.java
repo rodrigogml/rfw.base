@@ -3,9 +3,9 @@ package br.eng.rodrigogml.rfw.base.measureruler.interfaces;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler;
 import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.MeasureUnit;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Esta interface define os métodos que o sistema deve implementar para que o {@link MeasureRuler} consiga realizar a transformação entre unidades de medidas de dimenções diferentes. Incluindo unidades definidas pelo usuário.<br>

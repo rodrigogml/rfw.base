@@ -2,9 +2,9 @@ package br.eng.rodrigogml.rfw.base.dataformatters;
 
 import java.util.Locale;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
  * Description: DataFormatter para números de telefones.<br>
@@ -278,7 +278,7 @@ public class RFWPhoneDataFormatter implements RFWDataFormatter<String, String> {
         }
         break;
       default:
-        throw new RFWValidationException("DDI desconhecido pelo RFW!", new String[] { ddi, ddd });
+        throw new RFWValidationException("DDI desconhecido pelo RFWDeprec!", new String[] { ddi, ddd });
     }
   }
 

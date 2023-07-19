@@ -36,14 +36,14 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import br.eng.rodrigogml.rfw.base.RFW;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.base.fwreports.bean.FWReportOptionBean;
 import br.eng.rodrigogml.rfw.base.fwreports.bean.FWReportOptionBean.PAGE_ORIENTATION;
 import br.eng.rodrigogml.rfw.base.utils.BUFile;
 import br.eng.rodrigogml.rfw.base.utils.RUString;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 
 /**
  * Description: Classe principal de relatorios. Todas as classes geradoras de relatorios do sistema deve extender esta classe.<br>
@@ -341,7 +341,7 @@ public abstract class FWReport {
     }
     {
       String enterpriseName = this.reportBean.getEnterpriseName();
-      if (enterpriseName == null) enterpriseName = "RFW";
+      if (enterpriseName == null) enterpriseName = "RFWDeprec";
 
       // Escreve o nome da empresa
       tmpl.setFontAndSize(getBaseFontBold(), TEXTSIZE_T1);

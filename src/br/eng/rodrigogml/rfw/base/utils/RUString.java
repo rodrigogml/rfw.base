@@ -19,12 +19,12 @@ import java.util.regex.Pattern;
 
 import com.google.common.io.BaseEncoding;
 
-import br.eng.rodrigogml.rfw.base.RFW;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.preprocess.PreProcess;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
  * Description: Classe com métodos úteis para tratamentos e manipulação de String.<br>
@@ -1232,7 +1232,7 @@ public class RUString {
    * @return String codificada
    */
   public static String encodeBase32(byte[] content) {
-    // Estamos usando o Google Guava (já presente no RFW por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFW. No futuro quem sabe ter a própria implementação
+    // Estamos usando o Google Guava (já presente no RFWDeprec por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFWDeprec. No futuro quem sabe ter a própria implementação
     return BaseEncoding.base32().encode(content);
   }
 
@@ -1243,7 +1243,7 @@ public class RUString {
    * @return String codificada
    */
   public static String encodeBase32(String content) {
-    // Estamos usando o Google Guava (já presente no RFW por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFW. No futuro quem sabe ter a própria implementação
+    // Estamos usando o Google Guava (já presente no RFWDeprec por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFWDeprec. No futuro quem sabe ter a própria implementação
     return BaseEncoding.base32().encode(content.getBytes());
   }
 
@@ -1254,7 +1254,7 @@ public class RUString {
    * @return String codificada
    */
   public static String decodeBase32(String content) {
-    // Estamos usando o Google Guava (já presente no RFW por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFW. No futuro quem sabe ter a própria implementação
+    // Estamos usando o Google Guava (já presente no RFWDeprec por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFWDeprec. No futuro quem sabe ter a própria implementação
     return new String(BaseEncoding.base32().decode(content));
   }
 
@@ -1265,7 +1265,7 @@ public class RUString {
    * @return String codificada
    */
   public static byte[] decodeBase32ToByte(String content) {
-    // Estamos usando o Google Guava (já presente no RFW por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFW. No futuro quem sabe ter a própria implementação
+    // Estamos usando o Google Guava (já presente no RFWDeprec por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFWDeprec. No futuro quem sabe ter a própria implementação
     return BaseEncoding.base32().decode(content);
   }
 

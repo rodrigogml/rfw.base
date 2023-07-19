@@ -7,8 +7,8 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Locale;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Classe utilitária para métodos que interagem com a máquina (pc), como recuperar IP, MAC Address, Discos, Capacidades de Processamento, etc.<BR>

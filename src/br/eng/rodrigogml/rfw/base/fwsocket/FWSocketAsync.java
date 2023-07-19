@@ -12,12 +12,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.base.fwsocket.listener.FWSocketAsyncServerListener;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 
 /**
  * Description: Classe do FW quer permite "levantar um servidor" ou iniciar o client, através de conexões do tipo "full-duplex".<BR>

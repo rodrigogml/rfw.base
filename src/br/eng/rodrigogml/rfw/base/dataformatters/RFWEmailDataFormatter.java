@@ -2,8 +2,8 @@ package br.eng.rodrigogml.rfw.base.dataformatters;
 
 import java.util.Locale;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.utils.BUMail;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Data formatter para endereços de e-mail.<BR>

@@ -37,19 +37,21 @@ import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.SimpleTextExtractionStrategy;
 
 import br.eng.rodrigogml.rfw.base.dataformatters.LocaleConverter;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
 
 /**
  * Description: Utilitários para gerenciar arquivos, escrever, ler, etc.<br>
  *
  * @author Rodrigo Leitão
  * @since 3.1.0 (NOV / 2009)
+ * @deprecated Movida para o o RFWDeprec.Kernel com o nome de RUFile - métodos sendo migrados pouco a pouco conforme a necessidade (Ao levar o método para lá, excluir daqui).
  */
-
+@Deprecated
 public class BUFile {
 
   public static boolean isDirectory(String path) {
@@ -136,14 +138,6 @@ public class BUFile {
       }
     }
     return files;
-  }
-
-  public static boolean fileExists(String filename) {
-    return fileExists(new File(filename));
-  }
-
-  public static boolean fileExists(File file) {
-    return file.exists();
   }
 
   public static String readFileContentToString(String filename) throws RFWException {
@@ -610,7 +604,7 @@ public class BUFile {
    */
   public static Date getCreationDate(String fileName) throws RFWException {
     // Se o arquivo não existir lança crítico, isso deve ser validado adequadamente fora da classe utilitária
-    if (!fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName });
+    if (!RUFile.fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName });
 
     Path path = new File(fileName).toPath();
     BasicFileAttributes attr;
@@ -631,7 +625,7 @@ public class BUFile {
    */
   public static Date getLastAccessTime(String fileName) throws RFWException {
     // Se o arquivo não existir lança crítico, isso deve ser validado adequadamente fora da classe utilitária
-    if (!fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName });
+    if (!RUFile.fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName });
 
     Path path = new File(fileName).toPath();
     BasicFileAttributes attr;
@@ -652,7 +646,7 @@ public class BUFile {
    */
   public static Date getLastModifiedTime(String fileName) throws RFWException {
     // Se o arquivo não existir lança crítico, isso deve ser validado adequadamente fora da classe utilitária
-    if (!fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName });
+    if (!RUFile.fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName });
 
     Path path = new File(fileName).toPath();
     BasicFileAttributes attr;
@@ -684,7 +678,7 @@ public class BUFile {
    */
   public static boolean isSymbolicLink(File fileName) throws RFWException {
     // Se o arquivo não existir lança crítico, isso deve ser validado adequadamente fora da classe utilitária
-    if (!fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName.getAbsolutePath() });
+    if (!RUFile.fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName.getAbsolutePath() });
 
     Path path = fileName.toPath();
     BasicFileAttributes attr;

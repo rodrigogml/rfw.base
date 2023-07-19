@@ -23,14 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import br.eng.rodrigogml.rfw.base.RFW;
 import br.eng.rodrigogml.rfw.base.dao.RFWDAO.SQLDialect;
 import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAOConverter;
 import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAOEncrypt;
 import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaCollectionField;
 import br.eng.rodrigogml.rfw.base.dao.interfaces.RFWDAOConverterInterface;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.utils.BUEncrypter;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
@@ -40,6 +37,9 @@ import br.eng.rodrigogml.rfw.base.vo.RFWMO.RFWMOData;
 import br.eng.rodrigogml.rfw.base.vo.RFWOrderBy;
 import br.eng.rodrigogml.rfw.base.vo.RFWOrderBy.RFWOrderbyItem;
 import br.eng.rodrigogml.rfw.base.vo.RFWVO;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Classe que cria um mapeamento para execução de um comando SQL entre os objetos e o banco de dados.<br>
@@ -1678,7 +1678,7 @@ class DAOMap {
           stmt.setString(i, (String) o);
         } else if (o instanceof Date) {
           // stmt.setTimestamp(i, new Timestamp(((Date) o).getTime()));
-          throw new RFWCriticalException("Por definição o RFW não deve mais utilizar o 'java.util.Date'. Verifique a implementação e substitua adequadamente por LocalDate, LocalTime ou LocalDateTime.");
+          throw new RFWCriticalException("Por definição o RFWDeprec não deve mais utilizar o 'java.util.Date'. Verifique a implementação e substitua adequadamente por LocalDate, LocalTime ou LocalDateTime.");
         } else if (o instanceof LocalDate) {
           // stmt.setObject(i, o, Types.DATE);
           stmt.setDate(i, java.sql.Date.valueOf((LocalDate) o));

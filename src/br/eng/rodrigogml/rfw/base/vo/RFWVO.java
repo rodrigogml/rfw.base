@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.eng.rodrigogml.rfw.base.dao.RFWDAO;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.sessionmanager.interceptors.SMInterceptor;
-import br.eng.rodrigogml.rfw.base.utils.RFWRecursiveClone;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
+import br.eng.rodrigogml.rfw.base.utils.RFWRecursiveClone;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Classe pai de todos os Value Objects do sistema. Permitindo assim que métodos consigam operar genericamente em muitos casos.<br>

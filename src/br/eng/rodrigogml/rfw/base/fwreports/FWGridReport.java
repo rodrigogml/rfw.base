@@ -12,12 +12,12 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWRunTimeException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.base.fwreports.FWGridReport.FWGridReportMatrix.TextWrapMode;
 import br.eng.rodrigogml.rfw.base.fwreports.FWListReport.ReportBlock.ALIGNMENT;
 import br.eng.rodrigogml.rfw.base.fwreports.bean.FWGridReportOptionBean;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWRunTimeException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 
 /**
  * Description: Classe de relatório que permite a geração de um relatório baseada em um "GRID". O desenvolvedor deve extender esta classe e montar a estrutura dos dados e configurações das células de acordo com suas preferências. Uma vez que todos os dados estejam definidos dentro desse GRID (uma matriz) deve-se mandar gerar o relatório. O {@link FWGridReport} montará o relatório quebrando as

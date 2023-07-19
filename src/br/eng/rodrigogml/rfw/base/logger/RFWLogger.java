@@ -4,17 +4,20 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.eng.rodrigogml.rfw.base.RFW;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationGroupException;
+import br.eng.rodrigogml.rfw.base.RFWDeprec;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogEntry.RFWLogSeverity;
 import br.eng.rodrigogml.rfw.base.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationGroupException;
 
 /**
  * Description: Esta classe gerencia as entradas de Log do sistema.<br>
@@ -42,7 +45,7 @@ public class RFWLogger {
    * A partir de quanto tempo a desde o momento do seu registro uma entrada pode ficar em memória aguardando persistência.<br>
    * Tempo em SEGUNDOS. Valor padrão 10 minutos.<br>
    * <bR>
-   * Note que o tempo é avaliado em relação ao horário padrão do sistema {@link RFW#getDateTime()}. Caso o log esteja sendo feito por outro sistema, ou com um TimeZone diferente, talvez seja necessário implementar uma configuração aqui no {@link RFWLogger} para definir o TimeZone de comparação das entradas.
+   * Note que o tempo é avaliado em relação ao horário padrão do sistema {@link RFWDeprec#getDateTime()}. Caso o log esteja sendo feito por outro sistema, ou com um TimeZone diferente, talvez seja necessário implementar uma configuração aqui no {@link RFWLogger} para definir o TimeZone de comparação das entradas.
    */
   private static long timeToLive = 600;
 
@@ -50,6 +53,11 @@ public class RFWLogger {
    * Referência para a Thread de limpeza.
    */
   private static Thread cleannerThread = null;
+
+  /**
+   * Conjunto com o UUID das exceções que já foram logadas, para evitar que sejam loggadas múltiplas vezes ao passar por cada classe.
+   */
+  private static Set<String> loggedExceptions = new HashSet<String>();
 
   /**
    * Construtor privado para classe de métodos estáticos
@@ -76,7 +84,7 @@ public class RFWLogger {
             Thread.sleep(timeToClean * 1000);
           } catch (Exception e) {
           }
-        } while (!RFW.isShuttingDown()); // Thread Daemon, queremos ela rodando para sempre, até que o RFW sinalize que devemos desligar o framework
+        } while (!RFW.isShuttingDown()); // Thread Daemon, queremos ela rodando para sempre, até que o RFWDeprec sinalize que devemos desligar o framework
       }
     };
     cleannerThread.setPriority(Thread.MIN_PRIORITY);
@@ -146,13 +154,32 @@ public class RFWLogger {
    * @param e Exceção a ser Logada.
    */
   public synchronized final static void logException(Throwable e) {
-    if (!(e instanceof RFWException) || !((RFWException) e).getLogged()) {
+    if (!(e instanceof RFWException) || shouldLog((RFWException) e)) {
       RFWLogSeverity severity = RFWLogSeverity.EXCEPTION;
       if (e instanceof RFWValidationException || e instanceof RFWValidationGroupException) {
         severity = RFWLogSeverity.VALIDATION;
       }
       String exPoint = e.getStackTrace()[0].toString();
       log(severity, e.getLocalizedMessage(), convertExceptionToString(e), exPoint);
+    }
+  }
+
+  private final static boolean shouldLog(RFWException e) {
+    synchronized (loggedExceptions) {
+      if (loggedExceptions.contains(e.getUuid())) {
+        return false;
+      } else {
+        loggedExceptions.add(e.getUuid());
+        RFW.runLater("#RFWLogger: Delayed UUID Remover", true, 5000, new Runnable() {
+          @Override
+          public void run() {
+            synchronized (loggedExceptions) {
+              loggedExceptions.remove(e.getUuid());
+            }
+          }
+        });
+        return true;
+      }
     }
   }
 
@@ -225,7 +252,7 @@ public class RFWLogger {
    * @param tags permite que se adicione tags particulares ao Log. Tenha em mente que Tags são utilizadas para ajudar a filtrar vários eventos de uma mesma natureza, não jogue informações que só aparecerão em um único evento por vez nas tags. Cria um log de debug ou info para isso.
    */
   public synchronized final static void logException(Throwable e, String... tags) {
-    if (!(e instanceof RFWException) || !((RFWException) e).getLogged()) {
+    if (!(e instanceof RFWException) || shouldLog((RFWException) e)) {
       RFWLogSeverity severity = RFWLogSeverity.EXCEPTION;
       if (e instanceof RFWValidationException || e instanceof RFWValidationGroupException) {
         severity = RFWLogSeverity.VALIDATION;
@@ -303,7 +330,7 @@ public class RFWLogger {
   public static final String convertExceptionToString(Throwable e) {
     StringWriter sw = new StringWriter();
     sw.write("<MESSAGE>");
-    if (e instanceof RFWException) sw.write(((RFWException) e).getExceptioncode() + " - ");
+    if (e instanceof RFWException) sw.write(((RFWException) e).getExceptionCode() + " - ");
     sw.write(e.getLocalizedMessage() + "</MESSAGE>\r\n");
     // Verifica os paremetros para exibir no LOG
     if (e instanceof RFWException && ((RFWException) e).getParams() != null) {

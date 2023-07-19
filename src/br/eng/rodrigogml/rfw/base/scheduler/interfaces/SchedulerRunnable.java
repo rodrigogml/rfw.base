@@ -2,7 +2,7 @@ package br.eng.rodrigogml.rfw.base.scheduler.interfaces;
 
 import java.util.Map;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Esta interface para implementar a tarefa executável do Scheduler.<BR>

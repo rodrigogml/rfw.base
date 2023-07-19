@@ -15,15 +15,15 @@ import java.nio.charset.Charset;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import br.eng.rodrigogml.rfw.base.RFW;
 import br.eng.rodrigogml.rfw.base.dataformatters.LocaleConverter;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobMonitor;
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 
 /**
  * Description: Classe utilitária com métodos pertinentes a manipulação de informação na WEB.<br>
@@ -119,7 +119,7 @@ public class BUWeb {
             throw new RFWCriticalException("Falha ao realizar a conxeão ou lêr os dados da mesma.", new String[] { address }, e);
           }
         } else {
-          throw new RFWCriticalException("Recebido do endereço '" + address + "' o código '" + responseCode + "', que é desconhecido pelo RFW!");
+          throw new RFWCriticalException("Recebido do endereço '" + address + "' o código '" + responseCode + "', que é desconhecido pelo RFWDeprec!");
         }
         tries++;
       }
@@ -159,7 +159,7 @@ public class BUWeb {
         URL obj = new URL(address);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         if (con instanceof HttpsURLConnection) {
-          // Permite o override de aceitação dos certificados conhecidos pelo RFW
+          // Permite o override de aceitação dos certificados conhecidos pelo RFWDeprec
           BUCert.configureSSLCertificatesOnConnection((HttpsURLConnection) con);
         }
         con.setConnectTimeout(5000); // Define um timeout de conexão para não esperar para sempre
@@ -230,7 +230,7 @@ public class BUWeb {
             throw new RFWCriticalException("Falha ao realizar a conxeão ou lêr os dados da mesma.", new String[] { address }, e);
           }
         } else {
-          throw new RFWCriticalException("Recebido do endereço '" + address + "' o código '" + responseCode + "', que é desconhecido pelo RFW!");
+          throw new RFWCriticalException("Recebido do endereço '" + address + "' o código '" + responseCode + "', que é desconhecido pelo RFWDeprec!");
         }
         tries++;
       }

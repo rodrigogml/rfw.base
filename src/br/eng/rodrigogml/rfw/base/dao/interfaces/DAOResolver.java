@@ -1,8 +1,8 @@
 package br.eng.rodrigogml.rfw.base.dao.interfaces;
 
 import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAO;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.vo.RFWVO;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Interface para permitir que algumas informações que precisam ser passadas para o RFWDAO sejam manipuladas/resolvidas pela aplicação a medida que necessárias pelo RFWDAO.<br>

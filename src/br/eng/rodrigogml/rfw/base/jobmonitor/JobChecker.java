@@ -2,13 +2,13 @@ package br.eng.rodrigogml.rfw.base.jobmonitor;
 
 import java.util.LinkedList;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus.JobStep;
 import br.eng.rodrigogml.rfw.base.jobmonitor.interfaces.JobCheckerListener;
 import br.eng.rodrigogml.rfw.base.jobmonitor.interfaces.JobStatusSupplier;
 import br.eng.rodrigogml.rfw.base.jobmonitor.interfaces.JobStatusSupplierDefault;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: JobChecker é uma classe utilitária para forçar a verificação temporária de um Job em background.<br>

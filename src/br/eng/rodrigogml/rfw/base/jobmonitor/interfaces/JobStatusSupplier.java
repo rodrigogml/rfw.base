@@ -1,9 +1,9 @@
 package br.eng.rodrigogml.rfw.base.jobmonitor.interfaces;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.jobmonitor.Job;
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobMonitor;
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Interface do JobMonitor que permite implementar um "Supplier".<br>

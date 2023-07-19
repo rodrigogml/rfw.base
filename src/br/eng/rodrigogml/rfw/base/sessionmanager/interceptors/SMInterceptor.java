@@ -8,18 +8,18 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
-import br.eng.rodrigogml.rfw.base.RFW;
 import br.eng.rodrigogml.rfw.base.eventdispatcher.EventDispatcher;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.base.sessionmanager.SessionManager;
 import br.eng.rodrigogml.rfw.base.sessionmanager.annotations.Security;
 import br.eng.rodrigogml.rfw.base.sessionmanager.annotations.Security.SecurityAction;
 import br.eng.rodrigogml.rfw.base.sessionmanager.interfaces.SessionVO;
 import br.eng.rodrigogml.rfw.base.utils.BUArray;
-import br.eng.rodrigogml.rfw.base.utils.BUGenerators;
 import br.eng.rodrigogml.rfw.base.vo.RFWRecursiveClonable;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
 
 /**
  * Description: Claase interceptadora da chamada da fachada para verificação de sessão, autorização e necessidade de rollback.<br>
@@ -105,7 +105,7 @@ public class SMInterceptor {
 
         return proceed;
       } catch (Throwable e) {
-        // Força o Rollback em qualquer caso de exception. Algumas vezes a exception que chega aqui não é a do RFW, e sem forçar o rollback parte da transação continua terminando em Comited.
+        // Força o Rollback em qualquer caso de exception. Algumas vezes a exception que chega aqui não é a do FrameWork, e sem forçar o rollback parte da transação continua terminando em Comited.
         if (context != null) context.setRollbackOnly();
         if (RFW.isDevelopmentEnvironment()) e.printStackTrace();
         // Deixa a exceção seguir normalmente
@@ -129,7 +129,7 @@ public class SMInterceptor {
     Integer type = null;
     if (parameters == null || parameters.length < 1 || parameters[0] == null || !(parameters[0] instanceof String)) {
       throw new RFWCriticalException("ID de sessão inválida para chamada da fachada: ${0}", new String[] { ctx.getMethod().getDeclaringClass().getCanonicalName() + "#" + ctx.getMethod().getName() });
-    } else if (((String) parameters[0]).matches(BUGenerators.UUID_REGEXP)) {
+    } else if (((String) parameters[0]).matches(RUGenerators.UUID_REGEXP)) {
       type = 0;
     } else if (((String) parameters[0]).matches("(\\Q" + SessionManager.getTokenPrefix() + "\\E)?[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}")) {
       type = 1;

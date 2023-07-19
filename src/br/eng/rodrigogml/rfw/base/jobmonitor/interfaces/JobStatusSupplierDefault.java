@@ -1,8 +1,8 @@
 package br.eng.rodrigogml.rfw.base.jobmonitor.interfaces;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobMonitor;
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Implementação padrão (para JobMonitor dentro da mesma JVM) da {@link JobStatusSupplierDefault}.<br>

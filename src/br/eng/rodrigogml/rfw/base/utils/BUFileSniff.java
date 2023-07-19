@@ -9,14 +9,14 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
- * Description: Classe utilitária do RFW para verificar o tipo do arquivo.<br>
+ * Description: Classe utilitária do RFWDeprec para verificar o tipo do arquivo.<br>
  * Utiliza o {@link Files#probeContentType(Path)} para identificar o tipo do arquivo, mas dependendo do retornado tenta realizar algumas validações no conteúdo para identificar de que se trata o arquivo.<br>
  * <br>
- * <B>ATENÇÃO: NOTE QUE OS ARQUIVOS SÃO IDENTIFICADOS E CATEGORIZADOS POR ALGUNS ATRIBUTOS E/OU ESTRUTURA ESPECÍFICA, E NÃO SÃO VALIDADOS A FUNDO. O OBJETIVO PRINCIPAL É APENAS IDENTIFICAR E EXTRAIR ALGUMAS PARAMETROS NECESSÁRIOS PARA GUIAR AS OPERAÇÕES DO RFW.</B>
+ * <B>ATENÇÃO: NOTE QUE OS ARQUIVOS SÃO IDENTIFICADOS E CATEGORIZADOS POR ALGUNS ATRIBUTOS E/OU ESTRUTURA ESPECÍFICA, E NÃO SÃO VALIDADOS A FUNDO. O OBJETIVO PRINCIPAL É APENAS IDENTIFICAR E EXTRAIR ALGUMAS PARAMETROS NECESSÁRIOS PARA GUIAR AS OPERAÇÕES DO RFWDeprec.</B>
  *
  * @author Rodrigo Leitão
  * @since 10.0.0 (26 de jun de 2019)
@@ -29,7 +29,7 @@ public class BUFileSniff {
      */
     UNKNOW,
     /**
-     * Arquivo do tipo texto, que não pode ser melhor identificado pelo RFW.
+     * Arquivo do tipo texto, que não pode ser melhor identificado pelo RFWDeprec.
      */
     TEXT_PLAIN,
     /**

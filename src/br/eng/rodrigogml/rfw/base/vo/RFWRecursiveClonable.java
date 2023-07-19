@@ -2,7 +2,7 @@ package br.eng.rodrigogml.rfw.base.vo;
 
 import java.util.HashMap;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Esta interface define a implementação de um Clone Recursivo usado pelo framework para duplicar uma estrutura completa de Objetos.<br>

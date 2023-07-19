@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import br.eng.rodrigogml.rfw.base.dataformatters.RFWPhoneDataFormatter;
 
 /**
- * Description: Annotation usada para definir um atributo do tipo String que funcionará como um número de telefone no padrão RFW: "DDI|DDD|Phone".<BR>
+ * Description: Annotation usada para definir um atributo do tipo String que funcionará como um número de telefone no padrão RFWDeprec: "DDI|DDD|Phone".<BR>
  *
  * @author Rodrigo Leitão
  * @since 7.1.0 (04/07/2015)
@@ -40,7 +40,7 @@ public @interface RFWMetaStringPhoneField {
 
   /**
    * Indica se o atributo aceita apenas formátos conhecidos ou aceita qualquer string como telefone.<br>
-   * Na prática faz com que o RFWValidator não falhe caso o método {@link RFWPhoneDataFormatter#getPhoneType(String)} retorne UNKNOW, e avisa aos desenvolvedores que o número do telefone está fora do formato do RFW, o que pode causar falhar em campos, relatórios, etc. ao ser utilizado.
+   * Na prática faz com que o RFWValidator não falhe caso o método {@link RFWPhoneDataFormatter#getPhoneType(String)} retorne UNKNOW, e avisa aos desenvolvedores que o número do telefone está fora do formato do RFWDeprec, o que pode causar falhar em campos, relatórios, etc. ao ser utilizado.
    */
   boolean acceptUnknowFormats() default false;
 

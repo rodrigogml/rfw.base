@@ -17,10 +17,11 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import br.eng.rodrigogml.rfw.base.RFW;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.base.RFWDeprec;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
  * Description: Classe utilitária para manusear datas.<br>
@@ -61,7 +62,7 @@ public class BUDateTime {
   }
 
   /**
-   * Chama o método {@link #parseDate(String)} e converte para um {@link LocalDateTime} considerando o ZoneID configurado em {@link RFW#getZoneId()}<br>
+   * Chama o método {@link #parseDate(String)} e converte para um {@link LocalDateTime} considerando o ZoneID configurado em {@link RFWDeprec#getZoneId()}<br>
    * Verifique os padrões de entrada suportados na documentação do {@link #parseDate(String)}
    *
    * @param date Objeto data a ser convertido, já com a definição de fuso embutida.
@@ -111,7 +112,7 @@ public class BUDateTime {
   }
 
   /**
-   * Chama o método {@link #parseDate(String)} e converte para um {@link LocalDateTime} considerando o ZoneID configurado em {@link RFW#getZoneId()}<br>
+   * Chama o método {@link #parseDate(String)} e converte para um {@link LocalDateTime} considerando o ZoneID configurado em {@link RFWDeprec#getZoneId()}<br>
    * Verifique os padrões de entrada suportados na documentação do {@link #parseDate(String)}
    *
    * @param date Objeto data a ser convertido, já com a definição de fuso embutida.
@@ -125,7 +126,7 @@ public class BUDateTime {
   }
 
   /**
-   * Chama o método {@link #parseDate(String)} e converte para um {@link LocalDateTime} considerando o ZoneID configurado em {@link RFW#getZoneId()}<br>
+   * Chama o método {@link #parseDate(String)} e converte para um {@link LocalDateTime} considerando o ZoneID configurado em {@link RFWDeprec#getZoneId()}<br>
    * Verifique os padrões de entrada suportados na documentação do {@link #parseDate(String)}
    *
    * @param date Objeto data a ser convertido, já com a definição de fuso embutida.
@@ -138,7 +139,7 @@ public class BUDateTime {
   }
 
   /**
-   * Chama o método {@link #parseDate(String)} e converte para um {@link LocalDateTime} considerando o ZoneID configurado em {@link RFW#getZoneId()}<br>
+   * Chama o método {@link #parseDate(String)} e converte para um {@link LocalDateTime} considerando o ZoneID configurado em {@link RFWDeprec#getZoneId()}<br>
    * Verifique os padrões de entrada suportados na documentação do {@link #parseDate(String)}
    *
    * @param date Objeto data a ser convertido, já com a definição de fuso embutida.
@@ -197,7 +198,7 @@ public class BUDateTime {
   }
 
   /**
-   * Converte um {@link Date} em {@link LocalDateTime}. Utiliza a Zona padrão do sistema {@link RFW#getZoneId()}.
+   * Converte um {@link Date} em {@link LocalDateTime}. Utiliza a Zona padrão do sistema {@link RFWDeprec#getZoneId()}.
    *
    * @param date Data a ser convertida em LocalDateTime
    * @return LocalDateTime conforme a zona, ou nulo se receber o valor nulo como parâmetro.
@@ -220,7 +221,7 @@ public class BUDateTime {
   }
 
   /**
-   * Converte um {@link LocalDateTime} para {@link Date} utilizando a Zona do Sistema {@link RFW#getZoneId()}.
+   * Converte um {@link LocalDateTime} para {@link Date} utilizando a Zona do Sistema {@link RFWDeprec#getZoneId()}.
    *
    * @param dateTime Valor de Entrada a ser convertido
    * @return Valor Convertido ou nulo caso o valor de entrada seja nulo.
@@ -242,7 +243,7 @@ public class BUDateTime {
   }
 
   /**
-   * Converte um {@link LocalDate} para {@link Date} utilizando a Zona do Sistema {@link RFW#getZoneId()}.<br>
+   * Converte um {@link LocalDate} para {@link Date} utilizando a Zona do Sistema {@link RFWDeprec#getZoneId()}.<br>
    * É considerada a hora zero do dia passaro na conversão para a Zona.
    *
    * @param date Valor de Entrada a ser convertido

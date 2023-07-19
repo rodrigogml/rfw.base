@@ -9,13 +9,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.eng.rodrigogml.rfw.base.RFW;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.scheduler.interfaces.SchedulerListener;
 import br.eng.rodrigogml.rfw.base.scheduler.interfaces.SchedulerTask;
 import br.eng.rodrigogml.rfw.base.utils.BUDateTime;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Classe de controle das tarefas agendadas do sistema. Reponsável por carrega-las, inicial-las e executa-las conforme suas regras.<br>

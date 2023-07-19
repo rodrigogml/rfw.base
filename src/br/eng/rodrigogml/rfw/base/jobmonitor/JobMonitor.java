@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
-import br.eng.rodrigogml.rfw.base.utils.BUGenerators;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
 
 /**
  * Description: JobMonitor é o serviço do Framework responsável por manter referência de Thread que estão rodando "trabalhos" pesados em paralelo.<br>
@@ -44,7 +44,7 @@ public class JobMonitor {
    * @return Identificador único para referência futura da tarefa.
    */
   static String registerJob(final Job job) {
-    String jobUUID = BUGenerators.generateUUID();
+    String jobUUID = RUGenerators.generateUUID();
     hashJob.put(jobUUID, job);
 
     final String jobTitle = "##### JobMonitorTimer LeakCatcher: " + jobUUID;

@@ -3,9 +3,9 @@ package br.eng.rodrigogml.rfw.base.jobmonitor;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import br.eng.rodrigogml.rfw.base.RFW;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
  * Description: Bean utilizado para recuperar o estatus de algum Job.<br>

@@ -8,9 +8,9 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.fwreports.FWListReport.ReportBlock.ALIGNMENT;
 import br.eng.rodrigogml.rfw.base.fwreports.bean.FWListReportOptionBean;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Classe de execução de relatório de listagem.<BR>

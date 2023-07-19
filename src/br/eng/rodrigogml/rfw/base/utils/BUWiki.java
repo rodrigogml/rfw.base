@@ -1,7 +1,7 @@
 package br.eng.rodrigogml.rfw.base.utils;
 
 /**
- * Description: Classe utilitária para os métodos auxiliares do Wiki do RFW.<br>
+ * Description: Classe utilitária para os métodos auxiliares do Wiki do RFWDeprec.<br>
  * O objetivo deste Wiki é ter um padrão parecido com o do wikipedia que permita que relatórios sejam escritos em um formato comum do sistema, e que ele possa ser traduzido para outros formatos, como os padrões de impressão direto em impressora, HTML, XML, PDF, RichText, etc.
  *
  * @author Rodrigo Leitão

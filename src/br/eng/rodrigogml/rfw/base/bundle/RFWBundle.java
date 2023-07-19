@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import br.eng.rodrigogml.rfw.base.RFW;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.CustomMeasureUnit;
 import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.MeasureUnit;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
 import br.eng.rodrigogml.rfw.base.utils.RUString;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
  * Description: Classe estática para operações com o Bundle principal da aplicação.<br>
@@ -78,13 +78,13 @@ public class RFWBundle {
 
       if (t instanceof RFWException) {
         RFWException e = (RFWException) t;
-        msg = e.getExceptioncode();
-        if (e.getExceptioncode() != null && e.getExceptioncode().matches("[A-Z0-9_]+_[0-9]{6}")) {
-          String bundle = getReader().getProperty(e.getExceptioncode());
+        msg = e.getExceptionCode();
+        if (e.getExceptionCode() != null && e.getExceptionCode().matches("[A-Z0-9_]+_[0-9]{6}")) {
+          String bundle = getReader().getProperty(e.getExceptionCode());
           // Se encontrou algo no bundle
           if (bundle != null) {
             msg = bundle;
-            if (RFW.isDevelopmentEnvironment()) msg = msg + " [" + e.getExceptioncode() + "]";
+            if (RFW.isDevelopmentEnvironment()) msg = msg + " [" + e.getExceptionCode() + "]";
           }
         }
 
@@ -150,7 +150,7 @@ public class RFWBundle {
    */
   public static void loadBundle(String bundleName) throws RFWException {
     if (bundle == null && bundleName == null) {
-      loadBundle("rfwbundle.properties"); // garante que a primeira chamada seja sempre com o bundleName do arquivo principal do RFW
+      loadBundle("rfwbundle.properties"); // garante que a primeira chamada seja sempre com o bundleName do arquivo principal do RFWDeprec
       return;
     } else if (bundle != null && bundleName == null) {
       throw new RFWCriticalException("O nome do bundle não pode ser nulo!");

@@ -9,9 +9,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import br.eng.rodrigogml.rfw.base.RFW;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Classe utilitária com métodos de IO.<br>
@@ -86,7 +86,7 @@ public class BUIO {
         command.add("-classpath");
         String classPath = currentJar.getPath();
         if (RFW.isDevelopmentEnvironment()) {
-          // Incluímos a pasta de libs na pasta anterior a de classes, que de forma geral dos projetos do RFW para aplicações, é onde os jars de dependências são copiados
+          // Incluímos a pasta de libs na pasta anterior a de classes, que de forma geral dos projetos do RFWDeprec para aplicações, é onde os jars de dependências são copiados
           classPath += File.pathSeparator + currentJar.getPath() + File.separator + ".." + File.separator + "libs" + File.separator + "*";
         }
         command.add(classPath);

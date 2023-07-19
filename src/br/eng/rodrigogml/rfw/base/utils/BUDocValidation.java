@@ -1,7 +1,7 @@
 package br.eng.rodrigogml.rfw.base.utils;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
  * Description: Classe de utilidades de manipulação do CNPJ.<br>
@@ -1660,7 +1660,7 @@ public class BUDocValidation {
    * O método remove quaisquer caracteres que não sejam dígitos do código de barras antes de validar.
    *
    * @param numericLine the numeric line
-   * @throws RFWException the RFW exception
+   * @throws RFWException the RFWDeprec exception
    */
   public static void isBoletoNumericCodeValid(String numericLine) throws RFWException {
     numericLine = RUString.removeNonDigits(numericLine);
@@ -1719,7 +1719,7 @@ public class BUDocValidation {
 
     String barCode = null;
     final BankBillCodeType type = getCodeType(numericCode, false);
-    if (type == null) throw new RFWValidationException("Código Numérico Inválido ou não conhecido pelo RFW!");
+    if (type == null) throw new RFWValidationException("Código Numérico Inválido ou não conhecido pelo RFWDeprec!");
 
     switch (type) {
       case SERVICE_NUMERICCODE: {
@@ -1835,7 +1835,7 @@ public class BUDocValidation {
     // 8 (Valor a ser cobrado efetivamente em reais) - com dígito verificador calculado pelo módulo 11
     // 9 (Quantidade de Moeda) - com dígito verificador calculado pelo módulo 11
     if (codeBar.charAt(2) != '6' && codeBar.charAt(2) != '7' && codeBar.charAt(2) != '8' && codeBar.charAt(2) != '9') {
-      throw new RFWValidationException("O código da moeda do código de barras não é válido, ou não reconhecido pelo RFW.");
+      throw new RFWValidationException("O código da moeda do código de barras não é válido, ou não reconhecido pelo RFWDeprec.");
     }
 
     // Se o campo 'segmento' possui um valor válido, ou seja, diferente de zero e 8 (os únicos valores inválidos atualmente)
@@ -1893,7 +1893,7 @@ public class BUDocValidation {
         modCalc = 2;
       }
     } else {
-      throw new RFWValidationException("Código do Identificador desconhecido pelo RFW!");
+      throw new RFWValidationException("Código do Identificador desconhecido pelo RFWDeprec!");
     }
 
     // Validar DV do primeiro bloco
@@ -1943,7 +1943,7 @@ public class BUDocValidation {
   public static void isCodeValid(String code) throws RFWException {
     code = RUString.removeNonDigits(code);
     final BankBillCodeType type = getCodeType(code);
-    if (type == null) throw new RFWValidationException("Código inválido ou não reconhecido pelo RFW!");
+    if (type == null) throw new RFWValidationException("Código inválido ou não reconhecido pelo RFWDeprec!");
     switch (type) {
       case BOLETO_BARCODE:
         BUDocValidation.isBoletoBarCodeValid(code);
@@ -1973,7 +1973,7 @@ public class BUDocValidation {
 
     String numericCode = null;
     final BankBillCodeType type = getCodeType(barCode);
-    if (type == null) throw new RFWValidationException("Código de Barras Inválido ou não conhecido pelo RFW!");
+    if (type == null) throw new RFWValidationException("Código de Barras Inválido ou não conhecido pelo RFWDeprec!");
 
     switch (type) {
       case SERVICE_BARCODE: {
@@ -1989,7 +1989,7 @@ public class BUDocValidation {
             modCalc = 2;
           }
         } else {
-          throw new RFWValidationException("Código do Identificador desconhecido pelo RFW!");
+          throw new RFWValidationException("Código do Identificador desconhecido pelo RFWDeprec!");
         }
 
         numericCode = "";

@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Description: RFW Annotation usada para definir uma constraint de relação entre dois atributos da entidade.<BR>
+ * Description: RFWDeprec Annotation usada para definir uma constraint de relação entre dois atributos da entidade.<BR>
  * <ul>
  * <li>As comparações de equal e notequal consideram iguais quando ambos são nulos, e diferente caso 1 seja nulo e outro não.</li>
  * <li>As comparações de grandeza (<, <=, > e >=) retornam true caso um dos atributos seja nulo. Pois não é possível compara-lo.</li>

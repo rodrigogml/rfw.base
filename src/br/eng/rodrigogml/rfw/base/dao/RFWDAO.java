@@ -29,7 +29,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import br.eng.rodrigogml.rfw.base.RFW;
 import br.eng.rodrigogml.rfw.base.dao.DAOMap.DAOMapField;
 import br.eng.rodrigogml.rfw.base.dao.DAOMap.DAOMapTable;
 import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAOConverter;
@@ -39,9 +38,6 @@ import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaRelationshipFie
 import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaRelationshipField.RelationshipTypes;
 import br.eng.rodrigogml.rfw.base.dao.interfaces.DAOResolver;
 import br.eng.rodrigogml.rfw.base.dao.interfaces.RFWDAOConverterInterface;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.base.utils.BUArray;
 import br.eng.rodrigogml.rfw.base.utils.BUEncrypter;
 import br.eng.rodrigogml.rfw.base.utils.BUFile;
@@ -51,6 +47,10 @@ import br.eng.rodrigogml.rfw.base.vo.RFWField;
 import br.eng.rodrigogml.rfw.base.vo.RFWMO;
 import br.eng.rodrigogml.rfw.base.vo.RFWOrderBy;
 import br.eng.rodrigogml.rfw.base.vo.RFWVO;
+import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
  * Description: Classe de DAO principal do Framework.<br>
@@ -2026,7 +2026,7 @@ public final class RFWDAO<VO extends RFWVO> {
         } else if (Date.class.isAssignableFrom(dataType)) {
           // Timestamp d = rs.getTimestamp(mField.table.alias + "." + mField.column);
           // if (!rs.wasNull()) BUReflex.setPropertyValue(vo, mField.field, new Date(d.getTime()), false);
-          throw new RFWCriticalException("Por definição o RFW não deve mais utilizar o java.util.Date, verifique a implementação e substitua corretamente por LocalDate, LocalTime ou LocalDateTime. '${0}'", new String[] { mField.table.type.getCanonicalName() + "#" + mField.field });
+          throw new RFWCriticalException("Por definição o RFWDeprec não deve mais utilizar o java.util.Date, verifique a implementação e substitua corretamente por LocalDate, LocalTime ou LocalDateTime. '${0}'", new String[] { mField.table.type.getCanonicalName() + "#" + mField.field });
         } else if (LocalDate.class.isAssignableFrom(dataType)) {
           Object obj = getRSObject(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getObject(mTable.alias + "." + mField.column);
           if (!rs.wasNull()) {

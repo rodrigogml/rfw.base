@@ -2,8 +2,8 @@ package br.eng.rodrigogml.rfw.base.sessionmanager.interfaces;
 
 import java.util.Locale;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.sessionmanager.SessionManager;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
  * Description: Interface que precisa ser implementada pelo sistema e definida no {@link SessionManager} para fornecer as informações necessárias de autenticação e controle.<br>

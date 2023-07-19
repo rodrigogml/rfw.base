@@ -9,7 +9,7 @@ import java.util.Date;
 import org.apache.poi.ss.usermodel.Cell;
 
 import br.eng.rodrigogml.rfw.base.bundle.RFWBundle;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 
 /**
  * Description: Classe utilitária para ajudar a escrever e criar documentos do Office utilizando a ferramenta POI.<br>

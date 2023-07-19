@@ -3,8 +3,8 @@ package br.eng.rodrigogml.rfw.base.dataformatters;
 import java.util.Locale;
 
 import br.eng.rodrigogml.rfw.base.bundle.RFWBundle;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWRunTimeException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWRunTimeException;
 
 /**
  * Description: Data Formatter para trocar o valor de uma enumeration para o valor do Bundle.<br>

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
-import br.eng.rodrigogml.rfw.base.RFW;
 import br.eng.rodrigogml.rfw.base.bundle.RFWBundle;
+import br.eng.rodrigogml.rfw.kernel.RFW;
 
 /**
  * Description: VO para registrar uma entrada de LOG.<br>
@@ -69,7 +69,7 @@ public class RFWLogEntry implements Serializable {
 
   /**
    * Mensagem de Log. Recomendado o limite de 255 caracteres. Qualquer conteúdo maior que 255 caracteres deve ser jogado para o {@link #content}<br>
-   * Note que o tamanho é uma recomendação uma vez que este atributo só fica na memória enquanto está no RFW, a limitação é a limitação de tamanho do java, a separação entre message e content ganha mais sentido quando se pensa em banco de dados e a persistência do objeto.
+   * Note que o tamanho é uma recomendação uma vez que este atributo só fica na memória enquanto está no RFWDeprec, a limitação é a limitação de tamanho do java, a separação entre message e content ganha mais sentido quando se pensa em banco de dados e a persistência do objeto.
    */
   private String message = null;
 
@@ -115,7 +115,7 @@ public class RFWLogEntry implements Serializable {
 
   /**
    * Get mensagem de Log. Recomendado o limite de 255 caracteres. Qualquer conteúdo maior que 255 caracteres deve ser jogado para o {@link #content}<br>
-   * Note que o tamanho é uma recomendação uma vez que este atributo só fica na memória enquanto está no RFW, a limitação é a limitação de tamanho do java, a separação entre message e content ganha mais sentido quando se pensa em banco de dados e a persistência do objeto.
+   * Note que o tamanho é uma recomendação uma vez que este atributo só fica na memória enquanto está no RFWDeprec, a limitação é a limitação de tamanho do java, a separação entre message e content ganha mais sentido quando se pensa em banco de dados e a persistência do objeto.
    *
    * @return the mensagem de Log
    */
@@ -125,7 +125,7 @@ public class RFWLogEntry implements Serializable {
 
   /**
    * Set mensagem de Log. Recomendado o limite de 255 caracteres. Qualquer conteúdo maior que 255 caracteres deve ser jogado para o {@link #content}<br>
-   * Note que o tamanho é uma recomendação uma vez que este atributo só fica na memória enquanto está no RFW, a limitação é a limitação de tamanho do java, a separação entre message e content ganha mais sentido quando se pensa em banco de dados e a persistência do objeto.
+   * Note que o tamanho é uma recomendação uma vez que este atributo só fica na memória enquanto está no RFWDeprec, a limitação é a limitação de tamanho do java, a separação entre message e content ganha mais sentido quando se pensa em banco de dados e a persistência do objeto.
    *
    * @param message the new mensagem de Log
    */

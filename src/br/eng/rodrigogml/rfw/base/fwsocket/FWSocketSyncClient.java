@@ -13,9 +13,9 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
  * Description: Classe do Framework que cria um socket e conecta em um FWSocketSyncServer abstrai a rotina de conexão de um socket. Simplificando o acesso ao envio de dados e recebimento.<BR>

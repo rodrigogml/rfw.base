@@ -11,13 +11,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWCriticalException;
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.base.fwsocket.listener.FWSocketSyncServerListener;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
- * Description: Classe do RFW quer permite "levantar um servidor" que aceita conexões do tipo "requisição->resposta", similar a um servidor HTTP. Cada conexão recebe uma resposta, resultado de um processamento e é finalizada.<BR>
+ * Description: Classe do RFWDeprec quer permite "levantar um servidor" que aceita conexões do tipo "requisição->resposta", similar a um servidor HTTP. Cada conexão recebe uma resposta, resultado de um processamento e é finalizada.<BR>
  * Utiliza como base a transmissão de arquivos serializados encapsulado dentro do {@link FWSocketObjectMap}.
  *
  * @author Rodrigo Leitão

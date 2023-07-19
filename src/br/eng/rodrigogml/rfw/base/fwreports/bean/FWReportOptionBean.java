@@ -3,7 +3,7 @@ package br.eng.rodrigogml.rfw.base.fwreports.bean;
 import java.io.Serializable;
 import java.util.Locale;
 
-import br.eng.rodrigogml.rfw.base.RFW;
+import br.eng.rodrigogml.rfw.kernel.RFW;
 
 /**
  * Description: Bean de configuração geral de relatórios. Deve ser estendido pelos de VOs de configuração de cada relatório.<br>

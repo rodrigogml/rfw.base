@@ -2,10 +2,10 @@ package br.eng.rodrigogml.rfw.base.dataformatters;
 
 import java.util.Locale;
 
-import br.eng.rodrigogml.rfw.base.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
- * Description: Esta classe é um padrão de definição de um DataFormatter usado pelo RFW.<br>
+ * Description: Esta classe é um padrão de definição de um DataFormatter usado pelo RFWDeprec.<br>
  * Um DataFormatter é uma classe que opera normalmente entre o bean (VOs) e os componentes de exibição para o usuário (como GUI, relatórios, etc.), fazendo o parser e a formatação dos dados para que sejam armazenados no Bean corretamente, enquanto que são exibidos na tela de maneira amigável para o usuário.<br>
  * além disso, esta classe carrega outras definições uteis, como validador para campos, tamanhos máximos digitáveis, etc. <br>
  * <b>Sempre que possível (quando não houver configurações, como casas decimais, negativos, etc.) implemente o DataFormatter como singleton para evitar múltiplas instancias denecessárias na memória.</b>
