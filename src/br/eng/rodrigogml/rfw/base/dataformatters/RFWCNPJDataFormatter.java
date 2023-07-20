@@ -3,7 +3,7 @@ package br.eng.rodrigogml.rfw.base.dataformatters;
 import java.util.Locale;
 
 import br.eng.rodrigogml.rfw.base.utils.BUDocValidation;
-import br.eng.rodrigogml.rfw.base.utils.RUString;
+import br.eng.rodrigogml.rfw.base.utils.BUString;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
@@ -26,7 +26,7 @@ public class RFWCNPJDataFormatter implements RFWDataFormatter<String, String> {
   public String toPresentation(String value, Locale locale) {
     String result = "";
     if (value != null && !"".equals(value.toString().trim())) {
-      result = RUString.removeNonDigits(value);
+      result = BUString.removeNonDigits(value);
       if (result.length() == 14) {
         result = result.substring(0, 2) + "." + result.substring(2, 5) + "." + result.substring(5, 8) + "/" + result.substring(8, 12) + "-" + result.substring(12, 14);
       }
@@ -38,7 +38,7 @@ public class RFWCNPJDataFormatter implements RFWDataFormatter<String, String> {
   public String toVO(String formattedvalue, Locale locale) {
     String result = null;
     if (formattedvalue != null) {
-      result = RUString.removeNonDigits(formattedvalue);
+      result = BUString.removeNonDigits(formattedvalue);
     }
     return result;
   }

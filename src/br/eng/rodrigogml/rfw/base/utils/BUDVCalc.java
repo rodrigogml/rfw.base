@@ -67,7 +67,7 @@ public class BUDVCalc {
    * @throws RFWValidationException Lançado caso o valor não tenha apenas números, ou seja um valor nulo/vazio.
    */
   public static String calcMod11(String value) throws RFWException {
-    value = RUString.removeNonDigits(value);
+    value = BUString.removeNonDigits(value);
     if (value == null || !value.matches("[0-9]+")) {
       throw new RFWValidationException("RFW_ERR_200001");
     }
@@ -105,7 +105,7 @@ public class BUDVCalc {
    * @throws RFWValidationException Lançado caso o valor não tenha apenas números, ou seja um valor nulo/vazio.
    */
   public static String calcMod11ForServiceGovernment(String value) throws RFWException {
-    value = RUString.removeNonDigits(value);
+    value = BUString.removeNonDigits(value);
     if (value == null || !value.matches("[0-9]+")) {
       throw new RFWValidationException("RFW_ERR_200001");
     }

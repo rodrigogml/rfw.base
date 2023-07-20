@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 
 import br.eng.rodrigogml.rfw.base.RFWDeprec;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogEntry.RFWLogSeverity;
-import br.eng.rodrigogml.rfw.base.preprocess.PreProcess;
-import br.eng.rodrigogml.rfw.base.utils.BUReflex;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationGroupException;
+import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
+import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
 
 /**
  * Description: Esta classe gerencia as entradas de Log do sistema.<br>
@@ -144,7 +144,7 @@ public class RFWLogger {
    * @param obj Objeto a ser impresso no anexo do Log.
    */
   public final static void logObject(String msg, Object obj) {
-    String print = BUReflex.printObject(obj);
+    String print = RUReflex.printObject(obj);
     log(RFWLogSeverity.OBJECT, msg, print + "\r\n========INVOKER:===========\r\n" + getInvoker(), null);
   }
 
@@ -241,7 +241,7 @@ public class RFWLogger {
    * @param tags permite que se adicione tags particulares ao Log. Tenha em mente que Tags são utilizadas para ajudar a filtrar vários eventos de uma mesma natureza, não jogue informações que só aparecerão em um único evento por vez nas tags. Cria um log de debug ou info para isso.
    */
   public final static void logObject(String msg, Object obj, String... tags) {
-    String print = BUReflex.printObject(obj);
+    String print = RUReflex.printObject(obj);
     log(RFWLogSeverity.OBJECT, msg, print + "\r\n========INVOKER:===========\r\n" + getInvoker(), null, tags);
   }
 
@@ -321,7 +321,7 @@ public class RFWLogger {
    * Este método retorna quem foi que chamou a classe {@link RFWLogger}, para registrar de maneira fácil onde no código foi registrado cada registro.
    */
   private static final String getInvoker() {
-    return BUReflex.getInvoker(3, 10);
+    return RUReflex.getInvoker(3, 10);
   }
 
   /**

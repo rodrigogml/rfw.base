@@ -3,8 +3,8 @@ package br.eng.rodrigogml.rfw.base.dataformatters;
 import java.util.Locale;
 
 import br.eng.rodrigogml.rfw.base.vo.GVO;
-import br.eng.rodrigogml.rfw.base.vo.RFWVO;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 
 /**
  * Data formatter utilizado para componentes que trabalham com lista de VOs, mas por falta do Equals por ID o componente não identifica corretamente os valores "definidos".<Br>

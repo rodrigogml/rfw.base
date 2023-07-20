@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import br.eng.rodrigogml.rfw.base.preprocess.PreProcess.PreProcessOption;
+import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess.PreProcessOption;
 
 /**
  * Description: Annotation usada para definir um atributo do tipo String que funcionará como um Email.<BR>

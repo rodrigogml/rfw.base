@@ -2,6 +2,7 @@ package br.eng.rodrigogml.rfw.base.utils;
 
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
  * Description: Classe de utilidades de manipulação do CNPJ.<br>
@@ -1630,7 +1631,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static void isBoletoBarCodeValid(String codebar) throws RFWException {
-    codebar = RUString.removeNonDigits(codebar);
+    codebar = BUString.removeNonDigits(codebar);
 
     // Tamanho exato de 44 algarismos
     if (codebar.length() != 44) {
@@ -1663,7 +1664,7 @@ public class BUDocValidation {
    * @throws RFWException the RFWDeprec exception
    */
   public static void isBoletoNumericCodeValid(String numericLine) throws RFWException {
-    numericLine = RUString.removeNonDigits(numericLine);
+    numericLine = BUString.removeNonDigits(numericLine);
 
     // Se o tamanho está correto
     if (!(numericLine.length() == 33 || (numericLine.length() > 33 && numericLine.length() <= 36 && numericLine.substring(33) == "0000") || numericLine.length() >= 37 && numericLine.length() <= 47)) {
@@ -1715,7 +1716,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static String convertNumericCodeToBarCode(String numericCode) throws RFWException {
-    numericCode = RUString.removeNonDigits(numericCode);
+    numericCode = BUString.removeNonDigits(numericCode);
 
     String barCode = null;
     final BankBillCodeType type = getCodeType(numericCode, false);
@@ -1771,7 +1772,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   private static BankBillCodeType getCodeType(String code, boolean test) throws RFWException {
-    code = RUString.removeNonDigits(code);
+    code = BUString.removeNonDigits(code);
     if (code.length() == 44) { // Provavelmente é código de barras
       if (code.startsWith("8")) { // Provavelmente código de arrecadação
         try {
@@ -1814,7 +1815,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static void isServiceBarCodeValid(String codeBar) throws RFWException {
-    codeBar = RUString.removeNonDigits(codeBar);
+    codeBar = BUString.removeNonDigits(codeBar);
 
     // Tamanho exato deve ser de 44 algarismos
     if (codeBar.length() != 44) {
@@ -1866,7 +1867,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static void isServiceNumericCodeValid(String numericCode) throws RFWException {
-    numericCode = RUString.removeNonDigits(numericCode);
+    numericCode = BUString.removeNonDigits(numericCode);
 
     // Tamanho exato de 48 algarismos
     if (numericCode.length() != 48) {
@@ -1941,7 +1942,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static void isCodeValid(String code) throws RFWException {
-    code = RUString.removeNonDigits(code);
+    code = BUString.removeNonDigits(code);
     final BankBillCodeType type = getCodeType(code);
     if (type == null) throw new RFWValidationException("Código inválido ou não reconhecido pelo RFWDeprec!");
     switch (type) {
@@ -1969,7 +1970,7 @@ public class BUDocValidation {
    * @throws RFWException
    */
   public static String convertBarCodeToNumericCode(String barCode) throws RFWException {
-    barCode = RUString.removeNonDigits(barCode);
+    barCode = BUString.removeNonDigits(barCode);
 
     String numericCode = null;
     final BankBillCodeType type = getCodeType(barCode);

@@ -2,7 +2,7 @@ package br.eng.rodrigogml.rfw.base.jobmonitor;
 
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus.JobStep;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
-import br.eng.rodrigogml.rfw.base.preprocess.PreProcess;
+import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 
 /**
  * Description: Classe responsável por inciar e gerenciar a tarefa. Esta classe deve ser extendida para iniciar a execução da tarefa em paralelo (outra Thread).<br>

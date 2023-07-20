@@ -6,7 +6,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import br.eng.rodrigogml.rfw.base.vo.RFWVO;
+import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 
 /**
  * Description: Meta Annotation para indica dependência com outras classes.<br>

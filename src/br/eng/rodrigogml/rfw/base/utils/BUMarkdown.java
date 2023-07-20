@@ -42,47 +42,47 @@ public class BUMarkdown {
             String linePrefix = prefixSplit[0];
             // ##> Processa os formatores de início de linha
             if ("=====".equals(linePrefix)) {
-              line = new StringBuilder().append("<h5>").append(RUString.subString(line, 6, line.length())).append("</h5>").toString();
+              line = new StringBuilder().append("<h5>").append(BUString.subString(line, 6, line.length())).append("</h5>").toString();
               beforeBR = false;
               nextBR = false;
             } else if ("====".equals(linePrefix)) {
-              line = new StringBuilder().append("<h4>").append(RUString.subString(line, 5, line.length())).append("</h4>").toString();
+              line = new StringBuilder().append("<h4>").append(BUString.subString(line, 5, line.length())).append("</h4>").toString();
               beforeBR = false;
               nextBR = false;
             } else if ("===".equals(linePrefix)) {
-              line = new StringBuilder().append("<h3>").append(RUString.subString(line, 4, line.length())).append("</h3>").toString();
+              line = new StringBuilder().append("<h3>").append(BUString.subString(line, 4, line.length())).append("</h3>").toString();
               beforeBR = false;
               nextBR = false;
             } else if ("==".equals(linePrefix)) {
-              line = new StringBuilder().append("<h2>").append(RUString.subString(line, 3, line.length())).append("</h2>").toString();
+              line = new StringBuilder().append("<h2>").append(BUString.subString(line, 3, line.length())).append("</h2>").toString();
               beforeBR = false;
               nextBR = false;
             } else if ("=".equals(linePrefix)) {
-              line = new StringBuilder().append("<h1>").append(RUString.subString(line, 2, line.length())).append("</h1>").toString();
+              line = new StringBuilder().append("<h1>").append(BUString.subString(line, 2, line.length())).append("</h1>").toString();
               beforeBR = false;
               nextBR = false;
             } else if ("**".equals(linePrefix)) {
-              line = new StringBuilder().append("<li>").append(RUString.subString(line, 3, line.length())).append("</li>").toString();
+              line = new StringBuilder().append("<li>").append(BUString.subString(line, 3, line.length())).append("</li>").toString();
               beforeBR = false;
               nextBR = false;
             } else if ("+#".equals(linePrefix)) {
-              line = new StringBuilder().append("<ol>").append(RUString.subString(line, 3, line.length())).toString();
+              line = new StringBuilder().append("<ol>").append(BUString.subString(line, 3, line.length())).toString();
               beforeBR = false;
               nextBR = false;
             } else if ("-#".equals(linePrefix)) {
-              line = new StringBuilder().append("</ol>").append(RUString.subString(line, 3, line.length())).toString();
+              line = new StringBuilder().append("</ol>").append(BUString.subString(line, 3, line.length())).toString();
               beforeBR = false;
               nextBR = false;
             } else if ("+*".equals(linePrefix)) {
-              line = new StringBuilder().append("<ul>").append(RUString.subString(line, 3, line.length())).toString();
+              line = new StringBuilder().append("<ul>").append(BUString.subString(line, 3, line.length())).toString();
               beforeBR = false;
               nextBR = false;
             } else if ("-*".equals(linePrefix)) {
-              line = new StringBuilder().append("</ul>").append(RUString.subString(line, 3, line.length())).toString();
+              line = new StringBuilder().append("</ul>").append(BUString.subString(line, 3, line.length())).toString();
               beforeBR = false;
               nextBR = false;
             } else if ("--".equals(linePrefix)) {
-              line = new StringBuilder().append("<hr>").append(RUString.subString(line, 3, line.length())).toString();
+              line = new StringBuilder().append("<hr>").append(BUString.subString(line, 3, line.length())).toString();
               beforeBR = false;
               nextBR = false;
             }

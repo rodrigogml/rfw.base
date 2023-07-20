@@ -25,21 +25,21 @@ import java.util.Map.Entry;
 
 import br.eng.rodrigogml.rfw.base.dao.RFWDAO.SQLDialect;
 import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAOConverter;
-import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAOEncrypt;
-import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaCollectionField;
 import br.eng.rodrigogml.rfw.base.dao.interfaces.RFWDAOConverterInterface;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.utils.BUEncrypter;
-import br.eng.rodrigogml.rfw.base.utils.BUReflex;
 import br.eng.rodrigogml.rfw.base.vo.RFWField;
-import br.eng.rodrigogml.rfw.base.vo.RFWMO;
-import br.eng.rodrigogml.rfw.base.vo.RFWMO.RFWMOData;
 import br.eng.rodrigogml.rfw.base.vo.RFWOrderBy;
 import br.eng.rodrigogml.rfw.base.vo.RFWOrderBy.RFWOrderbyItem;
-import br.eng.rodrigogml.rfw.base.vo.RFWVO;
 import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.dao.annotations.rfwmeta.RFWMetaCollectionField;
+import br.eng.rodrigogml.rfw.kernel.dao.annotations.rfwmeta.RFWMetaEncrypt;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
+import br.eng.rodrigogml.rfw.kernel.vo.RFWMO;
+import br.eng.rodrigogml.rfw.kernel.vo.RFWMO.RFWMOData;
+import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 
 /**
  * Description: Classe que cria um mapeamento para execução de um comando SQL entre os objetos e o banco de dados.<br>
@@ -865,7 +865,7 @@ class DAOMap {
           c++;
 
           // Salvamos o valor do objeto na lista de atributos.
-          Object value = BUReflex.getPropertyValue(vo, mField.field);
+          Object value = RUReflex.getPropertyValue(vo, mField.field);
 
           // Verificamos se o atributo tem um converter, se tiver ele será usado para preparar os valores para o banco de dados
           if (!"id".equals(mField.field)) { // Não aceita as annotations no campo ID
@@ -875,9 +875,9 @@ class DAOMap {
               if (!(ni instanceof RFWDAOConverterInterface)) throw new RFWCriticalException("A classe '${0}' definida no atributo '${1}' da classe '${2}' não é um RFWDAOConverterInterface válido!", new String[] { convAnn.converterClass().getCanonicalName(), mField.field, vo.getClass().getCanonicalName() });
               value = ((RFWDAOConverterInterface) ni).toDB(value);
             } else {
-              // Verificamos se o atributo for do tipo String e tem a annotation RFWDAOEncrypt, para encriptarmos o conteúdo
+              // Verificamos se o atributo for do tipo String e tem a annotation RFWMetaEncrypt, para encriptarmos o conteúdo
               if (value != null && (value instanceof String)) {
-                final RFWDAOEncrypt encAnn = vo.getClass().getDeclaredField(mField.field).getAnnotation(RFWDAOEncrypt.class);
+                final RFWMetaEncrypt encAnn = vo.getClass().getDeclaredField(mField.field).getAnnotation(RFWMetaEncrypt.class);
                 if (encAnn != null) {
                   value = BUEncrypter.encryptDES((String) value, encAnn.key());
                 }
@@ -1050,7 +1050,7 @@ class DAOMap {
             c++;
 
             // Salvamos o valor do objeto na lista de atributos.
-            Object value = BUReflex.getPropertyValue(vo, mField.field);
+            Object value = RUReflex.getPropertyValue(vo, mField.field);
 
             // Verificamos se o atributo tem um converter, se tiver ele será usado para preparar os valores para o banco de dados
             if (!"id".equals(mField.field)) { // Não acieta as annotations no campo ID
@@ -1060,9 +1060,9 @@ class DAOMap {
                 if (!(ni instanceof RFWDAOConverterInterface)) throw new RFWCriticalException("A classe '${0}' definida no atributo '${1}' da classe '${2}' não é um RFWDAOConverterInterface válido!", new String[] { convAnn.converterClass().getCanonicalName(), mField.field, vo.getClass().getCanonicalName() });
                 value = ((RFWDAOConverterInterface) ni).toDB(value);
               } else {
-                // Verificamos se o atributo for do tipo String e tem a annotation RFWDAOEncrypt, para encriptarmos o conteúdo
+                // Verificamos se o atributo for do tipo String e tem a annotation RFWMetaEncrypt, para encriptarmos o conteúdo
                 if (value != null && (value instanceof String)) {
-                  final RFWDAOEncrypt encAnn = vo.getClass().getDeclaredField(mField.field).getAnnotation(RFWDAOEncrypt.class);
+                  final RFWMetaEncrypt encAnn = vo.getClass().getDeclaredField(mField.field).getAnnotation(RFWMetaEncrypt.class);
                   if (encAnn != null) {
                     value = BUEncrypter.encryptDES((String) value, encAnn.key());
                   }
@@ -1152,9 +1152,9 @@ class DAOMap {
           if (!(ni instanceof RFWDAOConverterInterface)) throw new RFWCriticalException("A classe '${0}' definida no atributo '${1}' da classe '${2}' não é um RFWDAOConverterInterface válido!", new String[] { convAnn.converterClass().getCanonicalName(), mField.field, voClass.getCanonicalName() });
           value = ((RFWDAOConverterInterface) ni).toDB(value);
         } else {
-          // Verificamos se o atributo for do tipo String e tem a annotation RFWDAOEncrypt, para encriptarmos o conteúdo
+          // Verificamos se o atributo for do tipo String e tem a annotation RFWMetaEncrypt, para encriptarmos o conteúdo
           if (value != null && (value instanceof String)) {
-            final RFWDAOEncrypt encAnn = voClass.getDeclaredField(mField.field).getAnnotation(RFWDAOEncrypt.class);
+            final RFWMetaEncrypt encAnn = voClass.getDeclaredField(mField.field).getAnnotation(RFWMetaEncrypt.class);
             if (encAnn != null) {
               value = BUEncrypter.encryptDES((String) value, encAnn.key());
             }
@@ -1367,8 +1367,8 @@ class DAOMap {
     for (RFWMOData data : mo.getEqual()) {
       DAOMapField fMap = map.mapFieldByPath.get(data.getFieldname());
       if (fMap == null) fMap = map.mapFieldByPath.get(data.getFieldname() + "@"); // se não encontrou, pode ser que o atributo seja uma Collection, tentamos encontrar com o '@' no final
-      RFWDAOEncrypt encAnn = null;
-      if (fMap != null) encAnn = BUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
+      RFWMetaEncrypt encAnn = null;
+      if (fMap != null) encAnn = RUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
       if (buff.length() > 0) {
         switch (mo.getAppendmethod()) {
           case AND:
@@ -1391,8 +1391,8 @@ class DAOMap {
     for (RFWMOData data : mo.getNotEqual()) {
       DAOMapField fMap = map.mapFieldByPath.get(data.getFieldname());
       if (fMap == null) fMap = map.mapFieldByPath.get(data.getFieldname() + "@"); // se não encontrou, pode ser que o atributo seja uma Collection, tentamos encontrar com o '@' no final
-      RFWDAOEncrypt encAnn = null;
-      if (fMap != null) encAnn = BUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
+      RFWMetaEncrypt encAnn = null;
+      if (fMap != null) encAnn = RUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
       if (buff.length() > 0) {
         switch (mo.getAppendmethod()) {
           case AND:
@@ -1415,8 +1415,8 @@ class DAOMap {
     for (RFWMOData data : mo.getLike()) {
       DAOMapField fMap = map.mapFieldByPath.get(data.getFieldname());
       if (fMap == null) fMap = map.mapFieldByPath.get(data.getFieldname() + "@"); // se não encontrou, pode ser que o atributo seja uma Collection, tentamos encontrar com o '@' no final
-      RFWDAOEncrypt encAnn = null;
-      if (fMap != null) encAnn = BUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
+      RFWMetaEncrypt encAnn = null;
+      if (fMap != null) encAnn = RUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
       if (buff.length() > 0) {
         switch (mo.getAppendmethod()) {
           case AND:
@@ -1440,8 +1440,8 @@ class DAOMap {
     for (RFWMOData data : mo.getGreaterThanOrEqualTo()) {
       DAOMapField fMap = map.mapFieldByPath.get(data.getFieldname());
       if (fMap == null) fMap = map.mapFieldByPath.get(data.getFieldname() + "@"); // se não encontrou, pode ser que o atributo seja uma Collection, tentamos encontrar com o '@' no final
-      RFWDAOEncrypt encAnn = null;
-      if (fMap != null) encAnn = BUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
+      RFWMetaEncrypt encAnn = null;
+      if (fMap != null) encAnn = RUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
       if (buff.length() > 0) {
         switch (mo.getAppendmethod()) {
           case AND:
@@ -1464,8 +1464,8 @@ class DAOMap {
     for (RFWMOData data : mo.getGreaterThan()) {
       DAOMapField fMap = map.mapFieldByPath.get(data.getFieldname());
       if (fMap == null) fMap = map.mapFieldByPath.get(data.getFieldname() + "@"); // se não encontrou, pode ser que o atributo seja uma Collection, tentamos encontrar com o '@' no final
-      RFWDAOEncrypt encAnn = null;
-      if (fMap != null) encAnn = BUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
+      RFWMetaEncrypt encAnn = null;
+      if (fMap != null) encAnn = RUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
       if (buff.length() > 0) {
         switch (mo.getAppendmethod()) {
           case AND:
@@ -1488,8 +1488,8 @@ class DAOMap {
     for (RFWMOData data : mo.getLessThanOrEqualTo()) {
       DAOMapField fMap = map.mapFieldByPath.get(data.getFieldname());
       if (fMap == null) fMap = map.mapFieldByPath.get(data.getFieldname() + "@"); // se não encontrou, pode ser que o atributo seja uma Collection, tentamos encontrar com o '@' no final
-      RFWDAOEncrypt encAnn = null;
-      if (fMap != null) encAnn = BUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
+      RFWMetaEncrypt encAnn = null;
+      if (fMap != null) encAnn = RUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
       if (buff.length() > 0) {
         switch (mo.getAppendmethod()) {
           case AND:
@@ -1512,8 +1512,8 @@ class DAOMap {
     for (RFWMOData data : mo.getLessThan()) {
       DAOMapField fMap = map.mapFieldByPath.get(data.getFieldname());
       if (fMap == null) fMap = map.mapFieldByPath.get(data.getFieldname() + "@"); // se não encontrou, pode ser que o atributo seja uma Collection, tentamos encontrar com o '@' no final
-      RFWDAOEncrypt encAnn = null;
-      if (fMap != null) encAnn = BUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
+      RFWMetaEncrypt encAnn = null;
+      if (fMap != null) encAnn = RUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
       if (buff.length() > 0) {
         switch (mo.getAppendmethod()) {
           case AND:
@@ -1572,8 +1572,8 @@ class DAOMap {
     for (RFWMOData data : mo.getIn()) {
       DAOMapField fMap = map.mapFieldByPath.get(data.getFieldname());
       if (fMap == null) fMap = map.mapFieldByPath.get(data.getFieldname() + "@"); // se não encontrou, pode ser que o atributo seja uma Collection, tentamos encontrar com o '@' no final
-      RFWDAOEncrypt encAnn = null;
-      if (fMap != null) encAnn = BUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
+      RFWMetaEncrypt encAnn = null;
+      if (fMap != null) encAnn = RUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
       if (buff.length() > 0) {
         switch (mo.getAppendmethod()) {
           case AND:
@@ -1606,8 +1606,8 @@ class DAOMap {
     for (RFWMOData data : mo.getNotIn()) {
       DAOMapField fMap = map.mapFieldByPath.get(data.getFieldname());
       if (fMap == null) fMap = map.mapFieldByPath.get(data.getFieldname() + "@"); // se não encontrou, pode ser que o atributo seja uma Collection, tentamos encontrar com o '@' no final
-      RFWDAOEncrypt encAnn = null;
-      if (fMap != null) encAnn = BUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
+      RFWMetaEncrypt encAnn = null;
+      if (fMap != null) encAnn = RUReflex.getRFWDAOEncryptAnnotation(fMap.table.type, fMap.field.replaceAll("\\@", ""));
       if (buff.length() > 0) {
         switch (mo.getAppendmethod()) {
           case AND:

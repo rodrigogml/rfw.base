@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
  * Description: Classe utilitária com métodos para facilitar a escrita de uma aplicação de Console.<br>

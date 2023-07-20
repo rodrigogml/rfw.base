@@ -14,12 +14,12 @@ import br.eng.rodrigogml.rfw.base.sessionmanager.annotations.Security;
 import br.eng.rodrigogml.rfw.base.sessionmanager.annotations.Security.SecurityAction;
 import br.eng.rodrigogml.rfw.base.sessionmanager.interfaces.SessionVO;
 import br.eng.rodrigogml.rfw.base.utils.BUArray;
-import br.eng.rodrigogml.rfw.base.vo.RFWRecursiveClonable;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
+import br.eng.rodrigogml.rfw.kernel.vo.RFWRecursiveClonable;
 
 /**
  * Description: Claase interceptadora da chamada da fachada para verificação de sessão, autorização e necessidade de rollback.<br>

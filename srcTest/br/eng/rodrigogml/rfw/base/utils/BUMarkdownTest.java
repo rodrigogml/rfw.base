@@ -15,6 +15,6 @@ public class BUMarkdownTest {
     String html = BUIO.readToString(BUMarkdownTest.class.getResourceAsStream("/resources/markdown/BUMarkdownTest_html.txt"), StandardCharsets.UTF_8);
 
     String converted = BUMarkdown.convertMarkdownToHTML(markdown.toString());
-    RUString.validateEqualsString(html, converted);
+    BUString.validateEqualsString(html, converted);
   }
 }

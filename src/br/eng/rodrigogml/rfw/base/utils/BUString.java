@@ -20,11 +20,11 @@ import java.util.regex.Pattern;
 import com.google.common.io.BaseEncoding;
 
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
-import br.eng.rodrigogml.rfw.base.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 
 /**
  * Description: Classe com métodos úteis para tratamentos e manipulação de String.<br>
@@ -32,8 +32,10 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
  * @author Rodrigo Leitão
  * @since 1.0.0 (AGO / 2007)
  * @version 4.1.0 (23/06/2011) - rodrigogml - Nome alterado de StringUtils, para ficar no padrão do sistema.
+ * @deprecated Movido para RFW.Kernel na classe RUString
  */
-public class RUString {
+@Deprecated
+public class BUString {
 
   /**
    * Array com os digitos: 0-9.
@@ -186,67 +188,6 @@ public class RUString {
    */
   public static String replaceNonUTF8BaseCaracters(String text, String replacement) throws RFWException {
     return text.replaceAll("[^\\u0000-\\u007E]", replacement);
-  }
-
-  /**
-   * Faz a mesma função que os método {@link #completeUntilLengthLeft(String, String, int)}, mas também faz a função de {@link #truncate(String, int)} caso o tamanho recebido em data já seja maior que o tamanho de length.
-   *
-   * @param appendvalue string que será adicionada a string principal
-   * @param data string principal.
-   * @param length tamanho a ser atingido
-   * @return string principal com a string appendvalue concatenada n vezes à sua esquerda.
-   */
-  public static String completeOrTruncateUntilLengthLeft(String appendvalue, String data, int length) {
-    return truncate(completeUntilLengthLeft(appendvalue, data, length), length);
-  }
-
-  /**
-   * Faz a mesma função que os métoso {@link #completeUntilLengthRight(String, String, int)}, mas também faz a função de {@link #truncate(String, int)} caso o tamanho recebido em data já seja maior que o tamanho de length.
-   *
-   * @param appendvalue string que será adicionada a string principal
-   * @param data string principal.
-   * @param length tamanho a ser atingido
-   * @return string principal com a string appendvalue concatenada n vezes à sua esquerda.
-   */
-  public static String completeOrTruncateUntilLengthRight(String appendvalue, String data, int length) {
-    return truncate(completeUntilLengthRight(appendvalue, data, length), length);
-  }
-
-  /**
-   * Incrementa uma string, pela esquerda, com outra passada até que o tamanho ultrapasse o valor informado.
-   *
-   * @param appendvalue string que será adicionada a string principal
-   * @param data string principal.
-   * @param length tamanho a ser atingido
-   * @return string principal com a string appendvalue concatenada n vezes à sua esquerda.
-   */
-  public static String completeUntilLengthLeft(String appendvalue, String data, int length) {
-    if (data == null) data = "";
-    StringBuilder buff = new StringBuilder(length + appendvalue.length());
-    int appendlimit = length - data.length();
-    while (buff.length() < appendlimit) {
-      buff.append(appendvalue);
-    }
-    buff.append(data);
-    return buff.toString();
-  }
-
-  /**
-   * Incrementa uma string, pela direita, com outra passada até que o tamanho ultrapasse o valor informado.
-   *
-   * @param appendvalue string que será adicionada a string principal
-   * @param data string principal.
-   * @param length tamanho a ser atingido
-   * @return string principal com a string appendvalue concatenada n vezes à sua direita.
-   */
-  public static String completeUntilLengthRight(String appendvalue, String data, int length) {
-    if (data == null) data = "";
-    StringBuilder buff = new StringBuilder(length + appendvalue.length());
-    buff.append(data);
-    while (buff.length() < length) {
-      buff.append(appendvalue);
-    }
-    return buff.toString();
   }
 
   /**
@@ -468,22 +409,6 @@ public class RUString {
   }
 
   /**
-   * Corta uma string caso ela passe do tamanho máximo definido.
-   *
-   * @param value Texto a ser avaliado e cortado caso necessário.
-   * @param length Tamanho máximo que a String pode ter.
-   * @return Valor igual ao passado caso não ultrapasse o tamanho informado, ou a string cortada para ter o tamanho máximo definido.
-   */
-  public static String truncate(String value, int length) {
-    if (value != null) {
-      if (value.length() > length) {
-        value = value.substring(0, length);
-      }
-    }
-    return value;
-  }
-
-  /**
    * Gera uma String qualquer no padrão: [A-Za-z0-9]{length}
    *
    * @param length tamanho exato da String desejada
@@ -492,7 +417,7 @@ public class RUString {
   public static String genString(int length) {
     StringBuilder buf = new StringBuilder(length);
     while (buf.length() < length) {
-      buf.append(RUString.simplechars[(int) (Math.random() * RUString.simplechars.length)]);
+      buf.append(BUString.simplechars[(int) (Math.random() * BUString.simplechars.length)]);
     }
     return buf.toString();
   }
@@ -506,7 +431,7 @@ public class RUString {
   public static String genStringDigits(int length) {
     StringBuilder buf = new StringBuilder(length);
     while (buf.length() < length) {
-      buf.append(RUString.digits[(int) (RUString.digits.length - (Math.random() * 10))]);
+      buf.append(BUString.digits[(int) (BUString.digits.length - (Math.random() * 10))]);
     }
     return buf.toString();
   }
@@ -558,7 +483,7 @@ public class RUString {
    * @return String com o valor em HexaDecimal com as letras em lowercase.
    */
   public static String toHexFromBase64(byte[] bytearray) throws RFWException {
-    return RUString.toHex(Base64.getEncoder().encodeToString(bytearray));
+    return BUString.toHex(Base64.getEncoder().encodeToString(bytearray));
   }
 
   /**
@@ -570,7 +495,7 @@ public class RUString {
    * @return String com o valor em HexaDecimal com as letras em lowercase.
    */
   public static byte[] fromHexToByteArrayBase64(String hexstring) throws RFWException {
-    return Base64.getDecoder().decode(RUString.fromHexToByteArray(hexstring));
+    return Base64.getDecoder().decode(BUString.fromHexToByteArray(hexstring));
   }
 
   /**
@@ -1475,45 +1400,6 @@ public class RUString {
   }
 
   /**
-   * Este método tira todos os espaços em excesso de uma String, deixando apenas 1. Não importa se tiver 2, 3, 4 ou 1000. Ele substituirá todos por 1 único.
-   *
-   * @param value Texto a ser analizado e ter os espaço duplicados exterminados.
-   * @return Texto com apenas 1 espaço entre as palavras.
-   */
-  public static String replaceDoubleSpaces(String value) {
-    if (value != null) {
-      value = value.replaceAll("[ ]{2,}", " ");
-    }
-    return value;
-  }
-
-  /**
-   * Este método tira todos "TABS" (\\t) de uma String, deixando apenas 1 espaço. Não importa se tiver 2, 3, 4 ou 1000. Ele substituirá todos por 1 único.
-   *
-   * @param value Texto a ser analizado e ter os espaço duplicados exterminados.
-   * @return Texto com apenas 1 espaço entre as palavras.
-   */
-  public static String replaceTabsByUniqueSpace(String value) {
-    if (value != null) {
-      value = value.replaceAll("[\\t]+", " ");
-    }
-    return value;
-  }
-
-  /**
-   * Este método tira todos "Falsos Espaços conhecidos" (como o \\u00a0) de uma String, deixando apenas 1 espaço. Não importa se tiver 2, 3, 4 ou 1000. Ele substituirá todos por 1 único.
-   *
-   * @param value Texto a ser analizado e ter os espaço duplicados exterminados.
-   * @return Texto com apenas 1 espaço entre as palavras.
-   */
-  public static String replaceFakeSpacesByUniqueSpace(String value) {
-    if (value != null) {
-      value = value.replaceAll("[\u00a0]+", " ");
-    }
-    return value;
-  }
-
-  /**
    * Concatena Strings colocando ", " entre elas caso a primeira String seja diferente de null e de "".
    *
    * @param string1 Primeiro valor a ser concatenado
@@ -1584,7 +1470,7 @@ public class RUString {
       // "(?:(?:0[1-9]|1[0-9]|2[0-9]|30)/(?:04|06|09|11)/(19|20)[0-9]{2})"; // Meses com 30 dias
       // "(?:(?:0[1-9]|1[0-9]|2[0-9])/(?:02)/(19|20)[0-9]{2})"; // Fevereiro com 29 dias
       String regExp = "((?:(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])/(?:01|03|05|07|08|10|12)/(19|20)[0-9]{2})|(?:(?:0[1-9]|1[0-9]|2[0-9]|30)/(?:04|06|09|11)/(19|20)[0-9]{2})|(?:(?:0[1-9]|1[0-9]|2[0-9])/(?:02)/(19|20)[0-9]{2}))";
-      return RUString.extract(text, regExp, groupID);
+      return BUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }
@@ -1603,7 +1489,7 @@ public class RUString {
   public static String extractDateMMYYYY(String text, int groupID) {
     try {
       String regExp = "(?:^|[^/])((?:0[0-9]|1[0-2])/(?:(19|20)[0-9]{2}))(?:$|[^/])";
-      return RUString.extract(text, regExp, groupID);
+      return BUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }
@@ -1623,7 +1509,7 @@ public class RUString {
     try {
       String regExp = "((?:[01][0-9]|2[0-3])\\:(?:[0-5][0-9])\\:(?:[0-5][0-9]))";
       // String regExp = "((?:(?:0[1-9]|1[0-9]|2[0-9]|3[0-1])/(?:01|03|05|07|08|10|12)/(19|20)[0-9]{2})|(?:(?:0[1-9]|1[0-9]|2[0-9]|30)/(?:04|06|09|11)/(19|20)[0-9]{2})|(?:(?:0[1-9]|1[0-9]|2[0-9])/(?:02)/(19|20)[0-9]{2}))";
-      return RUString.extract(text, regExp, groupID);
+      return BUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }
@@ -1642,7 +1528,7 @@ public class RUString {
   public static String extractCodes(String text, int digitsCount, int groupID) {
     try {
       String regExp = "(?:^|[ ])([0-9]{4})(?:$|[ ])";
-      return RUString.extract(text, regExp, groupID);
+      return BUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }
@@ -1660,7 +1546,7 @@ public class RUString {
   public static String extracCNPJ(String text, int groupID) {
     try {
       String regExp = "(?:^|[^\\d])([0-9]{2}\\.?[0-9]{3}\\.?[0-9]{3}/?[0-9]{4}\\-?[0-9]{2})(?:$|[^\\d])";
-      return RUString.extract(text, regExp, groupID);
+      return BUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }
@@ -1688,7 +1574,7 @@ public class RUString {
         thousands = ",";
       }
       String regExp = "(?:^|[^0-9" + decimals + "])([0-9]{1,3}(?:[" + thousands + "]?[0-9]{3})*[" + decimals + "][0-9]+)(?:$|[^0-9" + decimals + "])";
-      String t = RUString.extract(text, regExp, groupID);
+      String t = BUString.extract(text, regExp, groupID);
       return t;
     } catch (RFWException e) {
       RFWLogger.logException(e);
@@ -1707,7 +1593,7 @@ public class RUString {
   public static String extractServiceNumericCode(String text, int groupID) {
     try {
       String regExp = "(?:^|[^0-9])((?:[0-9]{11}[ \\.-]*[0-9][ \\.-]*){4})(?:$|[^0-9])";
-      return RUString.extract(text, regExp, groupID);
+      return BUString.extract(text, regExp, groupID);
     } catch (RFWException e) {
       RFWLogger.logException(e);
     }

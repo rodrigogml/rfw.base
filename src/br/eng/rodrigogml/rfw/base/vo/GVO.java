@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.eng.rodrigogml.rfw.base.dataformatters.RFWGVODataFormatter;
+import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 
 /**
  * <i>*GVO vem da ideia de "Ghost VO", um objeto transparente para acrescentar uma funcionalidade à objetos já existentes. </i> <br>

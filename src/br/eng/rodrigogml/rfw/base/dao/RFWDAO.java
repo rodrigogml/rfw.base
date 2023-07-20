@@ -32,25 +32,26 @@ import javax.sql.DataSource;
 import br.eng.rodrigogml.rfw.base.dao.DAOMap.DAOMapField;
 import br.eng.rodrigogml.rfw.base.dao.DAOMap.DAOMapTable;
 import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAOConverter;
-import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAOEncrypt;
-import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaCollectionField;
-import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaRelationshipField;
-import br.eng.rodrigogml.rfw.base.dao.annotations.rfwmeta.RFWMetaRelationshipField.RelationshipTypes;
 import br.eng.rodrigogml.rfw.base.dao.interfaces.DAOResolver;
 import br.eng.rodrigogml.rfw.base.dao.interfaces.RFWDAOConverterInterface;
 import br.eng.rodrigogml.rfw.base.utils.BUArray;
 import br.eng.rodrigogml.rfw.base.utils.BUEncrypter;
 import br.eng.rodrigogml.rfw.base.utils.BUFile;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
-import br.eng.rodrigogml.rfw.base.utils.RUString;
 import br.eng.rodrigogml.rfw.base.vo.RFWField;
-import br.eng.rodrigogml.rfw.base.vo.RFWMO;
 import br.eng.rodrigogml.rfw.base.vo.RFWOrderBy;
-import br.eng.rodrigogml.rfw.base.vo.RFWVO;
 import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.dao.annotations.rfwmeta.RFWMetaCollectionField;
+import br.eng.rodrigogml.rfw.kernel.dao.annotations.rfwmeta.RFWMetaEncrypt;
+import br.eng.rodrigogml.rfw.kernel.dao.annotations.rfwmeta.RFWMetaRelationshipField;
+import br.eng.rodrigogml.rfw.kernel.dao.annotations.rfwmeta.RFWMetaRelationshipField.RelationshipTypes;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
+import br.eng.rodrigogml.rfw.kernel.utils.RUString;
+import br.eng.rodrigogml.rfw.kernel.vo.RFWMO;
+import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 
 /**
  * Description: Classe de DAO principal do Framework.<br>
@@ -284,7 +285,7 @@ public final class RFWDAO<VO extends RFWVO> {
     // NÃO REMOVER, NEM NUNCA DEFINIR MANUALMENTE O VALOR DE ISFULLLOADED FORA DO RFWDAO!!!
     if (!ignoreFullLoaded && !isNew && !vo.isFullLoaded()) throw new RFWCriticalException("O RFWDAO só aceita persistir objetos que foram completamente carregados para edição!");
 
-    final String[] updateAttributes = BUReflex.getRFWVOUpdateAttributes(vo.getClass());
+    final String[] updateAttributes = RUReflex.getRFWVOUpdateAttributes(vo.getClass());
     final DAOMap map = createDAOMap(this.type, updateAttributes);
 
     final HashMap<String, VO> persistedCache = new HashMap<>(); // Cache para armazenas os objetos que já foram persistidos. Evitando assim cair em loop ou múltiplas atualizações no banco de dados.
@@ -328,7 +329,7 @@ public final class RFWDAO<VO extends RFWVO> {
               break;
             case PARENT_ASSOCIATION: {
               needParent = true;
-              final Object fieldValue = BUReflex.getPropertyValue(entityVO, field.getName());
+              final Object fieldValue = RUReflex.getPropertyValue(entityVO, field.getName());
 
               // DELETE: Atributos de parentAssociation não há nada para fazer em relação a exclusão, já que quem nunca excluímos o pai, pelo contrário, é ele quem nos excluí.
               // PERSISTENCE: nada a fazer com o objeto pai além da validação abaixo
@@ -357,12 +358,12 @@ public final class RFWDAO<VO extends RFWVO> {
 
               // DELETE: quando o ID está neste objeto, sendo ele excluído ou a associação desfeita o ID tudo se resolve ao excluir ou atualizar este objeto. No caso de estar na tabela da contraparte, vamos atualizar ela depois que excluírmos esse objeto.
               // PERSISTÊNCIA: na persistência, por ser um objeto que está sendo persistido agora, pode ser que já tenhamos o ID, pode ser que não. Se já tiver o ID, deixa seguir, se não tiver, vamos limpar a associação para que se possa inserir o objeto sem a associação. e colocar o objeto na lista de pendências para atualizar a associação depois que tudo tiver sido persistido.
-              final Object fieldValue = BUReflex.getPropertyValue(entityVO, field.getName());
+              final Object fieldValue = RUReflex.getPropertyValue(entityVO, field.getName());
               if (fieldValue != null) {
                 if (RFWVO.class.isAssignableFrom(fieldValue.getClass())) {
                   VO fieldValueVO = (VO) fieldValue;
                   if (fieldValueVO.getId() == null) {
-                    BUReflex.setPropertyValue(entityVO, field.getName(), null, false);
+                    RUReflex.setPropertyValue(entityVO, field.getName(), null, false);
                     List<RFWVOUpdatePending<RFWVO>> pendList = updatePendings.get(fieldValueVO);
                     if (pendList == null) {
                       pendList = new LinkedList<RFWDAO.RFWVOUpdatePending<RFWVO>>();
@@ -375,7 +376,7 @@ public final class RFWDAO<VO extends RFWVO> {
                   for (Object item : list) {
                     VO fieldValueVO = (VO) item;
                     if (fieldValueVO.getId() == null) {
-                      BUReflex.setPropertyValue(entityVO, field.getName(), null, false);
+                      RUReflex.setPropertyValue(entityVO, field.getName(), null, false);
                       List<RFWVOUpdatePending<RFWVO>> pendList = updatePendings.get(fieldValueVO);
                       if (pendList == null) {
                         pendList = new LinkedList<RFWDAO.RFWVOUpdatePending<RFWVO>>();
@@ -389,7 +390,7 @@ public final class RFWDAO<VO extends RFWVO> {
                   for (Object item : map.values()) {
                     VO fieldValueVO = (VO) item;
                     if (fieldValueVO.getId() == null) {
-                      BUReflex.setPropertyValue(entityVO, field.getName(), null, false);
+                      RUReflex.setPropertyValue(entityVO, field.getName(), null, false);
                       List<RFWVOUpdatePending<RFWVO>> pendList = updatePendings.get(fieldValueVO);
                       if (pendList == null) {
                         pendList = new LinkedList<RFWDAO.RFWVOUpdatePending<RFWVO>>();
@@ -408,25 +409,25 @@ public final class RFWDAO<VO extends RFWVO> {
               // PERSISTÊNCIA: Em caso de composição, não fazemos nada aqui no pré-processamento, pois os objetos compostos serão persistidos depois do objeto pai.
               // DELETE: Relacionamento de Composição, precisamos verificar se ele existia antes e deixou de existir, ou em caso de 1:N verifica quais objetos deixaram de existir.
               // ATENÇÃO: Não aceita as coleções nulas pq, por definição, objeto nulo indica que não foi recuperado, a ausência de objetos relacionados deve ser sempre simbolizada por uma lista vazia.
-              final Object fieldValue = BUReflex.getPropertyValue(entityVO, field.getName());
+              final Object fieldValue = RUReflex.getPropertyValue(entityVO, field.getName());
               if (fieldValue != null) {
                 if (RFWVO.class.isAssignableFrom(fieldValue.getClass())) {
                   if (entityVOOrig != null) {
                     RFWVO fieldValueVO = (RFWVO) fieldValue;
-                    RFWVO fieldValueVOOrig = (RFWVO) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                    RFWVO fieldValueVOOrig = (RFWVO) RUReflex.getPropertyValue(entityVOOrig, field.getName());
                     if (fieldValueVOOrig != null && (fieldValueVO == null || fieldValueVO.getId() == null)) {
                       // Se o objeto no banco existir e o objeto atual for diferente ou não tiver ID, temos de excluir o objeto atual pq o objeto mudou.
-                      delete(ds, daoMap, fieldValueVOOrig, BUReflex.addPath(path, field.getName()), dialect);
+                      delete(ds, daoMap, fieldValueVOOrig, RUReflex.addPath(path, field.getName()), dialect);
                     }
                   }
                 } else if (List.class.isAssignableFrom(fieldValue.getClass())) {
                   if (entityVOOrig != null) {
                     List list = (List) fieldValue;
-                    List listOrig = (List) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                    List listOrig = (List) RUReflex.getPropertyValue(entityVOOrig, field.getName());
                     if ((list == null || list.size() == 0) && (listOrig != null && listOrig.size() > 0)) {
                       // Se não temos mais objetos relacionados, mas antes tinhamos, apagamos todos os itens da lista anterior.
                       for (Object item : listOrig) {
-                        delete(ds, daoMap, (VO) item, BUReflex.addPath(path, field.getName()), dialect);
+                        delete(ds, daoMap, (VO) item, RUReflex.addPath(path, field.getName()), dialect);
                       }
                     } else if ((listOrig != null && listOrig.size() >= 0) && (list != null && list.size() >= 0)) {
                       // Se temos as duas listas, temos que comprar as duas e descobrir os objetos que sumiram, assim iteramos uma dentro da outra para ver os objetos que sumiram comparando seus IDs
@@ -440,7 +441,7 @@ public final class RFWDAO<VO extends RFWVO> {
                             break;
                           }
                         }
-                        if (!found) delete(ds, daoMap, itemOrigVO, BUReflex.addPath(path, field.getName()), dialect);
+                        if (!found) delete(ds, daoMap, itemOrigVO, RUReflex.addPath(path, field.getName()), dialect);
                       }
                     } else if ((listOrig == null || listOrig.size() == 0) && (list == null || list.size() == 0)) {
                       // Se não temos lista agora, e já não tinhamos, nada a fazer. O IF só previne cair no else e lançar a Exception de "prevenção de falha de lógica".
@@ -451,11 +452,11 @@ public final class RFWDAO<VO extends RFWVO> {
                 } else if (Map.class.isAssignableFrom(fieldValue.getClass())) {
                   if (entityVOOrig != null) {
                     Map hash = (Map) fieldValue;
-                    Map hashOrig = (Map) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                    Map hashOrig = (Map) RUReflex.getPropertyValue(entityVOOrig, field.getName());
                     if (hash.size() == 0 && hashOrig.size() > 0) {
                       // Se não temos mais objetos relacionados, mas antes tinhamos, apagamos todos os itens da lista anterior.
                       for (Object itemOrig : hashOrig.values()) {
-                        delete(ds, daoMap, (VO) itemOrig, BUReflex.addPath(path, field.getName()), dialect);
+                        delete(ds, daoMap, (VO) itemOrig, RUReflex.addPath(path, field.getName()), dialect);
                       }
                     } else if (hashOrig.size() > 0 && hash.size() > 0) {
                       // Se temos as duas listas, temos que comprar as duas e descobrir os objetos que sumiram, assim iteramos uma dentro da outra para ver os objetos que sumiram comparando seus IDs
@@ -469,7 +470,7 @@ public final class RFWDAO<VO extends RFWVO> {
                             break;
                           }
                         }
-                        if (!found) delete(ds, daoMap, itemOrigVO, BUReflex.addPath(path, field.getName()), dialect);
+                        if (!found) delete(ds, daoMap, itemOrigVO, RUReflex.addPath(path, field.getName()), dialect);
                       }
                     }
                   }
@@ -479,20 +480,20 @@ public final class RFWDAO<VO extends RFWVO> {
               } else {
                 // Se não existe no objeto atual, verificamos se existe no objeto original
                 if (entityVOOrig != null) {
-                  final Object fieldValueOrig = BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                  final Object fieldValueOrig = RUReflex.getPropertyValue(entityVOOrig, field.getName());
                   if (fieldValueOrig != null) {
                     if (RFWVO.class.isAssignableFrom(fieldValueOrig.getClass())) {
                       // Se o objeto no banco existir e o objeto atual não, temos de excluir o objeto atual pq a composição mudou.
-                      delete(ds, daoMap, (VO) fieldValueOrig, BUReflex.addPath(path, field.getName()), dialect);
+                      delete(ds, daoMap, (VO) fieldValueOrig, RUReflex.addPath(path, field.getName()), dialect);
                     } else if (List.class.isAssignableFrom(fieldValueOrig.getClass())) {
                       // Se não temos mais objetos relacionados, mas antes tinhamos, apagamos todos os itens da lista anterior.
                       for (Object item : (List) fieldValueOrig) {
-                        delete(ds, daoMap, (VO) item, BUReflex.addPath(path, field.getName()), dialect);
+                        delete(ds, daoMap, (VO) item, RUReflex.addPath(path, field.getName()), dialect);
                       }
                     } else if (Map.class.isAssignableFrom(fieldValueOrig.getClass())) {
                       // Se não temos mais objetos relacionados, mas antes tinhamos, apagamos todos os itens da lista anterior.
                       for (Object itemOrig : ((Map) fieldValueOrig).values()) {
-                        delete(ds, daoMap, (VO) itemOrig, BUReflex.addPath(path, field.getName()), dialect);
+                        delete(ds, daoMap, (VO) itemOrig, RUReflex.addPath(path, field.getName()), dialect);
                       }
                     }
                   }
@@ -504,18 +505,18 @@ public final class RFWDAO<VO extends RFWVO> {
               // PERSISTÊNCIA: Em caso de composição, não fazemos nada aqui no pré-processamento, pois os objetos compostos serão persistidos depois do objeto pai.
               // DELETE: Relacionamento de Composição, precisamos verificar se ele existia antes e deixou de existir. Se ele deixou de existir, precisamos excluir todas sua hierarquia.
               // ATENÇÃO: Não aceita as coleções nulas pq, por definição, objeto nulo indica que não foi recuperado, a ausência de objetos relacionados deve ser sempre simbolizada por uma lista vazia.
-              final Object fieldValue = BUReflex.getPropertyValue(entityVO, field.getName());
+              final Object fieldValue = RUReflex.getPropertyValue(entityVO, field.getName());
               if (fieldValue != null) {
                 if (RFWVO.class.isAssignableFrom(fieldValue.getClass())) {
                   throw new RFWValidationException("Encontrado a definição 'COMPOSITION_TREE' em um relacionamento 1:1. Essa definição só pode ser utilizado em coleções para indicar os 'filhos' do relacionamento hierarquico. Classe: ${0} / Field: ${1} / FieldClass: ${2}.", new String[] { entityVO.getClass().getCanonicalName(), field.getName(), fieldValue.getClass().getCanonicalName() });
                 } else if (List.class.isAssignableFrom(fieldValue.getClass())) {
                   if (entityVOOrig != null) {
                     List list = (List) fieldValue;
-                    List listOrig = (List) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                    List listOrig = (List) RUReflex.getPropertyValue(entityVOOrig, field.getName());
                     if ((list == null || list.size() == 0) && (listOrig != null && listOrig.size() > 0)) {
                       // Se não temos mais objetos relacionados, mas antes tinhamos, apagamos todos os itens da lista anterior.
                       for (Object item : listOrig) {
-                        String destPath = BUReflex.addPath(path, field.getName());
+                        String destPath = RUReflex.addPath(path, field.getName());
                         // Se não tivermos o caminho temos de completar dianimicamente no DAOMap
                         if (daoMap.getMapTableByPath(destPath) == null) daoMap.createMapTableForCompositionTree(path, destPath, "id", ann.columnMapped());
                         delete(ds, daoMap, (VO) item, destPath, dialect);
@@ -532,7 +533,7 @@ public final class RFWDAO<VO extends RFWVO> {
                             break;
                           }
                         }
-                        if (!found) delete(ds, daoMap, itemOrigVO, BUReflex.addPath(path, field.getName()), dialect);
+                        if (!found) delete(ds, daoMap, itemOrigVO, RUReflex.addPath(path, field.getName()), dialect);
                       }
                     } else if ((listOrig == null || listOrig.size() == 0) && (list == null || list.size() == 0)) {
                       // Se não temos lista agora, e já não tinhamos, nada a fazer. O IF só previne cair no else e lançar a Exception de "prevenção de falha de lógica".
@@ -543,11 +544,11 @@ public final class RFWDAO<VO extends RFWVO> {
                 } else if (Map.class.isAssignableFrom(fieldValue.getClass())) {
                   if (entityVOOrig != null) {
                     Map hash = (Map) fieldValue;
-                    Map hashOrig = (Map) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                    Map hashOrig = (Map) RUReflex.getPropertyValue(entityVOOrig, field.getName());
                     if (hash.size() == 0 && hashOrig.size() > 0) {
                       // Se não temos mais objetos relacionados, mas antes tinhamos, apagamos todos os itens da lista anterior.
                       for (Object itemOrig : hashOrig.values()) {
-                        delete(ds, daoMap, (VO) itemOrig, BUReflex.addPath(path, field.getName()), dialect);
+                        delete(ds, daoMap, (VO) itemOrig, RUReflex.addPath(path, field.getName()), dialect);
                       }
                     } else if (hashOrig.size() > 0 && hash.size() > 0) {
                       // Se temos as duas listas, temos que comprar as duas e descobrir os objetos que sumiram, assim iteramos uma dentro da outra para ver os objetos que sumiram comparando seus IDs
@@ -561,7 +562,7 @@ public final class RFWDAO<VO extends RFWVO> {
                             break;
                           }
                         }
-                        if (!found) delete(ds, daoMap, itemOrigVO, BUReflex.addPath(path, field.getName()), dialect);
+                        if (!found) delete(ds, daoMap, itemOrigVO, RUReflex.addPath(path, field.getName()), dialect);
                       }
                     }
                   }
@@ -577,7 +578,7 @@ public final class RFWDAO<VO extends RFWVO> {
 
               // DELETE: nos casos de associação, quando o ID está na nossa tabela, ele será definido como null ao atualizar o objeto e não devemos apagar a contra-parte. No caso do ID estar na tabela da contra-parte, vamos defini-lo como nulo depois do persistir o objeto atualizado
               // PERSISTÊNCIA: Nos casos de associação é esperado que o objeto associado já tenha um ID definido, já que é um objeto a parte
-              final Object fieldValue = BUReflex.getPropertyValue(entityVO, field.getName());
+              final Object fieldValue = RUReflex.getPropertyValue(entityVO, field.getName());
               if (fieldValue != null) {
                 if (RFWVO.class.isAssignableFrom(fieldValue.getClass())) {
                   VO fieldValueVO = (VO) fieldValue;
@@ -602,7 +603,7 @@ public final class RFWDAO<VO extends RFWVO> {
               // DELETE: os relacionamentos N:N serão excluídos depois da atualização do objeto
               // PERSISTÊNCIA: Nos casos de ManyToMany a coluna de FK não está na tabela do objeto (e sim na tabela de joinAlias). Por isso tudo o que temos que fazer é validar se todos os objetos tem um ID para a posterior inserção.
               // PERSISTÊNCIA: Note que ManyToMany deve sempre estar dentro de algum tipo de coleção/lista/hash/etc por ser múltiplos objetos.
-              final Object fieldValue = BUReflex.getPropertyValue(entityVO, field.getName());
+              final Object fieldValue = RUReflex.getPropertyValue(entityVO, field.getName());
               if (fieldValue == null) {
                 // Por ser esperado sempre uma Lista nas associações ManyToMany, um objeto recebido nulo é um erro, já que nulo indica que não foi carregado enquanto que uma coleção vazia indica a ausência de associações.
                 throw new RFWCriticalException("Falha ao persistir o objeto '${0}'. No atributo '${1}' recebemos uma coleção vazia. A ausência de relacionamento deve sempre ser indicada por uma coleção vazia, o atributo nulo é indicativo de que ele não foi carredo do banco de dados.", new String[] { entityVO.getClass().getCanonicalName(), field.getName() });
@@ -628,7 +629,7 @@ public final class RFWDAO<VO extends RFWVO> {
         if (colAnn != null) {
           // No caso de lista, temos de excluir todos os objetos anteriores do banco para inserir os novos depois. Não temos como comparar pq não utilizamos IDs nesses objetos. Assim, se o objeto original existir excluímos todos os itens associados anteriormente de uma única vez.
           if (entityVOOrig != null) {
-            deleteCollection(ds, daoMap, entityVOOrig, "@" + BUReflex.addPath(path, field.getName()), dialect);
+            deleteCollection(ds, daoMap, entityVOOrig, "@" + RUReflex.addPath(path, field.getName()), dialect);
           }
         }
       }
@@ -675,22 +676,22 @@ public final class RFWDAO<VO extends RFWVO> {
               // No caso de associação e a FK estar na tabela do outro objeto, temos atualizar a coluna do outro objeto. (Se estiver na tabela do objeto sendo editado o valor já foi definido)
               if (!"".equals(ann.columnMapped())) {
                 // Verificamos se houve alteração entre a associação atual e a associação existente no banco de dados para saber se precisamos atualizar a tabels
-                final Object fieldValue = BUReflex.getPropertyValue(entityVO, field.getName());
+                final Object fieldValue = RUReflex.getPropertyValue(entityVO, field.getName());
                 if (fieldValue != null) { // Atualmente temos um relacionamento
                   if (RFWVO.class.isAssignableFrom(fieldValue.getClass())) {
                     RFWVO fieldValueVO = (RFWVO) fieldValue;
                     RFWVO fieldValueVOOrig = null;
-                    if (entityVOOrig != null) fieldValueVOOrig = (RFWVO) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                    if (entityVOOrig != null) fieldValueVOOrig = (RFWVO) RUReflex.getPropertyValue(entityVOOrig, field.getName());
                     if (fieldValueVOOrig != null && !fieldValueVO.getId().equals(fieldValueVOOrig.getId())) {
                       // Se também temos um relacionamento no VO original e eles tem IDs diferentes, precisamos remover a associação do objeto anterior antes de incluir a nova associação (se tem o mesmo ID não precisamos fazer nada pois já estão certos)
-                      updateExternalFK(ds, daoMap, BUReflex.addPath(path, field.getName()), fieldValueVOOrig.getId(), null, dialect); // Exclui a associação do objeto anterior
+                      updateExternalFK(ds, daoMap, RUReflex.addPath(path, field.getName()), fieldValueVOOrig.getId(), null, dialect); // Exclui a associação do objeto anterior
                     }
                     // Agora que já removemos as associações do objeto que não estão mais em uso, vamos atualizar as novas associações.
-                    updateExternalFK(ds, daoMap, BUReflex.addPath(path, field.getName()), fieldValueVO.getId(), entityVO.getId(), dialect); // Inclui a associação do novo Objeto
+                    updateExternalFK(ds, daoMap, RUReflex.addPath(path, field.getName()), fieldValueVO.getId(), entityVO.getId(), dialect); // Inclui a associação do novo Objeto
                   } else if (Map.class.isAssignableFrom(fieldValue.getClass())) {
                     Map fieldValueMap = (Map) fieldValue;
                     Map fieldValueMapOrig = null;
-                    if (entityVOOrig != null) fieldValueMapOrig = (Map) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                    if (entityVOOrig != null) fieldValueMapOrig = (Map) RUReflex.getPropertyValue(entityVOOrig, field.getName());
 
                     if (fieldValueMapOrig != null && fieldValueMapOrig.size() > 0) {
                       // Se também temos um relacionamento no VO original, iteramos seus objetos para comparação...
@@ -699,19 +700,19 @@ public final class RFWDAO<VO extends RFWVO> {
                         RFWVO fieldValueVO = (RFWVO) fieldValueMap.get(key);
                         if (fieldValueVO == null || !fieldValueVO.getId().equals(fieldValueVOOrig.getId())) {
                           // ..., temos o objeto para as mesma chavez, mas eles tem IDs diferentes, precisamos remover a associação antiga (a nova associação é feita depois) (se tem o mesmo ID não precisamos fazer nada pois já estão certos)
-                          updateExternalFK(ds, daoMap, BUReflex.addPath(path, field.getName()), fieldValueVOOrig.getId(), null, dialect); // Exclui a associação do objeto anterior na tabela
+                          updateExternalFK(ds, daoMap, RUReflex.addPath(path, field.getName()), fieldValueVOOrig.getId(), null, dialect); // Exclui a associação do objeto anterior na tabela
                         }
                       }
                     }
                     // Tendo ou não removido associações dos objetos que não estão mais associados, atualizamos os novos objetos associados
                     for (Object obj : fieldValueMap.values()) {
                       RFWVO fieldValueVO = (RFWVO) obj;
-                      updateExternalFK(ds, daoMap, BUReflex.addPath(path, field.getName()), fieldValueVO.getId(), entityVO.getId(), dialect); // Atualiza a associação na tabela do objeto associado.
+                      updateExternalFK(ds, daoMap, RUReflex.addPath(path, field.getName()), fieldValueVO.getId(), entityVO.getId(), dialect); // Atualiza a associação na tabela do objeto associado.
                     }
                   } else if (List.class.isAssignableFrom(fieldValue.getClass())) {
                     List list = (List) fieldValue;
                     List listOriginal = null;
-                    if (entityVOOrig != null) listOriginal = (List) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                    if (entityVOOrig != null) listOriginal = (List) RUReflex.getPropertyValue(entityVOOrig, field.getName());
 
                     if (listOriginal != null && listOriginal.size() > 0) {
                       // Se também temos um relacionamento no VO original, iteramos seus objetos para comparação...
@@ -730,14 +731,14 @@ public final class RFWDAO<VO extends RFWVO> {
 
                         if (itemVO == null || !itemVOOrig.getId().equals(itemVO.getId())) {
                           // ..., temos o objeto em ambas a lista, mas eles tem IDs diferentes, precisamos remover a associação antiga (a nova associação é feita depois) (se tem o mesmo ID não precisamos fazer nada pois já estão certos)
-                          updateExternalFK(ds, daoMap, BUReflex.addPath(path, field.getName()), itemVOOrig.getId(), null, dialect); // Exclui a associação do objeto anterior na tabela
+                          updateExternalFK(ds, daoMap, RUReflex.addPath(path, field.getName()), itemVOOrig.getId(), null, dialect); // Exclui a associação do objeto anterior na tabela
                         }
                       }
                     }
                     // Tendo ou não removido associações dos objetos que não estão mais associados, atualizamos os novos objetos associados
                     for (Object item : list) {
                       RFWVO itemVO = (RFWVO) item;
-                      updateExternalFK(ds, daoMap, BUReflex.addPath(path, field.getName()), itemVO.getId(), entityVO.getId(), dialect); // Atualiza a associação na tabela do objeto associado.
+                      updateExternalFK(ds, daoMap, RUReflex.addPath(path, field.getName()), itemVO.getId(), entityVO.getId(), dialect); // Atualiza a associação na tabela do objeto associado.
                     }
                   } else {
                     throw new RFWCriticalException("Falha ao persistir o objeto '${0}'. Não é possível persistir o atributo '${1}' por ser do tipo '${2}'.", new String[] { entityVO.getClass().getCanonicalName(), field.getName(), fieldValue.getClass().getCanonicalName() });
@@ -745,11 +746,11 @@ public final class RFWDAO<VO extends RFWVO> {
                 } else {
                   // Se não temos uma associação no objeto atual, temos que remover da antiga caso exista
                   Object fieldValueOrig = null;
-                  if (entityVOOrig != null) fieldValueOrig = BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                  if (entityVOOrig != null) fieldValueOrig = RUReflex.getPropertyValue(entityVOOrig, field.getName());
                   if (fieldValueOrig != null) {
                     if (RFWVO.class.isAssignableFrom(fieldValueOrig.getClass())) {
                       RFWVO fieldValueOrigVO = (RFWVO) fieldValueOrig;
-                      updateExternalFK(ds, daoMap, BUReflex.addPath(path, field.getName()), fieldValueOrigVO.getId(), null, dialect); // Exclui a associação na tabela do objeto anterior
+                      updateExternalFK(ds, daoMap, RUReflex.addPath(path, field.getName()), fieldValueOrigVO.getId(), null, dialect); // Exclui a associação na tabela do objeto anterior
                     } else if (List.class.isAssignableFrom(fieldValueOrig.getClass())) {
                       // Caso no objeto original tenha uma list lançamos erro. Pois o objeto sendo persistido não deve ter as collections nulas e sim vazias para indicar a ausência de associações. Uma collection nula provavelmente indica que o objeto não foi bem inicializado, ou mal recuperado do banco em caso de atualização.
                       throw new RFWCriticalException("Falha ao persistir o objeto '${0}'. No atributo '${1}' recebemos uma coleção vazia. A ausência de relacionamento deve sempre ser indicada por uma coleção vazia, o atributo nulo é indicativo de que ele não foi carredo do banco de dados.", new String[] { entityVO.getClass().getCanonicalName(), field.getName() });
@@ -763,17 +764,17 @@ public final class RFWDAO<VO extends RFWVO> {
               break;
             case COMPOSITION: {
               // PERSISTÊNCIA: Em caso de composição, temos agora que persistir todos os objetos filhos
-              final Object fieldValue = BUReflex.getPropertyValue(entityVO, field.getName());
+              final Object fieldValue = RUReflex.getPropertyValue(entityVO, field.getName());
               if (fieldValue != null) {
                 if (RFWVO.class.isAssignableFrom(fieldValue.getClass())) {
                   VO fieldValueVOOrig = null;
-                  if (entityVOOrig != null) fieldValueVOOrig = (VO) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                  if (entityVOOrig != null) fieldValueVOOrig = (VO) RUReflex.getPropertyValue(entityVOOrig, field.getName());
                   // Passamos isNew como true sempre que o objeto atual (objeto pai) for novo, isso pq objetos de composição não podem ter ID definido antes do próprio pai, provavelmente isso é um erro. No entanto, o pai pode ser "velho" (em update) e o objeto da composição novo (em insert).
-                  persist(ds, daoMap, (isNew || ((VO) fieldValue).getId() == null), (VO) fieldValue, fieldValueVOOrig, BUReflex.addPath(path, field.getName()), persistedCache, null, 0, updatePendings, dialect);
+                  persist(ds, daoMap, (isNew || ((VO) fieldValue).getId() == null), (VO) fieldValue, fieldValueVOOrig, RUReflex.addPath(path, field.getName()), persistedCache, null, 0, updatePendings, dialect);
                 } else if (List.class.isAssignableFrom(fieldValue.getClass())) {
                   List list = (List) fieldValue;
                   List listOriginal = null;
-                  if (entityVOOrig != null) listOriginal = (List) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                  if (entityVOOrig != null) listOriginal = (List) RUReflex.getPropertyValue(entityVOOrig, field.getName());
 
                   // Se é uma lista, verificamos se tem o atributo "sortColumn" definido na Annotation. Nestes casos temos de criar esse atributo para ser salvo junto
                   String sColumn = null;
@@ -794,20 +795,20 @@ public final class RFWDAO<VO extends RFWVO> {
                     }
 
                     // Passamos isNew como true sempre que o objeto atual (objeto pai) for novo, isso pq objetos de composição não podem ter ID definido antes do próprio pai, provavelmente isso é um erro. No entanto, o pai pode ser "velho" (em update) e o objeto da composição novo (em insert).
-                    persist(ds, daoMap, (isNew || itemVO.getId() == null), itemVO, itemVOOrig, BUReflex.addPath(path, field.getName()), persistedCache, sColumn, countIndex, updatePendings, dialect);
+                    persist(ds, daoMap, (isNew || itemVO.getId() == null), itemVO, itemVOOrig, RUReflex.addPath(path, field.getName()), persistedCache, sColumn, countIndex, updatePendings, dialect);
 
                     countIndex++;
                   }
                 } else if (Map.class.isAssignableFrom(fieldValue.getClass())) {
                   Map hash = (Map) fieldValue;
                   Map hashOriginal = null;
-                  if (entityVOOrig != null) hashOriginal = (Map) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                  if (entityVOOrig != null) hashOriginal = (Map) RUReflex.getPropertyValue(entityVOOrig, field.getName());
                   for (Object key : hash.keySet()) {
                     VO itemVO = (VO) hash.get(key);
                     VO itemVOOrig = null;
                     if (hashOriginal != null) itemVOOrig = (VO) hashOriginal.get(key);
                     // Passamos isNew como true sempre que o objeto atual (objeto pai) for novo, isso pq objetos de composição não podem ter ID definido antes do próprio pai, provavelmente isso é um erro. No entanto, o pai pode ser "velho" (em update) e o objeto da composição novo (em insert).
-                    persist(ds, daoMap, (isNew || itemVO.getId() == null), itemVO, itemVOOrig, BUReflex.addPath(path, field.getName()), persistedCache, null, 0, updatePendings, dialect);
+                    persist(ds, daoMap, (isNew || itemVO.getId() == null), itemVO, itemVOOrig, RUReflex.addPath(path, field.getName()), persistedCache, null, 0, updatePendings, dialect);
                   }
                 } else {
                   throw new RFWCriticalException("Falha ao persistir o objeto '${0}'. Não é possível persistir o atributo '${1}' por ser do tipo '${2}'.", new String[] { entityVO.getClass().getCanonicalName(), field.getName(), fieldValue.getClass().getCanonicalName() });
@@ -817,14 +818,14 @@ public final class RFWDAO<VO extends RFWVO> {
               break;
             case COMPOSITION_TREE: {
               // PERSISTÊNCIA: Em caso de composição de árvore, temos agora que persistir todos os objetos filhos
-              final Object fieldValue = BUReflex.getPropertyValue(entityVO, field.getName());
+              final Object fieldValue = RUReflex.getPropertyValue(entityVO, field.getName());
               if (fieldValue != null) {
                 if (RFWVO.class.isAssignableFrom(fieldValue.getClass())) {
                   throw new RFWValidationException("Encontrado a definição 'COMPOSITION_TREE' em um relacionamento 1:1. Essa definição só pode ser utilizado em coleções para indicar os 'filhos' do relacionamento hierarquico. Classe: ${0} / Field: ${1} / FieldClass: ${2}.", new String[] { entityVO.getClass().getCanonicalName(), field.getName(), fieldValue.getClass().getCanonicalName() });
                 } else if (List.class.isAssignableFrom(fieldValue.getClass())) {
                   List list = (List) fieldValue;
                   List listOriginal = null;
-                  if (entityVOOrig != null) listOriginal = (List) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                  if (entityVOOrig != null) listOriginal = (List) RUReflex.getPropertyValue(entityVOOrig, field.getName());
 
                   // Se é uma lista, verificamos se tem o atributo "sortColumn" definido na Annotation. Nestes casos temos de criar esse atributo para ser salvo junto
                   String sColumn = null;
@@ -845,7 +846,7 @@ public final class RFWDAO<VO extends RFWVO> {
                     }
 
                     // Antes de passar para os objetos filhos em "esquema de árvore". Precisamos completar o DAOMap, isso pq quando ele é feito limitamos o mapeamento de estruturas hierarquicas por tender ao infinito. Vamos duplicando o mapeamento aqui, dinamicamente
-                    String destPath = BUReflex.addPath(path, field.getName());
+                    String destPath = RUReflex.addPath(path, field.getName());
                     // System.out.println(dumpDAOMap(daoMap));
                     // Se não tivermos o caminho temos de completar dianimicamente no DAOMap
                     daoMap.createMapTableForCompositionTree(path, destPath, "id", ann.columnMapped());
@@ -857,13 +858,13 @@ public final class RFWDAO<VO extends RFWVO> {
                 } else if (Map.class.isAssignableFrom(fieldValue.getClass())) {
                   Map hash = (Map) fieldValue;
                   Map hashOriginal = null;
-                  if (entityVOOrig != null) hashOriginal = (Map) BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                  if (entityVOOrig != null) hashOriginal = (Map) RUReflex.getPropertyValue(entityVOOrig, field.getName());
                   for (Object key : hash.keySet()) {
                     VO itemVO = (VO) hash.get(key);
                     VO itemVOOrig = null;
                     if (hashOriginal != null) itemVOOrig = (VO) hashOriginal.get(key);
                     // Passamos isNew como true sempre que o objeto atual (objeto pai) for novo, isso pq objetos de composição não podem ter ID definido antes do próprio pai, provavelmente isso é um erro. No entanto, o pai pode ser "velho" (em update) e o objeto da composição novo (em insert).
-                    persist(ds, daoMap, (isNew || itemVO.getId() == null), itemVO, itemVOOrig, BUReflex.addPath(path, field.getName()), persistedCache, null, 0, updatePendings, dialect);
+                    persist(ds, daoMap, (isNew || itemVO.getId() == null), itemVO, itemVOOrig, RUReflex.addPath(path, field.getName()), persistedCache, null, 0, updatePendings, dialect);
                   }
                 } else {
                   throw new RFWCriticalException("Falha ao persistir o objeto '${0}'. Não é possível persistir o atributo '${1}' por ser do tipo '${2}'.", new String[] { entityVO.getClass().getCanonicalName(), field.getName(), fieldValue.getClass().getCanonicalName() });
@@ -879,14 +880,14 @@ public final class RFWDAO<VO extends RFWVO> {
               break;
             case MANY_TO_MANY: {
               // Os relacionamentos ManyToMany precisam ter os inserts da tabela de Join realizados para "linkar" os dois objetos
-              final Object fieldValue = BUReflex.getPropertyValue(entityVO, field.getName());
+              final Object fieldValue = RUReflex.getPropertyValue(entityVO, field.getName());
               if (fieldValue != null) {
                 if (List.class.isAssignableFrom(fieldValue.getClass())) {
                   for (Object item : (List) fieldValue) {
-                    try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createManyToManySelectStatement(conn, daoMap, BUReflex.addPath(path, field.getName()), entityVO, (VO) item, dialect); ResultSet rs = stmt.executeQuery()) {
+                    try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createManyToManySelectStatement(conn, daoMap, RUReflex.addPath(path, field.getName()), entityVO, (VO) item, dialect); ResultSet rs = stmt.executeQuery()) {
                       if (!rs.next()) {
                         // Se não tem um resultado próximo, criamos a inserção, se não deixa quieto que já foi feito
-                        try (PreparedStatement stmt2 = DAOMap.createManyToManyInsertStatement(conn, daoMap, BUReflex.addPath(path, field.getName()), entityVO, (VO) item, dialect)) {
+                        try (PreparedStatement stmt2 = DAOMap.createManyToManyInsertStatement(conn, daoMap, RUReflex.addPath(path, field.getName()), entityVO, (VO) item, dialect)) {
                           stmt2.executeUpdate();
                         }
                       }
@@ -896,10 +897,10 @@ public final class RFWDAO<VO extends RFWVO> {
                   }
                 } else if (Map.class.isAssignableFrom(fieldValue.getClass())) {
                   for (Object item : ((Map) fieldValue).values()) {
-                    try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createManyToManySelectStatement(conn, daoMap, BUReflex.addPath(path, field.getName()), entityVO, (VO) item, dialect); ResultSet rs = stmt.executeQuery()) {
+                    try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createManyToManySelectStatement(conn, daoMap, RUReflex.addPath(path, field.getName()), entityVO, (VO) item, dialect); ResultSet rs = stmt.executeQuery()) {
                       if (!rs.next()) {
                         // Se não tem um resultado próximo, criamos a inserção, se não deixa quieto que já foi feito
-                        try (PreparedStatement stmt2 = DAOMap.createManyToManyInsertStatement(conn, daoMap, BUReflex.addPath(path, field.getName()), entityVO, (VO) item, dialect)) {
+                        try (PreparedStatement stmt2 = DAOMap.createManyToManyInsertStatement(conn, daoMap, RUReflex.addPath(path, field.getName()), entityVO, (VO) item, dialect)) {
                           stmt2.executeUpdate();
                         }
                       }
@@ -913,7 +914,7 @@ public final class RFWDAO<VO extends RFWVO> {
               }
               // Se existir uma lista no objeto original, precisamos apagar todos os mapeamentos que não existem mais, caso contrário as desassociações não deixarão de existir
               if (entityVOOrig != null) {
-                final Object fieldValueOrig = BUReflex.getPropertyValue(entityVOOrig, field.getName());
+                final Object fieldValueOrig = RUReflex.getPropertyValue(entityVOOrig, field.getName());
                 if (fieldValueOrig != null) {
                   if (List.class.isAssignableFrom(fieldValueOrig.getClass())) {
                     List listOrig = (List) fieldValueOrig;
@@ -929,7 +930,7 @@ public final class RFWDAO<VO extends RFWVO> {
                         }
                       }
                       if (!found) {
-                        try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createManyToManyDeleteStatement(conn, daoMap, BUReflex.addPath(path, field.getName()), entityVO, (VO) itemOrig, dialect)) {
+                        try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createManyToManyDeleteStatement(conn, daoMap, RUReflex.addPath(path, field.getName()), entityVO, (VO) itemOrig, dialect)) {
                           stmt.executeUpdate();
                         } catch (Throwable e) {
                           throw new RFWCriticalException("Falha ao executar a operação no banco de dados.", e);
@@ -950,7 +951,7 @@ public final class RFWDAO<VO extends RFWVO> {
                         }
                       }
                       if (!found) {
-                        try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createManyToManyDeleteStatement(conn, daoMap, BUReflex.addPath(path, field.getName()), entityVO, (VO) itemOrig, dialect)) {
+                        try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createManyToManyDeleteStatement(conn, daoMap, RUReflex.addPath(path, field.getName()), entityVO, (VO) itemOrig, dialect)) {
                           stmt.executeUpdate();
                         } catch (Throwable e) {
                           throw new RFWCriticalException("Falha ao executar a operação no banco de dados.", e);
@@ -969,14 +970,14 @@ public final class RFWDAO<VO extends RFWVO> {
         final RFWMetaCollectionField colAnn = field.getAnnotation(RFWMetaCollectionField.class);
         if (colAnn != null) {
           // Se temos uma collection para persistir, vamos iterar cada um dos itens e persisti-lo na tabela agora que certezamente temos um ID no objeto pai
-          Object colValue = BUReflex.getPropertyValue(entityVO, field.getName());
+          Object colValue = RUReflex.getPropertyValue(entityVO, field.getName());
           if (colValue != null) {
             if (colValue instanceof List<?>) {
-              if (((List<?>) colValue).size() > 0) insertCollection(ds, daoMap, "@" + BUReflex.addPath(path, field.getName()), (List<?>) colValue, entityVO.getId(), dialect, colAnn);
+              if (((List<?>) colValue).size() > 0) insertCollection(ds, daoMap, "@" + RUReflex.addPath(path, field.getName()), (List<?>) colValue, entityVO.getId(), dialect, colAnn);
             } else if (colValue instanceof HashSet<?>) {
-              if (((HashSet<?>) colValue).size() > 0) insertCollection(ds, daoMap, "@" + BUReflex.addPath(path, field.getName()), new LinkedList<Object>((HashSet<?>) colValue), entityVO.getId(), dialect, colAnn);
+              if (((HashSet<?>) colValue).size() > 0) insertCollection(ds, daoMap, "@" + RUReflex.addPath(path, field.getName()), new LinkedList<Object>((HashSet<?>) colValue), entityVO.getId(), dialect, colAnn);
             } else if (colValue instanceof Map<?, ?>) {
-              if (((Map<?, ?>) colValue).size() > 0) insertCollection(ds, daoMap, "@" + BUReflex.addPath(path, field.getName()), new LinkedList<Object>(((Map<?, ?>) colValue).entrySet()), entityVO.getId(), dialect, colAnn);
+              if (((Map<?, ?>) colValue).size() > 0) insertCollection(ds, daoMap, "@" + RUReflex.addPath(path, field.getName()), new LinkedList<Object>(((Map<?, ?>) colValue).entrySet()), entityVO.getId(), dialect, colAnn);
             } else {
               throw new RFWCriticalException("O RFWDAO não sabe persistir uma RFWMetaCollectionField com o objeto do tipo '" + colValue.getClass().getCanonicalName() + "'");
             }
@@ -1094,7 +1095,7 @@ public final class RFWDAO<VO extends RFWVO> {
   public VO findForUpdate(Long id, String[] attributes) throws RFWException {
     if (id == null) throw new NullPointerException("ID can't be null!");
 
-    final String[] attForUpdate = BUReflex.getRFWVOUpdateAttributes(type);
+    final String[] attForUpdate = RUReflex.getRFWVOUpdateAttributes(type);
     attributes = BUArray.concatAll(new String[0], attributes, attForUpdate);
 
     final DAOMap map = createDAOMap(this.type, attributes);
@@ -1414,7 +1415,7 @@ public final class RFWDAO<VO extends RFWVO> {
                 // Recupera o field com o valor baseado no atributo do Path da Tabela. Note que o Path da tabela tem o @ no início para identificar que é uma tabela de MetaCollection. Já os campos, tem o @ no fim do nome do field, por isso a operação remover a @ do começo e concatena-la no final.
                 final DAOMapField mField = map.getMapFieldByPath(mTable.path.substring(1) + "@");
 
-                final RFWMetaCollectionField ann = (RFWMetaCollectionField) BUReflex.getRFWMetaAnnotation(vo.getClass(), mField.field.substring(0, mField.field.length() - 1));
+                final RFWMetaCollectionField ann = (RFWMetaCollectionField) RUReflex.getRFWMetaAnnotation(vo.getClass(), mField.field.substring(0, mField.field.length() - 1));
                 if (ann.targetRelationship() == null) throw new RFWCriticalException("Não foi possível encontrar o TargetRelationship da MetaCollection em '" + vo.getClass().getCanonicalName() + "' do método '" + mField.field.substring(0, mField.field.length() - 1) + "'.");
 
                 // Recupera o conteúdo a ser colocado na MetaCollection
@@ -1441,7 +1442,7 @@ public final class RFWDAO<VO extends RFWVO> {
 
                 if (content != null) {
                   // Com o VO em mãos, verificamos o tipo de MetaCollection que temos na entidade (Map ou List) para saber como popular e instanciar se ainda for o primeiro
-                  final Class<?> rt = BUReflex.getPropertyTypeByType(parentTable.type, mField.field.substring(0, mField.field.length() - 1)); // Remove a @ do final do Field
+                  final Class<?> rt = RUReflex.getPropertyTypeByType(parentTable.type, mField.field.substring(0, mField.field.length() - 1)); // Remove a @ do final do Field
                   if (List.class.isAssignableFrom(rt)) {
                     // Se é um List procuramos a coluna de 'sort' para saber como organizar os itens
                     DAOMapField sortField = map.getMapFieldByPath(mTable.path.substring(1) + "@sortColumn");
@@ -1451,7 +1452,7 @@ public final class RFWDAO<VO extends RFWVO> {
                       // sortIndex = rs.getInt(mTable.alias + "." + sortField.column);
                     }
 
-                    List list = (List) BUReflex.getPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1));
+                    List list = (List) RUReflex.getPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1));
                     if (list == null) {
                       list = new ArrayList<>();
                     }
@@ -1469,15 +1470,15 @@ public final class RFWDAO<VO extends RFWVO> {
                         list.add(sortIndex, content); // Ao incluir o objeto no índex determinado, empurramos todos os outros para frente, por isso temos de remover o próximo objeto (que antes ocupava o lugar deste)
                         list.remove(sortIndex + 1);
                       }
-                      BUReflex.setPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1), list, false);
+                      RUReflex.setPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1), list, false);
                     }
                   } else if (HashSet.class.isAssignableFrom(rt)) {
-                    HashSet set = (HashSet) BUReflex.getPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1));
+                    HashSet set = (HashSet) RUReflex.getPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1));
                     if (set == null) {
                       set = new HashSet<>();
                     }
                     set.add(content); // não testamos se já existe pq o SET não permite itens repetidos, ele substituirá automaticamente itens repetidos
-                    BUReflex.setPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1), set, false);
+                    RUReflex.setPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1), set, false);
                   } else if (Map.class.isAssignableFrom(rt)) {
                     // Se é um Map procuramos a coluna de 'key' para saber a chave que devemos incluir na Map
                     DAOMapField keyField = map.getMapFieldByPath(mTable.path.substring(1) + "@keyColumn");
@@ -1490,14 +1491,14 @@ public final class RFWDAO<VO extends RFWVO> {
                       keyValue = ((RFWDAOConverterInterface) ni).toVO(keyValue);
                     }
 
-                    Map hash = (Map) BUReflex.getPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1));
+                    Map hash = (Map) RUReflex.getPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1));
                     if (hash == null) {
                       hash = new LinkedHashMap<>();
                     }
                     // Recupera o atributo do objeto que é usado como chave da hash
                     if (!hash.containsKey(keyValue)) {
                       hash.put(keyValue, content); // Só adiciona se ainda não tiver este objeto
-                      BUReflex.setPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1), hash, false);
+                      RUReflex.setPropertyValue(vo, mField.field.substring(0, mField.field.length() - 1), hash, false);
                     }
                   } else {
                     throw new RFWCriticalException("O tipo ${0} não é suportado pela RFWMetaCollection! Atributo '${1}' da classe '${2}'.", new String[] { rt.getCanonicalName(), mField.field.substring(0, mField.field.length() - 1), parentTable.type.getCanonicalName() });
@@ -1562,11 +1563,11 @@ public final class RFWDAO<VO extends RFWVO> {
                 if (tmp.path.startsWith(".")) join = aliasCache.get(tmp.joinAlias);
               }
               final String relativePath = BUReflex.getLastPath(mTable.path); // pega o caminho em ralação ao objeto atual, não desde a raiz
-              final Class<?> rt = BUReflex.getPropertyTypeByType(join.getClass(), relativePath);
+              final Class<?> rt = RUReflex.getPropertyTypeByType(join.getClass(), relativePath);
               if (RFWVO.class.isAssignableFrom(rt)) {
-                BUReflex.setPropertyValue(join, relativePath, vo, false);
+                RUReflex.setPropertyValue(join, relativePath, vo, false);
               } else if (List.class.isAssignableFrom(rt)) {
-                List list = (List) BUReflex.getPropertyValue(join, relativePath);
+                List list = (List) RUReflex.getPropertyValue(join, relativePath);
                 if (list == null) {
                   list = new ArrayList<>();
                 }
@@ -1596,19 +1597,19 @@ public final class RFWDAO<VO extends RFWVO> {
                     list.add(sortIndex, vo); // Ao incluir o objeto no índex determinado, empurramos todos os outros para frente, por isso temos de remover o próximo objeto (que antes ocupava o lugar deste)
                     list.remove(sortIndex + 1);
                   }
-                  BUReflex.setPropertyValue(join, relativePath, list, false);
+                  RUReflex.setPropertyValue(join, relativePath, list, false);
                 }
               } else if (Map.class.isAssignableFrom(rt)) {
-                Map hash = (Map) BUReflex.getPropertyValue(join, relativePath);
+                Map hash = (Map) RUReflex.getPropertyValue(join, relativePath);
                 if (hash == null) {
                   hash = new LinkedHashMap<>();
                 }
                 // Recupera o atributo do objeto que é usado como chave da hash
                 final String keyMapAttributeName = join.getClass().getDeclaredField(relativePath).getAnnotation(RFWMetaRelationshipField.class).keyMap();
-                final Object key = BUReflex.getPropertyValue(vo, keyMapAttributeName);
+                final Object key = RUReflex.getPropertyValue(vo, keyMapAttributeName);
                 if (!hash.containsKey(key)) {
                   hash.put(key, vo); // Só adiciona se ainda não tiver este objeto
-                  BUReflex.setPropertyValue(join, relativePath, hash, false);
+                  RUReflex.setPropertyValue(join, relativePath, hash, false);
                 }
               } else {
                 throw new RFWCriticalException("O RFWDAO não sabe montar mapeamento do tipo '${0}', presente no '${1}'.", new String[] { rt.getCanonicalName(), join.getClass().getCanonicalName() });
@@ -1626,20 +1627,20 @@ public final class RFWDAO<VO extends RFWVO> {
                 if (join != null) {
                   // Se joinAlias continuar nulo, é pq mesmo o objeto pai não foi montado. Isso pode acontecer am casos de múltiplos LEFT JOIN e o relacionamento anterior também retornou nulo. Como ele é nulo não precisamos criar a lista vazia
                   final String relativePath = BUReflex.getLastPath(mTable.path); // pega o caminho em ralação ao objeto atual, não desde a raiz
-                  final Class<?> rt = BUReflex.getPropertyTypeByType(join.getClass(), relativePath);
+                  final Class<?> rt = RUReflex.getPropertyTypeByType(join.getClass(), relativePath);
                   if (RFWVO.class.isAssignableFrom(rt)) {
                     // Não faz nada, só não deixa cair no else
                   } else if (List.class.isAssignableFrom(rt)) {
-                    List list = (List) BUReflex.getPropertyValue(join, relativePath);
+                    List list = (List) RUReflex.getPropertyValue(join, relativePath);
                     if (list == null) {
                       list = new ArrayList<>();
-                      BUReflex.setPropertyValue(join, relativePath, list, false);
+                      RUReflex.setPropertyValue(join, relativePath, list, false);
                     }
                   } else if (Map.class.isAssignableFrom(rt)) {
-                    Map hash = (Map) BUReflex.getPropertyValue(join, relativePath);
+                    Map hash = (Map) RUReflex.getPropertyValue(join, relativePath);
                     if (hash == null) {
                       hash = new LinkedHashMap<>();
-                      BUReflex.setPropertyValue(join, relativePath, hash, false);
+                      RUReflex.setPropertyValue(join, relativePath, hash, false);
                     }
                   } else {
                     throw new RFWCriticalException("O RFWDAO não sabe montar mapeamento do tipo '${0}', presente no '${1}'.", new String[] { rt.getCanonicalName(), join.getClass().getCanonicalName() });
@@ -2006,59 +2007,59 @@ public final class RFWDAO<VO extends RFWVO> {
         Object obj = getRSObject(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect);
         // final Object s = ((RFWDAOConverterInterface) ni).toVO(rs.getObject(mTable.alias + "." + mField.column));
         final Object s = ((RFWDAOConverterInterface) ni).toVO(obj);
-        BUReflex.setPropertyValue(vo, mField.field, s, false);
+        RUReflex.setPropertyValue(vo, mField.field, s, false);
       } else {
         final Class<?> dataType = decField.getType();
 
         if (Long.class.isAssignableFrom(dataType)) {
           Long l = getRSLong(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getLong(mTable.alias + "." + mField.column);
-          if (!rs.wasNull()) BUReflex.setPropertyValue(vo, mField.field, l, false);
+          if (!rs.wasNull()) RUReflex.setPropertyValue(vo, mField.field, l, false);
         } else if (String.class.isAssignableFrom(dataType)) {
           String s = getRSString(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getString(mTable.alias + "." + mField.column);
           if (!rs.wasNull()) {
-            // Nos casos de String, verificamos se temos a anotation de RFWDAOEncrypt
-            final RFWDAOEncrypt encAnn = decField.getAnnotation(RFWDAOEncrypt.class);
+            // Nos casos de String, verificamos se temos a anotation de RFWMetaEncrypt
+            final RFWMetaEncrypt encAnn = decField.getAnnotation(RFWMetaEncrypt.class);
             if (encAnn != null) {
               s = BUEncrypter.decryptDES(s, encAnn.key());
             }
-            BUReflex.setPropertyValue(vo, mField.field, s, false);
+            RUReflex.setPropertyValue(vo, mField.field, s, false);
           }
         } else if (Date.class.isAssignableFrom(dataType)) {
           // Timestamp d = rs.getTimestamp(mField.table.alias + "." + mField.column);
-          // if (!rs.wasNull()) BUReflex.setPropertyValue(vo, mField.field, new Date(d.getTime()), false);
+          // if (!rs.wasNull()) RUReflex.setPropertyValue(vo, mField.field, new Date(d.getTime()), false);
           throw new RFWCriticalException("Por definição o RFWDeprec não deve mais utilizar o java.util.Date, verifique a implementação e substitua corretamente por LocalDate, LocalTime ou LocalDateTime. '${0}'", new String[] { mField.table.type.getCanonicalName() + "#" + mField.field });
         } else if (LocalDate.class.isAssignableFrom(dataType)) {
           Object obj = getRSObject(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getObject(mTable.alias + "." + mField.column);
           if (!rs.wasNull()) {
             if (obj instanceof Timestamp) {
-              BUReflex.setPropertyValue(vo, mField.field, ((Timestamp) obj).toLocalDateTime().toLocalDate(), false);
+              RUReflex.setPropertyValue(vo, mField.field, ((Timestamp) obj).toLocalDateTime().toLocalDate(), false);
             } else if (obj instanceof java.sql.Date) {
-              BUReflex.setPropertyValue(vo, mField.field, ((java.sql.Date) obj).toLocalDate(), false);
+              RUReflex.setPropertyValue(vo, mField.field, ((java.sql.Date) obj).toLocalDate(), false);
             } else {
               throw new RFWCriticalException("Não foi possível identificar o objeto '" + obj.getClass().getCanonicalName() + "' recebido para o atributo '" + mField.field + "' do VO: '" + vo.getClass().getCanonicalName() + "'. Tabela: '" + mTable.table + "." + mField.column + "'.");
             }
           }
         } else if (LocalTime.class.isAssignableFrom(dataType)) {
           Time t = getRSTime(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getTime(mTable.alias + "." + mField.column);
-          if (!rs.wasNull()) BUReflex.setPropertyValue(vo, mField.field, t.toLocalTime(), false);
+          if (!rs.wasNull()) RUReflex.setPropertyValue(vo, mField.field, t.toLocalTime(), false);
         } else if (LocalDateTime.class.isAssignableFrom(dataType)) {
           Timestamp t = getRSTimestamp(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getTimestamp(mTable.alias + "." + mField.column);
-          if (!rs.wasNull()) BUReflex.setPropertyValue(vo, mField.field, t.toLocalDateTime(), false);
+          if (!rs.wasNull()) RUReflex.setPropertyValue(vo, mField.field, t.toLocalDateTime(), false);
         } else if (Integer.class.isAssignableFrom(dataType)) {
           Integer i = getRSInteger(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getInt(mTable.alias + "." + mField.column);
-          if (!rs.wasNull()) BUReflex.setPropertyValue(vo, mField.field, i, false);
+          if (!rs.wasNull()) RUReflex.setPropertyValue(vo, mField.field, i, false);
         } else if (Boolean.class.isAssignableFrom(dataType)) {
           Boolean b = getRSBoolean(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getBoolean(mTable.alias + "." + mField.column);
-          if (!rs.wasNull()) BUReflex.setPropertyValue(vo, mField.field, b, false);
+          if (!rs.wasNull()) RUReflex.setPropertyValue(vo, mField.field, b, false);
         } else if (BigDecimal.class.isAssignableFrom(dataType)) {
           BigDecimal b = getRSBigDecimal(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getBigDecimal(mTable.alias + "." + mField.column);
-          if (!rs.wasNull()) BUReflex.setPropertyValue(vo, mField.field, b, false);
+          if (!rs.wasNull()) RUReflex.setPropertyValue(vo, mField.field, b, false);
         } else if (Enum.class.isAssignableFrom(dataType)) {
           String b = getRSString(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getString(mTable.alias + "." + mField.column);
           if (!rs.wasNull()) {
             @SuppressWarnings({ "rawtypes", "unchecked" })
             final Enum e = Enum.valueOf((Class<Enum>) dataType, b);
-            BUReflex.setPropertyValue(vo, mField.field, e, false);
+            RUReflex.setPropertyValue(vo, mField.field, e, false);
           }
         } else if (byte[].class.isAssignableFrom(dataType)) {
           Blob blob = getRSBlob(rs, mTable.schema, mTable.table, mTable.alias, mField.column, dialect); // rs.getBlob(mTable.alias + "." + mField.column);
@@ -2066,7 +2067,7 @@ public final class RFWDAO<VO extends RFWVO> {
             int blobLength = (int) blob.length();
             byte[] b = blob.getBytes(1, blobLength);
             blob.free();
-            if (!rs.wasNull()) BUReflex.setPropertyValue(vo, mField.field, b, false);
+            if (!rs.wasNull()) RUReflex.setPropertyValue(vo, mField.field, b, false);
           }
         } else if (RFWVO.class.isAssignableFrom(dataType)) {
           // Não fazemos nada. Isso pq o caso em que esse objeto aparece é quando temos uma coluna de FK na tabela do objeto. Para inserir só o ID não vamos criar o objeto para dar preferência em mandar sempre um objeto mais leve. Caso o objeto tenha sido solicitado explicitamente, ele será montado durante leitura da sua propria tabela e colocado aqui.
@@ -2209,7 +2210,7 @@ public final class RFWDAO<VO extends RFWVO> {
       // RFWDAO.dumpDAOMap(map)
       // Tendo o mapeamento da tabela feito, iteramos a classe para mapear todos os seus fields que tenham alguma anotação RFWMeta definida. Qualquer attributo sem uma annotation RFWMeta é ignorado.
       for (Field field : entityType.getDeclaredFields()) {
-        final Annotation metaAnn = BUReflex.getRFWMetaAnnotation(field);
+        final Annotation metaAnn = RUReflex.getRFWMetaAnnotation(field);
         if (metaAnn != null) {
 
           // Se não tivermos um nome de coluna definido, utilizaremos o nome do próprio atributo da classe
@@ -2245,7 +2246,7 @@ public final class RFWDAO<VO extends RFWVO> {
   private void loadEntityCollectionMap(Class<? extends RFWVO> root, DAOMap map, String attribute) throws RFWException {
     if (!"id".equals(attribute)) {
       if (attribute.endsWith("@") && attribute.length() > 0) attribute = attribute.substring(0, attribute.length() - 1);
-      Annotation ann = BUReflex.getRFWMetaAnnotation(root, attribute);
+      Annotation ann = RUReflex.getRFWMetaAnnotation(root, attribute);
       if (ann instanceof RFWMetaCollectionField) {
         RFWMetaCollectionField colAnn = (RFWMetaCollectionField) ann;
         String parentPath = BUReflex.getParentPath(attribute); // Recuperamos o caminho pai para obter o mapeamento do pai. Já devemos ter todos pois o método loadEntityMap deve ser sempre chamado antes deste método
@@ -2254,11 +2255,11 @@ public final class RFWDAO<VO extends RFWVO> {
         String fieldName = paths[paths.length - 1];
 
         // Validamos se já não associamos essa tabela (isso pode acontecer se o usuário solicitar mais de uma vez o mesmo atributo de collection... estupido...)
-        if (map.getMapTableByPath("@" + BUReflex.addPath(parentPath, fieldName)) == null) {
+        if (map.getMapTableByPath("@" + RUReflex.addPath(parentPath, fieldName)) == null) {
           DAOMapTable daoMapTable = map.getMapTableByPath(parentPath);
 
           // para indicar que o caminho é uma Collection, o path recebe um '@' como prefixo do path
-          final DAOMapTable colMapTable = map.createMapTable(daoMapTable.type, "@" + BUReflex.addPath(parentPath, fieldName), daoMapTable.schema, colAnn.table(), colAnn.fkColumn(), daoMapTable.alias, "id");
+          final DAOMapTable colMapTable = map.createMapTable(daoMapTable.type, "@" + RUReflex.addPath(parentPath, fieldName), daoMapTable.schema, colAnn.table(), colAnn.fkColumn(), daoMapTable.alias, "id");
           // Mapeia o campo e as colunas de key e Sort caso existam
           map.createMapField(parentPath, fieldName + "@", colMapTable, colAnn.column());
           map.createMapField(parentPath, fieldName + "@fk", colMapTable, colAnn.fkColumn());

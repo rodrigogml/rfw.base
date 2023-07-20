@@ -67,7 +67,7 @@ public class BUTOTP {
 
     // Extrai os bytes para gerar a chave
     byte[] secretKey = Arrays.copyOf(buffer, SECRET_BITS / 8);
-    String generatedKey = RUString.encodeBase32(secretKey);
+    String generatedKey = BUString.encodeBase32(secretKey);
 
     return generatedKey;
   }
@@ -101,7 +101,7 @@ public class BUTOTP {
    * @throws RFWException
    */
   private static boolean checkCode(String secret, long code, long timestamp, int window) throws RFWException {
-    byte[] decodedKey = RUString.decodeBase32ToByte(secret);
+    byte[] decodedKey = BUString.decodeBase32ToByte(secret);
 
     // Converte o tempo passado em "janelas", para saber em que "passo" da senha que estamos.
     final long timeWindow = timestamp / TIMESTEPSIZEINMILLIS;
@@ -144,9 +144,9 @@ public class BUTOTP {
   public static int getCode(String secret, int offset) throws RFWException {
     byte[] key;
     try {
-      key = RUString.decodeBase32ToByte(secret);
+      key = BUString.decodeBase32ToByte(secret);
     } catch (Exception e) {
-      key = RUString.decodeBase64ToByte(secret);
+      key = BUString.decodeBase64ToByte(secret);
     }
     long tm = new Date().getTime() / TIMESTEPSIZEINMILLIS;
 

@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Stack;
 
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
-import br.eng.rodrigogml.rfw.base.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
 
 /**

@@ -9,11 +9,11 @@ import java.util.Map.Entry;
 
 import br.eng.rodrigogml.rfw.base.bundle.RFWBundle;
 import br.eng.rodrigogml.rfw.base.measureruler.interfaces.MeasureRulerEquivalenceInterface;
-import br.eng.rodrigogml.rfw.base.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 
 /**
  * Description: Classe utilizada para criar as definições de unidades de medidas do framework. Conversões, "traduções", e outras necessidades relacionadas a grandezas de medidas.<br>

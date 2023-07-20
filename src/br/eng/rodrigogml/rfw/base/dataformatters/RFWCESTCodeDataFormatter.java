@@ -2,9 +2,9 @@ package br.eng.rodrigogml.rfw.base.dataformatters;
 
 import java.util.Locale;
 
-import br.eng.rodrigogml.rfw.base.utils.RUString;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
  * Description: Classe que formata e valida um código CEST, de acordo com a quantidade de dígitos fornecida no campo.<br>

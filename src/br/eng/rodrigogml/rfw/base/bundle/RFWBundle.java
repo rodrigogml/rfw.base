@@ -8,7 +8,7 @@ import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.CustomMeasureUnit;
 import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.MeasureUnit;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
-import br.eng.rodrigogml.rfw.base.utils.RUString;
+import br.eng.rodrigogml.rfw.base.utils.BUString;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
@@ -177,7 +177,7 @@ public class RFWBundle {
    * @return Bundle do enumeration, ou a própria enumeration (caminho completo do objeto) caso a chave não seja encontrada no bundle.
    */
   public static String get(Enum<?> value) {
-    String key = RUString.getEnumKey(value);
+    String key = BUString.getEnumKey(value);
     String v = get(key);
     if (value != null && v == null) {
       RFWLogger.logWarn("A chave enum foi solicitada mas não encontramos um bundle: " + key);
