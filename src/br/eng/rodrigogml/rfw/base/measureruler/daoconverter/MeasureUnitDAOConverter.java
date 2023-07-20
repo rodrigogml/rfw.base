@@ -3,10 +3,10 @@ package br.eng.rodrigogml.rfw.base.measureruler.daoconverter;
 import br.eng.rodrigogml.rfw.base.dao.interfaces.RFWDAOConverterInterface;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler;
-import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.MeasureDimension;
-import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.MeasureUnit;
 import br.eng.rodrigogml.rfw.base.measureruler.vo.CustomMeasureUnitGeneric;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.MeasureDimension;
 
 /**
  * Description: Implementa o conversor do DAO para que seja possível persistir um objeto que utilize a MeasureUnit como um de seus atributos..<br>

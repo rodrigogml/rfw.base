@@ -4,9 +4,9 @@ import java.util.Locale;
 
 import br.eng.rodrigogml.rfw.base.bundle.RFWBundle;
 import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler;
-import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.MeasureUnit;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit;
 
 /**
  * Description: Data Formatter para trocar o valor da {@link MeasureUnit} para o valor do Bundle.<br>

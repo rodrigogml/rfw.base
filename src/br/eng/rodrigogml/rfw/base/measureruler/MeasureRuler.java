@@ -1,6 +1,5 @@
 package br.eng.rodrigogml.rfw.base.measureruler;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +12,13 @@ import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.AreaUnit;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.LengthUnit;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.MeasureDimension;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.UnitUnit;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.VolumeUnit;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.WeightUnit;
 import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 
 /**
@@ -30,237 +36,11 @@ public final class MeasureRuler {
   }
 
   /**
-   * Enum utilizada para definir as grandezas de medidas do sistema.
-   */
-  public static enum MeasureDimension {
-    WEIGHT(WeightUnit.values()), UNIT(UnitUnit.values()), VOLUME(VolumeUnit.values()), LENGTH(LengthUnit.values()), AREA(AreaUnit.values()), CUSTOM(null);
-
-    private MeasureUnit[] units = null;
-
-    MeasureDimension(MeasureUnit[] units) {
-      this.units = units;
-    }
-
-    public MeasureUnit[] getUnits() {
-      return units;
-    }
-  }
-
-  /**
-   * Interface utilizada para definir uma unidade de medida.
-   */
-  public static interface MeasureUnit extends Serializable {
-
-    /**
-     * Razão de tamanho da unidade dentro da Dimensão.
-     *
-     * @return Ex: 1000 para Kg, 1 para g, 1 para m, 1000 para Km, etc.
-     */
-    BigDecimal getRatio();
-
-    /**
-     * Retorna a Dimensão da unidade atual.
-     *
-     * @return {@link MeasureDimension} do {@link MeasureUnit} atual.
-     */
-    MeasureDimension getDimension();
-
-    /**
-     * Simbolo da Unidade de Medida.
-     *
-     * @return Ex: Kg para Kilograma, Km para Kilometro, t para Tonelada,
-     */
-    String getSymbol();
-
-    /**
-     * Nome da Unidade de Medida.<br>
-     * Redundância em relação ao método {@link #name()}, para que seja possível utilziar o padrão de métodos "get" com as classes do Framework.
-     *
-     * @return Retorna o .name() do Enum mascarado pela interface MeasureUnit.
-     */
-    String getName();
-
-    /**
-     * Nome da Unidade de Medida.
-     *
-     * @return Retorna o .name() do Enum mascarado pela interface MeasureUnit.
-     */
-    String name();
-
-    /**
-     * Número Ordinal do item.
-     *
-     * @return Retorna o .orginal() do Enum mascarado pela interface MeasureUnit.
-     */
-    int ordinal();
-  }
-
-  /**
    * Interface abaixo da {@link MeasureUnit} simplesmente para diferenciar as unidades de medida padrão das {@link MeasureDimension#CUSTOM}.
    *
    * Nenhum método adicional.
    */
   public static interface CustomMeasureUnit extends MeasureUnit {
-  }
-
-  public static enum WeightUnit implements MeasureUnit {
-    KILOGRAM(new BigDecimal("1000"), "Kg"), GRAM(BigDecimal.ONE, "g"), MILIGRAM(new BigDecimal("0.001"), "mg"), TONNE(new BigDecimal("1000000"), "t");
-
-    WeightUnit(BigDecimal ratio, String symbol) {
-      this.ratio = ratio;
-      this.symbol = symbol;
-    }
-
-    private BigDecimal ratio;
-    private String symbol;
-
-    @Override
-    public BigDecimal getRatio() {
-      return this.ratio;
-    }
-
-    @Override
-    public String getSymbol() {
-      return this.symbol;
-    }
-
-    @Override
-    public String getName() {
-      return super.name();
-    }
-
-    @Override
-    public MeasureDimension getDimension() {
-      return MeasureDimension.WEIGHT;
-    }
-  }
-
-  public static enum UnitUnit implements MeasureUnit {
-    UNIT(BigDecimal.ONE, "Und"), COUPLE(new BigDecimal("2"), "Par"), DOZEN(new BigDecimal("12"), "Dz"), CENT(RFW.BIGHUNDRED, "CNT"), MIL(new BigDecimal("1000"), "MIL");
-
-    private BigDecimal ratio;
-    private String symbol;
-
-    UnitUnit(BigDecimal ratio, String symbol) {
-      this.ratio = ratio;
-      this.symbol = symbol;
-    }
-
-    @Override
-    public BigDecimal getRatio() {
-      return this.ratio;
-    }
-
-    @Override
-    public String getName() {
-      return super.name();
-    }
-
-    @Override
-    public String getSymbol() {
-      return this.symbol;
-    }
-
-    @Override
-    public MeasureDimension getDimension() {
-      return MeasureDimension.UNIT;
-    }
-  }
-
-  public static enum VolumeUnit implements MeasureUnit {
-    LITER(BigDecimal.ONE, "L"), MILLILITER(new BigDecimal("0.001"), "mL"), CUBICMETER(new BigDecimal("1000"), "m3");
-
-    private BigDecimal ratio;
-    private String symbol;
-
-    VolumeUnit(BigDecimal ratio, String symbol) {
-      this.ratio = ratio;
-      this.symbol = symbol;
-    }
-
-    @Override
-    public BigDecimal getRatio() {
-      return this.ratio;
-    }
-
-    @Override
-    public String getName() {
-      return super.name();
-    }
-
-    @Override
-    public String getSymbol() {
-      return this.symbol;
-    }
-
-    @Override
-    public MeasureDimension getDimension() {
-      return MeasureDimension.VOLUME;
-    }
-  }
-
-  public static enum LengthUnit implements MeasureUnit {
-    METER(BigDecimal.ONE, "m"), CENTIMETER(new BigDecimal("0.01"), "cm"), MILIMETER(new BigDecimal("0.001"), "mm");
-
-    private BigDecimal ratio;
-    private String symbol;
-
-    LengthUnit(BigDecimal ratio, String symbol) {
-      this.ratio = ratio;
-      this.symbol = symbol;
-    }
-
-    @Override
-    public BigDecimal getRatio() {
-      return this.ratio;
-    }
-
-    @Override
-    public String getName() {
-      return super.name();
-    }
-
-    @Override
-    public String getSymbol() {
-      return this.symbol;
-    }
-
-    @Override
-    public MeasureDimension getDimension() {
-      return MeasureDimension.LENGTH;
-    }
-  }
-
-  public static enum AreaUnit implements MeasureUnit {
-    SQUAREMETER(BigDecimal.ONE, "m2");
-
-    private BigDecimal ratio;
-    private String symbol;
-
-    AreaUnit(BigDecimal ratio, String symbol) {
-      this.ratio = ratio;
-      this.symbol = symbol;
-    }
-
-    @Override
-    public BigDecimal getRatio() {
-      return this.ratio;
-    }
-
-    @Override
-    public String getName() {
-      return super.name();
-    }
-
-    @Override
-    public String getSymbol() {
-      return this.symbol;
-    }
-
-    @Override
-    public MeasureDimension getDimension() {
-      return MeasureDimension.AREA;
-    }
   }
 
   public static MeasureUnit valueOf(String name) throws RFWCriticalException {
@@ -387,7 +167,7 @@ public final class MeasureRuler {
         startWeight = BigDecimal.ONE;
         endWeight = BigDecimal.ONE;
       } else {
-        if (equivalence == null) throw new RFWValidationException("Não é possível converter entre Dimensões diferentes sem uma regra de equivalência definida! (" + RFWBundle.get(startUnit.getDimension()) + " -> " + RFWBundle.get(endUnit.getDimension()) + "')");
+        if (equivalence == null) throw new RFWValidationException("Não é possível converter entre Dimensões diferentes sem uma regra de equivalência definida! (${0} -> ${1}')", new String[] { RFWBundle.get(startUnit.getDimension()), RFWBundle.get(endUnit.getDimension()) });
 
         HashMap<MeasureUnit, BigDecimal> eqHash = equivalence.getMeasureUnitHash();
         for (Entry<MeasureUnit, BigDecimal> entry : eqHash.entrySet()) {
@@ -485,7 +265,7 @@ public final class MeasureRuler {
     HashMap<MeasureUnit, BigDecimal> hash = null;
     if (equivalence != null) hash = cleanInvalidEquivalences(equivalence);
 
-    final LinkedHashSet<MeasureUnit> set = new LinkedHashSet<MeasureRuler.MeasureUnit>();
+    final LinkedHashSet<MeasureUnit> set = new LinkedHashSet<MeasureUnit>();
 
     if (dimension != null) {
       for (MeasureUnit unit : dimension.getUnits()) {
@@ -521,7 +301,7 @@ public final class MeasureRuler {
     HashMap<MeasureUnit, BigDecimal> hash = equivalence.getMeasureUnitHash();
     PreProcess.requiredNonNullCritical(hash, "A hash de equivalências não pode ser nula!");
 
-    final HashMap<MeasureUnit, BigDecimal> newHash = new HashMap<MeasureRuler.MeasureUnit, BigDecimal>();
+    final HashMap<MeasureUnit, BigDecimal> newHash = new HashMap<MeasureUnit, BigDecimal>();
     for (Entry<MeasureUnit, BigDecimal> entry : hash.entrySet()) {
       if (entry.getValue() != null && entry.getKey() != null && entry.getKey().getRatio() != null && entry.getKey().getRatio().compareTo(BigDecimal.ZERO) > 0 && entry.getKey().name() != null && entry.getKey().getSymbol() != null) {
         newHash.put(entry.getKey(), entry.getValue());

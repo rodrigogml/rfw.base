@@ -6,13 +6,13 @@ import java.util.Properties;
 
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.CustomMeasureUnit;
-import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.MeasureUnit;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
 import br.eng.rodrigogml.rfw.base.utils.BUString;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit;
 
 /**
  * Description: Classe estática para operações com o Bundle principal da aplicação.<br>
@@ -46,17 +46,24 @@ public class RFWBundle {
       // Busca a causa original, primeira exception
       if (key != null) msg = getReader().getProperty(key);
 
-      // Substitui os parametros
-      if (msg != null && params != null) {
-        for (int i = 0; i < params.length; i++) {
-          if (params[i] == null) params[i] = "<null>";
-          msg = msg.replace("${" + i + "}", params[i]);
-        }
-      }
-
+      msg = replaceParameters(msg, params);
     } catch (Throwable e) {
       RFWLogger.logException(e, "RFWLogger");
       // Não faz nada, só garante que se falharmos em localizar a msg vamos garantir que o método não falhe
+    }
+    return msg;
+  }
+
+  private static String replaceParameters(String msg, String[] params) {
+    // Substitui os parametros
+    if (msg != null && params != null) {
+      for (int i = 0; i < params.length; i++) {
+        if (params[i] == null) {
+          params[i] = "<null>";
+        }
+
+        msg = msg.replace("${" + i + "}", params[i]);
+      }
     }
     return msg;
   }
@@ -89,13 +96,7 @@ public class RFWBundle {
         }
 
         // Substitui os parametros
-        final String[] params = e.getParams();
-        if (msg != null && params != null) {
-          for (int i = 0; i < params.length; i++) {
-            if (params[i] == null) params[i] = "<null>";
-            msg = msg.replace("${" + i + "}", params[i]);
-          }
-        }
+        replaceParameters(msg, e.getParams());
 
         if (msg != null) {
           // Substitui variáveis da exception de validação
