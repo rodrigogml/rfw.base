@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Locale;
 
 import br.eng.rodrigogml.rfw.base.utils.BUArray;
-import br.eng.rodrigogml.rfw.kernel.dao.annotations.rfwmeta.RFWMetaCollectionField;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaCollectionField;
 
 /**
  * Description: DataFormater utilizado para exibir o conteúdo de uma Lista de enumerations, normalmente é anotado com {@link RFWMetaCollectionField}.<br>
