@@ -34,7 +34,6 @@ import br.eng.rodrigogml.rfw.base.dao.DAOMap.DAOMapTable;
 import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAOConverter;
 import br.eng.rodrigogml.rfw.base.dao.interfaces.DAOResolver;
 import br.eng.rodrigogml.rfw.base.dao.interfaces.RFWDAOConverterInterface;
-import br.eng.rodrigogml.rfw.base.utils.BUArray;
 import br.eng.rodrigogml.rfw.base.utils.BUEncrypter;
 import br.eng.rodrigogml.rfw.base.utils.BUFile;
 import br.eng.rodrigogml.rfw.base.utils.BUReflex;
@@ -48,6 +47,7 @@ import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaCollectionField;
 import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaEncrypt;
 import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaRelationshipField;
 import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaRelationshipField.RelationshipTypes;
+import br.eng.rodrigogml.rfw.kernel.utils.RUArray;
 import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
 import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWMO;
@@ -247,7 +247,7 @@ public final class RFWDAO<VO extends RFWVO> {
 
   public void massUpdate(Map<String, Object> setValues, RFWMO mo) throws RFWException {
     String[] updateAttributes = setValues.keySet().toArray(new String[0]);
-    updateAttributes = BUArray.concatAll(updateAttributes, mo.getAttributes().toArray(new String[0]));
+    updateAttributes = RUArray.concatAll(updateAttributes, mo.getAttributes().toArray(new String[0]));
     final DAOMap map = createDAOMap(this.type, updateAttributes);
 
     try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createMassUpdateStatement(conn, map, setValues, mo, this.type, dialect)) {
@@ -1073,7 +1073,7 @@ public final class RFWDAO<VO extends RFWVO> {
     try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createSelectStatement(conn, map, attributes, true, mo, null, null, null, null, dialect); ResultSet rs = stmt.executeQuery()) {
       final List<RFWVO> list = mountVO(rs, map, null);
       if (list.size() > 1) {
-        throw new RFWCriticalException("Encontrado mais de um objeto em uma busca por ID.", new String[] { "" + id, BUArray.concatArrayIntoString(attributes, ",") });
+        throw new RFWCriticalException("Encontrado mais de um objeto em uma busca por ID.", new String[] { "" + id, RUArray.concatArrayIntoString(attributes, ",") });
       } else if (list.size() == 1) {
         return (VO) list.get(0);
       }
@@ -1096,7 +1096,7 @@ public final class RFWDAO<VO extends RFWVO> {
     if (id == null) throw new NullPointerException("ID can't be null!");
 
     final String[] attForUpdate = RUReflex.getRFWVOUpdateAttributes(type);
-    attributes = BUArray.concatAll(new String[0], attributes, attForUpdate);
+    attributes = RUArray.concatAll(new String[0], attributes, attForUpdate);
 
     final DAOMap map = createDAOMap(this.type, attributes);
 
@@ -1107,7 +1107,7 @@ public final class RFWDAO<VO extends RFWVO> {
     try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createSelectStatement(conn, map, attributes, true, mo, null, null, null, null, dialect); ResultSet rs = stmt.executeQuery()) {
       final List<RFWVO> list = mountVO(rs, map, null);
       if (list.size() > 1) {
-        throw new RFWCriticalException("Encontrado mais de um objeto em uma busca por ID.", new String[] { "" + id, BUArray.concatArrayIntoString(attributes, ",") });
+        throw new RFWCriticalException("Encontrado mais de um objeto em uma busca por ID.", new String[] { "" + id, RUArray.concatArrayIntoString(attributes, ",") });
       } else if (list.size() == 1) {
         final VO v = (VO) list.get(0);
         v.setFullLoaded(true);
@@ -1144,8 +1144,8 @@ public final class RFWDAO<VO extends RFWVO> {
   public List<Long> findIDs(RFWMO mo, RFWOrderBy orderBy, Integer offSet, Integer limit) throws RFWException {
     // Primeiro vamos buscar apenas os ids do objeto raiz que satisfazem as condições
     String[] moAtt = new String[0];
-    if (mo != null) moAtt = BUArray.concatAll(moAtt, mo.getAttributes().toArray(new String[0]));
-    if (orderBy != null) moAtt = BUArray.concatAll(moAtt, orderBy.getAttributes().toArray(new String[0]));
+    if (mo != null) moAtt = RUArray.concatAll(moAtt, mo.getAttributes().toArray(new String[0]));
+    if (orderBy != null) moAtt = RUArray.concatAll(moAtt, orderBy.getAttributes().toArray(new String[0]));
 
     final DAOMap map = createDAOMap(this.type, moAtt);
 
@@ -1200,8 +1200,8 @@ public final class RFWDAO<VO extends RFWVO> {
   public List<VO> findList(RFWMO mo, RFWOrderBy orderBy, String[] attributes, Integer offSet, Integer limit) throws RFWException {
     if (mo == null) mo = new RFWMO();
     // Primeiro vamos buscar apenas os ids do objeto raiz que satisfazem as condições
-    String[] atts = BUArray.concatAll(new String[0], mo.getAttributes().toArray(new String[0]), attributes);
-    if (orderBy != null) atts = BUArray.concatAll(atts, orderBy.getAttributes().toArray(new String[0]));
+    String[] atts = RUArray.concatAll(new String[0], mo.getAttributes().toArray(new String[0]), attributes);
+    if (orderBy != null) atts = RUArray.concatAll(atts, orderBy.getAttributes().toArray(new String[0]));
     final DAOMap map = createDAOMap(this.type, atts);
 
     try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createSelectStatement(conn, map, new String[] { "id" }, false, mo, orderBy, offSet, limit, null, dialect); ResultSet rs = stmt.executeQuery()) {
@@ -1224,7 +1224,7 @@ public final class RFWDAO<VO extends RFWVO> {
         if (attributes == null) {
           atts = orderBy.getAttributes().toArray(new String[0]);
         } else {
-          atts = BUArray.concatAll(attributes, orderBy.getAttributes().toArray(new String[0]));
+          atts = RUArray.concatAll(attributes, orderBy.getAttributes().toArray(new String[0]));
         }
       } else {
         atts = attributes;
@@ -1250,16 +1250,16 @@ public final class RFWDAO<VO extends RFWVO> {
     String[] attsFields = new String[0];
     if (fields == null) throw new RFWCriticalException("O parâmetro 'fields' não pode ser nulo!");
     for (RFWField field : fields) {
-      attsFields = BUArray.concatAll(attsFields, field.getAttributes().toArray(new String[0]));
+      attsFields = RUArray.concatAll(attsFields, field.getAttributes().toArray(new String[0]));
     }
     String[] attsGroupBy = new String[0];
     if (groupBy != null) for (RFWField field : groupBy) {
-      attsGroupBy = BUArray.concatAll(attsGroupBy, field.getAttributes().toArray(new String[0]));
+      attsGroupBy = RUArray.concatAll(attsGroupBy, field.getAttributes().toArray(new String[0]));
     }
     String[] attsOrderBy = new String[0];
     if (orderBy != null) attsOrderBy = orderBy.getAttributes().toArray(new String[0]);
 
-    String[] attsTotal = BUArray.concatAll(attsMO, attsFields, attsOrderBy, attsGroupBy);
+    String[] attsTotal = RUArray.concatAll(attsMO, attsFields, attsOrderBy, attsGroupBy);
 
     // Mapeamos todos os objetos necessários
     final DAOMap map = createDAOMap(this.type, attsTotal);
@@ -1291,7 +1291,7 @@ public final class RFWDAO<VO extends RFWVO> {
   public VO findUniqueMatch(RFWMO mo, String[] attributes) throws RFWException {
     if (mo == null) mo = new RFWMO();
     // Primeiro vamos buscar apenas os ids do objeto raiz que satisfazem as condições
-    final DAOMap map = createDAOMap(this.type, BUArray.concatAll(new String[0], mo.getAttributes().toArray(new String[0]), attributes));
+    final DAOMap map = createDAOMap(this.type, RUArray.concatAll(new String[0], mo.getAttributes().toArray(new String[0]), attributes));
 
     try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createSelectStatement(conn, map, new String[] { "id" }, false, mo, null, null, null, null, dialect); ResultSet rs = stmt.executeQuery()) {
 
@@ -1325,7 +1325,7 @@ public final class RFWDAO<VO extends RFWVO> {
   public VO findUniqueMatchForUpdate(RFWMO mo, String[] attributes) throws RFWException {
     if (mo == null) mo = new RFWMO();
     // Primeiro vamos buscar apenas os ids do objeto raiz que satisfazem as condições
-    final DAOMap map = createDAOMap(this.type, BUArray.concatAll(new String[0], mo.getAttributes().toArray(new String[0]), attributes));
+    final DAOMap map = createDAOMap(this.type, RUArray.concatAll(new String[0], mo.getAttributes().toArray(new String[0]), attributes));
 
     try (Connection conn = ds.getConnection(); PreparedStatement stmt = DAOMap.createSelectStatement(conn, map, new String[] { "id" }, false, mo, null, null, null, null, dialect); ResultSet rs = stmt.executeQuery()) {
       DAOMapTable mTable = map.getMapTableByPath("");

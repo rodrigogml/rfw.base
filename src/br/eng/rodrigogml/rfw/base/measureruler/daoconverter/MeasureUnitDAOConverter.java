@@ -2,9 +2,9 @@ package br.eng.rodrigogml.rfw.base.measureruler.daoconverter;
 
 import br.eng.rodrigogml.rfw.base.dao.interfaces.RFWDAOConverterInterface;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
-import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler;
 import br.eng.rodrigogml.rfw.base.measureruler.vo.CustomMeasureUnitGeneric;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.measureruler.MeasureRuler;
 import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit;
 import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.MeasureDimension;
 

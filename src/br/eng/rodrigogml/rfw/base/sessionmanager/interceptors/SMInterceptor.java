@@ -13,11 +13,11 @@ import br.eng.rodrigogml.rfw.base.sessionmanager.SessionManager;
 import br.eng.rodrigogml.rfw.base.sessionmanager.annotations.Security;
 import br.eng.rodrigogml.rfw.base.sessionmanager.annotations.Security.SecurityAction;
 import br.eng.rodrigogml.rfw.base.sessionmanager.interfaces.SessionVO;
-import br.eng.rodrigogml.rfw.base.utils.BUArray;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUArray;
 import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWRecursiveClonable;
 
@@ -69,7 +69,7 @@ public class SMInterceptor {
           // Se é uma chave válida, verificamos se a sessão é válida. Se a sessão não for válida o método lançará a exception
           ssVO = SessionManager.getSession((String) parameters[0]);
           // Verificamos se o usuário tem a chave definida
-          if (!ssVO.hasAccess(annSec.key())) throw new RFWWarningException("RFW_ERR_300070", new String[] { ssVO.getUser(), BUArray.concatArrayIntoString(annSec.key(), 999) });
+          if (!ssVO.hasAccess(annSec.key())) throw new RFWWarningException("RFW_ERR_300070", new String[] { ssVO.getUser(), RUArray.concatArrayIntoString(annSec.key(), 999) });
           // Se não deu exception, a transação é válida, registramos a sessão nesta Thread
           SessionManager.attachSessionToThread(Thread.currentThread(), ssVO.getUUID());
         }

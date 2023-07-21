@@ -15,11 +15,11 @@ import java.nio.charset.Charset;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import br.eng.rodrigogml.rfw.base.dataformatters.LocaleConverter;
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobMonitor;
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.dataformatters.LocaleConverter;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
