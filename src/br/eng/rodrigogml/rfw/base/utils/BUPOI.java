@@ -8,7 +8,7 @@ import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Cell;
 
-import br.eng.rodrigogml.rfw.base.bundle.RFWBundle;
+import br.eng.rodrigogml.rfw.kernel.bundle.RFWBundle;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 
 /**

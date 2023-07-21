@@ -20,6 +20,7 @@ import javax.mail.internet.MimeMessage;
 
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
 
 /**
  * Description: Classe utilitária para conter métodos de auxílio do serviço de e-mail.<BR>
@@ -285,7 +286,7 @@ public class BUMail {
    * @throws RFWException
    */
   public static String loadMessageTemplate(String templateResourceName, HashMap<String, String> fieldContents) throws RFWException {
-    String content = BUIO.readToString(BUReflex.getResourceAsStream(templateResourceName), StandardCharsets.UTF_8);
+    String content = BUIO.readToString(RUReflex.getResourceAsStream(templateResourceName), StandardCharsets.UTF_8);
     for (Entry<String, String> entry : fieldContents.entrySet()) {
       content = BUString.replaceAll(content, "${" + entry.getKey() + "}", entry.getValue());
     }

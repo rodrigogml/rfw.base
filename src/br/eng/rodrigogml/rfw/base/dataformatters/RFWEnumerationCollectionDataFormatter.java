@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import br.eng.rodrigogml.rfw.base.utils.BUArray;
+import br.eng.rodrigogml.rfw.kernel.dataformatters.RFWDataFormatter;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.rfwmeta.RFWMetaCollectionField;

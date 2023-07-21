@@ -3,8 +3,7 @@ package br.eng.rodrigogml.rfw.base.measureruler.vo;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import br.eng.rodrigogml.rfw.base.measureruler.MeasureRuler.CustomMeasureUnit;
-import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.MeasureUnit.MeasureDimension;
+import br.eng.rodrigogml.rfw.kernel.measureruler.interfaces.CustomMeasureUnit;
 
 /**
  * Description: Objeto imutável utilizado para definir uma unidade de medida personalizada.<br>

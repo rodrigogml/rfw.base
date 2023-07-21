@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map.Entry;
 
-import br.eng.rodrigogml.rfw.base.bundle.RFWBundle;
 import br.eng.rodrigogml.rfw.base.measureruler.interfaces.MeasureRulerEquivalenceInterface;
 import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.bundle.RFWBundle;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
@@ -33,14 +33,6 @@ public final class MeasureRuler {
    * Construtor privado para classe esttática.
    */
   private MeasureRuler() {
-  }
-
-  /**
-   * Interface abaixo da {@link MeasureUnit} simplesmente para diferenciar as unidades de medida padrão das {@link MeasureDimension#CUSTOM}.
-   *
-   * Nenhum método adicional.
-   */
-  public static interface CustomMeasureUnit extends MeasureUnit {
   }
 
   public static MeasureUnit valueOf(String name) throws RFWCriticalException {

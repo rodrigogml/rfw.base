@@ -1,6 +1,5 @@
 package br.eng.rodrigogml.rfw.base;
 
-import br.eng.rodrigogml.rfw.base.bundle.RFWBundle;
 import br.eng.rodrigogml.rfw.base.eventdispatcher.EventDispatcher;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.sessionmanager.SessionManager;
@@ -54,17 +53,6 @@ public class RFWDeprec {
     SessionManager.setTimeToLive(timeToLive);
     SessionManager.setBackOperation(backOperation);
     SessionManager.setTokenPrefix(tokenPrefix);
-  }
-
-  /**
-   * Este método inicializa {@link RFWBundle} com um novo arquivo.<br>
-   * Note que cada novo arquivo carregado é lido sobre o mesmo properties. Isso faz com que em caso de conflito de chaves o conteúdo do último arquivo lido se sobreponha. Embora pareça uma falha, a ideia é proposital, assim é possível substituir mensagens padrão do RFWDeprec pelo sistema sendo feito.
-   *
-   * @param bundleName
-   * @throws RFWException
-   */
-  public static void initializeBundle(String bundleName) throws RFWException {
-    RFWBundle.loadBundle(bundleName);
   }
 
   /**

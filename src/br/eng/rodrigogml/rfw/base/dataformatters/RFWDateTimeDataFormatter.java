@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 
 import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.dataformatters.RFWDataFormatter;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWRunTimeException;
 

@@ -2,6 +2,7 @@ package br.eng.rodrigogml.rfw.base.dataformatters;
 
 import java.util.Locale;
 
+import br.eng.rodrigogml.rfw.kernel.dataformatters.RFWDataFormatter;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 

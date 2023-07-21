@@ -291,20 +291,6 @@ public class BUString {
   }
 
   /**
-   * Converte o valor da enumeração em "chave" que nada mais é do que sua qualificação completa de class + enumeração + objeto da enumeração. Útil para IDs e para unificação na internacionalizações de labels.
-   *
-   * @param value enum desejado.
-   * @return String com da chave.
-   */
-  public static String getEnumKey(Enum<?> value) {
-    String enumkey = null;
-    if (value != null) {
-      enumkey = value.getDeclaringClass().getCanonicalName() + "." + value.name();
-    }
-    return enumkey;
-  }
-
-  /**
    * Converte o objeto que contém o valor da enumeração (a própria enumeração) em "chave".<br>
    * O mesmo que o método <code>getEnumKey()</code>, exceto pelo acrescimo do valor da enumeração ao final.
    *

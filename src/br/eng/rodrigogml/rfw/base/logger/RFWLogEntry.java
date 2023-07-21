@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
-import br.eng.rodrigogml.rfw.base.bundle.RFWBundle;
 import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.bundle.RFWBundle;
 
 /**
  * Description: VO para registrar uma entrada de LOG.<br>
