@@ -47,6 +47,7 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
 import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
 import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;
 import sun.security.pkcs11.wrapper.CK_SLOT_INFO;
@@ -832,7 +833,7 @@ public class BUCert {
     if (dt == null) {
       throw new RFWValidationException("RFW_ERR_000001");
     }
-    return BUDateTime.toLocalDateTime(dt, RFW.getZoneId());
+    return RUDateTime.toLocalDateTime(dt, RFW.getZoneId());
   }
 
   /**
@@ -851,7 +852,7 @@ public class BUCert {
     if (dt == null) {
       throw new RFWValidationException("RFW_ERR_000001");
     }
-    return BUDateTime.toLocalDateTime(dt, RFW.getZoneId());
+    return RUDateTime.toLocalDateTime(dt, RFW.getZoneId());
   }
 
   /**

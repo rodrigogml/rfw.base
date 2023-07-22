@@ -12,10 +12,10 @@ import java.util.List;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.scheduler.interfaces.SchedulerListener;
 import br.eng.rodrigogml.rfw.base.scheduler.interfaces.SchedulerTask;
-import br.eng.rodrigogml.rfw.base.utils.BUDateTime;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
 
 /**
  * Description: Classe de controle das tarefas agendadas do sistema. Reponsável por carrega-las, inicial-las e executa-las conforme suas regras.<br>
@@ -208,12 +208,12 @@ public class SchedulerController {
       // Antes de incrementar salvamos o dia da semana, e quantas vezes esse dia da semana apareceu. Uma indica o dia da semana e a outra quantas vezes esse dia da semana já apareceu dentro do mês.
       // NOTE: que obtemos esse valor da data de agendamento original e não da última execução. Isso porque a data original pode representar a "quinta" semana, e a última execução pode indicar apenas a "quarta" caso aquele mês não tenha a quinta. Para manter sempre o dia definido no início temos que usar a data original.
       GregorianCalendar gc2 = new GregorianCalendar();
-      gc2.setTime(BUDateTime.toDate(task.getScheduleTime()));
+      gc2.setTime(RUDateTime.toDate(task.getScheduleTime()));
       int dwm = gc2.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH); // A "semana do mês", que indica sempre o valor de "dia do mês" / 7 - só a parte inteira. O que junto com o Day_OF_Week ajuda a indicar qual é a ocorrencia daquele dia da semana dentro do mês.
       int dw = gc2.get(GregorianCalendar.DAY_OF_WEEK);
       // Avançamos quantos meses forem solicitados
       GregorianCalendar gc = new GregorianCalendar();
-      gc.setTime(BUDateTime.toDate(baseTime));
+      gc.setTime(RUDateTime.toDate(baseTime));
       gc.add(GregorianCalendar.MONTH, skipRecurrence);
       // Salvamos o mês antes de acertar o dia da semana / mês
       int month = gc.get(GregorianCalendar.MONTH);
@@ -224,7 +224,7 @@ public class SchedulerController {
       while (month != gc.get(GregorianCalendar.MONTH)) {
         gc.add(GregorianCalendar.WEEK_OF_YEAR, -1);
       }
-      nextExecution = BUDateTime.toLocalDateTime(gc.getTime());
+      nextExecution = RUDateTime.toLocalDateTime(gc.getTime());
     }
     return nextExecution;
   }

@@ -13,6 +13,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BUDateTimeTest {
 
@@ -30,13 +32,13 @@ public class BUDateTimeTest {
     LocalDate localDate = LocalDate.of(1982, Month.MARCH, 25);
 
     for (int i = 0; i < dates.length; i++) {
-      Date tmpDate = BUDateTime.parseDate(dates[i]);
+      Date tmpDate = RUDateTime.parseDate(dates[i]);
       assertTrue("Falha na Date: " + i, tmpDate.compareTo(date) == 0);
 
-      LocalDateTime tmpLocalDateTime = BUDateTime.parseLocalDateTime(dates[i]);
+      LocalDateTime tmpLocalDateTime = RUDateTime.parseLocalDateTime(dates[i]);
       assertTrue("Falha na LocalDateTime: " + i, tmpLocalDateTime.compareTo(localDateTime) == 0);
 
-      LocalDate tmpLocalDate = BUDateTime.parseLocalDate(dates[i]);
+      LocalDate tmpLocalDate = RUDateTime.parseLocalDate(dates[i]);
       assertTrue("Falha na LocalDate: " + i, tmpLocalDate.compareTo(localDate) == 0);
     }
   }
@@ -57,13 +59,13 @@ public class BUDateTimeTest {
     LocalDate localDate = LocalDate.of(1982, Month.MARCH, 25);
 
     for (int i = 0; i < dates.length; i++) {
-      Date tmpDate = BUDateTime.parseDate(dates[i]);
+      Date tmpDate = RUDateTime.parseDate(dates[i]);
       assertTrue("Falha na Date: " + i, tmpDate.compareTo(date) == 0);
 
-      LocalDateTime tmpLocalDateTime = BUDateTime.parseLocalDateTime(dates[i]);
+      LocalDateTime tmpLocalDateTime = RUDateTime.parseLocalDateTime(dates[i]);
       assertTrue("Falha na LocalDateTime: " + i, tmpLocalDateTime.compareTo(localDateTime) == 0);
 
-      LocalDate tmpLocalDate = BUDateTime.parseLocalDate(dates[i]);
+      LocalDate tmpLocalDate = RUDateTime.parseLocalDate(dates[i]);
       assertTrue("Falha na LocalDate: " + i, tmpLocalDate.compareTo(localDate) == 0);
     }
   }
