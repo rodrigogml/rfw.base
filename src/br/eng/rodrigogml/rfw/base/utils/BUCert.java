@@ -1,6 +1,5 @@
 package br.eng.rodrigogml.rfw.base.utils;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyManagementException;
@@ -8,10 +7,7 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Provider;
-import java.security.ProviderException;
 import java.security.SecureRandom;
-import java.security.Security;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
@@ -21,7 +17,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManager;
@@ -46,15 +41,14 @@ import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
-import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
-import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
-import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;
-import sun.security.pkcs11.wrapper.CK_SLOT_INFO;
-import sun.security.pkcs11.wrapper.CK_TOKEN_INFO;
-import sun.security.pkcs11.wrapper.PKCS11;
-import sun.security.pkcs11.wrapper.PKCS11Constants;
-import sun.security.pkcs11.wrapper.PKCS11Exception;
+//import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
+//import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;
+//import sun.security.pkcs11.wrapper.CK_SLOT_INFO;
+//import sun.security.pkcs11.wrapper.CK_TOKEN_INFO;
+//import sun.security.pkcs11.wrapper.PKCS11;
+//import sun.security.pkcs11.wrapper.PKCS11Constants;
+//import sun.security.pkcs11.wrapper.PKCS11Exception;
 
 /**
  * Description: Classe utilitária com os métodos de manipulação de certificados.<BR>
@@ -279,345 +273,352 @@ public class BUCert {
     }
   }
 
-  /**
-   * Obtem os slots encontrados de uma biblioteca PKCS11.<br>
-   *
-   *
-   * @param librarypath caminho completo para a biblioteca do equipamento (Token/SmartCard), .dll para Windows ou .so para linux.
-   * @return Slots que podem ser utilizados para carregar o provider desejado. Retorna um Array de tamanho 0 se conseguir carregar a biblioteca mas não encontrar nenhum dispositivo, como nenhum cartão inserido ou tokenUSB plugado.
-   * @throws RFWException Lançado caso ocorra algum problema ao executar a operação.
-   */
-  public static long[] getSlotsPKCS11(String librarypath) throws RFWException {
-    CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
-    initArgs.flags = PKCS11Constants.CKF_OS_LOCKING_OK;
+  // /**
+  // * Obtem os slots encontrados de uma biblioteca PKCS11.<br>
+  // *
+  // *
+  // * @param librarypath caminho completo para a biblioteca do equipamento (Token/SmartCard), .dll para Windows ou .so para linux.
+  // * @return Slots que podem ser utilizados para carregar o provider desejado. Retorna um Array de tamanho 0 se conseguir carregar a biblioteca mas não encontrar nenhum dispositivo, como nenhum cartão inserido ou tokenUSB plugado.
+  // * @throws RFWException Lançado caso ocorra algum problema ao executar a operação.
+  // */
+  // public static long[] getSlotsPKCS11(String librarypath) throws RFWException {
+  // CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
+  // initArgs.flags = PKCS11Constants.CKF_OS_LOCKING_OK;
+  //
+  // String functionList = "C_GetFunctionList";
+  // PKCS11 tmpPKCS11 = null;
+  // long[] slotList = null;
+  // try {
+  // tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, false);
+  // } catch (PKCS11Exception e) {
+  // try {
+  // initArgs = null;
+  // tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, true);
+  // } catch (PKCS11Exception ex) {
+  // throw new RFWCriticalException("RFW_ERR_200086", ex);
+  // } catch (IOException ex) {
+  // throw new RFWWarningException("RFW_ERR_200086", ex);
+  // }
+  // } catch (IOException e) {
+  // throw new RFWWarningException("RFW_ERR_200086", e);
+  // }
+  //
+  // try {
+  // slotList = tmpPKCS11.C_GetSlotList(true);
+  // } catch (PKCS11Exception ex) {
+  // throw new RFWWarningException("RFW_ERR_200086", ex);
+  // }
+  // return slotList;
+  // }
 
-    String functionList = "C_GetFunctionList";
-    PKCS11 tmpPKCS11 = null;
-    long[] slotList = null;
-    try {
-      tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, false);
-    } catch (PKCS11Exception e) {
-      try {
-        initArgs = null;
-        tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, true);
-      } catch (PKCS11Exception ex) {
-        throw new RFWCriticalException("RFW_ERR_200086", ex);
-      } catch (IOException ex) {
-        throw new RFWWarningException("RFW_ERR_200086", ex);
-      }
-    } catch (IOException e) {
-      throw new RFWWarningException("RFW_ERR_200086", e);
-    }
+  // /**
+  // * Obtem um objeto com as informações do token de um determinado slot de uma biblioteca PKCS11.<br>
+  // *
+  // *
+  // * @param librarypath caminho completo para a biblioteca do equipamento (Token/SmartCard), .dll para Windows ou .so para linux.
+  // * @param slot número do slot do device que desejamos obter informações do token inserido.
+  // * @return Objeto com as informações obtidas do device plugado nesse slot.
+  // * @throws RFWException Lançado caso ocorra algum problema ao executar a operação.
+  // */
+  // public static CK_TOKEN_INFO getTokenInfoPKCS11(String librarypath, long slot) throws RFWException {
+  // CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
+  // initArgs.flags = PKCS11Constants.CKF_OS_LOCKING_OK;
+  //
+  // String functionList = "C_GetFunctionList";
+  // PKCS11 tmpPKCS11 = null;
+  // try {
+  // tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, false);
+  // } catch (PKCS11Exception e) {
+  // try {
+  // initArgs = null;
+  // tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, true);
+  // } catch (PKCS11Exception ex) {
+  // throw new RFWCriticalException("RFW_ERR_200086", ex);
+  // } catch (IOException ex) {
+  // throw new RFWWarningException("RFW_ERR_200086", ex);
+  // }
+  // } catch (IOException e) {
+  // throw new RFWWarningException("RFW_ERR_200086", e);
+  // }
+  //
+  // try {
+  // return tmpPKCS11.C_GetTokenInfo(slot);
+  // } catch (PKCS11Exception ex) {
+  // throw new RFWWarningException("RFW_ERR_200086", ex);
+  // }
+  // }
 
-    try {
-      slotList = tmpPKCS11.C_GetSlotList(true);
-    } catch (PKCS11Exception ex) {
-      throw new RFWWarningException("RFW_ERR_200086", ex);
-    }
-    return slotList;
-  }
+  // /**
+  // * Obtem um objeto com as informações de um determinado slot de uma biblioteca PKCS11.<br>
+  // *
+  // *
+  // * @param librarypath caminho completo para a biblioteca do equipamento (Token/SmartCard), .dll para Windows ou .so para linux.
+  // * @param slot número do slot do device que desejamos obter informações.
+  // * @return Objeto com as informações obtidas do device plugado nesse slot.
+  // * @throws RFWException Lançado caso ocorra algum problema ao executar a operação.
+  // */
+  // public static CK_SLOT_INFO getSlotsInfoPKCS11(String librarypath, long slot) throws RFWException {
+  // CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
+  // initArgs.flags = PKCS11Constants.CKF_OS_LOCKING_OK;
+  //
+  // String functionList = "C_GetFunctionList";
+  // PKCS11 tmpPKCS11 = null;
+  // try {
+  // tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, false);
+  // } catch (PKCS11Exception e) {
+  // try {
+  // initArgs = null;
+  // tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, true);
+  // } catch (PKCS11Exception ex) {
+  // throw new RFWCriticalException("RFW_ERR_200086", ex);
+  // } catch (IOException ex) {
+  // throw new RFWWarningException("RFW_ERR_200086", ex);
+  // }
+  // } catch (IOException e) {
+  // throw new RFWWarningException("RFW_ERR_200086", e);
+  // }
+  //
+  // try {
+  // return tmpPKCS11.C_GetSlotInfo(slot);
+  // } catch (PKCS11Exception ex) {
+  // throw new RFWWarningException("RFW_ERR_200086", ex);
+  // }
+  // }
 
-  /**
-   * Obtem um objeto com as informações do token de um determinado slot de uma biblioteca PKCS11.<br>
-   *
-   *
-   * @param librarypath caminho completo para a biblioteca do equipamento (Token/SmartCard), .dll para Windows ou .so para linux.
-   * @param slot número do slot do device que desejamos obter informações do token inserido.
-   * @return Objeto com as informações obtidas do device plugado nesse slot.
-   * @throws RFWException Lançado caso ocorra algum problema ao executar a operação.
-   */
-  public static CK_TOKEN_INFO getTokenInfoPKCS11(String librarypath, long slot) throws RFWException {
-    CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
-    initArgs.flags = PKCS11Constants.CKF_OS_LOCKING_OK;
+  // /**
+  // * Método auxiliar que retorna uma lista com todos os atributos que puderam ser lidos do objeto encontrado dentro de um Token.<br>
+  // * <b>Note que nem todos os atributos são suportados por todos os tipos de objetos, esse método ignora os atributos que resultaram em erro automaticamente.</b><br>
+  // * Antes de chamar esse método o método C_FindObjects já deve ter sido evocado e, depois do retorno desse método, deve ser fechado e tratado normalmente.
+  // *
+  // * @param tmpPKCS11 objeto com sessão aberta para o device.
+  // * @param session ID de sessão aberta para a a consulta.
+  // * @param findindex índice do objeto retornado na busca para obter os parametros.
+  // *
+  // * @return Lista com todos os atributos que retornaram sem erro na consulta do objeto.
+  // */
+  // private static List<CK_ATTRIBUTE> getTokenQueryAttributesPKCS11(PKCS11 tmpPKCS11, long session, long findindex) {
+  // final CK_ATTRIBUTE[] attributes = new CK_ATTRIBUTE[] { new CK_ATTRIBUTE(PKCS11Constants.CKA_AC_ISSUER), new CK_ATTRIBUTE(PKCS11Constants.CKA_ALWAYS_SENSITIVE), new CK_ATTRIBUTE(PKCS11Constants.CKA_APPLICATION), new CK_ATTRIBUTE(PKCS11Constants.CKA_ATTR_TYPES), new CK_ATTRIBUTE(PKCS11Constants.CKA_AUTH_PIN_FLAGS), new CK_ATTRIBUTE(PKCS11Constants.CKA_BASE), new
+  // CK_ATTRIBUTE(PKCS11Constants.CKA_CERTIFICATE_TYPE), new CK_ATTRIBUTE(PKCS11Constants.CKA_CLASS), new CK_ATTRIBUTE(PKCS11Constants.CKA_COEFFICIENT), new CK_ATTRIBUTE(PKCS11Constants.CKA_DECRYPT), new CK_ATTRIBUTE(PKCS11Constants.CKA_DERIVE), new CK_ATTRIBUTE(PKCS11Constants.CKA_EC_PARAMS), new CK_ATTRIBUTE(PKCS11Constants.CKA_EC_POINT), new CK_ATTRIBUTE(PKCS11Constants.CKA_ECDSA_PARAMS), new
+  // CK_ATTRIBUTE(PKCS11Constants.CKA_ENCRYPT), new CK_ATTRIBUTE(PKCS11Constants.CKA_END_DATE), new CK_ATTRIBUTE(PKCS11Constants.CKA_EXPONENT_1), new CK_ATTRIBUTE(PKCS11Constants.CKA_EXPONENT_2), new CK_ATTRIBUTE(PKCS11Constants.CKA_EXTRACTABLE),
+  // new CK_ATTRIBUTE(PKCS11Constants.CKA_HAS_RESET), new CK_ATTRIBUTE(PKCS11Constants.CKA_HW_FEATURE_TYPE), new CK_ATTRIBUTE(PKCS11Constants.CKA_ID), new CK_ATTRIBUTE(PKCS11Constants.CKA_ISSUER), new CK_ATTRIBUTE(PKCS11Constants.CKA_KEY_GEN_MECHANISM), new CK_ATTRIBUTE(PKCS11Constants.CKA_KEY_TYPE), new CK_ATTRIBUTE(PKCS11Constants.CKA_LABEL), new CK_ATTRIBUTE(PKCS11Constants.CKA_LOCAL), new
+  // CK_ATTRIBUTE(PKCS11Constants.CKA_MODIFIABLE), new CK_ATTRIBUTE(PKCS11Constants.CKA_MODULUS), new CK_ATTRIBUTE(PKCS11Constants.CKA_MODULUS_BITS), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_BASE), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_CERT_MD5_HASH), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_CERT_SHA1_HASH), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_DB), new
+  // CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_TRUST_BASE), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_TRUST_CLIENT_AUTH), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_TRUST_CODE_SIGNING),
+  // new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_TRUST_EMAIL_PROTECTION), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_TRUST_SERVER_AUTH), new CK_ATTRIBUTE(PKCS11Constants.CKA_NEVER_EXTRACTABLE), new CK_ATTRIBUTE(PKCS11Constants.CKA_OBJECT_ID), new CK_ATTRIBUTE(PKCS11Constants.CKA_OWNER), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIME), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIME_1), new
+  // CK_ATTRIBUTE(PKCS11Constants.CKA_PRIME_2), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIME_BITS), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIVATE), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIVATE_EXPONENT), new CK_ATTRIBUTE(PKCS11Constants.CKA_PUBLIC_EXPONENT), new CK_ATTRIBUTE(PKCS11Constants.CKA_RESET_ON_INIT), new CK_ATTRIBUTE(PKCS11Constants.CKA_SECONDARY_AUTH), new
+  // CK_ATTRIBUTE(PKCS11Constants.CKA_SENSITIVE), new CK_ATTRIBUTE(PKCS11Constants.CKA_SERIAL_NUMBER), new CK_ATTRIBUTE(PKCS11Constants.CKA_SIGN), new CK_ATTRIBUTE(PKCS11Constants.CKA_SIGN_RECOVER), new CK_ATTRIBUTE(PKCS11Constants.CKA_START_DATE),
+  // new CK_ATTRIBUTE(PKCS11Constants.CKA_SUB_PRIME_BITS), new CK_ATTRIBUTE(PKCS11Constants.CKA_SUBJECT), new CK_ATTRIBUTE(PKCS11Constants.CKA_SUBPRIME), new CK_ATTRIBUTE(PKCS11Constants.CKA_TOKEN), new CK_ATTRIBUTE(PKCS11Constants.CKA_TRUSTED), new CK_ATTRIBUTE(PKCS11Constants.CKA_UNWRAP), new CK_ATTRIBUTE(PKCS11Constants.CKA_VALUE), new CK_ATTRIBUTE(PKCS11Constants.CKA_VALUE_BITS), new
+  // CK_ATTRIBUTE(PKCS11Constants.CKA_VALUE_LEN), new CK_ATTRIBUTE(PKCS11Constants.CKA_VENDOR_DEFINED), new CK_ATTRIBUTE(PKCS11Constants.CKA_VERIFY), new CK_ATTRIBUTE(PKCS11Constants.CKA_VERIFY_RECOVER), new CK_ATTRIBUTE(PKCS11Constants.CKA_WRAP) };
+  // final List<CK_ATTRIBUTE> resultlist = new ArrayList<>();
+  //
+  // // Itera cada attriuto em busca dos atributos válidos para este objeto
+  // for (int i = 0; i < attributes.length; i++) {
+  // CK_ATTRIBUTE[] cka = new CK_ATTRIBUTE[1];
+  // cka[0] = attributes[i];
+  // try {
+  // // Lê os objetos
+  // tmpPKCS11.C_GetAttributeValue(session, findindex, cka);
+  // resultlist.add(cka[0]);
+  // } catch (PKCS11Exception e) {
+  // // se não é suportado nem verificamos erro, apenas seguimos para o próximo atributo e não o adicionamos na lista de retorno
+  // }
+  // }
+  // // retorna lista final
+  // return resultlist;
+  // }
 
-    String functionList = "C_GetFunctionList";
-    PKCS11 tmpPKCS11 = null;
-    try {
-      tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, false);
-    } catch (PKCS11Exception e) {
-      try {
-        initArgs = null;
-        tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, true);
-      } catch (PKCS11Exception ex) {
-        throw new RFWCriticalException("RFW_ERR_200086", ex);
-      } catch (IOException ex) {
-        throw new RFWWarningException("RFW_ERR_200086", ex);
-      }
-    } catch (IOException e) {
-      throw new RFWWarningException("RFW_ERR_200086", e);
-    }
+  // /**
+  // * Conecta-se no dispositivo e obtem uma lista de atributos de cada objeto encontrado no dispositivo.
+  // *
+  // * @param librarypath biblioteca de acesso ao dispositivo
+  // * @param slot número do slot do objeto.
+  // * @return Lista com uma lista de atributos encontrados em cada objeto.
+  // * @throws RFWException Lançado caso não seja possível concluir algum passo.
+  // */
+  // public static List<List<CK_ATTRIBUTE>> getSlotsObjectsInfoPKCS11(String librarypath, long slot) throws RFWException {
+  // CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
+  // initArgs.flags = PKCS11Constants.CKF_OS_LOCKING_OK;
+  //
+  // // Tenta criar o acesso para o device e slot indicados
+  // String functionList = "C_GetFunctionList";
+  // PKCS11 tmpPKCS11 = null;
+  // try {
+  // tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, false);
+  // } catch (PKCS11Exception e) {
+  // try {
+  // initArgs = null;
+  // tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, true);
+  // } catch (PKCS11Exception ex) {
+  // throw new RFWCriticalException("RFW_ERR_200086", ex);
+  // } catch (IOException ex) {
+  // throw new RFWWarningException("RFW_ERR_200086", ex);
+  // }
+  // } catch (IOException e) {
+  // throw new RFWWarningException("RFW_ERR_200086", e);
+  // }
+  //
+  // long session = -1;
+  // try {
+  // // Abre a sessão com o dispositivo
+  // session = tmpPKCS11.C_OpenSession(slot, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
+  //
+  // // Cria o filtro dos objetos que queremos buscar
+  // CK_ATTRIBUTE[] attributes = new CK_ATTRIBUTE[1];
+  // attributes[0] = new CK_ATTRIBUTE();
+  // attributes[0].type = PKCS11Constants.CKA_TOKEN;
+  // attributes[0].pValue = true;
+  // tmpPKCS11.C_FindObjectsInit(session, attributes);
+  //
+  // // Lista que retornará com as informações
+  // final List<List<CK_ATTRIBUTE>> objectsinfolist = new ArrayList<>();
+  //
+  // // Buscamos os objetos
+  // int lastindex = 1;
+  // while (true) {
+  // long[] keyhandles = tmpPKCS11.C_FindObjects(session, lastindex++);
+  // if (keyhandles.length == 0) break;
+  //
+  // // Iteraos as chaves dos objetoe contrados
+  // for (int i = 0; i < keyhandles.length; i++) {
+  // long findindex = keyhandles[i];
+  // // Faz a consulta dos atributos que esse objeto suportar e colocar na lista de retorno
+  // final List<CK_ATTRIBUTE> list = getTokenQueryAttributesPKCS11(tmpPKCS11, session, findindex);
+  // objectsinfolist.add(list);
+  // }
+  //
+  // }
+  // return objectsinfolist;
+  // } catch (PKCS11Exception ex) {
+  // throw new RFWWarningException("RFW_ERR_200086", ex);
+  // } finally {
+  // try {
+  // if (session >= 0) {
+  // tmpPKCS11.C_FindObjectsFinal(session);
+  // tmpPKCS11.C_CloseSession(session);
+  // }
+  // } catch (PKCS11Exception e) {
+  // }
+  // }
+  // }
 
-    try {
-      return tmpPKCS11.C_GetTokenInfo(slot);
-    } catch (PKCS11Exception ex) {
-      throw new RFWWarningException("RFW_ERR_200086", ex);
-    }
-  }
+  // /**
+  // * Carrega o Provider solicitado.
+  // *
+  // * @param providername Nome de identificação do Provider
+  // * @param librarypath caminho completo para a biblioteca de comunicação com o device de criptografia.
+  // * @param slot Número do device. Deve ser informado principalmente quando há mais de um device na mesma máquina para evitar que se retorne o errado. Se não informado é retornado o primeiro Provider encontrado. Para obter os números dos slotes existentes para um provider utilize o método {@link BUConnection#getSlotsPKCS11Library(String)}
+  // * @return
+  // */
+  // public static Provider loadProviderPKCS11(String providername, String librarypath, Long slot) {
+  // String tokenconfiguration = null;
+  // if (slot != null) {
+  // tokenconfiguration = new String("name = " + providername + "_" + slot + "\n" + "library = " + librarypath + "\nslot = " + slot + "\n");
+  // } else {
+  // tokenconfiguration = new String("name = " + providername + "\n" + "library = " + librarypath + "\n");
+  // }
+  // Provider provider = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream(tokenconfiguration.getBytes()));
+  // final Provider existentprovider = Security.getProvider(provider.getName());
+  // if (existentprovider != null) {
+  // Security.addProvider(provider);
+  // } else {
+  // provider = existentprovider;
+  // }
+  // return provider;
+  // }
 
-  /**
-   * Obtem um objeto com as informações de um determinado slot de uma biblioteca PKCS11.<br>
-   *
-   *
-   * @param librarypath caminho completo para a biblioteca do equipamento (Token/SmartCard), .dll para Windows ou .so para linux.
-   * @param slot número do slot do device que desejamos obter informações.
-   * @return Objeto com as informações obtidas do device plugado nesse slot.
-   * @throws RFWException Lançado caso ocorra algum problema ao executar a operação.
-   */
-  public static CK_SLOT_INFO getSlotsInfoPKCS11(String librarypath, long slot) throws RFWException {
-    CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
-    initArgs.flags = PKCS11Constants.CKF_OS_LOCKING_OK;
+  // /**
+  // * Este método tenta carregar todos os "Provider" possíveis (conhecidos por esta classe) para certificados tipo A3.<br>
+  // *
+  // * @throws RFWException Caso nenhum provider suportado/conhecido pelo Framework possa ser encontrado.
+  // * @Deprecated Este método deve ser inutilizado por manter os caminhos das bibliotexas constantes.
+  // */
+  // public static void loadProvidersA3Token() throws RFWException {
+  // // p = new sun.security.pkcs11.SunPKCS11(getClass().getClassLoader().getResourceAsStream("token_smartcard.cfg"));
+  // boolean loaded = false;
+  // Provider p = null;
+  // p = Security.getProvider("SunPKCS11-SmartCard");
+  // if (p == null) {
+  // try {
+  // p = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream("name=SunPKCS11-SmartCard\nlibrary=C:/Windows/SysWOW64/aetpkss1.dll".getBytes()));
+  // p.list(System.out);
+  // Security.addProvider(p);
+  // loaded = true;
+  // } catch (ProviderException e) {
+  // }
+  // } else {
+  // loaded = true;
+  // }
+  // p = Security.getProvider("SunPKCS11-Safesign");
+  // if (p == null) {
+  // try {
+  // p = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream("name=Safesign\nlibrary=C:/WINDOWS/system32/eTpkcs11.dll".getBytes()));
+  // Security.addProvider(p);
+  // loaded = true;
+  // } catch (ProviderException e) {
+  // }
+  // } else {
+  // loaded = true;
+  // }
+  // p = Security.getProvider("SunPKCS11-Safenetikey2032");
+  // if (p == null) {
+  // try {
+  // p = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream("name=Safenetikey2032\nlibrary=c:/windows/system32/dkck201.dll".getBytes()));
+  // Security.addProvider(p);
+  // loaded = true;
+  // } catch (ProviderException e) {
+  // }
+  // } else {
+  // loaded = true;
+  // }
+  // p = Security.getProvider("SunPKCS11-eToken");
+  // if (p == null) {
+  // try {
+  // p = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream("name=eToken\nlibrary=C:/WINDOWS/system32/eTpkcs11.dll".getBytes()));
+  // Security.addProvider(p);
+  // loaded = true;
+  // } catch (ProviderException e) {
+  // }
+  // } else {
+  // loaded = true;
+  // }
+  // p = Security.getProvider("SunPKCS11-FeitianPKCS");
+  // if (p == null) {
+  // try {
+  // p = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream("name=FeitianPKCS\nlibrary=c:/windows/system32/ngp11v211.dll\nslot=1".getBytes()));
+  // Security.addProvider(p);
+  // loaded = true;
+  // } catch (ProviderException e) {
+  // }
+  // } else {
+  // loaded = true;
+  // }
+  // if (!loaded) {
+  // throw new RFWWarningException("RFW_ERR_200084");
+  // }
+  // }
 
-    String functionList = "C_GetFunctionList";
-    PKCS11 tmpPKCS11 = null;
-    try {
-      tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, false);
-    } catch (PKCS11Exception e) {
-      try {
-        initArgs = null;
-        tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, true);
-      } catch (PKCS11Exception ex) {
-        throw new RFWCriticalException("RFW_ERR_200086", ex);
-      } catch (IOException ex) {
-        throw new RFWWarningException("RFW_ERR_200086", ex);
-      }
-    } catch (IOException e) {
-      throw new RFWWarningException("RFW_ERR_200086", e);
-    }
-
-    try {
-      return tmpPKCS11.C_GetSlotInfo(slot);
-    } catch (PKCS11Exception ex) {
-      throw new RFWWarningException("RFW_ERR_200086", ex);
-    }
-  }
-
-  /**
-   * Método auxiliar que retorna uma lista com todos os atributos que puderam ser lidos do objeto encontrado dentro de um Token.<br>
-   * <b>Note que nem todos os atributos são suportados por todos os tipos de objetos, esse método ignora os atributos que resultaram em erro automaticamente.</b><br>
-   * Antes de chamar esse método o método C_FindObjects já deve ter sido evocado e, depois do retorno desse método, deve ser fechado e tratado normalmente.
-   *
-   * @param tmpPKCS11 objeto com sessão aberta para o device.
-   * @param session ID de sessão aberta para a a consulta.
-   * @param findindex índice do objeto retornado na busca para obter os parametros.
-   *
-   * @return Lista com todos os atributos que retornaram sem erro na consulta do objeto.
-   */
-  private static List<CK_ATTRIBUTE> getTokenQueryAttributesPKCS11(PKCS11 tmpPKCS11, long session, long findindex) {
-    final CK_ATTRIBUTE[] attributes = new CK_ATTRIBUTE[] { new CK_ATTRIBUTE(PKCS11Constants.CKA_AC_ISSUER), new CK_ATTRIBUTE(PKCS11Constants.CKA_ALWAYS_SENSITIVE), new CK_ATTRIBUTE(PKCS11Constants.CKA_APPLICATION), new CK_ATTRIBUTE(PKCS11Constants.CKA_ATTR_TYPES), new CK_ATTRIBUTE(PKCS11Constants.CKA_AUTH_PIN_FLAGS), new CK_ATTRIBUTE(PKCS11Constants.CKA_BASE), new CK_ATTRIBUTE(PKCS11Constants.CKA_CERTIFICATE_TYPE), new CK_ATTRIBUTE(PKCS11Constants.CKA_CLASS), new CK_ATTRIBUTE(PKCS11Constants.CKA_COEFFICIENT), new CK_ATTRIBUTE(PKCS11Constants.CKA_DECRYPT), new CK_ATTRIBUTE(PKCS11Constants.CKA_DERIVE), new CK_ATTRIBUTE(PKCS11Constants.CKA_EC_PARAMS), new CK_ATTRIBUTE(PKCS11Constants.CKA_EC_POINT), new CK_ATTRIBUTE(PKCS11Constants.CKA_ECDSA_PARAMS), new CK_ATTRIBUTE(PKCS11Constants.CKA_ENCRYPT), new CK_ATTRIBUTE(PKCS11Constants.CKA_END_DATE), new CK_ATTRIBUTE(PKCS11Constants.CKA_EXPONENT_1), new CK_ATTRIBUTE(PKCS11Constants.CKA_EXPONENT_2), new CK_ATTRIBUTE(PKCS11Constants.CKA_EXTRACTABLE),
-        new CK_ATTRIBUTE(PKCS11Constants.CKA_HAS_RESET), new CK_ATTRIBUTE(PKCS11Constants.CKA_HW_FEATURE_TYPE), new CK_ATTRIBUTE(PKCS11Constants.CKA_ID), new CK_ATTRIBUTE(PKCS11Constants.CKA_ISSUER), new CK_ATTRIBUTE(PKCS11Constants.CKA_KEY_GEN_MECHANISM), new CK_ATTRIBUTE(PKCS11Constants.CKA_KEY_TYPE), new CK_ATTRIBUTE(PKCS11Constants.CKA_LABEL), new CK_ATTRIBUTE(PKCS11Constants.CKA_LOCAL), new CK_ATTRIBUTE(PKCS11Constants.CKA_MODIFIABLE), new CK_ATTRIBUTE(PKCS11Constants.CKA_MODULUS), new CK_ATTRIBUTE(PKCS11Constants.CKA_MODULUS_BITS), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_BASE), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_CERT_MD5_HASH), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_CERT_SHA1_HASH), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_DB), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_TRUST_BASE), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_TRUST_CLIENT_AUTH), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_TRUST_CODE_SIGNING),
-        new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_TRUST_EMAIL_PROTECTION), new CK_ATTRIBUTE(PKCS11Constants.CKA_NETSCAPE_TRUST_SERVER_AUTH), new CK_ATTRIBUTE(PKCS11Constants.CKA_NEVER_EXTRACTABLE), new CK_ATTRIBUTE(PKCS11Constants.CKA_OBJECT_ID), new CK_ATTRIBUTE(PKCS11Constants.CKA_OWNER), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIME), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIME_1), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIME_2), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIME_BITS), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIVATE), new CK_ATTRIBUTE(PKCS11Constants.CKA_PRIVATE_EXPONENT), new CK_ATTRIBUTE(PKCS11Constants.CKA_PUBLIC_EXPONENT), new CK_ATTRIBUTE(PKCS11Constants.CKA_RESET_ON_INIT), new CK_ATTRIBUTE(PKCS11Constants.CKA_SECONDARY_AUTH), new CK_ATTRIBUTE(PKCS11Constants.CKA_SENSITIVE), new CK_ATTRIBUTE(PKCS11Constants.CKA_SERIAL_NUMBER), new CK_ATTRIBUTE(PKCS11Constants.CKA_SIGN), new CK_ATTRIBUTE(PKCS11Constants.CKA_SIGN_RECOVER), new CK_ATTRIBUTE(PKCS11Constants.CKA_START_DATE),
-        new CK_ATTRIBUTE(PKCS11Constants.CKA_SUB_PRIME_BITS), new CK_ATTRIBUTE(PKCS11Constants.CKA_SUBJECT), new CK_ATTRIBUTE(PKCS11Constants.CKA_SUBPRIME), new CK_ATTRIBUTE(PKCS11Constants.CKA_TOKEN), new CK_ATTRIBUTE(PKCS11Constants.CKA_TRUSTED), new CK_ATTRIBUTE(PKCS11Constants.CKA_UNWRAP), new CK_ATTRIBUTE(PKCS11Constants.CKA_VALUE), new CK_ATTRIBUTE(PKCS11Constants.CKA_VALUE_BITS), new CK_ATTRIBUTE(PKCS11Constants.CKA_VALUE_LEN), new CK_ATTRIBUTE(PKCS11Constants.CKA_VENDOR_DEFINED), new CK_ATTRIBUTE(PKCS11Constants.CKA_VERIFY), new CK_ATTRIBUTE(PKCS11Constants.CKA_VERIFY_RECOVER), new CK_ATTRIBUTE(PKCS11Constants.CKA_WRAP) };
-    final List<CK_ATTRIBUTE> resultlist = new ArrayList<>();
-
-    // Itera cada attriuto em busca dos atributos válidos para este objeto
-    for (int i = 0; i < attributes.length; i++) {
-      CK_ATTRIBUTE[] cka = new CK_ATTRIBUTE[1];
-      cka[0] = attributes[i];
-      try {
-        // Lê os objetos
-        tmpPKCS11.C_GetAttributeValue(session, findindex, cka);
-        resultlist.add(cka[0]);
-      } catch (PKCS11Exception e) {
-        // se não é suportado nem verificamos erro, apenas seguimos para o próximo atributo e não o adicionamos na lista de retorno
-      }
-    }
-    // retorna lista final
-    return resultlist;
-  }
-
-  /**
-   * Conecta-se no dispositivo e obtem uma lista de atributos de cada objeto encontrado no dispositivo.
-   *
-   * @param librarypath biblioteca de acesso ao dispositivo
-   * @param slot número do slot do objeto.
-   * @return Lista com uma lista de atributos encontrados em cada objeto.
-   * @throws RFWException Lançado caso não seja possível concluir algum passo.
-   */
-  public static List<List<CK_ATTRIBUTE>> getSlotsObjectsInfoPKCS11(String librarypath, long slot) throws RFWException {
-    CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
-    initArgs.flags = PKCS11Constants.CKF_OS_LOCKING_OK;
-
-    // Tenta criar o acesso para o device e slot indicados
-    String functionList = "C_GetFunctionList";
-    PKCS11 tmpPKCS11 = null;
-    try {
-      tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, false);
-    } catch (PKCS11Exception e) {
-      try {
-        initArgs = null;
-        tmpPKCS11 = PKCS11.getInstance(librarypath, functionList, initArgs, true);
-      } catch (PKCS11Exception ex) {
-        throw new RFWCriticalException("RFW_ERR_200086", ex);
-      } catch (IOException ex) {
-        throw new RFWWarningException("RFW_ERR_200086", ex);
-      }
-    } catch (IOException e) {
-      throw new RFWWarningException("RFW_ERR_200086", e);
-    }
-
-    long session = -1;
-    try {
-      // Abre a sessão com o dispositivo
-      session = tmpPKCS11.C_OpenSession(slot, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
-
-      // Cria o filtro dos objetos que queremos buscar
-      CK_ATTRIBUTE[] attributes = new CK_ATTRIBUTE[1];
-      attributes[0] = new CK_ATTRIBUTE();
-      attributes[0].type = PKCS11Constants.CKA_TOKEN;
-      attributes[0].pValue = true;
-      tmpPKCS11.C_FindObjectsInit(session, attributes);
-
-      // Lista que retornará com as informações
-      final List<List<CK_ATTRIBUTE>> objectsinfolist = new ArrayList<>();
-
-      // Buscamos os objetos
-      int lastindex = 1;
-      while (true) {
-        long[] keyhandles = tmpPKCS11.C_FindObjects(session, lastindex++);
-        if (keyhandles.length == 0) break;
-
-        // Iteraos as chaves dos objetoe contrados
-        for (int i = 0; i < keyhandles.length; i++) {
-          long findindex = keyhandles[i];
-          // Faz a consulta dos atributos que esse objeto suportar e colocar na lista de retorno
-          final List<CK_ATTRIBUTE> list = getTokenQueryAttributesPKCS11(tmpPKCS11, session, findindex);
-          objectsinfolist.add(list);
-        }
-
-      }
-      return objectsinfolist;
-    } catch (PKCS11Exception ex) {
-      throw new RFWWarningException("RFW_ERR_200086", ex);
-    } finally {
-      try {
-        if (session >= 0) {
-          tmpPKCS11.C_FindObjectsFinal(session);
-          tmpPKCS11.C_CloseSession(session);
-        }
-      } catch (PKCS11Exception e) {
-      }
-    }
-  }
-
-  /**
-   * Carrega o Provider solicitado.
-   *
-   * @param providername Nome de identificação do Provider
-   * @param librarypath caminho completo para a biblioteca de comunicação com o device de criptografia.
-   * @param slot Número do device. Deve ser informado principalmente quando há mais de um device na mesma máquina para evitar que se retorne o errado. Se não informado é retornado o primeiro Provider encontrado. Para obter os números dos slotes existentes para um provider utilize o método {@link BUConnection#getSlotsPKCS11Library(String)}
-   * @return
-   */
-  public static Provider loadProviderPKCS11(String providername, String librarypath, Long slot) {
-    String tokenconfiguration = null;
-    if (slot != null) {
-      tokenconfiguration = new String("name = " + providername + "_" + slot + "\n" + "library = " + librarypath + "\nslot = " + slot + "\n");
-    } else {
-      tokenconfiguration = new String("name = " + providername + "\n" + "library = " + librarypath + "\n");
-    }
-    Provider provider = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream(tokenconfiguration.getBytes()));
-    final Provider existentprovider = Security.getProvider(provider.getName());
-    if (existentprovider != null) {
-      Security.addProvider(provider);
-    } else {
-      provider = existentprovider;
-    }
-    return provider;
-  }
-
-  /**
-   * Este método tenta carregar todos os "Provider" possíveis (conhecidos por esta classe) para certificados tipo A3.<br>
-   *
-   * @throws RFWException Caso nenhum provider suportado/conhecido pelo Framework possa ser encontrado.
-   * @Deprecated Este método deve ser inutilizado por manter os caminhos das bibliotexas constantes.
-   */
-  public static void loadProvidersA3Token() throws RFWException {
-    // p = new sun.security.pkcs11.SunPKCS11(getClass().getClassLoader().getResourceAsStream("token_smartcard.cfg"));
-    boolean loaded = false;
-    Provider p = null;
-    p = Security.getProvider("SunPKCS11-SmartCard");
-    if (p == null) {
-      try {
-        p = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream("name=SunPKCS11-SmartCard\nlibrary=C:/Windows/SysWOW64/aetpkss1.dll".getBytes()));
-        p.list(System.out);
-        Security.addProvider(p);
-        loaded = true;
-      } catch (ProviderException e) {
-      }
-    } else {
-      loaded = true;
-    }
-    p = Security.getProvider("SunPKCS11-Safesign");
-    if (p == null) {
-      try {
-        p = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream("name=Safesign\nlibrary=C:/WINDOWS/system32/eTpkcs11.dll".getBytes()));
-        Security.addProvider(p);
-        loaded = true;
-      } catch (ProviderException e) {
-      }
-    } else {
-      loaded = true;
-    }
-    p = Security.getProvider("SunPKCS11-Safenetikey2032");
-    if (p == null) {
-      try {
-        p = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream("name=Safenetikey2032\nlibrary=c:/windows/system32/dkck201.dll".getBytes()));
-        Security.addProvider(p);
-        loaded = true;
-      } catch (ProviderException e) {
-      }
-    } else {
-      loaded = true;
-    }
-    p = Security.getProvider("SunPKCS11-eToken");
-    if (p == null) {
-      try {
-        p = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream("name=eToken\nlibrary=C:/WINDOWS/system32/eTpkcs11.dll".getBytes()));
-        Security.addProvider(p);
-        loaded = true;
-      } catch (ProviderException e) {
-      }
-    } else {
-      loaded = true;
-    }
-    p = Security.getProvider("SunPKCS11-FeitianPKCS");
-    if (p == null) {
-      try {
-        p = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream("name=FeitianPKCS\nlibrary=c:/windows/system32/ngp11v211.dll\nslot=1".getBytes()));
-        Security.addProvider(p);
-        loaded = true;
-      } catch (ProviderException e) {
-      }
-    } else {
-      loaded = true;
-    }
-    if (!loaded) {
-      throw new RFWWarningException("RFW_ERR_200084");
-    }
-  }
-
-  /**
-   * Este método verifica já temos o provider de segurança SSL carregado no sistema. Se não encontrar, iniciamos e carregarmos na VM. Providers necessários para certificados do tipo A1.<br>
-   *
-   * @throws RFWException Caso nenhum provider suportado/conhecido pelo RFWDeprec possa ser encontrado.
-   */
-  public static void loadProvidersA1() throws RFWException {
-    boolean loaded = false;
-    Provider p = null;
-    p = Security.getProvider("SunJSSE");
-    if (p == null) {
-      try {
-        p = new com.sun.net.ssl.internal.ssl.Provider();
-        Security.addProvider(p);
-        loaded = true;
-      } catch (ProviderException e) {
-      }
-    } else {
-      loaded = true;
-    }
-    if (!loaded) {
-      throw new RFWWarningException("Falha ao encontrar/carregar o Provider de segurança para certificados A1");
-    }
-  }
+  // /**
+  // * Este método verifica já temos o provider de segurança SSL carregado no sistema. Se não encontrar, iniciamos e carregarmos na VM. Providers necessários para certificados do tipo A1.<br>
+  // *
+  // * @throws RFWException Caso nenhum provider suportado/conhecido pelo RFWDeprec possa ser encontrado.
+  // */
+  // public static void loadProvidersA1() throws RFWException {
+  // boolean loaded = false;
+  // Provider p = null;
+  // p = Security.getProvider("SunJSSE");
+  // if (p == null) {
+  // try {
+  // p = new com.sun.net.ssl.internal.ssl.Provider();
+  // Security.addProvider(p);
+  // loaded = true;
+  // } catch (ProviderException e) {
+  // }
+  // } else {
+  // loaded = true;
+  // }
+  // if (!loaded) {
+  // throw new RFWWarningException("Falha ao encontrar/carregar o Provider de segurança para certificados A1");
+  // }
+  // }
 
   /**
    * Este método retorna uma string com as informações coletadas do Certificado.
