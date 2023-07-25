@@ -1,5 +1,6 @@
 package br.eng.rodrigogml.rfw.base.utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyManagementException;
@@ -7,7 +8,10 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
+import java.security.ProviderException;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
@@ -41,6 +45,7 @@ import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
 //import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
 //import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;
@@ -500,30 +505,30 @@ public class BUCert {
   // }
   // }
 
-  // /**
-  // * Carrega o Provider solicitado.
-  // *
-  // * @param providername Nome de identificação do Provider
-  // * @param librarypath caminho completo para a biblioteca de comunicação com o device de criptografia.
-  // * @param slot Número do device. Deve ser informado principalmente quando há mais de um device na mesma máquina para evitar que se retorne o errado. Se não informado é retornado o primeiro Provider encontrado. Para obter os números dos slotes existentes para um provider utilize o método {@link BUConnection#getSlotsPKCS11Library(String)}
-  // * @return
-  // */
-  // public static Provider loadProviderPKCS11(String providername, String librarypath, Long slot) {
-  // String tokenconfiguration = null;
-  // if (slot != null) {
-  // tokenconfiguration = new String("name = " + providername + "_" + slot + "\n" + "library = " + librarypath + "\nslot = " + slot + "\n");
-  // } else {
-  // tokenconfiguration = new String("name = " + providername + "\n" + "library = " + librarypath + "\n");
-  // }
-  // Provider provider = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream(tokenconfiguration.getBytes()));
-  // final Provider existentprovider = Security.getProvider(provider.getName());
-  // if (existentprovider != null) {
-  // Security.addProvider(provider);
-  // } else {
-  // provider = existentprovider;
-  // }
-  // return provider;
-  // }
+  /**
+   * Carrega o Provider solicitado.
+   *
+   * @param providername Nome de identificação do Provider
+   * @param librarypath caminho completo para a biblioteca de comunicação com o device de criptografia.
+   * @param slot Número do device. Deve ser informado principalmente quando há mais de um device na mesma máquina para evitar que se retorne o errado. Se não informado é retornado o primeiro Provider encontrado. Para obter os números dos slotes existentes para um provider utilize o método {@link BUConnection#getSlotsPKCS11Library(String)}
+   * @return
+   */
+  public static Provider loadProviderPKCS11(String providername, String librarypath, Long slot) {
+    String tokenconfiguration = null;
+    if (slot != null) {
+      tokenconfiguration = new String("name = " + providername + "_" + slot + "\n" + "library = " + librarypath + "\nslot = " + slot + "\n");
+    } else {
+      tokenconfiguration = new String("name = " + providername + "\n" + "library = " + librarypath + "\n");
+    }
+    Provider provider = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream(tokenconfiguration.getBytes()));
+    final Provider existentprovider = Security.getProvider(provider.getName());
+    if (existentprovider != null) {
+      Security.addProvider(provider);
+    } else {
+      provider = existentprovider;
+    }
+    return provider;
+  }
 
   // /**
   // * Este método tenta carregar todos os "Provider" possíveis (conhecidos por esta classe) para certificados tipo A3.<br>
@@ -596,29 +601,29 @@ public class BUCert {
   // }
   // }
 
-  // /**
-  // * Este método verifica já temos o provider de segurança SSL carregado no sistema. Se não encontrar, iniciamos e carregarmos na VM. Providers necessários para certificados do tipo A1.<br>
-  // *
-  // * @throws RFWException Caso nenhum provider suportado/conhecido pelo RFWDeprec possa ser encontrado.
-  // */
-  // public static void loadProvidersA1() throws RFWException {
-  // boolean loaded = false;
-  // Provider p = null;
-  // p = Security.getProvider("SunJSSE");
-  // if (p == null) {
-  // try {
-  // p = new com.sun.net.ssl.internal.ssl.Provider();
-  // Security.addProvider(p);
-  // loaded = true;
-  // } catch (ProviderException e) {
-  // }
-  // } else {
-  // loaded = true;
-  // }
-  // if (!loaded) {
-  // throw new RFWWarningException("Falha ao encontrar/carregar o Provider de segurança para certificados A1");
-  // }
-  // }
+  /**
+   * Este método verifica já temos o provider de segurança SSL carregado no sistema. Se não encontrar, iniciamos e carregarmos na VM. Providers necessários para certificados do tipo A1.<br>
+   *
+   * @throws RFWException Caso nenhum provider suportado/conhecido pelo RFWDeprec possa ser encontrado.
+   */
+  public static void loadProvidersA1() throws RFWException {
+    boolean loaded = false;
+    Provider p = null;
+    p = Security.getProvider("SunJSSE");
+    if (p == null) {
+      try {
+        p = new com.sun.net.ssl.internal.ssl.Provider();
+        Security.addProvider(p);
+        loaded = true;
+      } catch (ProviderException e) {
+      }
+    } else {
+      loaded = true;
+    }
+    if (!loaded) {
+      throw new RFWWarningException("Falha ao encontrar/carregar o Provider de segurança para certificados A1");
+    }
+  }
 
   /**
    * Este método retorna uma string com as informações coletadas do Certificado.
