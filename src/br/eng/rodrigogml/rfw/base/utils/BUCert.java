@@ -40,12 +40,12 @@ import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.asn1.DERUTF8String;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 
-import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
+import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
 //import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
 //import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;

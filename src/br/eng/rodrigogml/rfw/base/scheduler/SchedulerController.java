@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.scheduler.interfaces.SchedulerListener;
 import br.eng.rodrigogml.rfw.base.scheduler.interfaces.SchedulerTask;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
 
 /**

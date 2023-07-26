@@ -18,11 +18,11 @@ import java.util.regex.Pattern;
 
 import com.google.common.io.BaseEncoding;
 
-import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.kernel.utils.RUDocValidation;
 import br.eng.rodrigogml.rfw.kernel.utils.RUNumber;

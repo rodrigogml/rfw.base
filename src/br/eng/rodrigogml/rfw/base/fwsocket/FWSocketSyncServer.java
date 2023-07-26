@@ -12,9 +12,9 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 import br.eng.rodrigogml.rfw.base.fwsocket.listener.FWSocketSyncServerListener;
-import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 
 /**
  * Description: Classe do RFWDeprec quer permite "levantar um servidor" que aceita conexões do tipo "requisição->resposta", similar a um servidor HTTP. Cada conexão recebe uma resposta, resultado de um processamento e é finalizada.<BR>

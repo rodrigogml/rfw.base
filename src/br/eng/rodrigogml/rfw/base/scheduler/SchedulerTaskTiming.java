@@ -10,11 +10,11 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.scheduler.interfaces.SchedulerRunnable;
 import br.eng.rodrigogml.rfw.base.scheduler.interfaces.SchedulerTask;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
+import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
 
 /**

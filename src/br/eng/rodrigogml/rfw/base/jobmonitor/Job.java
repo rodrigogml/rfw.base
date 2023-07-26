@@ -1,7 +1,7 @@
 package br.eng.rodrigogml.rfw.base.jobmonitor;
 
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus.JobStep;
-import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
+import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 
 /**

@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
 
 /**

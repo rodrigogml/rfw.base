@@ -1,6 +1,5 @@
 package br.eng.rodrigogml.rfw.base;
 
-import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.sessionmanager.SessionManager;
 import br.eng.rodrigogml.rfw.base.sessionmanager.interfaces.SessionBackOperation;
 import br.eng.rodrigogml.rfw.kernel.eventdispatcher.EventDispatcher;
@@ -20,23 +19,6 @@ public class RFWDeprec {
    * Construtor privado para uma classe completamente estática
    */
   private RFWDeprec() {
-  }
-
-  /**
-   * Inicializa o serviço do RFWLogger configurando seus parâmetros.<Br>
-   * Note que este método de fato só define as configurações do RFWDeprec. Suas thread só são iniciadas a partir do primeiro log() realizado.<br>
-   * <br>
-   * <b>ATENÇÃO: </B>Depois de inicializado, o RFWLogger exige que o método {@link #shutdownFW()} seja chamado para que suas Threads sejam encerradas.
-   *
-   * @param timeToLive Define o tempo que uma entrada de LOG pode ficar na memória aguardando para ser consumida. Depois de passado do periodo definido aqui, a o próprio {@link RFWLogger} descartará a entrada do Log.<br>
-   *          Tempo definido em segundos.
-   * @param timeToClean Define de quanto em quanto tempo o {@link RFWLogger} executará a limpeza das entradas que não foram consumidas. Note que conforme os valores definidos uma entrada de log ficará aguardando ser consumida descartada entre no mínimo pelo valor definido como timeToLive e no máximo até timeToLive + timeToClean.<br>
-   *          Tempo definido em segundos.
-   * @throws RFWException
-   */
-  public static void initializeFWLogger(long timeToLive, long timeToClean) throws RFWException {
-    RFWLogger.setTimeToLive(timeToLive);
-    RFWLogger.setTimeToClean(timeToClean);
   }
 
   /**
