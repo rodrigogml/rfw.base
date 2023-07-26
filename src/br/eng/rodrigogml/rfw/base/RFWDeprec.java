@@ -1,9 +1,9 @@
 package br.eng.rodrigogml.rfw.base;
 
-import br.eng.rodrigogml.rfw.base.eventdispatcher.EventDispatcher;
 import br.eng.rodrigogml.rfw.base.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.base.sessionmanager.SessionManager;
 import br.eng.rodrigogml.rfw.base.sessionmanager.interfaces.SessionBackOperation;
+import br.eng.rodrigogml.rfw.kernel.eventdispatcher.EventDispatcher;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;;
 
 /**

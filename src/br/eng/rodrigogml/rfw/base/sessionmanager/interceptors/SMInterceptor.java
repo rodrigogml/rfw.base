@@ -8,12 +8,12 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
-import br.eng.rodrigogml.rfw.base.eventdispatcher.EventDispatcher;
 import br.eng.rodrigogml.rfw.base.sessionmanager.SessionManager;
 import br.eng.rodrigogml.rfw.base.sessionmanager.annotations.Security;
 import br.eng.rodrigogml.rfw.base.sessionmanager.annotations.Security.SecurityAction;
 import br.eng.rodrigogml.rfw.base.sessionmanager.interfaces.SessionVO;
 import br.eng.rodrigogml.rfw.kernel.RFW;
+import br.eng.rodrigogml.rfw.kernel.eventdispatcher.EventDispatcher;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
