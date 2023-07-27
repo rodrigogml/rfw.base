@@ -23,9 +23,9 @@ public class MeasureUnitDAOConverter implements RFWDAOConverterInterface {
     try {
       if (value != null) {
         if (value.startsWith("#")) {
-          int indexParenteses = value.indexOf('|');
-          String symbol = value.substring(1, indexParenteses);
-          String name = value.substring(indexParenteses + 1, value.length() - 1);
+          int index = value.indexOf('|');
+          String symbol = value.substring(1, index);
+          String name = value.substring(index + 1, value.length());
           result = new CustomMeasureUnitGeneric(name, symbol);
         } else {
           result = MeasureRuler.valueOf(value);
