@@ -64,6 +64,13 @@
 			<version>1.0</version>
 		</dependency>
 
+		<!-- RFW.ORM -->
+		<dependency>
+			<groupId>br.eng.rodrigogml.rfw</groupId>
+			<artifactId>RFW.ORM</artifactId>
+			<version>1.0</version>
+		</dependency>
+
 		<!-- junit - Utilizado para realizar os testes apenas -->
 		<dependency>
 			<groupId>junit</groupId>

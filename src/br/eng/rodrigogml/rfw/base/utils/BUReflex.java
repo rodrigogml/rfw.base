@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import br.eng.rodrigogml.rfw.base.dao.annotations.dao.RFWDAO;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
@@ -329,61 +328,6 @@ public class BUReflex {
    */
   public static <VO extends RFWVO> List<Long> collectVOIDsToList(VO[] vos) throws RFWException {
     return Arrays.asList(vos).stream().map(VO::getId).collect(Collectors.toCollection(ArrayList::new));
-  }
-
-  /**
-   * Obtem Annotation RFWDAO da entidade.
-   *
-   * @return Annotation RFWDAO da entidade
-   */
-  public static RFWDAO getRFWDAOAnnotation(Class<? extends RFWVO> type) throws RFWException {
-    final RFWDAO ann = type.getAnnotation(RFWDAO.class);
-    if (ann == null) {
-      throw new RFWCriticalException("A entidade '${0}' não possui a Annotation RFWDAO, e não pode ser interpretada.", new String[] { type.getCanonicalName() });
-    }
-    return ann;
-  }
-
-  /**
-   * Método auxiliar para obter o "caminho pai".<br>
-   *
-   * @param path Caminho para extrair o caminho pai.
-   * @return Retorna o caminho pai. Ex:
-   *         <li>Se passado "a.b.c.d.e" este método deve retornar "a.b.c.d".
-   *         <li>Se passado "a" o método deve retornar "" já que vazio é caminho raiz.
-   *         <li>Se passado "" retornamos null já que não temos um caminho pai.
-   */
-  public static String getParentPath(String path) {
-    if (path == null || "".equals(path)) {
-      return null;
-    }
-    int p = path.lastIndexOf(".");
-    if (p == -1) {
-      return "";
-    } else {
-      return path.substring(0, p);
-    }
-  }
-
-  /**
-   * Método auxiliar para obter o "último atributo do caminho".<br>
-   *
-   * @param path Caminho para extrair o último bloco.
-   * @return Retorna o caminho pai. Ex:
-   *         <li>Se passado "a.b.c.d.e" este método deve retornar "e".
-   *         <li>Se passado "a" o método deve retornar "a".
-   *         <li>Se passado null ou "" retornamos null já que não temos nenhum atributo.
-   */
-  public static String getLastPath(String path) {
-    if (path == null || "".equals(path)) {
-      return null;
-    }
-    int p = path.lastIndexOf(".");
-    if (p == -1) {
-      return path;
-    } else {
-      return path.substring(p + 1, path.length());
-    }
   }
 
   /**

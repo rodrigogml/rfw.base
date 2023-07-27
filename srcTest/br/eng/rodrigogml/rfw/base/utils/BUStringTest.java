@@ -56,9 +56,9 @@ public class BUStringTest {
 
   @Test
   public void t02_genStringWithLength() throws RFWException {
-    assertEquals("          ", BUString.genString(10, " "));
-    assertEquals("          ", BUString.genString(5, "  "));
-    assertEquals("rarararara", BUString.genString(5, "ra"));
+    assertEquals("          ", RUString.repeatString(10, " "));
+    assertEquals("          ", RUString.repeatString(5, "  "));
+    assertEquals("rarararara", RUString.repeatString(5, "ra"));
   }
 
   @Test

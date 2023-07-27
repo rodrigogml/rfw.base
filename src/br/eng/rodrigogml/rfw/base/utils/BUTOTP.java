@@ -15,6 +15,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
 
 /**
  * Description: Classe de implementação de autenticação TOTP/HOTP.<br>
@@ -230,7 +231,7 @@ public class BUTOTP {
     System.out.println(qrcode);
 
     final byte[] image = BUBarCode.generateQRCode(qrcode, ErrorCorrectionLevel.M, 300, "PNG");
-    BUFile.writeFileContent("C:\\t\\qrcode.png", image);
+    RUFile.writeFileContent("C:\\t\\qrcode.png", image);
   }
 
   public static void main(String[] args) throws Exception {

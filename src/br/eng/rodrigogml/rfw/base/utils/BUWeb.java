@@ -24,6 +24,7 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
+import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
 
 /**
  * Description: Classe utilitária com métodos pertinentes a manipulação de informação na WEB.<br>
@@ -203,7 +204,7 @@ public class BUWeb {
           if (fileName == null) fileName = "downloadedFile";
           if (jobStatus != null) jobStatus.setParam("filename", fileName);
 
-          File tmpFile = BUFile.createFileInTemporaryPath(fileName);
+          File tmpFile = RUFile.createFileInTemporaryPath(fileName);
           long totalRead = 0;
           if (jobStatus != null) jobStatus.setProgressMessage("Baixando...");
           try (InputStream in = con.getInputStream(); FileOutputStream out = new FileOutputStream(tmpFile)) {

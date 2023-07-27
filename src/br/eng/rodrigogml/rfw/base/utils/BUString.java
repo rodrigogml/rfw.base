@@ -39,16 +39,6 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUNumber;
 public class BUString {
 
   /**
-   * Array com os digitos: 0-9.
-   */
-  public static final char[] digits = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-
-  /**
-   * Array com os caracteres: a-z, A-Z e 0-9.
-   */
-  public static final char[] simplechars = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-
-  /**
    * Array com a maioria dos caracteres "comuns".
    */
   public static final char[] allchars = new char[] { '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', 'ª', '«', '¬', '­', '®', '¯', '°', '±', '²', '³', '´', 'µ', '¶', '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', '×', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', '÷', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'þ', 'ÿ', 'Œ', 'œ', 'Š', 'š', 'Ÿ', 'Ž',
@@ -198,45 +188,6 @@ public class BUString {
    */
   public static int countLines(StringBuilder value) {
     return count(value, '\n');
-  }
-
-  /**
-   * Gera uma String qualquer no padrão: [A-Za-z0-9]{length}
-   *
-   * @param length tamanho exato da String desejada
-   * @return
-   */
-  public static String genString(int length) {
-    StringBuilder buf = new StringBuilder(length);
-    while (buf.length() < length) {
-      buf.append(BUString.simplechars[(int) (Math.random() * BUString.simplechars.length)]);
-    }
-    return buf.toString();
-  }
-
-  /**
-   * Gera uma String qualquer no padrão: [0-9]{length}
-   *
-   * @param length tamanho da String desejada
-   * @return
-   */
-  public static String genStringDigits(int length) {
-    StringBuilder buf = new StringBuilder(length);
-    while (buf.length() < length) {
-      buf.append(BUString.digits[(int) (BUString.digits.length - (Math.random() * 10))]);
-    }
-    return buf.toString();
-  }
-
-  /**
-   * Cria uma String com n repetições de uma determinada cadeira de caracteres (ou caracter simples).
-   *
-   * @param repeats Número de repetições na String final.
-   * @param base Conteúdo a ser repetido na String.
-   * @return String montada conforme as definições. Com tamanho total = repeats * base.length();
-   */
-  public static String genString(int repeats, String base) {
-    return new String(new char[repeats]).replaceAll("\0", base);
   }
 
   /**

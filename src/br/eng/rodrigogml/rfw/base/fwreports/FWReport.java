@@ -38,12 +38,12 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import br.eng.rodrigogml.rfw.base.fwreports.bean.FWReportOptionBean;
 import br.eng.rodrigogml.rfw.base.fwreports.bean.FWReportOptionBean.PAGE_ORIENTATION;
-import br.eng.rodrigogml.rfw.base.utils.BUFile;
 import br.eng.rodrigogml.rfw.base.utils.BUString;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
 
 /**
  * Description: Classe principal de relatorios. Todas as classes geradoras de relatorios do sistema deve extender esta classe.<br>
@@ -97,7 +97,7 @@ public abstract class FWReport {
 
       // Escrevemos o conteúdo em um arquivo temporário
       try {
-        this.tmpFile = BUFile.createFileInTemporaryPath(this.reportBean.getReportFileName() + ".pdf", null, StandardCharsets.UTF_8);
+        this.tmpFile = RUFile.createFileInTemporaryPath(this.reportBean.getReportFileName() + ".pdf", null, StandardCharsets.UTF_8);
         writer = PdfWriter.getInstance(document, new FileOutputStream(this.tmpFile));
       } catch (FileNotFoundException e) {
         throw new RFWCriticalException("Falha ao inicializar o arquivo temporário para escrita do relatório!");

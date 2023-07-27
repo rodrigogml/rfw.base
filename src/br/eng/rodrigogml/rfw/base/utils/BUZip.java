@@ -19,6 +19,7 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
 
 /**
  * Description: Classe utilitária responsável por dispobilizar classes de tratamento e manipulação de arquivos compactados do tipo ZIP.<BR>
@@ -156,7 +157,7 @@ public class BUZip {
    * @throws RFWException
    */
   public static String createNewZipFile(String zipFileName, int compressionLevel, Object[][] content) throws RFWException {
-    File file = BUFile.createFileInTemporaryPath(zipFileName, StandardCharsets.ISO_8859_1);
+    File file = RUFile.createFileInTemporaryPath(zipFileName, StandardCharsets.ISO_8859_1);
     try (ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(file))) {
       zip.setMethod(ZipOutputStream.DEFLATED);
       zip.setLevel(compressionLevel);
