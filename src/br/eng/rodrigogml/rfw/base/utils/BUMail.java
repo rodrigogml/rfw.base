@@ -19,7 +19,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.utils.RUMail;
 import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
 import br.eng.rodrigogml.rfw.kernel.utils.RUString;
@@ -162,24 +161,6 @@ public class BUMail {
       result = false;
     }
     return result;
-  }
-
-  /**
-   * Valida se o endereço é válido de acordo com a RFC822.<br>
-   * Note que este método aceita e-mails como:<br>
-   * <li>user@[10.9.8.7]
-   * <li>user@localhost
-   *
-   * @param mail
-   * @throws RFWException
-   */
-  public static void validateMailAddressThroughRFC822(String mail) throws RFWException {
-    try {
-      InternetAddress emailAddr = new InternetAddress(mail);
-      emailAddr.validate();
-    } catch (AddressException ex) {
-      throw new RFWValidationException("O endereço de e-mail não é um endereço válido.");
-    }
   }
 
   /**
