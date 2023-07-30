@@ -134,7 +134,7 @@ public class SMInterceptor {
     } else if (((String) parameters[0]).matches("(\\Q" + SessionManager.getTokenPrefix() + "\\E)?[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}")) {
       type = 1;
     }
-    if (type == null) throw new RFWCriticalException("ID de sessão inválida para chamada da fachada: ${0}", new String[] { ctx.getMethod().getDeclaringClass().getCanonicalName() + "#" + ctx.getMethod().getName(), ((String) parameters[0]) });
+    if (type == null) throw new RFWCriticalException("RFW_000019", new String[] { ctx.getMethod().getDeclaringClass().getCanonicalName() + "#" + ctx.getMethod().getName(), ((String) parameters[0]) });
     return type;
   }
 
