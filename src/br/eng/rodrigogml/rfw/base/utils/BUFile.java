@@ -392,26 +392,6 @@ public class BUFile {
   }
 
   /**
-   * Extrai o nome do arquivo de um caminho completo recebido.
-   *
-   * @param file Caminho com o nome do arquivo
-   * @return
-   */
-  public static String extractFileExtension(File file) {
-    return extractFileExtension(file.getAbsolutePath());
-  }
-
-  /**
-   * Extrai o nome do arquivo de um caminho completo recebido.
-   *
-   * @param file Caminho com o nome do arquivo
-   * @return
-   */
-  public static String extractFileExtension(String file) {
-    return file.substring(file.lastIndexOf('.') + 1);
-  }
-
-  /**
    * Este método tenta descobrir o charset correto de um arquivo. Note para identificar o charset correto será testado um decoder de cada charset no arquivo, e alguns deles podem dar múltiplos positivos, o que não garante uma exatidão na detecção.<br>
    * Teste os seguintes charsets:
    * <li>StandardCharsets.ISO_8859_1
