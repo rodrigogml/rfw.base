@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
@@ -32,7 +31,6 @@ import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.SimpleTextExtractionStrategy;
 
-import br.eng.rodrigogml.rfw.kernel.dataformatters.LocaleConverter;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
@@ -57,20 +55,6 @@ public class BUFile {
     return path.isDirectory();
   }
 
-  public static String[] getFileNamesFromDirectory(String path) {
-    File[] listOfFiles = getFilesFromDirectory(path);
-
-    ArrayList<String> files = new ArrayList<>(listOfFiles.length);
-
-    for (int i = 0; i < listOfFiles.length; i++) {
-      if (listOfFiles[i].isFile()) {
-        files.add(listOfFiles[i].getAbsolutePath());
-      }
-    }
-
-    return files.toArray(new String[0]);
-  }
-
   /**
    * Retorna os arquivos de um determinado diretório que tenham a data de criação maiores ou iguais a uma determinada data.
    *
@@ -80,7 +64,7 @@ public class BUFile {
    * @throws RFWException
    */
   public static File[] getFilesNewerOrEqualThan(String path, long timemillis) throws RFWException {
-    final File[] files = getFilesFromDirectory(path);
+    final File[] files = RUFile.getFilesFromDirectory(path);
 
     final LinkedList<File> newerFiles = new LinkedList<>();
     try {
@@ -96,14 +80,8 @@ public class BUFile {
     return newerFiles.toArray(new File[0]);
   }
 
-  public static File[] getFilesFromDirectory(String path) {
-    File folder = new File(path);
-    File[] listOfFiles = folder.listFiles();
-    return listOfFiles;
-  }
-
   public static String[] getDirectoryFromDirectory(String path) {
-    File[] listOfFiles = getFilesFromDirectory(path);
+    File[] listOfFiles = RUFile.getFilesFromDirectory(path);
 
     ArrayList<String> directories = new ArrayList<>(listOfFiles.length);
 
@@ -133,68 +111,6 @@ public class BUFile {
       }
     }
     return files;
-  }
-
-  public static String readFileContentToString(String filename) throws RFWException {
-    File file = new File(filename);
-    return readFileContentToString(file);
-  }
-
-  public static String readFileContentToString(File file) throws RFWException {
-    return new String(readFileContent(file));
-  }
-
-  public static String readFileContentToString(String filename, String charset) throws RFWException {
-    File file = new File(filename);
-    return readFileContentToString(file, charset);
-  }
-
-  public static String readFileContentToString(String filename, Charset charset) throws RFWException {
-    File file = new File(filename);
-    return readFileContentToString(file, charset);
-  }
-
-  public static String readFileContentToString(File file, Charset charset) throws RFWException {
-    return new String(readFileContent(file), charset);
-  }
-
-  public static String readFileContentToString(File file, String charset) throws RFWException {
-    try {
-      return new String(readFileContent(file), charset);
-    } catch (UnsupportedEncodingException e) {
-      throw new RFWCriticalException("RFW_ERR_200332");
-    }
-  }
-
-  public static byte[] readFileContent(String filename) throws RFWException {
-    File file = new File(filename);
-    return readFileContent(file);
-  }
-
-  public static byte[] readFileContent(File file) throws RFWException {
-    if (!file.exists()) {
-      throw new RFWValidationException("RFW_ERR_200059", new String[] { file.getPath() });
-    }
-    if (!file.canRead()) {
-      throw new RFWValidationException("RFW_ERR_200060", new String[] { file.getPath() });
-    }
-    FileInputStream fileinput = null;
-    try {
-      fileinput = new FileInputStream(file);
-      if (file.length() > Integer.MAX_VALUE) {
-        throw new RFWValidationException("RFW_ERR_200063", new String[] { LocaleConverter.formatBytesSize(file.length(), null, 1) });
-      }
-      return BUIO.readToByteArray(fileinput);
-    } catch (FileNotFoundException e) {
-      throw new RFWValidationException("RFW_ERR_200061", new String[] { file.getPath() });
-    } finally {
-      if (fileinput != null) {
-        try {
-          fileinput.close();
-        } catch (IOException e) {
-        }
-      }
-    }
   }
 
   /**
@@ -456,7 +372,7 @@ public class BUFile {
     if (!fPath.isDirectory()) throw new RFWValidationException("O caminho '" + path + "' não é um diretório válido!");
     if (!fPath.canWrite()) throw new RFWValidationException("Não temos permissão para escrever no diretório '" + path + "'!");
 
-    for (File file : getFilesFromDirectory(path)) {
+    for (File file : RUFile.getFilesFromDirectory(path)) {
       if (deleteSymlinks || !isSymbolicLink(file)) deleteFile(file);
     }
   }
