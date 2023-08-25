@@ -19,6 +19,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUIO;
 import br.eng.rodrigogml.rfw.kernel.utils.RUMail;
 import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
 import br.eng.rodrigogml.rfw.kernel.utils.RUString;
@@ -199,7 +200,7 @@ public class BUMail {
    * @throws RFWException
    */
   public static String loadMessageTemplate(String templateResourceName, HashMap<String, String> fieldContents) throws RFWException {
-    String content = BUIO.readToString(RUReflex.getResourceAsStream(templateResourceName), StandardCharsets.UTF_8);
+    String content = RUIO.toString(RUReflex.getResourceAsStream(templateResourceName), StandardCharsets.UTF_8);
     for (Entry<String, String> entry : fieldContents.entrySet()) {
       content = RUString.replaceAll(content, "${" + entry.getKey() + "}", entry.getValue());
     }

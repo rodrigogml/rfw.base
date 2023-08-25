@@ -1,12 +1,9 @@
 package br.eng.rodrigogml.rfw.base.utils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import br.eng.rodrigogml.rfw.kernel.RFW;
@@ -100,47 +97,4 @@ public class BUIO {
     }
   }
 
-  /**
-   * Lê o conteúdo de um inputStream para um array de Bytes.
-   *
-   * @param in InputStream pronto para ser lido
-   * @return array de bytes com o conteúdo lido do InputStream
-   * @throws RFWException
-   */
-  public static byte[] readToByteArray(InputStream in) throws RFWException {
-    try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-      byte[] tmpbytes = new byte[4096];
-      int c = 0;
-      while ((c = in.read(tmpbytes)) > 0) {
-        out.write(tmpbytes, 0, c);
-      }
-      out.flush();
-      return out.toByteArray();
-    } catch (IOException e) {
-      throw new RFWCriticalException("Falha ao lêr o conteúdo do InputStream!", e);
-    }
-  }
-
-  /**
-   * Lê o conteúdo de um InputStream para uma String utilizando o Charset UTF_8.
-   *
-   * @param in Stream com o conteúdo para ser lido.
-   * @return String montada com os Bytes do InputStream convertidos utilizadno o UTF_8.
-   * @throws RFWException
-   */
-  public static String readToString(InputStream in) throws RFWException {
-    return new String(BUIO.readToByteArray(in), StandardCharsets.UTF_8);
-  }
-
-  /**
-   * Lê o conteúdo de um InputStream para uma String utilizando o Charset desejado.
-   *
-   * @param in Stream com o conteúdo para ser lido.
-   * @param charset que será utilizado para converter os bytes em caracteres.
-   * @return String montada com os Bytes do InputStream convertidos utilizadno o Charset passado.
-   * @throws RFWException
-   */
-  public static String readToString(InputStream in, Charset charset) throws RFWException {
-    return new String(BUIO.readToByteArray(in), charset);
-  }
 }

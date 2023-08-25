@@ -41,28 +41,6 @@ public class BUConnection {
   }
 
   /**
-   * Prepara o java para conseseguir realizar conexões HTTPS com encriptação TLS 1.2.
-   *
-   * @param km define o KeyStore com os certificados privados que podem ser usados para criptografia da conexão.
-   * @param tm define o TrustManager, gerenciador de confiabilidade de certificados, para permitir que o java valide a realize a conexão com os servidores que usem um desses certificados.
-   * @param sslProtocol Procolo de conexão SSL. Ex: SSLv3, TLSv1, TLSv1.1 and TLSv1.2
-   * @throws RFWException
-   */
-  public static void setupTLSConnection(final KeyManager[] km, final TrustManager[] tm, String sslProtocol) throws RFWException {
-    // Define que as conexões que usam o protocolo de encriptação PKGS devem utilizar a classe do pacote da SUN. Isso é necessário porque a implementação nativa do java.net.URL não dá suporte à HTTPS
-    // System.setProperty("java.protocol.handler.pkgs", "com.sun.net.ssl.internal.www.protocol");
-
-    try {
-      // Recupera o Contexto do SSL e define os certificados definidos
-      SSLContext sc = SSLContext.getInstance(sslProtocol);
-      sc.init(km, tm, null);
-      SSLContext.setDefault(sc); // Define esse contexto de chaves para as conexões SSL
-    } catch (Exception e) {
-      throw new RFWCriticalException("RFW_ERR_200055", e);
-    }
-  }
-
-  /**
    * Define que o java deve permitir a renegociação de SSL/TLS.<br>
    * Usada por alguns provedores HTTPS ao tentar negociar o protocolo de encriptação a ser usado. Por padrão a renegociação foi desabilitada no java por "problemas de segurança". Para comunicar com alguns provedores, essa propriedade deve ser definida como TRUE.
    */
