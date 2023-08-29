@@ -277,17 +277,6 @@ public class BUFile {
   }
 
   /**
-   * Extrai o nome do arquivo de um caminho completo recebido. NÃO RETORNA A EXTENSÃO DO ARQUIVO!
-   *
-   * @param file Caminho com o nome do arquivo
-   * @return
-   */
-  public static String extractFileName(String file) {
-    final String name = new File(file).getName();
-    return name.substring(0, name.lastIndexOf('.'));
-  }
-
-  /**
    * Extrai o nome e extenção do arquivo de um caminho completo recebido.
    *
    * @param file Caminho com o nome do arquivo
