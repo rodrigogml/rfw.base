@@ -21,7 +21,7 @@ public abstract class Job extends Thread {
    * Inicia um novo Job
    */
   public Job(String jobTitle) {
-    super("##### Job: " + PreProcess.coalesce(jobTitle, "Job Without Title :/"));
+    super("### Job: " + PreProcess.coalesce(jobTitle, "Job Without Title :/"));
     this.setDaemon(false);
     this.jobStatus = new JobStatus(JobMonitor.registerJob(this), PreProcess.coalesce(jobTitle, "Job Without Title :/"));
   }
