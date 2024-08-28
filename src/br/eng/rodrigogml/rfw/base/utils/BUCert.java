@@ -8,10 +8,12 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.Provider;
 import java.security.ProviderException;
 import java.security.SecureRandom;
 import java.security.Security;
+import java.security.Signature;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
@@ -38,6 +40,9 @@ import org.bouncycastle.asn1.DERPrintableString;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.asn1.DERUTF8String;
+import org.bouncycastle.asn1.nist.NISTObjectIdentifiers;
+import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.DigestInfo;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 
 import br.eng.rodrigogml.rfw.kernel.RFW;
@@ -920,7 +925,7 @@ public class BUCert {
   // * @throws RFWException
   // */
   // public static String getCertificateCNPJ(CertificateVO certVO) throws RFWException {
-  // KeyStore ks = loadKeyStoreFromPKCS12(new ByteArrayInputStream(certVO.getCertificatefilevo().getFilecontentvo().getContent()), certVO.getPassword());
+  // KeyStore ks = loadKeyStoreFromPKCS12(new ByteArrayInputStream(certVO.getCertificatefilevo().getFileContentVO().getContent()), certVO.getPassword());
   // // Recupera chave privada do certificado cliente
   // KeyStore.PrivateKeyEntry pkEntry;
   // try {
@@ -947,27 +952,27 @@ public class BUCert {
    * @return
    */
   public static String signContentSHA256andRSA(final String content, final KeyStore keyStore, final String alias, final String pin) throws RFWException {
-    throw new RFWCriticalException("Desde a atualização do BounceCastle, este método precisa de revisão! - signContentSHA256andRSA(...)");
-    // try {
-    // PrivateKey pKey = (PrivateKey) keyStore.getKey(alias, pin.toCharArray());
-    //
-    // MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-    // messageDigest.update(content.getBytes());
-    // byte[] outputDigest = messageDigest.digest();
-    //
-    // AlgorithmIdentifier sha256Aid = new AlgorithmIdentifier(NISTObjectIdentifiers.id_sha256, null);
-    // DigestInfo di = new DigestInfo(sha256Aid, outputDigest);
-    //
-    // Signature rsaSignature = Signature.getInstance("NONEwithRSA");
-    // rsaSignature.initSign(pKey);
-    // rsaSignature.update(di.toASN1Object().getEncoded());
-    // byte[] signed = rsaSignature.sign();
-    // // Codifica na base 64 e remove os "enters" e espaços da string
-    // final String finalKey = BUString.encodeBase64(signed).replaceAll("[\r\n ]", "");
-    // return finalKey;
-    // } catch (Throwable e) {
-    // throw new RFWCriticalException("RFW_ERR_200461", e);
-    // }
+    // throw new RFWCriticalException("Desde a atualização do BounceCastle, este método precisa de revisão! - signContentSHA256andRSA(...)");
+    try {
+      PrivateKey pKey = (PrivateKey) keyStore.getKey(alias, pin.toCharArray());
+
+      MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+      messageDigest.update(content.getBytes());
+      byte[] outputDigest = messageDigest.digest();
+
+      AlgorithmIdentifier sha256Aid = new AlgorithmIdentifier(NISTObjectIdentifiers.id_sha256, null);
+      DigestInfo di = new DigestInfo(sha256Aid, outputDigest);
+
+      Signature rsaSignature = Signature.getInstance("NONEwithRSA");
+      rsaSignature.initSign(pKey);
+      rsaSignature.update(di.toASN1Primitive().getEncoded());
+      byte[] signed = rsaSignature.sign();
+      // Codifica na base 64 e remove os "enters" e espaços da string
+      final String finalKey = BUString.encodeBase64(signed).replaceAll("[\r\n ]", "");
+      return finalKey;
+    } catch (Throwable e) {
+      throw new RFWCriticalException("RFW_ERR_200461", e);
+    }
   }
 
   /**

@@ -120,5 +120,4 @@ public class BUMachine {
     }
     return detectedOS;
   }
-
 }
