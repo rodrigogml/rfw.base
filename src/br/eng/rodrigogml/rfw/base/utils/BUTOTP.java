@@ -16,6 +16,7 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
+import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
  * Description: Classe de implementação de autenticação TOTP/HOTP.<br>
@@ -68,7 +69,7 @@ public class BUTOTP {
 
     // Extrai os bytes para gerar a chave
     byte[] secretKey = Arrays.copyOf(buffer, SECRET_BITS / 8);
-    String generatedKey = BUString.encodeBase32(secretKey);
+    String generatedKey = RUString.encodeBase32(secretKey);
 
     return generatedKey;
   }
@@ -102,7 +103,7 @@ public class BUTOTP {
    * @throws RFWException
    */
   private static boolean checkCode(String secret, long code, long timestamp, int window) throws RFWException {
-    byte[] decodedKey = BUString.decodeBase32ToByte(secret);
+    byte[] decodedKey = RUString.decodeBase32ToByte(secret);
 
     // Converte o tempo passado em "janelas", para saber em que "passo" da senha que estamos.
     final long timeWindow = timestamp / TIMESTEPSIZEINMILLIS;
@@ -145,9 +146,9 @@ public class BUTOTP {
   public static int getCode(String secret, int offset) throws RFWException {
     byte[] key;
     try {
-      key = BUString.decodeBase32ToByte(secret);
+      key = RUString.decodeBase32ToByte(secret);
     } catch (Exception e) {
-      key = BUString.decodeBase64ToByte(secret);
+      key = RUString.decodeBase64ToByte(secret);
     }
     long tm = new Date().getTime() / TIMESTEPSIZEINMILLIS;
 

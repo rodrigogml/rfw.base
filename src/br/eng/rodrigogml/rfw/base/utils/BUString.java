@@ -12,8 +12,6 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.common.io.BaseEncoding;
-
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
@@ -581,105 +579,6 @@ public class BUString {
       pow++;
     }
     return buff.toString().trim();
-  }
-
-  /**
-   * Este método decodifica uma string codificada em base 64.
-   *
-   * @param encodedContent String codificada
-   * @return String decodificada
-   */
-  public static String decodeBase64(String encodedContent) {
-    return new String(Base64.getMimeDecoder().decode(encodedContent));
-  }
-
-  /**
-   * Este método decodifica uma string codificada em base 64.
-   *
-   * @param encodedContent String codificada
-   * @return String decodificada
-   * @throws UnsupportedEncodingException
-   */
-  public static String decodeBase64(String encodedContent, String charset) throws RFWException {
-    try {
-      return new String(Base64.getMimeDecoder().decode(encodedContent), charset);
-    } catch (UnsupportedEncodingException e) {
-      throw new RFWCriticalException("Charset inválido: '" + charset + "'!");
-    }
-  }
-
-  /**
-   * Este método decodifica uma string codificada em base 64.
-   *
-   * @param encodedContent String codificada
-   * @return String decodificada
-   */
-  public static byte[] decodeBase64ToByte(String encodedContent) {
-    return Base64.getMimeDecoder().decode(encodedContent);
-  }
-
-  /**
-   * Este método codifica uma string em base 64.
-   *
-   * @param content String para ser codificada.
-   * @return String codificada
-   */
-  public static String encodeBase64(String content) {
-    return new String(Base64.getMimeEncoder().encodeToString(content.getBytes()));
-  }
-
-  /**
-   * Este método codifica um array de bytes em base 64.
-   *
-   * @param content String para ser codificada.
-   * @return String codificada
-   */
-  public static String encodeBase64(byte[] content) {
-    return new String(Base64.getMimeEncoder().encodeToString(content));
-  }
-
-  /**
-   * Este método codifica um array de bytes em base 32.
-   *
-   * @param content String para ser codificada.
-   * @return String codificada
-   */
-  public static String encodeBase32(byte[] content) {
-    // Estamos usando o Google Guava (já presente no RFWDeprec por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFWDeprec. No futuro quem sabe ter a própria implementação
-    return BaseEncoding.base32().encode(content);
-  }
-
-  /**
-   * Este método codifica uma String em base 32.
-   *
-   * @param content String para ser codificada.
-   * @return String codificada
-   */
-  public static String encodeBase32(String content) {
-    // Estamos usando o Google Guava (já presente no RFWDeprec por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFWDeprec. No futuro quem sabe ter a própria implementação
-    return BaseEncoding.base32().encode(content.getBytes());
-  }
-
-  /**
-   * Este método decodifica uma String em base 32.
-   *
-   * @param content String para codificada.
-   * @return String codificada
-   */
-  public static String decodeBase32(String content) {
-    // Estamos usando o Google Guava (já presente no RFWDeprec por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFWDeprec. No futuro quem sabe ter a própria implementação
-    return new String(BaseEncoding.base32().decode(content));
-  }
-
-  /**
-   * Este método decodifica uma String em base 32.
-   *
-   * @param content String para codificada.
-   * @return String codificada
-   */
-  public static byte[] decodeBase32ToByte(String content) {
-    // Estamos usando o Google Guava (já presente no RFWDeprec por conta do Vaadin e outras bibliotecas) Outra opção seria utilizar o Apache Commons, mas este ainda não está presente no RFWDeprec. No futuro quem sabe ter a própria implementação
-    return BaseEncoding.base32().decode(content);
   }
 
   /**

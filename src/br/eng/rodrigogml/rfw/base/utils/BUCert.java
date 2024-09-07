@@ -1,6 +1,5 @@
 package br.eng.rodrigogml.rfw.base.utils;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyManagementException;
@@ -59,6 +58,7 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
 //import sun.security.pkcs11.wrapper.PKCS11;
 //import sun.security.pkcs11.wrapper.PKCS11Constants;
 //import sun.security.pkcs11.wrapper.PKCS11Exception;
+import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
  * Description: Classe utilitária com os métodos de manipulação de certificados.<BR>
@@ -510,31 +510,6 @@ public class BUCert {
   // }
   // }
 
-  /**
-   * Carrega o Provider solicitado.
-   *
-   * @param providername Nome de identificação do Provider
-   * @param librarypath caminho completo para a biblioteca de comunicação com o device de criptografia.
-   * @param slot Número do device. Deve ser informado principalmente quando há mais de um device na mesma máquina para evitar que se retorne o errado. Se não informado é retornado o primeiro Provider encontrado. Para obter os números dos slotes existentes para um provider utilize o método {@link BUConnection#getSlotsPKCS11Library(String)}
-   * @return
-   */
-  public static Provider loadProviderPKCS11(String providername, String librarypath, Long slot) {
-    String tokenconfiguration = null;
-    if (slot != null) {
-      tokenconfiguration = new String("name = " + providername + "_" + slot + "\n" + "library = " + librarypath + "\nslot = " + slot + "\n");
-    } else {
-      tokenconfiguration = new String("name = " + providername + "\n" + "library = " + librarypath + "\n");
-    }
-    Provider provider = new sun.security.pkcs11.SunPKCS11(new ByteArrayInputStream(tokenconfiguration.getBytes()));
-    final Provider existentprovider = Security.getProvider(provider.getName());
-    if (existentprovider != null) {
-      Security.addProvider(provider);
-    } else {
-      provider = existentprovider;
-    }
-    return provider;
-  }
-
   // /**
   // * Este método tenta carregar todos os "Provider" possíveis (conhecidos por esta classe) para certificados tipo A3.<br>
   // *
@@ -617,10 +592,14 @@ public class BUCert {
     p = Security.getProvider("SunJSSE");
     if (p == null) {
       try {
-        p = new com.sun.net.ssl.internal.ssl.Provider();
-        Security.addProvider(p);
+        // p = new com.sun.net.ssl.internal.ssl.Provider();
+        // Security.addProvider(p);
+        // Troquei as linhas acima pela linha a seguir, pq diz já carregar o provider e não gera o warning do acesso interno à classe SunPKCS11
+        SSLContext.getInstance("TLS"); // Isso já carrega o provider necessário
         loaded = true;
       } catch (ProviderException e) {
+      } catch (NoSuchAlgorithmException e) {
+        if (RFW.isDevelopmentEnvironment()) e.printStackTrace();
       }
     } else {
       loaded = true;
@@ -968,7 +947,7 @@ public class BUCert {
       rsaSignature.update(di.toASN1Primitive().getEncoded());
       byte[] signed = rsaSignature.sign();
       // Codifica na base 64 e remove os "enters" e espaços da string
-      final String finalKey = BUString.encodeBase64(signed).replaceAll("[\r\n ]", "");
+      final String finalKey = RUString.encodeBase64(signed).replaceAll("[\r\n ]", "");
       return finalKey;
     } catch (Throwable e) {
       throw new RFWCriticalException("RFW_ERR_200461", e);
