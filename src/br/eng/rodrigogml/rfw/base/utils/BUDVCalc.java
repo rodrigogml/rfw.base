@@ -10,7 +10,9 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUString;
  *
  * @author Rodrigo Leitão
  * @since 4.0.0 (28/01/2011)
+ * @deprecated Classe em substituição pela RFWDVCalc
  */
+@Deprecated
 public class BUDVCalc {
 
   private BUDVCalc() {
@@ -66,7 +68,9 @@ public class BUDVCalc {
    * @param value valor contendo apenas dígitos para que seja calculado o DV.
    * @return String contendo apenas 1 caracter que será o DV.
    * @throws RFWValidationException Lançado caso o valor não tenha apenas números, ou seja um valor nulo/vazio.
+   * @deprecated Este método migrou para RUDVCalc mas pode ser o calcDVGenericMod11 (Utilizado no sistema), ou outro específico para o documento
    */
+  @Deprecated
   public static String calcMod11(String value) throws RFWException {
     value = RUString.removeNonDigits(value);
     if (value == null || !value.matches("[0-9]+")) {
