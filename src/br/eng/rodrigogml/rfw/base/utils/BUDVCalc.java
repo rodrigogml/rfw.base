@@ -27,7 +27,7 @@ public class BUDVCalc {
    */
   public static String calcMod10(String value) throws RFWValidationException {
     if (value == null || !value.matches("[0-9]+")) {
-      throw new RFWValidationException("RFW_000052");
+      throw new RFWValidationException("RFW_000058");
     }
     int factor = 2;
     int counter = 0;
