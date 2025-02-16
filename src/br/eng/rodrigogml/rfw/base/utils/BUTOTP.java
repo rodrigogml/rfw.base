@@ -148,7 +148,7 @@ public class BUTOTP {
     try {
       key = RUString.decodeBase32ToByte(secret);
     } catch (Exception e) {
-      key = RUString.decodeBase64ToByte(secret);
+      key = RUString.decodeMimeBase64ToByte(secret);
     }
     long tm = new Date().getTime() / TIMESTEPSIZEINMILLIS;
 

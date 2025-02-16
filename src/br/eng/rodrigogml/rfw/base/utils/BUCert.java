@@ -947,7 +947,7 @@ public class BUCert {
       rsaSignature.update(di.toASN1Primitive().getEncoded());
       byte[] signed = rsaSignature.sign();
       // Codifica na base 64 e remove os "enters" e espaços da string
-      final String finalKey = RUString.encodeBase64(signed).replaceAll("[\r\n ]", "");
+      final String finalKey = RUString.encodeMimeBase64(signed).replaceAll("[\r\n ]", "");
       return finalKey;
     } catch (Throwable e) {
       throw new RFWCriticalException("RFW_ERR_200461", e);
