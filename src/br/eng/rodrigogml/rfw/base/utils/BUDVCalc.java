@@ -2,7 +2,6 @@ package br.eng.rodrigogml.rfw.base.utils;
 
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
-import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
  * Description: Classe utilitária para concentrar o cálculo de Dígivos Verificadores (DV).<br>
@@ -28,7 +27,7 @@ public class BUDVCalc {
    */
   public static String calcMod10(String value) throws RFWValidationException {
     if (value == null || !value.matches("[0-9]+")) {
-      throw new RFWValidationException("RFW_ERR_200001");
+      throw new RFWValidationException("RFW_000052");
     }
     int factor = 2;
     int counter = 0;
@@ -53,84 +52,6 @@ public class BUDVCalc {
     } else {
       return "" + (10 - tmod);
     }
-  }
-
-  /**
-   * Calcula um dígito verificador usando módulo de 11, com uma base de 2 à 9.<br>
-   * Multiplicando cada número do valor passado pelos números da base (2, 3,..., 9) e somando, ao final obtém o módulo da dívisão por 11, e subtrai de 11. Caso o resultado do cálculo seja igual a 11 (resto 0) ou 10 (resto 1) o DV será 0.<br>
-   * <br>
-   * <b>Casos conhecidos que usam esta validação:</b>
-   * <ul>
-   * <li>Chave de Acesso da NFe</li>
-   * <li>DV Geral do Boleto de Cobrança</li>
-   * </ul>
-   *
-   * @param value valor contendo apenas dígitos para que seja calculado o DV.
-   * @return String contendo apenas 1 caracter que será o DV.
-   * @throws RFWValidationException Lançado caso o valor não tenha apenas números, ou seja um valor nulo/vazio.
-   * @deprecated Este método migrou para RUDVCalc mas pode ser o calcDVGenericMod11 (Utilizado no sistema), ou outro específico para o documento
-   */
-  @Deprecated
-  public static String calcMod11(String value) throws RFWException {
-    value = RUString.removeNonDigits(value);
-    if (value == null || !value.matches("[0-9]+")) {
-      throw new RFWValidationException("RFW_ERR_200001");
-    }
-
-    int[] base = { 2, 3, 4, 5, 6, 7, 8, 9 };
-    String[] digits = value.split("|");
-
-    long sum = 0;
-    int basecount = 0;
-    for (int i = digits.length - 1; i >= 0; i--) {
-      sum += base[basecount] * new Long(digits[i]);
-      basecount++;
-      basecount = (basecount % base.length);
-    }
-    long mod = 11 - (sum % 11);
-    if (mod >= 10) {
-      mod = 1;
-    }
-
-    return "" + mod;
-  }
-
-  /**
-   * Calcula um dígito verificador usando módulo de 11 APENAS PARA GUIAS DE ARRECAÇÃO DO GOVERNO / BOLETOS DE SERVIÇO, com uma base de 2 à 9.<br>
-   * Realiza a mesma operação que o método {@link #calcMod11(String)} com a diferença que quando cálculo do DV dá >=10, o método original retorna 1 e este método retorna 0.<br>
-   * <br>
-   * <b>Casos conhecidos que usam esta validação:</b>
-   * <ul>
-   * <li>Guia de FGTS</li>
-   * <li>Guia de GPS</li>
-   * </ul>
-   *
-   * @param value valor contendo apenas dígitos para que seja calculado o DV.
-   * @return String contendo apenas 1 caracter que será o DV.
-   * @throws RFWValidationException Lançado caso o valor não tenha apenas números, ou seja um valor nulo/vazio.
-   */
-  public static String calcMod11ForServiceGovernment(String value) throws RFWException {
-    value = RUString.removeNonDigits(value);
-    if (value == null || !value.matches("[0-9]+")) {
-      throw new RFWValidationException("RFW_ERR_200001");
-    }
-
-    int[] base = { 2, 3, 4, 5, 6, 7, 8, 9 };
-    String[] digits = value.split("|");
-
-    long sum = 0;
-    int basecount = 0;
-    for (int i = digits.length - 1; i >= 0; i--) {
-      sum += base[basecount] * new Long(digits[i]);
-      basecount++;
-      basecount = (basecount % base.length);
-    }
-    long mod = 11 - (sum % 11);
-    if (mod >= 10) {
-      mod = 0;
-    }
-
-    return "" + mod;
   }
 
   /**

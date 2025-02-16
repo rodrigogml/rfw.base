@@ -2,6 +2,7 @@ package br.eng.rodrigogml.rfw.base.utils;
 
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
+import br.eng.rodrigogml.rfw.kernel.utils.RUDVCalc;
 import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
@@ -110,7 +111,7 @@ public class BUDocValidation {
     // Removendo o DV da string
     String codeToCheck = codebar.substring(0, 4) + codebar.substring(5);
     // O DV tem que estar correto
-    if (codebar.charAt(4) != BUDVCalc.calcMod11(codeToCheck).charAt(0)) {
+    if (codebar.charAt(4) != RUDVCalc.calcPaymentSlipDVForServices(codeToCheck).charAt(0)) {
       throw new RFWValidationException("RFW_ERR_210058");
     }
 
@@ -171,7 +172,7 @@ public class BUDocValidation {
     // O DV é calculado com base no código de barras e não no código numérico. Por isso primeiro vamos converter o código numérico no código de barras e depois calcular o DV
     String codeBar = convertNumericCodeToBarCode(numericLine);
     String codeBarWithoutDV = codeBar.substring(0, 4) + codeBar.substring(5);
-    if (numericLine.charAt(32) != BUDVCalc.calcMod11(codeBarWithoutDV).charAt(0)) {
+    if (numericLine.charAt(32) != RUDVCalc.calcPaymentSlipDVForServices(codeBarWithoutDV).charAt(0)) {
       throw new RFWValidationException("RFW_ERR_210058");
     }
   }
@@ -318,10 +319,10 @@ public class BUDocValidation {
       throw new RFWValidationException("O dígito verificador do código de barras não está correto.");
     } else if ((codeBar.charAt(2) == '8' || codeBar.charAt(2) == '9')) {
       if (codeBar.charAt(1) == '5' || codeBar.charAt(1) == '1') { // 5 - Guias Governo // 1 - Prefeituras
-        if (codeBar.charAt(3) != BUDVCalc.calcMod11ForServiceGovernment(codeToCheck).charAt(0)) {
+        if (codeBar.charAt(3) != RUDVCalc.calcPaymentSlipDVForGovernment(codeToCheck).charAt(0)) {
           throw new RFWValidationException("O dígito verificador do código de barras não está correto.");
         }
-      } else if (codeBar.charAt(3) != BUDVCalc.calcMod11(codeToCheck).charAt(0)) {
+      } else if (codeBar.charAt(3) != RUDVCalc.calcPaymentSlipDVForServices(codeToCheck).charAt(0)) {
         throw new RFWValidationException("O dígito verificador do código de barras não está correto.");
       }
     }
@@ -369,36 +370,36 @@ public class BUDocValidation {
     // Validar DV do primeiro bloco
     if (modCalc == 1 && numericCode.charAt(11) != BUDVCalc.calcMod10(firstBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
-    } else if (modCalc == 2 && numericCode.charAt(11) != BUDVCalc.calcMod11(firstBlockCode).charAt(0)) {
+    } else if (modCalc == 2 && numericCode.charAt(11) != RUDVCalc.calcPaymentSlipDVForServices(firstBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
-    } else if (modCalc == 3 && numericCode.charAt(11) != BUDVCalc.calcMod11ForServiceGovernment(firstBlockCode).charAt(0)) {
+    } else if (modCalc == 3 && numericCode.charAt(11) != RUDVCalc.calcPaymentSlipDVForGovernment(firstBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
     }
 
     // Validar DV do segundo bloco
     if (modCalc == 1 && numericCode.charAt(23) != BUDVCalc.calcMod10(secondBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
-    } else if (modCalc == 2 && numericCode.charAt(23) != BUDVCalc.calcMod11(secondBlockCode).charAt(0)) {
+    } else if (modCalc == 2 && numericCode.charAt(23) != RUDVCalc.calcPaymentSlipDVForServices(secondBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
-    } else if (modCalc == 3 && numericCode.charAt(23) != BUDVCalc.calcMod11ForServiceGovernment(secondBlockCode).charAt(0)) {
+    } else if (modCalc == 3 && numericCode.charAt(23) != RUDVCalc.calcPaymentSlipDVForGovernment(secondBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
     }
 
     // Validar DV do terceiro bloco
     if (modCalc == 1 && numericCode.charAt(35) != BUDVCalc.calcMod10(thirdBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
-    } else if (modCalc == 2 && numericCode.charAt(35) != BUDVCalc.calcMod11(thirdBlockCode).charAt(0)) {
+    } else if (modCalc == 2 && numericCode.charAt(35) != RUDVCalc.calcPaymentSlipDVForServices(thirdBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
-    } else if (modCalc == 3 && numericCode.charAt(35) != BUDVCalc.calcMod11ForServiceGovernment(thirdBlockCode).charAt(0)) {
+    } else if (modCalc == 3 && numericCode.charAt(35) != RUDVCalc.calcPaymentSlipDVForGovernment(thirdBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
     }
 
     // Validar DV do terceiro bloco
     if (modCalc == 1 && numericCode.charAt(47) != BUDVCalc.calcMod10(fourthBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
-    } else if (modCalc == 2 && numericCode.charAt(47) != BUDVCalc.calcMod11(fourthBlockCode).charAt(0)) {
+    } else if (modCalc == 2 && numericCode.charAt(47) != RUDVCalc.calcPaymentSlipDVForServices(fourthBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
-    } else if (modCalc == 3 && numericCode.charAt(47) != BUDVCalc.calcMod11ForServiceGovernment(fourthBlockCode).charAt(0)) {
+    } else if (modCalc == 3 && numericCode.charAt(47) != RUDVCalc.calcPaymentSlipDVForGovernment(fourthBlockCode).charAt(0)) {
       throw new RFWValidationException("O dígito verificador do bloco 1 é inválido!");
     }
 
@@ -468,36 +469,36 @@ public class BUDocValidation {
         if (modCalc == 1) {
           numericCode += newBlock + BUDVCalc.calcMod10(newBlock);
         } else if (modCalc == 2) {
-          numericCode += newBlock + BUDVCalc.calcMod11(newBlock);
+          numericCode += newBlock + RUDVCalc.calcPaymentSlipDVForServices(newBlock);
         } else {
-          numericCode += newBlock + BUDVCalc.calcMod11ForServiceGovernment(newBlock);
+          numericCode += newBlock + RUDVCalc.calcPaymentSlipDVForGovernment(newBlock);
         }
 
         newBlock = barCode.substring(11, 22);
         if (modCalc == 1) {
           numericCode += newBlock + BUDVCalc.calcMod10(newBlock);
         } else if (modCalc == 2) {
-          numericCode += newBlock + BUDVCalc.calcMod11(newBlock);
+          numericCode += newBlock + RUDVCalc.calcPaymentSlipDVForServices(newBlock);
         } else {
-          numericCode += newBlock + BUDVCalc.calcMod11ForServiceGovernment(newBlock);
+          numericCode += newBlock + RUDVCalc.calcPaymentSlipDVForGovernment(newBlock);
         }
 
         newBlock = barCode.substring(22, 33);
         if (modCalc == 1) {
           numericCode += newBlock + BUDVCalc.calcMod10(newBlock);
         } else if (modCalc == 2) {
-          numericCode += newBlock + BUDVCalc.calcMod11(newBlock);
+          numericCode += newBlock + RUDVCalc.calcPaymentSlipDVForServices(newBlock);
         } else {
-          numericCode += newBlock + BUDVCalc.calcMod11ForServiceGovernment(newBlock);
+          numericCode += newBlock + RUDVCalc.calcPaymentSlipDVForGovernment(newBlock);
         }
 
         newBlock = barCode.substring(33, 44);
         if (modCalc == 1) {
           numericCode += newBlock + BUDVCalc.calcMod10(newBlock);
         } else if (modCalc == 2) {
-          numericCode += newBlock + BUDVCalc.calcMod11(newBlock);
+          numericCode += newBlock + RUDVCalc.calcPaymentSlipDVForServices(newBlock);
         } else {
-          numericCode += newBlock + BUDVCalc.calcMod11ForServiceGovernment(newBlock);
+          numericCode += newBlock + RUDVCalc.calcPaymentSlipDVForGovernment(newBlock);
         }
       }
         break;
