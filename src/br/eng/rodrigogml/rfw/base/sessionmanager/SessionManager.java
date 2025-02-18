@@ -399,7 +399,7 @@ public class SessionManager {
    * @param timeToLive the new define o tempo (em segundos) que uma sessão pode viver sem ser requisitada pelo Sessionmanager
    */
   public static void setTimeToLive(long timeToLive) throws RFWException {
-    PreProcess.requiredPositive(timeToLive, "O TimeToLeave da Sessão deve ser um número positivo!");
+    PreProcess.requiredNonNullPositive(timeToLive, "O TimeToLeave da Sessão deve ser um número positivo!");
     SessionManager.timeToLive = timeToLive;
   }
 
