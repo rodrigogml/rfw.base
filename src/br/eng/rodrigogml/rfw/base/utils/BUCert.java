@@ -50,7 +50,6 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
-import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
 //import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
 //import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;
 //import sun.security.pkcs11.wrapper.CK_SLOT_INFO;
@@ -59,6 +58,7 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
 //import sun.security.pkcs11.wrapper.PKCS11Constants;
 //import sun.security.pkcs11.wrapper.PKCS11Exception;
 import br.eng.rodrigogml.rfw.kernel.utils.RUString;
+import br.eng.rodrigogml.rfw.kernel.utils.RUTypes;
 
 /**
  * Description: Classe utilitária com os métodos de manipulação de certificados.<BR>
@@ -823,7 +823,7 @@ public class BUCert {
     if (dt == null) {
       throw new RFWValidationException("RFW_ERR_000001");
     }
-    return RUDateTime.toLocalDateTime(dt, RFW.getZoneId());
+    return RUTypes.toLocalDateTime(dt, RFW.getZoneId());
   }
 
   /**
@@ -842,7 +842,7 @@ public class BUCert {
     if (dt == null) {
       throw new RFWValidationException("RFW_ERR_000001");
     }
-    return RUDateTime.toLocalDateTime(dt, RFW.getZoneId());
+    return RUTypes.toLocalDateTime(dt, RFW.getZoneId());
   }
 
   /**

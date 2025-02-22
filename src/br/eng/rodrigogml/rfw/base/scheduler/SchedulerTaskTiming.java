@@ -15,7 +15,7 @@ import br.eng.rodrigogml.rfw.base.scheduler.interfaces.SchedulerTask;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
-import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
+import br.eng.rodrigogml.rfw.kernel.utils.RUTypes;
 
 /**
  * Description: Esta classe serve para gerenciar execução da tarefa que está agendada pelo SchedulerController.
@@ -103,7 +103,7 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
     if (runNow) {
       timer.schedule(this, 0);
     } else {
-      timer.schedule(this, RUDateTime.toDate(time));
+      timer.schedule(this, RUTypes.toDate(time));
     }
   }
 

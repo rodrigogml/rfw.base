@@ -10,7 +10,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.eng.rodrigogml.rfw.kernel.utils.RUDateTime;
+import br.eng.rodrigogml.rfw.kernel.utils.RUTypes;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BUDateTimeTest {
@@ -29,13 +29,13 @@ public class BUDateTimeTest {
     LocalDate localDate = LocalDate.of(1982, Month.MARCH, 25);
 
     for (int i = 0; i < dates.length; i++) {
-      Date tmpDate = RUDateTime.parseDate(dates[i]);
+      Date tmpDate = RUTypes.parseDate(dates[i]);
       // assertTrue("Falha na Date: " + i, tmpDate.compareTo(date) == 0);
 
-      LocalDateTime tmpLocalDateTime = RUDateTime.parseLocalDateTime(dates[i]);
+      LocalDateTime tmpLocalDateTime = RUTypes.parseLocalDateTime(dates[i]);
       // assertTrue("Falha na LocalDateTime: " + i + " / Data Original: " + dates[i] + " / Data Convertida: " + tmpLocalDateTime.toString(), tmpLocalDateTime.compareTo(localDateTime) == 0);
 
-      LocalDate tmpLocalDate = RUDateTime.parseLocalDate(dates[i]);
+      LocalDate tmpLocalDate = RUTypes.parseLocalDate(dates[i]);
       // assertTrue("Falha na LocalDate: "t + i, tmpLocalDate.compareTo(localDate) == 0);
     }
   }
@@ -56,13 +56,13 @@ public class BUDateTimeTest {
     LocalDate localDate = LocalDate.of(1982, Month.MARCH, 25);
 
     for (int i = 0; i < dates.length; i++) {
-      Date tmpDate = RUDateTime.parseDate(dates[i]);
+      Date tmpDate = RUTypes.parseDate(dates[i]);
       // assertTrue("Falha na Date: " + i, tmpDate.compareTo(date) == 0);
 
-      LocalDateTime tmpLocalDateTime = RUDateTime.parseLocalDateTime(dates[i]);
+      LocalDateTime tmpLocalDateTime = RUTypes.parseLocalDateTime(dates[i]);
       // assertTrue("Falha na LocalDateTime: " + i, tmpLocalDateTime.compareTo(localDateTime) == 0);
 
-      LocalDate tmpLocalDate = RUDateTime.parseLocalDate(dates[i]);
+      LocalDate tmpLocalDate = RUTypes.parseLocalDate(dates[i]);
       // assertTrue("Falha na LocalDate: " + i, tmpLocalDate.compareTo(localDate) == 0);
     }
   }
@@ -74,9 +74,9 @@ public class BUDateTimeTest {
     LocalDate d20220301 = LocalDate.of(2022, 3, 1);
     LocalDate d20220325 = LocalDate.of(2022, 3, 25);
 
-    // assertEquals(24, BUDateTime.calcDiferenceInDays(d20220301, d20220325));
-    // assertEquals(31, BUDateTime.calcDiferenceInDays(d20220101, d20220201));
-    // assertEquals(28, BUDateTime.calcDiferenceInDays(d20220201, d20220301));
+    // assertEquals(24, RUDateTime.calcDiferenceInDays(d20220301, d20220325));
+    // assertEquals(31, RUDateTime.calcDiferenceInDays(d20220101, d20220201));
+    // assertEquals(28, RUDateTime.calcDiferenceInDays(d20220201, d20220301));
   }
 
 }
