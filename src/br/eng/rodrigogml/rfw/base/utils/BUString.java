@@ -1,9 +1,7 @@
 package br.eng.rodrigogml.rfw.base.utils;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,14 +10,12 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.kernel.utils.RUDocValidation;
-import br.eng.rodrigogml.rfw.kernel.utils.RUNumber;
 
 /**
  * Description: Classe com métodos úteis para tratamentos e manipulação de String.<br>
@@ -352,233 +348,6 @@ public class BUString {
       value = value.replaceAll("\\_", "\\\\E.\\\\Q");
     }
     return value;
-  }
-
-  /**
-   * Recebe um valor em BigDecimal e o escreve por extenso. Se passado algum valor com mais de 2 casas decimais o valor será arredondado.
-   *
-   * @param value Valor a ser transformado por extenso.
-   * @return String com o texto do valor por extenso em Reais, escrito em Português brasileiro.
-   */
-  public static String currencyToExtense_BrazilianReal_BrazilianPortuguese(BigDecimal value) {
-    // Garante que teremos apenas duas casas decimais
-    value = value.setScale(2, RFW.getRoundingMode());
-
-    final StringBuilder buff = new StringBuilder();
-
-    // Separa a parte inteira e os centavos do valor
-    BigDecimal[] splitValue = RUNumber.extractIntegerAndFractionPart(value);
-
-    // Recuperar o extenso da parte inteira
-    buff.append(valueToExtense_BrazilianPortuguese(splitValue[0]));
-    // Anexa a moeda
-    if (splitValue[0].compareTo(BigDecimal.ONE) == 0) {
-      buff.append(" Real");
-    } else {
-      buff.append(" Reais");
-    }
-
-    // Só processa os centavos se ele existir, se estiver zerado não escreve "zero centavos"
-    if (splitValue[1].compareTo(BigDecimal.ZERO) != 0) {
-      // Recupera o extendo da parte dos centavos
-      buff.append(" e ").append(valueToExtense_BrazilianPortuguese(splitValue[1].multiply(new BigDecimal("100"))));
-      // Anexa a palavra centavos se existir
-      if (splitValue[1].compareTo(BigDecimal.ONE) == 0) {
-        buff.append(" centavo");
-      } else {
-        buff.append(" centavos");
-      }
-    }
-
-    return buff.toString();
-  }
-
-  /**
-   * Escreve um valor por extenso. Apesar de aceitar um BigDecimal por causa do tamanho dos números, os valores fracionários serão simplesmente ignorados.
-   *
-   * @param value Valor a ser transformado por extenso.
-   * @return String com o valor por extenso em Português Brasileiro.
-   */
-  public static Object valueToExtense_BrazilianPortuguese(BigDecimal value) {
-    final StringBuilder buff = new StringBuilder();
-    final BigDecimal BIGTHOUSAND = new BigDecimal("1000");
-
-    // Garante que os decimais serão ignorados
-    value = value.setScale(0, RoundingMode.FLOOR);
-
-    // Se o valor é zero já retorna logo, não sai tentando calcular e esrever para não escrever errado. Esse é o único número em que "zero" é escrito
-    if (value.compareTo(BigDecimal.ZERO) == 0) {
-      return "zero";
-    }
-
-    // Quebra o valor em cada milhar para ir compondo o valor
-    int pow = 0;
-    while (value.compareTo(BigDecimal.ZERO) > 0) {
-      long hundreds = value.remainder(BIGTHOUSAND).longValue();
-      value = value.divide(BIGTHOUSAND, 0, RoundingMode.FLOOR);
-
-      if (hundreds > 0) {
-        // Decopõe o número em unidades, dezens e centenas para criar o texto
-        int uvalue = (int) (hundreds % 10);
-        int dvalue = (int) ((hundreds / 10f) % 10);
-        int cvalue = (int) ((hundreds / 100f) % 10);
-
-        String ctext = null;
-        String dtext = null;
-        String utext = null;
-
-        if (hundreds == 100) {
-          ctext = "cem";
-        } else {
-          if (cvalue == 1) {
-            if (dvalue > 0 || uvalue > 0) {
-              ctext = "cento";
-            } else {
-              ctext = "cem";
-            }
-          } else if (cvalue == 2) {
-            ctext = "duzentos";
-          } else if (cvalue == 3) {
-            ctext = "trezentos";
-          } else if (cvalue == 4) {
-            ctext = "quatrocentos";
-          } else if (cvalue == 5) {
-            ctext = "quinhentos";
-          } else if (cvalue == 6) {
-            ctext = "seiscentos";
-          } else if (cvalue == 7) {
-            ctext = "setecentos";
-          } else if (cvalue == 8) {
-            ctext = "oitocentos";
-          } else if (cvalue == 9) {
-            ctext = "novecentos";
-          }
-
-          // Verifica o texto das dezenas
-          if (dvalue == 1) {
-            if (uvalue == 0) {
-              dtext = "dez";
-            } else if (uvalue == 1) {
-              dtext = "onze";
-            } else if (uvalue == 2) {
-              dtext = "doze";
-            } else if (uvalue == 3) {
-              dtext = "treze";
-            } else if (uvalue == 4) {
-              dtext = "quatorze";
-            } else if (uvalue == 5) {
-              dtext = "quinze";
-            } else if (uvalue == 6) {
-              dtext = "dezesseis";
-            } else if (uvalue == 7) {
-              dtext = "dezessete";
-            } else if (uvalue == 8) {
-              dtext = "dezoito";
-            } else if (uvalue == 9) {
-              dtext = "dezenove";
-            }
-          } else {
-            // Se não tem nome específico para o conjunto dezena e unidade, separamos em dezena e unidade
-            if (dvalue == 2) {
-              dtext = "vinte";
-            } else if (dvalue == 3) {
-              dtext = "trinta";
-            } else if (dvalue == 4) {
-              dtext = "quarenta";
-            } else if (dvalue == 5) {
-              dtext = "cinquenta";
-            } else if (dvalue == 6) {
-              dtext = "sessenta";
-            } else if (dvalue == 7) {
-              dtext = "setenta";
-            } else if (dvalue == 8) {
-              dtext = "oitenta";
-            } else if (dvalue == 9) {
-              dtext = "noventa";
-            }
-            // Texto das unidades
-            if (uvalue == 1) {
-              utext = "um";
-            } else if (uvalue == 2) {
-              utext = "dois";
-            } else if (uvalue == 3) {
-              utext = "três";
-            } else if (uvalue == 4) {
-              utext = "quatro";
-            } else if (uvalue == 5) {
-              utext = "cinco";
-            } else if (uvalue == 6) {
-              utext = "seis";
-            } else if (uvalue == 7) {
-              utext = "sete";
-            } else if (uvalue == 8) {
-              utext = "oito";
-            } else if (uvalue == 9) {
-              utext = "nove";
-            }
-          }
-        }
-
-        String text = ctext;
-        if (dtext != null) {
-          if (text != null) {
-            text = text + " e " + dtext;
-          } else {
-            text = dtext;
-          }
-        }
-        if (utext != null) {
-          if (text != null) {
-            text = text + " e " + utext;
-          } else {
-            text = utext;
-          }
-        }
-
-        // Depois que o número está pronto, verificamos em que casa de milhar estamos para anexar o valor
-        switch (pow) {
-          case 0:
-            // Não há nada, só o número mesmo
-            break;
-          case 1:
-            text += " mil";
-            break;
-          case 2:
-            text += (hundreds == 1 ? " milhão" : " milhões");
-            break;
-          case 3:
-            text += (hundreds == 1 ? " bilhão" : " bilhões");
-            break;
-          case 4:
-            text += (hundreds == 1 ? " trilhão" : " trilhões");
-            break;
-          case 5:
-            text += (hundreds == 1 ? " quatrilhão" : " quatrilhões");
-            break;
-          case 6:
-            text += (hundreds == 1 ? " quintilhão" : " quintilhões");
-            break;
-          case 7:
-            text += (hundreds == 1 ? " sextilhão" : " sextilhões");
-            break;
-          case 8:
-            text += (hundreds == 1 ? " setilhão" : " setilhões");
-            break;
-          case 9:
-            text += (hundreds == 1 ? " octilhão" : " octilhões");
-            break;
-          case 10:
-            text += (hundreds == 1 ? " nonilhão" : " nonilhões");
-            break;
-          default:
-            break;
-        }
-        if (buff.length() > 0) buff.insert(0, "e ");
-        buff.insert(0, text + ' ');
-      }
-      pow++;
-    }
-    return buff.toString().trim();
   }
 
   /**
