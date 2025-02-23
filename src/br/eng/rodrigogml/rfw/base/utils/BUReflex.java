@@ -9,16 +9,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
-import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
 import br.eng.rodrigogml.rfw.kernel.vo.GVO;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 
@@ -90,109 +86,6 @@ public class BUReflex {
     } catch (Exception e) {
       throw new RFWCriticalException("RFW_ERR_200473", new String[] { className }, e);
     }
-  }
-
-  /**
-   * Compra dois Objectos (RFWVO) e verifica os valores diferentes recursivamente.
-   *
-   * @param obj1 Objeto 1 para ser comparado
-   * @param obj2 Objeto 2 para ser comparado
-   * @return Lista com o caminho das propriedades que apresentaram diferenças.
-   * @throws RFWException
-   */
-  public static <T extends Object> List<String> compareRecursively(T obj1, T obj2) throws RFWException {
-    return compareRecursively(obj1, obj2, null, new LinkedList<Object>());
-  }
-
-  /**
-   * Método auxiliar do {@link #compareRecursively(RFWVO, RFWVO)}
-   *
-   * @param basepath Caminho dos atributos (recursivo) até chegarem nesta comparação. Passar nulo case sejam os dois objetos raiz.
-   * @param cache Lista com os objetos que já foram comparados, evitando assim loop infinito em caso de link cíclico dos objetos. Para o objeto raiz passar uma lista vazia.tá nada
-   * @throws RFWException
-   */
-  private static <T extends Object> List<String> compareRecursively(T obj1, T obj2, String basepath, List<Object> cache) throws RFWException {
-    LinkedList<String> atts = new LinkedList<String>();
-
-    if (obj1 == null ^ obj2 == null) {
-      atts.add(RUReflex.getAttributePath("", basepath));
-    } else if (obj1 != null && obj2 != null) {
-      if (!cache.contains(obj1)) {
-        cache.add(obj1);
-        if (obj1.getClass().isPrimitive() ||
-            String.class.isInstance(obj1) ||
-            Long.class.isInstance(obj1) ||
-            Integer.class.isInstance(obj1) ||
-            Boolean.class.isInstance(obj1) ||
-            Double.class.isInstance(obj1) ||
-            Float.class.isInstance(obj1) ||
-            Enum.class.isInstance(obj1) ||
-            Date.class.isInstance(obj1) ||
-            LocalDate.class.isInstance(obj1) ||
-            LocalDateTime.class.isInstance(obj1) ||
-            BigDecimal.class.isInstance(obj1) ||
-            Class.class.isInstance(obj1)) {
-          if (!obj1.equals(obj2)) {
-            atts.add(RUReflex.getAttributePath("", basepath));
-          }
-        } else if (Iterable.class.isInstance(obj1)) {
-          Iterator<?> it1 = ((Iterable<?>) obj1).iterator();
-          Iterator<?> it2 = ((Iterable<?>) obj2).iterator();
-          int index = 0;
-          while (true) {
-            if (!it1.hasNext() && !it2.hasNext()) {
-              break;
-            } else if (it1.hasNext() ^ it2.hasNext()) {
-              atts.add(RUReflex.getAttributePath("", basepath));
-              break;
-            } else {
-              Object itObj1 = it1.next();
-              Object itObj2 = it2.next();
-              atts.addAll(compareRecursively(itObj1, itObj2, RUReflex.getAttributePath("", index, basepath), cache));
-            }
-            index++;
-          }
-        } else if (Map.class.isInstance(obj1)) {
-          Map<?, ?> map1 = (Map<?, ?>) obj1;
-          Map<?, ?> map2 = (Map<?, ?>) obj2;
-          if (map1.size() != map2.size()) {
-            atts.add(RUReflex.getAttributePath("", basepath));
-          } else {
-            for (Object key : map1.keySet()) {
-              Object mapObj1 = map1.get(key);
-              Object mapObj2 = map2.get(key);
-              if (mapObj1 == null ^ mapObj2 == null) {
-                atts.add(RUReflex.getAttributePath("", key, key.getClass(), basepath));
-              } else if (mapObj1 != null && mapObj2 != null) {
-                atts.addAll(compareRecursively(mapObj1, mapObj2, RUReflex.getAttributePath("", key, key.getClass(), basepath), cache));
-              }
-            }
-          }
-        } else if (RFWVO.class.isAssignableFrom(obj1.getClass())) {
-          Method[] methods = obj1.getClass().getMethods();
-          for (Method method : methods) {
-            if ((method.getName().startsWith("get") || method.getName().startsWith("is")) && !method.getName().equals("getClass")) {
-              try {
-                Object ret1 = method.invoke(obj1);
-                Object ret2 = method.invoke(obj2);
-                String attribute = null;
-                if (method.getName().startsWith("get")) {
-                  attribute = method.getName().substring(3, 4).toLowerCase() + method.getName().substring(4);
-                } else if (method.getName().startsWith("is")) {
-                  attribute = method.getName().substring(2, 3).toLowerCase() + method.getName().substring(3);
-                }
-                atts.addAll(compareRecursively(ret1, ret2, RUReflex.getAttributePath(attribute, basepath), cache));
-              } catch (Exception e) {
-                throw new RFWCriticalException("Falha ao comparar semelhança dos objetos!", e);
-              }
-            }
-          }
-        } else {
-          throw new RFWCriticalException("Método despreparado para comparar o objeto '" + obj1.getClass().getCanonicalName() + "'.");
-        }
-      }
-    }
-    return atts;
   }
 
   /**

@@ -467,7 +467,7 @@ public class BUFile {
         } else if (charset.equals(Constants.CHARSET_WINDOWS_1252)) {
           return Charsets.WINDOWS_1252;
         } else {
-          RFWLogger.logImprovement("O arquivo BUFile não foi capaz de correlacionar o charset '" + charset + "'.");
+          RFWLogger.logImprovement("Não foi possível relacionar o charset detectado: '${0}'", new String[] { charset });
         }
       }
       return null;
