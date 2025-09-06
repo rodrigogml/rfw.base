@@ -15,14 +15,19 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
  *
  * @author Rodrigo Leitão
  * @since 5.0.0 (11/05/2012)
+ * @deprecated TODOS OS MÉTODOS DAS CLASSES UTILITÁRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO NÃO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILITÁRIOS ESPECÍFICOS PARA A FUNCIONALIDADE.
  */
+@Deprecated
 public class BUMachine {
 
   /**
    * Tipos de Sistema Operacional detectáveis por esta classe.
    */
   public static enum OSType {
-    WINDOWS, LINUX, MAC, UNKNOW
+    WINDOWS,
+    LINUX,
+    MAC,
+    UNKNOW
   }
 
   private BUMachine() {

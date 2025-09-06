@@ -33,7 +33,9 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
  *
  * @author Rodrigo Leitão
  * @since 7.1.0 (20/06/2015)
+ * @deprecated TODOS OS MÉTODOS DAS CLASSES UTILITÁRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO NÃO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILITÁRIOS ESPECÍFICOS PARA A FUNCIONALIDADE.
  */
+@Deprecated
 public final class BUBarCode {
 
   /**
@@ -175,35 +177,5 @@ public final class BUBarCode {
     } catch (Exception e) {
       throw new RFWWarningException("RFW_ERR_200313");
     }
-  }
-
-  /**
-   * Valida se o código de barras GTIN é válido. Funciona para GTIN8, GTIN12, GTIN13 e GTIN14.<br>
-   * Caso o valor passado seja nulo, resultará em NullPointerException para evitar que erros de programação em passar o valor sejam acobertados por uma "prevenção" interna do método.
-   *
-   * @param fullCodeBar Código de Barra completo, incluindo o dívido verificador
-   * @return true se for um código válido, false caso contrário
-   */
-  public static boolean isGTINCodeBarValid(String fullCodeBar) {
-    boolean ret = false;
-    if (fullCodeBar.length() == 8 || fullCodeBar.length() == 12 || fullCodeBar.length() == 13 || fullCodeBar.length() == 14) {
-      if (fullCodeBar.matches("[0-9]*")) {
-        int impSum = 0;
-        // PS: Nas iterações não consideramos o último número apra os cálculos poide deve ser o DV
-        for (int i = fullCodeBar.length() - 2; i >= 0; i -= 2) { // itera os números nas posições impares
-          impSum += Integer.parseInt(fullCodeBar.substring(i, i + 1));
-        }
-        impSum *= 3; // Multiplicamos o resultado por 3
-        for (int i = fullCodeBar.length() - 3; i >= 0; i -= 2) { // soma os números nas porições pares
-          impSum += Integer.parseInt(fullCodeBar.substring(i, i + 1));
-        }
-        // Verificamos o número que "falta" para chegar no próximo múltiplo de 10
-        int dv = (10 - (impSum % 10)) % 10; // <- O segundo módulo garante que quando o resultado do primeiro módulo der 0, o DV não resulta em 10, e sim em 0 como deve ser.
-
-        // Verificamos se é válido
-        return fullCodeBar.substring(fullCodeBar.length() - 1, fullCodeBar.length()).equals("" + dv);
-      }
-    }
-    return ret;
   }
 }

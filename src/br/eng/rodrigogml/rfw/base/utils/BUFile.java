@@ -43,6 +43,7 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
  * @author Rodrigo Leitão
  * @since 3.1.0 (NOV / 2009)
  * @deprecated Movida para o o RFWDeprec.Kernel com o nome de RUFile - métodos sendo migrados pouco a pouco conforme a necessidade (Ao levar o método para lá, excluir daqui).
+ * @deprecated TODOS OS MÉTODOS DAS CLASSES UTILITÁRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO NÃO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILITÁRIOS ESPECÍFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUFile {

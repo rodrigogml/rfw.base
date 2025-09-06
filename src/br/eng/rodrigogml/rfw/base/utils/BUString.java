@@ -19,6 +19,7 @@ import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
  * @since 1.0.0 (AGO / 2007)
  * @version 4.1.0 (23/06/2011) - rodrigogml - Nome alterado de StringUtils, para ficar no padrão do sistema.
  * @deprecated Movido para RFW.Kernel na classe RUString
+ * @deprecated TODOS OS MÉTODOS DAS CLASSES UTILITÁRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO NÃO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILITÁRIOS ESPECÍFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUString {

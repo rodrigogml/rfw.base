@@ -20,7 +20,9 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
  *
  * @author Rodrigo Leitão
  * @since 10.0.0 (26 de jun de 2019)
+ * @deprecated TODOS OS MÉTODOS DAS CLASSES UTILITÁRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO NÃO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILITÁRIOS ESPECÍFICOS PARA A FUNCIONALIDADE.
  */
+@Deprecated
 public class BUFileSniff {
 
   public static enum FileSniffType {
