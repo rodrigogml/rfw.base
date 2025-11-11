@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.eng.rodrigogml.rfw.kernel.utils.RUIO;
+import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BUMarkdownTest {
@@ -17,6 +18,6 @@ public class BUMarkdownTest {
     String html = RUIO.toString(BUMarkdownTest.class.getResourceAsStream("/resources/markdown/BUMarkdownTest_html.txt"), StandardCharsets.UTF_8);
 
     String converted = BUMarkdown.convertMarkdownToHTML(markdown.toString());
-    BUString.validateEqualsString(html, converted);
+    RUString.validateEqualsString(html, converted);
   }
 }

@@ -38,12 +38,12 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import br.eng.rodrigogml.rfw.base.fwreports.bean.FWReportOptionBean;
 import br.eng.rodrigogml.rfw.base.fwreports.bean.FWReportOptionBean.PAGE_ORIENTATION;
-import br.eng.rodrigogml.rfw.base.utils.BUString;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
+import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
  * Description: Classe principal de relatorios. Todas as classes geradoras de relatorios do sistema deve extender esta classe.<br>
@@ -376,11 +376,11 @@ public abstract class FWReport {
    * @return
    */
   protected PdfTemplate createTemplatePageFooterModel1(Locale locale, int actualPage, int actualSidePage) {
-    return createTemplatePageFooterModel1(locale, (actualSidePage > 1 ? BUString.convertToExcelColumnLetters(actualSidePage) + "-" + actualPage : "" + actualPage));
+    return createTemplatePageFooterModel1(locale, (actualSidePage > 1 ? RUString.convertToExcelColumnLetters(actualSidePage) + "-" + actualPage : "" + actualPage));
   }
 
   protected PdfTemplate createTemplatePageFooterModel1(String title, Locale locale, int actualPage, int actualSidePage) {
-    return createTemplatePageFooterModel1(title, locale, (actualSidePage > 1 ? BUString.convertToExcelColumnLetters(actualSidePage) + "-" + actualPage : "" + actualPage));
+    return createTemplatePageFooterModel1(title, locale, (actualSidePage > 1 ? RUString.convertToExcelColumnLetters(actualSidePage) + "-" + actualPage : "" + actualPage));
   }
 
   protected PdfTemplate createTemplatePageFooterModel1(Locale locale, String actualpage) {
