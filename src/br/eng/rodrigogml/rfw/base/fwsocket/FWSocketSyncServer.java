@@ -166,8 +166,8 @@ class FWSocketServerConnectionThread extends Thread {
     this.clientsocket = clientsocket;
     this.listener = listener;
     try {
-      this.reader = new InputStreamReader(clientsocket.getInputStream(), "ISO-8859-1");
-      this.writer = new PrintStream(clientsocket.getOutputStream(), true, "ISO-8859-1");
+      this.reader = new InputStreamReader(clientsocket.getInputStream(), "UTF-8");
+      this.writer = new PrintStream(clientsocket.getOutputStream(), true, "UTF-8");
     } catch (Exception e) {
       throw new RFWCriticalException("Erro ao iniciar streams de comunicação do FWSocket!");
     }
@@ -201,7 +201,7 @@ class FWSocketServerConnectionThread extends Thread {
           if (cmdbuff.length() >= fullexpected) {
             String serialobj = cmdbuff.substring(firstpipe + 1, fullexpected - 1); // Pula o tamanho esperado e o primeiro pipe, e subtrai 1 do tamanho total para remover o '\n' do final
             // Desserializa o objeto
-            ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(serialobj.getBytes("ISO-8859-1")));
+            ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(serialobj.getBytes("UTF-8")));
             FWSocketObjectMap tcproperties = (FWSocketObjectMap) input.readObject();
             processtime = System.nanoTime();
             try {
@@ -260,7 +260,7 @@ class FWSocketServerConnectionThread extends Thread {
         oo.flush();
         oo.reset();
         oo.close();
-        final String serobj = out.toString("ISO-8859-1"); // Usa o charset ISO-8859-1 pois faz o mapeamento direto em byte, sem corrigir caracteres. Evita codificar a string para Base64 ou Hexa (que dependem de biblioteca externa)
+        final String serobj = out.toString("UTF-8"); // Usa o charset ISO-8859-1 pois faz o mapeamento direto em byte, sem corrigir caracteres. Evita codificar a string para Base64 ou Hexa (que dependem de biblioteca externa)
         this.writer.print(serobj.length() + "|" + serobj + '\n');
         this.writer.flush();
       } catch (Exception e) {

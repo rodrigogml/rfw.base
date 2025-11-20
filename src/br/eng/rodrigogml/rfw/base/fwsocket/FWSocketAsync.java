@@ -163,7 +163,7 @@ public class FWSocketAsync {
       this.clientsocket = new Socket(serverAddr, port);
       clientsocket.setKeepAlive(true);
 
-      this.clientwriter = new PrintStream(clientsocket.getOutputStream(), true, "ISO-8859-1");
+      this.clientwriter = new PrintStream(clientsocket.getOutputStream(), true, "UTF-8");
       FWSocketAsyncConnectionThread t = new FWSocketAsyncConnectionThread(null, clientsocket, this.listener, this);
       t.setDaemon(true);
       t.setName("FWSocket ClientListener");
@@ -217,7 +217,7 @@ public class FWSocketAsync {
           clientid = System.nanoTime();
         }
         // Cria Thread Separada para gerenciar essa nvoa conexão e não atrapalhar o listener
-        this.clientwriter = new PrintStream(clientsocket.getOutputStream(), true, "ISO-8859-1");
+        this.clientwriter = new PrintStream(clientsocket.getOutputStream(), true, "UTF-8");
         FWSocketAsyncConnectionThread t = new FWSocketAsyncConnectionThread(clientid, clientsocket, this.listener, this);
         t.setDaemon(true);
         t.setName("FWSocket ClientListener");
@@ -254,7 +254,7 @@ public class FWSocketAsync {
         oo.flush();
         oo.reset();
         oo.close();
-        final String serobj = out.toString("ISO-8859-1"); // Usa o charset ISO-8859-1 pois faz o mapeamento direto em byte, sem corrigir caracteres. Evita codificar a string para Base64 ou Hexa (que dependem de biblioteca externa)
+        final String serobj = out.toString("UTF-8"); // Usa o charset ISO-8859-1 pois faz o mapeamento direto em byte, sem corrigir caracteres. Evita codificar a string para Base64 ou Hexa (que dependem de biblioteca externa)
         this.clientwriter.print(serobj.length() + "|" + serobj + '\n');
         this.clientwriter.flush();
       } catch (Exception e) {
@@ -284,7 +284,7 @@ public class FWSocketAsync {
         oo.flush();
         oo.reset();
         oo.close();
-        final String serobj = out.toString("ISO-8859-1"); // Usa o charset ISO-8859-1 pois faz o mapeamento direto em byte, sem corrigir caracteres. Evita codificar a string para Base64 ou Hexa (que dependem de biblioteca externa)
+        final String serobj = out.toString("UTF-8"); // Usa o charset ISO-8859-1 pois faz o mapeamento direto em byte, sem corrigir caracteres. Evita codificar a string para Base64 ou Hexa (que dependem de biblioteca externa)
         writer.print(serobj.length() + "|" + serobj + '\n');
         writer.flush();
       } catch (Exception e) {
@@ -321,7 +321,7 @@ class FWSocketAsyncConnectionThread extends Thread {
     this.listener = listener;
     this.fwSocket = fwSocket;
     try {
-      this.reader = new InputStreamReader(clientsocket.getInputStream(), "ISO-8859-1");
+      this.reader = new InputStreamReader(clientsocket.getInputStream(), "UTF-8");
     } catch (Exception e) {
       throw new RFWCriticalException("Erro ao iniciar streams de comunicação do FWSocket!");
     }
@@ -354,7 +354,7 @@ class FWSocketAsyncConnectionThread extends Thread {
           if (cmdbuff.length() >= fullexpected) {
             String serialobj = cmdbuff.substring(firstpipe + 1, fullexpected - 1); // Pula o tamanho esperado e o primeiro pipe, e subtrai 1 do tamanho total para remover o '\n' do final
             // Desserializa o objeto
-            ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(serialobj.getBytes("ISO-8859-1")));
+            ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(serialobj.getBytes("UTF-8")));
             FWSocketObjectMap tcproperties = (FWSocketObjectMap) input.readObject();
             processtime = System.nanoTime();
             try {

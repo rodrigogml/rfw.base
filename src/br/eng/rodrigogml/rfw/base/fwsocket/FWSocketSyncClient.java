@@ -50,18 +50,18 @@ public class FWSocketSyncClient implements Serializable {
     try {
       // Conectamos para obter o socket
       clientsocket = connect();
-      writer = new PrintStream(clientsocket.getOutputStream(), true, "ISO-8859-1");
+      writer = new PrintStream(clientsocket.getOutputStream(), true, "UTF-8");
       // Serializamos e enviamos o objeto
       final ByteArrayOutputStream out = new ByteArrayOutputStream();
       final ObjectOutputStream oo = new ObjectOutputStream(out);
       oo.writeObject(map);
       oo.flush();
       oo.close();
-      String serobj = out.toString("ISO-8859-1"); // Usa o charset ISO-8859-1 pois faz o mapeamento direto em byte, sem corrigir caracteres. Evita codificar a string para Base64 ou Hexa (que dependem de biblioteca externa)
+      String serobj = out.toString("UTF-8"); // Usa o charset ISO-8859-1 pois faz o mapeamento direto em byte, sem corrigir caracteres. Evita codificar a string para Base64 ou Hexa (que dependem de biblioteca externa)
       writer.print(serobj.length() + "|" + serobj + '\n');
       writer.flush();
       // Depois que enviou o dado, ficamos aguardando pela resposta
-      reader = new InputStreamReader(clientsocket.getInputStream(), "ISO-8859-1");
+      reader = new InputStreamReader(clientsocket.getInputStream(), "UTF-8");
       final StringBuilder cmdbuff = new StringBuilder(); // Guarda os pedoaços dos comandos que chegarem
       int expectedlenght = -1;
       char[] c = new char[1024]; // Bytes a serem lidos por vêz
@@ -82,7 +82,7 @@ public class FWSocketSyncClient implements Serializable {
             // Limpamos do Buffer apenas a informação sendo processada agora. Em casos de receber um comando colado em outro, temos de manter no buffer os comandos ainda não processados
             cmdbuff.delete(0, fullexpected);
             // Desserializa o objeto
-            ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(serialobj.getBytes("ISO-8859-1")));
+            ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(serialobj.getBytes("UTF-8")));
             response = (FWSocketObjectMap) input.readObject();
             break;
           }
