@@ -825,7 +825,7 @@ public class BUCert {
     if (dt == null) {
       throw new RFWValidationException("RFW_ERR_000001");
     }
-    return RUTypes.toLocalDateTime(dt, RFW.getZoneId());
+    return RUTypes.parseLocalDateTime(dt, RFW.getZoneId());
   }
 
   /**
@@ -844,7 +844,7 @@ public class BUCert {
     if (dt == null) {
       throw new RFWValidationException("RFW_ERR_000001");
     }
-    return RUTypes.toLocalDateTime(dt, RFW.getZoneId());
+    return RUTypes.parseLocalDateTime(dt, RFW.getZoneId());
   }
 
   /**
