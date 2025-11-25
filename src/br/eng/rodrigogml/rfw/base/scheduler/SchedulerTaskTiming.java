@@ -103,7 +103,7 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
     if (runNow) {
       timer.schedule(this, 0);
     } else {
-      timer.schedule(this, RUTypes.toDate(time));
+      timer.schedule(this, RUTypes.parseDate(time));
     }
   }
 
