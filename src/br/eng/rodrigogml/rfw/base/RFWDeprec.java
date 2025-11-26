@@ -6,11 +6,11 @@ import br.eng.rodrigogml.rfw.kernel.eventdispatcher.EventDispatcher;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;;
 
 /**
- * Description: Classe utilitária geral do RFWDeprec com métodos utilitários comuns genéricos.<br>
+ * Description: Classe utilitária geral do RFW com métodos utilitários comuns genéricos.<br>
  *
  * @author Rodrigo GML
  * @since 10.0 (12 de out de 2020)
- * @deprecated Deve ser utilizada a Classe que foi passada para o módulo RFWDeprec.Kernel
+ * @deprecated Deve ser utilizada a Classe que foi passada para o módulo RFW.Kernel
  */
 @Deprecated
 public class RFWDeprec {
@@ -22,7 +22,7 @@ public class RFWDeprec {
   }
 
   /**
-   * Inicializa o serviço de Controle de Sessão do RFWDeprec.
+   * Inicializa o serviço de Controle de Sessão do RFW.
    *
    * @param timeToLive Tempo que a sessão sobrevive sem atividade até ser descartada.<br>
    *          Valor em segundos.
