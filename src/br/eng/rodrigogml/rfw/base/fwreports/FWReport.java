@@ -97,7 +97,7 @@ public abstract class FWReport {
 
       // Escrevemos o conteúdo em um arquivo temporário
       try {
-        this.tmpFile = RUFile.createFileInTemporaryPath(this.reportBean.getReportFileName() + ".pdf", null, StandardCharsets.UTF_8);
+        this.tmpFile = RUFile.createFileInGeneratedTemporaryPath(this.reportBean.getReportFileName() + ".pdf", null, StandardCharsets.UTF_8);
         writer = PdfWriter.getInstance(document, new FileOutputStream(this.tmpFile));
       } catch (FileNotFoundException e) {
         throw new RFWCriticalException("Falha ao inicializar o arquivo temporário para escrita do relatório!");

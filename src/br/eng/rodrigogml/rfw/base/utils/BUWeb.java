@@ -50,6 +50,7 @@ public class BUWeb {
    * @return Conteúdo retornado atravéz da conexão em formato String.
    *
    */
+  @Deprecated
   public static String getURLContentOnString(String address) throws RFWException {
     return new String(getURLContent(address));
   }
@@ -63,6 +64,7 @@ public class BUWeb {
    * @return Conteúdo retornado atravéz da conexão em formato String.
    *
    */
+  @Deprecated
   public static String getURLContentOnString(String address, Charset charset) throws RFWException {
     return new String(getURLContent(address), charset);
   }
@@ -74,6 +76,7 @@ public class BUWeb {
    * @param address Endereço HTTP a ser recuperado
    * @return Conteúdo retornado atravéz da conexão em um byte Array.
    */
+  @Deprecated
   public static byte[] getURLContent(String address) throws RFWException {
     // try {//address = "http://images.creativeink.com.br/BL000322-2-VM_900.jpg";
     // URL url = new URL(address);
@@ -150,6 +153,7 @@ public class BUWeb {
    * @param jobStatus Suprote para o serviço {@link JobMonitor}.
    * @return Conteúdo retornado atravéz da conexão em um byte Array.
    */
+  @Deprecated
   public static File getURLContentOnTemporaryFile(String address, Long maxSizeBytesUpload, JobStatus jobStatus) throws RFWException {
     try {
       int tries = 0;
@@ -206,7 +210,7 @@ public class BUWeb {
           if (fileName == null) fileName = "downloadedFile";
           if (jobStatus != null) jobStatus.setParam("filename", fileName);
 
-          File tmpFile = RUFile.createFileInTemporaryPath(fileName);
+          File tmpFile = RUFile.createFileInGeneratedTemporaryPath(fileName);
           long totalRead = 0;
           if (jobStatus != null) jobStatus.setProgressMessage("Baixando...");
           try (InputStream in = con.getInputStream(); FileOutputStream out = new FileOutputStream(tmpFile)) {
