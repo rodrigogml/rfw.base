@@ -29,30 +29,30 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 
 /**
- * Description: Classe utilit·ria utilizada para geraÁ„o de cÛdigo de barras e similares..<BR>
+ * Description: Classe utilit√°ria utilizada para gera√ß√£o de c√≥digo de barras e similares..<BR>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.1.0 (20/06/2015)
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public final class BUBarCode {
 
   /**
-   * Construtor privado para previdir a instancia da classe utilit·ria.
+   * Construtor privado para previdir a instancia da classe utilit√°ria.
    */
   private BUBarCode() {
   }
 
   /**
    * Gerador de QRCode em image.<br>
-   * Mais informaÁıes sobre o QRCode em https://en.wikipedia.org/wiki/QR_code.
+   * Mais informa√ß√µes sobre o QRCode em https://en.wikipedia.org/wiki/QR_code.
    *
-   * @param content Define o conte˙do a ser codificado dentro do QRCode.
-   * @param errorcorrectionlevel NÌvel de correÁ„o de dados.
+   * @param content Define o conte√∫do a ser codificado dentro do QRCode.
+   * @param errorcorrectionlevel N√≠vel de corre√ß√£o de dados.
    * @param size Tamanho em pixel da imagem a ser gerada.
-   * @param fileType Filetype suportados para exportaÁ„o. O FileType È o mesmo argumento passado para o javax.imageio.ImageIO. Os tipos suportados podem ser encontrados em http://docs.oracle.com/javase/7/docs/api/javax/imageio/package-summary.html. Tipos usados com mais frequÍncia s„o: "PNG", "JPEG", "BMP" e "GIF".
-   * @return byte array com o conte˙do da imagem/arquivo.
+   * @param fileType Filetype suportados para exporta√ß√£o. O FileType √© o mesmo argumento passado para o javax.imageio.ImageIO. Os tipos suportados podem ser encontrados em http://docs.oracle.com/javase/7/docs/api/javax/imageio/package-summary.html. Tipos usados com mais frequ√™ncia s√£o: "PNG", "JPEG", "BMP" e "GIF".
+   * @return byte array com o conte√∫do da imagem/arquivo.
    * @throws RFWException
    */
   public static byte[] generateQRCode(String content, ErrorCorrectionLevel errorcorrectionlevel, int size, String fileType) throws RFWException {
@@ -106,10 +106,10 @@ public final class BUBarCode {
   }
 
   /**
-   * Identico ao mÈtodo {@link #readQRCode(InputStream, Map)}, mas n„o passa nenhum par‚metro de configuraÁ„o.
+   * Identico ao m√©todo {@link #readQRCode(InputStream, Map)}, mas n√£o passa nenhum par√¢metro de configura√ß√£o.
    *
-   * @param stream conte˙do da imagem a ser interpretada.
-   * @return conte˙do resgatado da imagem.
+   * @param stream conte√∫do da imagem a ser interpretada.
+   * @return conte√∫do resgatado da imagem.
    * @throws RFWException
    */
   public static String readQRCode(InputStream stream) throws RFWException {
@@ -117,11 +117,11 @@ public final class BUBarCode {
   }
 
   /**
-   * Aceita um Stream com o conte˙do de uma imagem (JPEG, GIF, BMP, PNG) que contenha um qrcode qualquer e tenta interpretar seu conte˙do e retorna-lo.
+   * Aceita um Stream com o conte√∫do de uma imagem (JPEG, GIF, BMP, PNG) que contenha um qrcode qualquer e tenta interpretar seu conte√∫do e retorna-lo.
    *
-   * @param stream conte˙do da imagem a ser interpretada.
-   * @param hash ConfiguraÁıes de decodificaÁ„o do QRCode.
-   * @return conte˙do resgatado da imagem.
+   * @param stream conte√∫do da imagem a ser interpretada.
+   * @param hash Configura√ß√µes de decodifica√ß√£o do QRCode.
+   * @return conte√∫do resgatado da imagem.
    * @throws RFWException
    */
   public static String readQRCode(InputStream stream, Map<DecodeHintType, ?> hash) throws RFWException {
@@ -135,8 +135,8 @@ public final class BUBarCode {
   }
 
   /**
-   * Aceita um Stream com o conte˙do de uma imagem (JPEG, GIF, BMP, PNG) que contenha um cÛdigo de barras 1D/2D qualquer e tenta interpretar seu conte˙do e retorna-lo.<br>
-   * Os cÛdigos de barras suprotados atÈ o momento s„o:
+   * Aceita um Stream com o conte√∫do de uma imagem (JPEG, GIF, BMP, PNG) que contenha um c√≥digo de barras 1D/2D qualquer e tenta interpretar seu conte√∫do e retorna-lo.<br>
+   * Os c√≥digos de barras suprotados at√© o momento s√£o:
    * <ul>
    * <li>1D product
    * <ul>
@@ -164,9 +164,9 @@ public final class BUBarCode {
    * </ul>
    * </ul>
    *
-   * @param stream conte˙do da imagem a ser interpretada.
-   * @param hash ConfiguraÁıes de decodificaÁ„o do cÛdigo de barras.
-   * @return conte˙do resgatado da imagem.
+   * @param stream conte√∫do da imagem a ser interpretada.
+   * @param hash Configura√ß√µes de decodifica√ß√£o do c√≥digo de barras.
+   * @return conte√∫do resgatado da imagem.
    * @throws RFWException
    */
   public static String readMultiFormat(InputStream stream, Map<DecodeHintType, ?> hash) throws RFWException {

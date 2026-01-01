@@ -27,27 +27,27 @@ import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
 
 /**
- * Description: Classe utilit·ria com mÈtodos pertinentes a manipulaÁ„o de informaÁ„o na WEB.<br>
+ * Description: Classe utilit√°ria com m√©todos pertinentes a manipula√ß√£o de informa√ß√£o na WEB.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.4.0 (7 de set de 2017)
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUWeb {
 
   /**
-   * Construtor privado de classe utilit·ria
+   * Construtor privado de classe utilit√°ria
    */
   private BUWeb() {
   }
 
   /**
-   * Este mÈtodo tem a funÁ„o de abrir uma conex„o http no endereÁo desejado e retornar o conte˙do recuperado em formato de String.<br>
-   * Note que este mÈtodo funciona tando quando para pegar o conte˙do de p·ginas quando para obter o conte˙do de arquivos de texto. Arquivos bin·rios È melhor obter o conte˙do atravÈs do mÈtodo {@link #getURLContent(String)}.
+   * Este m√©todo tem a fun√ß√£o de abrir uma conex√£o http no endere√ßo desejado e retornar o conte√∫do recuperado em formato de String.<br>
+   * Note que este m√©todo funciona tando quando para pegar o conte√∫do de p√°ginas quando para obter o conte√∫do de arquivos de texto. Arquivos bin√°rios √© melhor obter o conte√∫do atrav√©s do m√©todo {@link #getURLContent(String)}.
    *
-   * @param address EndereÁo HTTP a ser recuperado
-   * @return Conte˙do retornado atravÈz da conex„o em formato String.
+   * @param address Endere√ßo HTTP a ser recuperado
+   * @return Conte√∫do retornado atrav√©z da conex√£o em formato String.
    *
    */
   @Deprecated
@@ -56,12 +56,12 @@ public class BUWeb {
   }
 
   /**
-   * Este mÈtodo tem a funÁ„o de abrir uma conex„o http no endereÁo desejado e retornar o conte˙do recuperado em formato de String.<br>
-   * Note que este mÈtodo funciona tando quando para pegar o conte˙do de p·ginas quando para obter o conte˙do de arquivos de texto. Arquivos bin·rios È melhor obter o conte˙do atravÈs do mÈtodo {@link #getURLContent(String)}.
+   * Este m√©todo tem a fun√ß√£o de abrir uma conex√£o http no endere√ßo desejado e retornar o conte√∫do recuperado em formato de String.<br>
+   * Note que este m√©todo funciona tando quando para pegar o conte√∫do de p√°ginas quando para obter o conte√∫do de arquivos de texto. Arquivos bin√°rios √© melhor obter o conte√∫do atrav√©s do m√©todo {@link #getURLContent(String)}.
    *
-   * @param address EndereÁo HTTP a ser recuperado
+   * @param address Endere√ßo HTTP a ser recuperado
    * @param charset
-   * @return Conte˙do retornado atravÈz da conex„o em formato String.
+   * @return Conte√∫do retornado atrav√©z da conex√£o em formato String.
    *
    */
   @Deprecated
@@ -70,11 +70,11 @@ public class BUWeb {
   }
 
   /**
-   * Este mÈtodo tem a funÁ„o de abrir uma conex„o http no endereÁo desejado e retornar o conte˙do recuperado em byte array.<br>
-   * Este mÈtodo funciona melhor para baixar arquivos ou conte˙do bin·rio. Para baixar conte˙do de p·ginas e arquivos de texto experimente o {@link #getURLContentOnString(String)}
+   * Este m√©todo tem a fun√ß√£o de abrir uma conex√£o http no endere√ßo desejado e retornar o conte√∫do recuperado em byte array.<br>
+   * Este m√©todo funciona melhor para baixar arquivos ou conte√∫do bin√°rio. Para baixar conte√∫do de p√°ginas e arquivos de texto experimente o {@link #getURLContentOnString(String)}
    *
-   * @param address EndereÁo HTTP a ser recuperado
-   * @return Conte˙do retornado atravÈz da conex„o em um byte Array.
+   * @param address Endere√ßo HTTP a ser recuperado
+   * @return Conte√∫do retornado atrav√©z da conex√£o em um byte Array.
    */
   @Deprecated
   public static byte[] getURLContent(String address) throws RFWException {
@@ -92,10 +92,10 @@ public class BUWeb {
     // }
     // return out.toByteArray();
     // } catch (IOException e) {
-    // throw new RFWCriticalException("Falha ao realizar a conxe„o ou lÍr os dados da mesma.", new String[] { address }, e);
+    // throw new RFWCriticalException("Falha ao realizar a conxe√£o ou l√™r os dados da mesma.", new String[] { address }, e);
     // }
     // } catch (IOException e1) {
-    // throw new RFWCriticalException("URL inv·lida para download!", new String[] { address }, e1);
+    // throw new RFWCriticalException("URL inv√°lida para download!", new String[] { address }, e1);
     // }
 
     try {
@@ -103,16 +103,16 @@ public class BUWeb {
       while (tries < 100) { // Evita um loop infinito de tentativas, incluindo redirecionamentos
         URL obj = new URL(address);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setConnectTimeout(5000); // Define um timeout de conex„o para n„o esperar para sempre
-        con.setReadTimeout(5000); // Define um timeout de espera por resposta para n„o esperar para sempre
-        con.setRequestMethod("GET"); // normalmente n„o È necess·rio pois GET È o padr„o
-        con.setRequestProperty("User-Agent", "Mozilla/5.0"); // ConfiguraÁıes da requisiÁ„o
+        con.setConnectTimeout(5000); // Define um timeout de conex√£o para n√£o esperar para sempre
+        con.setReadTimeout(5000); // Define um timeout de espera por resposta para n√£o esperar para sempre
+        con.setRequestMethod("GET"); // normalmente n√£o √© necess√°rio pois GET √© o padr√£o
+        con.setRequestProperty("User-Agent", "Mozilla/5.0"); // Configura√ß√µes da requisi√ß√£o
 
-        int responseCode = con.getResponseCode(); // Recupera o cÛdigo de retorno
+        int responseCode = con.getResponseCode(); // Recupera o c√≥digo de retorno
         RFWLogger.logDebug("Response Code : " + responseCode);
         if (responseCode == 302) { // 302 Movido Temporariamente - https://pt.wikipedia.org/wiki/HTTP_302
           address = con.getHeaderField("Location");
-          RFWLogger.logDebug("Redirecionando requisiÁ„o para o endereÁo: " + address);
+          RFWLogger.logDebug("Redirecionando requisi√ß√£o para o endere√ßo: " + address);
         } else if (responseCode == 200) { // 200 OK
           try (BufferedInputStream in = new BufferedInputStream(con.getInputStream()); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             byte dataBuffer[] = new byte[1024];
@@ -122,36 +122,36 @@ public class BUWeb {
             }
             return out.toByteArray();
           } catch (IOException e) {
-            throw new RFWCriticalException("Falha ao realizar a conxe„o ou lÍr os dados da mesma.", new String[] { address }, e);
+            throw new RFWCriticalException("Falha ao realizar a conxe√£o ou l√™r os dados da mesma.", new String[] { address }, e);
           }
         } else {
-          throw new RFWCriticalException("Recebido do endereÁo '" + address + "' o cÛdigo '" + responseCode + "', que È desconhecido pelo RFWDeprec!");
+          throw new RFWCriticalException("Recebido do endere√ßo '" + address + "' o c√≥digo '" + responseCode + "', que √© desconhecido pelo RFWDeprec!");
         }
         tries++;
       }
-      throw new RFWWarningException("N„o foi possÌvel recuperar o conte˙do da URL: " + address);
+      throw new RFWWarningException("N√£o foi poss√≠vel recuperar o conte√∫do da URL: " + address);
     } catch (MalformedURLException e) {
-      throw new RFWCriticalException("URL inv·lida para download!", new String[] { address }, e);
+      throw new RFWCriticalException("URL inv√°lida para download!", new String[] { address }, e);
     } catch (ProtocolException e) {
-      throw new RFWCriticalException("Falha de protocolo para baixar o conte˙do!", new String[] { address }, e);
+      throw new RFWCriticalException("Falha de protocolo para baixar o conte√∫do!", new String[] { address }, e);
     } catch (SocketTimeoutException e) {
       throw new RFWCriticalException("Expirado o tempo de espera (timeout) de retorno do site.", new String[] { address }, e);
     } catch (IOException e) {
-      throw new RFWCriticalException("Falha ao lÍr o conte˙do do site!", new String[] { address }, e);
+      throw new RFWCriticalException("Falha ao l√™r o conte√∫do do site!", new String[] { address }, e);
     }
 
   }
 
   /**
-   * Este mÈtodo tem a funÁ„o de abrir uma conex„o http no endereÁo desejado e retornar o conte˙do recuperado para um arquivo tempor·rio.<br>
-   * Este mÈtodo funciona melhor para baixar arquivos ou conte˙do bin·rio. Para baixar conte˙do de p·ginas e arquivos de texto experimente o {@link #getURLContentOnString(String)}<br>
+   * Este m√©todo tem a fun√ß√£o de abrir uma conex√£o http no endere√ßo desejado e retornar o conte√∫do recuperado para um arquivo tempor√°rio.<br>
+   * Este m√©todo funciona melhor para baixar arquivos ou conte√∫do bin√°rio. Para baixar conte√∫do de p√°ginas e arquivos de texto experimente o {@link #getURLContentOnString(String)}<br>
    * <br>
-   * <b>ATEN«√O:</B> Este mÈtodo permite conectar por HTTPS, no entando ele n„o valida se o certificado recebido È v·lido e/ou confi·vel. Simplesmente aceita.
+   * <b>ATEN√á√ÉO:</B> Este m√©todo permite conectar por HTTPS, entretanto ele n√£o valida se o certificado recebido √© v√°lido e/ou confi√°vel. Simplesmente aceita.
    *
-   * @param address EndereÁo HTTP a ser recuperado
-   * @param maxSizeBytesUpload Tamanho m·ximo do arquivo para ser baixado. Se o arquivo for maior que o valor em bytes passado aqui, lanÁamos exceÁ„o de validaÁ„o. Para deixar sem limite passe nulo. Note que se n„o obtivermos o tamanho do arquivo antes, a exception ser· lanÁada sÛ depois de baixar a quantidade de bytes passada aqui.
-   * @param jobStatus Suprote para o serviÁo {@link JobMonitor}.
-   * @return Conte˙do retornado atravÈz da conex„o em um byte Array.
+   * @param address Endere√ßo HTTP a ser recuperado
+   * @param maxSizeBytesUpload Tamanho m√°ximo do arquivo para ser baixado. Se o arquivo for maior que o valor em bytes passado aqui, lan√ßamos exce√ß√£o de valida√ß√£o. Para deixar sem limite passe nulo. Note que se n√£o obtivermos o tamanho do arquivo antes, a exception ser√° lan√ßada s√≥ depois de baixar a quantidade de bytes passada aqui.
+   * @param jobStatus Suprote para o servi√ßo {@link JobMonitor}.
+   * @return Conte√∫do retornado atrav√©z da conex√£o em um byte Array.
    */
   @Deprecated
   public static File getURLContentOnTemporaryFile(String address, Long maxSizeBytesUpload, JobStatus jobStatus) throws RFWException {
@@ -159,38 +159,38 @@ public class BUWeb {
       int tries = 0;
       while (tries < 100) { // Evita um loop infinito de tentativas, incluindo redirecionamentos
         if (jobStatus != null) {
-          jobStatus.setProgressMessage("Abrindo Conex„o...");
+          jobStatus.setProgressMessage("Abrindo Conex√£o...");
           jobStatus.checkInterrupt();
         }
 
         URL obj = new URL(address);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         if (con instanceof HttpsURLConnection) {
-          // Permite o override de aceitaÁ„o dos certificados conhecidos pelo RFWDeprec
+          // Permite o override de aceita√ß√£o dos certificados conhecidos pelo RFWDeprec
           BUCert.configureSSLCertificatesOnConnection((HttpsURLConnection) con);
         }
-        con.setConnectTimeout(5000); // Define um timeout de conex„o para n„o esperar para sempre
-        con.setReadTimeout(5000); // Define um timeout de espera por resposta para n„o esperar para sempre
-        con.setRequestMethod("GET"); // normalmente n„o È necess·rio pois GET È o padr„o
-        con.setRequestProperty("User-Agent", "Mozilla/5.0"); // ConfiguraÁıes da requisiÁ„o
+        con.setConnectTimeout(5000); // Define um timeout de conex√£o para n√£o esperar para sempre
+        con.setReadTimeout(5000); // Define um timeout de espera por resposta para n√£o esperar para sempre
+        con.setRequestMethod("GET"); // normalmente n√£o √© necess√°rio pois GET √© o padr√£o
+        con.setRequestProperty("User-Agent", "Mozilla/5.0"); // Configura√ß√µes da requisi√ß√£o
 
-        int responseCode = con.getResponseCode(); // Recupera o cÛdigo de retorno
+        int responseCode = con.getResponseCode(); // Recupera o c√≥digo de retorno
         if (responseCode == 302) { // 302 Movido Temporariamente - https://pt.wikipedia.org/wiki/HTTP_302
           address = con.getHeaderField("Location");
-          if (jobStatus != null) jobStatus.setProgressMessage("Conte˙do Redirecionado para o endereÁo: " + address);
+          if (jobStatus != null) jobStatus.setProgressMessage("Conte√∫do Redirecionado para o endere√ßo: " + address);
           try {
             Thread.sleep(1000);
           } catch (InterruptedException e) {
           }
         } else if (responseCode == 200) { // 200 OK
-          if (jobStatus != null) jobStatus.setProgressMessage("Conte˙do Encontrado!");
+          if (jobStatus != null) jobStatus.setProgressMessage("Conte√∫do Encontrado!");
 
           String disposition = con.getHeaderField("Content-Disposition");
           // String contentType = con.getContentType();
           int contentLength = con.getContentLength();
 
           if (contentLength > 0) {
-            if (maxSizeBytesUpload != null && contentLength > maxSizeBytesUpload) new RFWValidationException("O arquivo n„o pode ser baixado por que È maior que o m·ximo permitido: " + LocaleConverter.formatBytesSize(maxSizeBytesUpload, RFW.getLocale(), 1) + ".");
+            if (maxSizeBytesUpload != null && contentLength > maxSizeBytesUpload) new RFWValidationException("O arquivo n√£o pode ser baixado por que √© maior que o m√°ximo permitido: " + LocaleConverter.formatBytesSize(maxSizeBytesUpload, RFW.getLocale(), 1) + ".");
             if (jobStatus != null) {
               jobStatus.setIndeterminate(false);
               jobStatus.setParam("size", contentLength);
@@ -206,7 +206,7 @@ public class BUWeb {
           }
           // Tenta tirar da URL
           if (fileName == null) fileName = address.substring(address.lastIndexOf("/") + 1, address.length());
-          // Se n„o deixa no nome padr„o
+          // Se n√£o deixa no nome padr√£o
           if (fileName == null) fileName = "downloadedFile";
           if (jobStatus != null) jobStatus.setParam("filename", fileName);
 
@@ -227,31 +227,31 @@ public class BUWeb {
                 }
               }
               if (contentLength <= 0) {
-                // Se for maior que zero j· foi validado, n„o precisamos ficar revalidando
-                if (maxSizeBytesUpload != null && totalRead > maxSizeBytesUpload) throw new RFWValidationException("O arquivo n„o pode ser baixado por que È maior que o m·ximo permitido: " + LocaleConverter.formatBytesSize(maxSizeBytesUpload, RFW.getLocale(), 1) + ".");
+                // Se for maior que zero j√° foi validado, n√£o precisamos ficar revalidando
+                if (maxSizeBytesUpload != null && totalRead > maxSizeBytesUpload) throw new RFWValidationException("O arquivo n√£o pode ser baixado por que √© maior que o m√°ximo permitido: " + LocaleConverter.formatBytesSize(maxSizeBytesUpload, RFW.getLocale(), 1) + ".");
               }
             }
             if (jobStatus != null) jobStatus.setProgressMessage("Finalizado!");
             return tmpFile;
           } catch (IOException e) {
-            throw new RFWCriticalException("Falha ao realizar a conxe„o ou lÍr os dados da mesma.", new String[] { address }, e);
+            throw new RFWCriticalException("Falha ao realizar a conxe√£o ou l√™r os dados da mesma.", new String[] { address }, e);
           }
         } else {
-          throw new RFWCriticalException("Recebido do endereÁo '" + address + "' o cÛdigo '" + responseCode + "', que È desconhecido pelo RFWDeprec!");
+          throw new RFWCriticalException("Recebido do endere√ßo '" + address + "' o c√≥digo '" + responseCode + "', que √© desconhecido pelo RFWDeprec!");
         }
         tries++;
       }
-      throw new RFWWarningException("N„o foi possÌvel recuperar o conte˙do da URL: " + address);
+      throw new RFWWarningException("N√£o foi poss√≠vel recuperar o conte√∫do da URL: " + address);
     } catch (
 
     MalformedURLException e) {
-      throw new RFWCriticalException("URL inv·lida para download!", new String[] { address }, e);
+      throw new RFWCriticalException("URL inv√°lida para download!", new String[] { address }, e);
     } catch (ProtocolException e) {
-      throw new RFWCriticalException("Falha de protocolo para baixar o conte˙do!", new String[] { address }, e);
+      throw new RFWCriticalException("Falha de protocolo para baixar o conte√∫do!", new String[] { address }, e);
     } catch (SocketTimeoutException e) {
       throw new RFWCriticalException("Expirado o tempo de espera (timeout) de retorno do site.", new String[] { address }, e);
     } catch (IOException e) {
-      throw new RFWCriticalException("Falha ao lÍr o conte˙do do site!", new String[] { address }, e);
+      throw new RFWCriticalException("Falha ao l√™r o conte√∫do do site!", new String[] { address }, e);
     }
   }
 

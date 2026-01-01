@@ -3,9 +3,9 @@ package br.eng.rodrigogml.rfw.base.fwreports.bean;
 import java.util.Locale;
 
 /**
- * Description: Bean de dados usados para fazer o relatÛrio do tipo Listagem.<BR>
+ * Description: Bean de dados usados para fazer o relat√≥rio do tipo Listagem.<BR>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.1.0 (28/08/2015)
  */
 public class FWGridReportOptionBean extends FWListReportOptionBean {

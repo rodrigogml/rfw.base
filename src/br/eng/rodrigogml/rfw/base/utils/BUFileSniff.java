@@ -13,25 +13,25 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
- * Description: Classe utilit·ria do RFWDeprec para verificar o tipo do arquivo.<br>
- * Utiliza o {@link Files#probeContentType(Path)} para identificar o tipo do arquivo, mas dependendo do retornado tenta realizar algumas validaÁıes no conte˙do para identificar de que se trata o arquivo.<br>
+ * Description: Classe utilit√°ria do RFWDeprec para verificar o tipo do arquivo.<br>
+ * Utiliza o {@link Files#probeContentType(Path)} para identificar o tipo do arquivo, mas dependendo do retornado tenta realizar algumas valida√ß√µes no conte√∫do para identificar de que se trata o arquivo.<br>
  * <br>
- * <B>ATEN«√O: NOTE QUE OS ARQUIVOS S√O IDENTIFICADOS E CATEGORIZADOS POR ALGUNS ATRIBUTOS E/OU ESTRUTURA ESPECÕFICA, E N√O S√O VALIDADOS A FUNDO. O OBJETIVO PRINCIPAL … APENAS IDENTIFICAR E EXTRAIR ALGUMAS PARAMETROS NECESS¡RIOS PARA GUIAR AS OPERA«’ES DO RFWDeprec.</B>
+ * <B>ATEN√á√ÉO: NOTE QUE OS ARQUIVOS S√ÉO IDENTIFICADOS E CATEGORIZADOS POR ALGUNS ATRIBUTOS E/OU ESTRUTURA ESPEC√çFICA, E N√ÉO S√ÉO VALIDADOS A FUNDO. O OBJETIVO PRINCIPAL √â APENAS IDENTIFICAR E EXTRAIR ALGUMAS PARAMETROS NECESS√ÅRIOS PARA GUIAR AS OPERA√á√ïES DO RFWDeprec.</B>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 10.0.0 (26 de jun de 2019)
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUFileSniff {
 
   public static enum FileSniffType {
     /**
-     * Tipo do arquivo È indefinido por esta classe ou n„o identific·vel.
+     * Tipo do arquivo √© indefinido por esta classe ou n√£o identific√°vel.
      */
     UNKNOW,
     /**
-     * Arquivo do tipo texto, que n„o pode ser melhor identificado pelo RFWDeprec.
+     * Arquivo do tipo texto, que n√£o pode ser melhor identificado pelo RFWDeprec.
      */
     TEXT_PLAIN,
     /**
@@ -41,7 +41,7 @@ public class BUFileSniff {
   }
 
   /**
-   * Abre o arquivo e faz as verificaÁıes conhecidas para identificar o melhor possÌvel o arquivo.
+   * Abre o arquivo e faz as verifica√ß√µes conhecidas para identificar o melhor poss√≠vel o arquivo.
    *
    * @throws RFWException
    */
@@ -50,7 +50,7 @@ public class BUFileSniff {
   }
 
   /**
-   * Abre o arquivo e faz as verificaÁıes conhecidas para identificar o melhor possÌvel o arquivo.
+   * Abre o arquivo e faz as verifica√ß√µes conhecidas para identificar o melhor poss√≠vel o arquivo.
    *
    * @throws RFWException
    */
@@ -67,13 +67,13 @@ public class BUFileSniff {
           type = FileSniffType.UNKNOW;
       }
     } catch (IOException e) {
-      throw new RFWCriticalException("Falha ao lÍr o arquivo!", e);
+      throw new RFWCriticalException("Falha ao l√™r o arquivo!", e);
     }
     return type;
   }
 
   /**
-   * Verifica se È um arquivo de texto da Febraban de pagamentos
+   * Verifica se √© um arquivo de texto da Febraban de pagamentos
    *
    * @return Objeto contendo as propriedades do arquivo.
    * @throws RFWException
@@ -81,7 +81,7 @@ public class BUFileSniff {
   private static boolean sniffTextPlainFebrabanPag(Path filePath) throws RFWException {
     final Charset charset = BUFile.detectTextFileCharset(filePath.toString());
 
-    // Vamos lÍr o arquivo para que, de acordo com o conte˙do encontrado, identificamos o arquivo
+    // Vamos l√™r o arquivo para que, de acordo com o conte√∫do encontrado, identificamos o arquivo
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath.toString()), charset))) {
 
       boolean foundFileHeader = false;
@@ -91,7 +91,7 @@ public class BUFileSniff {
       String line = null;
       while ((line = reader.readLine()) != null) {
         if (!line.isEmpty()) {
-          // Se alguma linha for diferente de 240 (ignorando as vazias que podem existir no fim do arquivo), n„o consideramos mais um arquivo de febraban
+          // Se alguma linha for diferente de 240 (ignorando as vazias que podem existir no fim do arquivo), n√£o consideramos mais um arquivo de febraban
           if (line.length() != 240) return false;
 
           // Verifica o tipo de registro da linha
@@ -121,7 +121,7 @@ public class BUFileSniff {
       }
 
     } catch (IOException e) {
-      throw new RFWCriticalException("Falha o lÍr o arquivo", e);
+      throw new RFWCriticalException("Falha o l√™r o arquivo", e);
     }
 
     return true;

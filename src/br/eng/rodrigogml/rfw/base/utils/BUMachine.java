@@ -11,17 +11,17 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
- * Description: Classe utilit·ria para mÈtodos que interagem com a m·quina (pc), como recuperar IP, MAC Address, Discos, Capacidades de Processamento, etc.<BR>
+ * Description: Classe utilit√°ria para m√©todos que interagem com a m√°quina (pc), como recuperar IP, MAC Address, Discos, Capacidades de Processamento, etc.<BR>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 5.0.0 (11/05/2012)
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUMachine {
 
   /**
-   * Tipos de Sistema Operacional detect·veis por esta classe.
+   * Tipos de Sistema Operacional detect√°veis por esta classe.
    */
   public static enum OSType {
     WINDOWS,
@@ -34,10 +34,10 @@ public class BUMachine {
   }
 
   /**
-   * Recupera a placa "padr„o" (ou primeira) que o java encontrar e retorna sua MAC Address.
+   * Recupera a placa "padr√£o" (ou primeira) que o java encontrar e retorna sua MAC Address.
    *
-   * @return MAC Address da m·quina no formaxo XX-XX-XX-XX-XX.
-   * @throws RFWException Caso n„o consiga recuperar as informaÁıes necess·rias.
+   * @return MAC Address da m√°quina no formaxo XX-XX-XX-XX-XX.
+   * @throws RFWException Caso n√£o consiga recuperar as informa√ß√µes necess√°rias.
    */
   public static String getLocalHostMacAddress() throws RFWException {
     try {
@@ -72,21 +72,21 @@ public class BUMachine {
   }
 
   /**
-   * Retorna o modelo da arquitetura em que o programa est· rodando.
+   * Retorna o modelo da arquitetura em que o programa est√° rodando.
    */
   public static String getJavaArchitetureModel() {
     return System.getProperty("sun.arch.data.model");
   }
 
   /**
-   * Recupera a vers„o da JVM atual
+   * Recupera a vers√£o da JVM atual
    */
   public static String getJavaVMVersion() {
     return ManagementFactory.getRuntimeMXBean().getVmVersion();
   }
 
   /**
-   * Recupera a vers„o do Runtime do Java. System.getProperty("java.runtime.version"). Exemplos:
+   * Recupera a vers√£o do Runtime do Java. System.getProperty("java.runtime.version"). Exemplos:
    * <li>"12+33", ou
    * <li>"1.8.0_201-b09", ou
    * <li>"1.5.0_22-b03"
@@ -107,9 +107,9 @@ public class BUMachine {
   }
 
   /**
-   * Tentamos detectar o sistema operacional com base no valor retornado em {@link #getOperatingSystem()}. Este mÈtodo precisa ser melhorado a medida que novos sistemas operacionais forem criados (novas versıes podem retornar diferentes valores e atrapalhar a detecÁ„o.
+   * Tentamos detectar o sistema operacional com base no valor retornado em {@link #getOperatingSystem()}. Este m√©todo precisa ser melhorado a medida que novos sistemas operacionais forem criados (novas vers√µes podem retornar diferentes valores e atrapalhar a detec√ß√£o.
    *
-   * @return Sistema Operacional Detectado ou {@link OSType#UNKNOW} caso n„o tenha detectado o sistema Operacional.
+   * @return Sistema Operacional Detectado ou {@link OSType#UNKNOW} caso n√£o tenha detectado o sistema Operacional.
    */
   public static OSType getOperatingSystemType() {
     OSType detectedOS;

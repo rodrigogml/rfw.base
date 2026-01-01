@@ -20,17 +20,17 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWRunTimeException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWWarningException;
 
 /**
- * Description: Classe de relatÛrio que permite a geraÁ„o de um relatÛrio baseada em um "GRID". O desenvolvedor deve extender esta classe e montar a estrutura dos dados e configuraÁıes das cÈlulas de acordo com suas preferÍncias. Uma vez que todos os dados estejam definidos dentro desse GRID (uma matriz) deve-se mandar gerar o relatÛrio. O {@link FWGridReport} montar· o relatÛrio quebrando as
+ * Description: Classe de relat√≥rio que permite a gera√ß√£o de um relat√≥rio baseada em um "GRID". O desenvolvedor deve extender esta classe e montar a estrutura dos dados e configura√ß√µes das c√©lulas de acordo com suas prefer√™ncias. Uma vez que todos os dados estejam definidos dentro desse GRID (uma matriz) deve-se mandar gerar o relat√≥rio. O {@link FWGridReport} montar√° o relat√≥rio quebrando as
  * linhas e as colunas conforme a necessidade.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.1.0 (28/08/2015)
  */
 public abstract class FWGridReport extends FWListReport {
 
   /**
-   * Esta classe tem a finalidade de carregar as definiÁıes de estilo. Essas definiÁıes poder„o ser aplicadas nas colunas ou diretamente nos valores.<br>
-   * O {@link FWGridReport} dar· preferÍncia para as definiÁıes feitas diretamente na cÈlula. Se n„o houverem definiÁıes diretamente na cÈlula as definiÁıes das colunas ser„o utilizadas.<br>
+   * Esta classe tem a finalidade de carregar as defini√ß√µes de estilo. Essas defini√ß√µes poder√£o ser aplicadas nas colunas ou diretamente nos valores.<br>
+   * O {@link FWGridReport} dar√° prefer√™ncia para as defini√ß√µes feitas diretamente na c√©lula. Se n√£o houverem defini√ß√µes diretamente na c√©lula as defini√ß√µes das colunas ser√£o utilizadas.<br>
    */
   public static class FWGridReportStyle {
 
@@ -41,7 +41,7 @@ public abstract class FWGridReport extends FWListReport {
     private TextWrapMode textWrapMode = null;
 
     /**
-     * Sobrepıes as definiÁıes de tamanho da fonte.
+     * Sobrep√µes as defini√ß√µes de tamanho da fonte.
      */
     private Float fontSize = null;
 
@@ -51,7 +51,7 @@ public abstract class FWGridReport extends FWListReport {
     /**
      * Construtor completo
      *
-     * @param bold Define se a Fonte ter· negrito
+     * @param bold Define se a Fonte ter√° negrito
      * @param alignment Define o alinhamento do texto
      * @param baseColor Define a cor do Texto
      */
@@ -138,24 +138,24 @@ public abstract class FWGridReport extends FWListReport {
   }
 
   /**
-   * Interface usada para agrupar os diferentes tipos de conte˙dos em um ˙nico objeto pai. J· pensando no dia em que teremos outros tipos de conte˙dos, como templates personalizados por exemplo.
+   * Interface usada para agrupar os diferentes tipos de conte√∫dos em um √∫nico objeto pai. J√° pensando no dia em que teremos outros tipos de conte√∫dos, como templates personalizados por exemplo.
    */
   public static interface FWGridReportContent {
     public FWGridReportStyle getStyle();
 
     /**
-     * Recupera quantas colunas esse conte˙do ocupa. O valor padr„o È 1. N„o pode ser menor que 1.
+     * Recupera quantas colunas esse conte√∫do ocupa. O valor padr√£o √© 1. N√£o pode ser menor que 1.
      */
     public int getColSpan();
 
     /**
-     * Para tipos de conte˙do que n„o suportem colSpan, podem lanÁar exceÁ„o.
+     * Para tipos de conte√∫do que n√£o suportem colSpan, podem lan√ßar exce√ß√£o.
      */
     public void setColSpan(int colSpan) throws RFWException;
   }
 
   /**
-   * Classe usada para definir um conte˙do do tipo String para ser colocado na cÈlula.
+   * Classe usada para definir um conte√∫do do tipo String para ser colocado na c√©lula.
    */
   public static class FWGridReportStringContent implements FWGridReportContent {
     private final String content;
@@ -196,37 +196,37 @@ public abstract class FWGridReport extends FWListReport {
   }
 
   /**
-   * Esta classe representa o conte˙do de um relatÛrio, isto È, um grid de dados para ser impresso nas folhas.
+   * Esta classe representa o conte√∫do de um relat√≥rio, isto √©, um grid de dados para ser impresso nas folhas.
    */
   public static class FWGridReportMatrix {
     /**
-     * ConfiguraÁıes de quebra e limite do texto das colunas.
+     * Configura√ß√µes de quebra e limite do texto das colunas.
      */
     public static enum TextWrapMode {
       /**
-       * N„o executa nenhum mÈtodo. Far· com que o texto seja escrito fora de "templates" o que deixa o PDF mais enxuto e leve, no entanto caso a coluna n„o tenha espaÁo suficiente para o conte˙do ele passar· por cima da coluna do lado.
+       * N√£o executa nenhum m√©todo. Far√° com que o texto seja escrito fora de "templates" o que deixa o PDF mais enxuto e leve, no entanto caso a coluna n√£o tenha espa√ßo suficiente para o conte√∫do ele passar√° por cima da coluna do lado.
        */
       NONE,
       /**
-       * Define que o texto poder· ser quebrado em m˙ltiplas linhas.
+       * Define que o texto poder√° ser quebrado em m√∫ltiplas linhas.
        */
       TEXTWRAP,
       /**
-       * Define que o texto dever· ser "cortado" quando o tamanho da coluna acabar.
+       * Define que o texto dever√° ser "cortado" quando o tamanho da coluna acabar.
        */
       TRUNCATE
     }
 
     /**
-     * Armazena as linhas do grid. Cada item da List ser· uma linha do Grid. O conte˙do da list È um array com seus conte˙dos. O tamanho de cara array ser· exatamente o definido em {@link #columns}.
+     * Armazena as linhas do grid. Cada item da List ser√° uma linha do Grid. O conte√∫do da list √© um array com seus conte√∫dos. O tamanho de cara array ser√° exatamente o definido em {@link #columns}.
      */
     private final LinkedList<FWGridReportContent[]> gridRows = new LinkedList<>();
     /**
-     * Define a quantidade de colunas que o Grid ter·.
+     * Define a quantidade de colunas que o Grid ter√°.
      */
     private final int columns;
     /**
-     * Armazena as definiÁıes de style das colunas.
+     * Armazena as defini√ß√µes de style das colunas.
      */
     private final FWGridReportStyle[] columnStyles;
     /**
@@ -234,11 +234,11 @@ public abstract class FWGridReport extends FWListReport {
      */
     private final String[] columnCaptions;
     /**
-     * Define a largura mÌnima que a coluna deve ter. Caso n„o caiba na p·gina ela ser· passada para uma quebra lateral.<br>
+     * Define a largura m√≠nima que a coluna deve ter. Caso n√£o caiba na p√°gina ela ser√° passada para uma quebra lateral.<br>
      */
     private final Integer[] columnMinWidth;
     /**
-     * Em geral o tamanho aplicado ‡s colunas È o valor definido em ColumnMinWidth. Mas quando uma coluna n„o cabe mais na p·gina sobre um espaÁo. A coluna que tiver este atributo definido com true primeiro, se expande para ocupar o espaÁo restante
+     * Em geral o tamanho aplicado √†s colunas √© o valor definido em ColumnMinWidth. Mas quando uma coluna n√£o cabe mais na p√°gina sobre um espa√ßo. A coluna que tiver este atributo definido com true primeiro, se expande para ocupar o espa√ßo restante
      */
     private final Boolean[] columnExpandable;
 
@@ -253,8 +253,8 @@ public abstract class FWGridReport extends FWListReport {
     private HashMap<FWGridReportContent[], String> rowLineBackgroundColor = new HashMap<>();
 
     /**
-     * Esta lista carrega as informaÁıes sobre a configuraÁ„o de texto da coluna. Se ela deve quebrar o texto em m˙ltiplas linhas ou n„o. Se estiver configurada como NONE (ou null - valor padr„o) nenhum modo ser· aplicado. Este mÈtodo evita a criaÁ„o de templates mar permite que o texto passe um por cima do outro. <br>
-     * Esta configuraÁ„o sÛ È v·lida para o conte˙do "String".
+     * Esta lista carrega as informa√ß√µes sobre a configura√ß√£o de texto da coluna. Se ela deve quebrar o texto em m√∫ltiplas linhas ou n√£o. Se estiver configurada como NONE (ou null - valor padr√£o) nenhum modo ser√° aplicado. Este m√©todo evita a cria√ß√£o de templates mar permite que o texto passe um por cima do outro. <br>
+     * Esta configura√ß√£o s√≥ √© v√°lida para o conte√∫do "String".
      */
     private final TextWrapMode[] columnTextWrapMode;
 
@@ -273,7 +273,7 @@ public abstract class FWGridReport extends FWListReport {
     }
 
     public void addRow(FWGridReportContent[] rowContent) {
-      if (rowContent == null || rowContent.length != this.columns) throw new ArrayIndexOutOfBoundsException("Tamanho do array com o conte˙do da linha inv·lido! Linha: " + this.gridRows.size());
+      if (rowContent == null || rowContent.length != this.columns) throw new ArrayIndexOutOfBoundsException("Tamanho do array com o conte√∫do da linha inv√°lido! Linha: " + this.gridRows.size());
       gridRows.add(rowContent);
     }
 
@@ -322,47 +322,47 @@ public abstract class FWGridReport extends FWListReport {
     }
 
     public void setColumnTextWrapMode(TextWrapMode wrapMode, int columnIndex) {
-      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("Õndice de coluna inv·lido! Õndice: " + columnIndex);
+      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("√çndice de coluna inv√°lido! √çndice: " + columnIndex);
       this.columnTextWrapMode[columnIndex] = wrapMode;
     }
 
     public void setColumnStyle(FWGridReportStyle style, int columnIndex) {
-      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("Õndice de coluna inv·lido! Õndice: " + columnIndex);
+      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("√çndice de coluna inv√°lido! √çndice: " + columnIndex);
       this.columnStyles[columnIndex] = style;
     }
 
     public void setColumnCaption(String caption, int columnIndex) {
-      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("Õndice de coluna inv·lido! Õndice: " + columnIndex);
+      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("√çndice de coluna inv√°lido! √çndice: " + columnIndex);
       this.columnCaptions[columnIndex] = caption;
     }
 
     public void setColumnMinWidth(Integer minWidth, int columnIndex) {
-      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("Õndice de coluna inv·lido! Õndice: " + columnIndex);
+      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("√çndice de coluna inv√°lido! √çndice: " + columnIndex);
       this.columnMinWidth[columnIndex] = minWidth;
     }
 
     public void setColumnExpandable(Boolean expandable, int columnIndex) {
-      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("Õndice de coluna inv·lido! Õndice: " + columnIndex);
+      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("√çndice de coluna inv√°lido! √çndice: " + columnIndex);
       this.columnExpandable[columnIndex] = expandable;
     }
 
     protected TextWrapMode getColumnTextWrapMode(int columnIndex) {
-      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("Õndice de coluna inv·lido! Õndice: " + columnIndex);
+      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("√çndice de coluna inv√°lido! √çndice: " + columnIndex);
       return this.columnTextWrapMode[columnIndex];
     }
 
     protected FWGridReportStyle getColumnStyle(int columnIndex) {
-      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("Õndice de coluna inv·lido! Õndice: " + columnIndex);
+      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("√çndice de coluna inv√°lido! √çndice: " + columnIndex);
       return this.columnStyles[columnIndex];
     }
 
     protected String getColumnCaption(int columnIndex) {
-      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("Õndice de coluna inv·lido! Õndice: " + columnIndex);
+      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("√çndice de coluna inv√°lido! √çndice: " + columnIndex);
       return this.columnCaptions[columnIndex];
     }
 
     protected Integer getColumnMinWidth(int columnIndex) {
-      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("Õndice de coluna inv·lido! Õndice: " + columnIndex);
+      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("√çndice de coluna inv√°lido! √çndice: " + columnIndex);
       if (this.columnMinWidth[columnIndex] != null) {
         return this.columnMinWidth[columnIndex];
       } else {
@@ -371,7 +371,7 @@ public abstract class FWGridReport extends FWListReport {
     }
 
     protected Boolean getColumnExpandable(int columnIndex) {
-      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("Õndice de coluna inv·lido! Õndice: " + columnIndex);
+      if (columnIndex >= this.columns || columnIndex < 0) throw new ArrayIndexOutOfBoundsException("√çndice de coluna inv√°lido! √çndice: " + columnIndex);
       return this.columnExpandable[columnIndex];
     }
 
@@ -385,47 +385,47 @@ public abstract class FWGridReport extends FWListReport {
   }
 
   /**
-   * Armazena a lista de relatÛrios Matrix que ser]ao transformados em relatÛrio. Normalmente sÛ temos uma matriz, mas m˙ltiplas podem ser adicionadas para que m˙ltiplos relatÛrios sejam gerados de uma ˙nica vez.
+   * Armazena a lista de relat√≥rios Matrix que ser]ao transformados em relat√≥rio. Normalmente s√≥ temos uma matriz, mas m√∫ltiplas podem ser adicionadas para que m√∫ltiplos relat√≥rios sejam gerados de uma √∫nica vez.
    */
   private final ArrayList<FWGridReportMatrix> matrixList = new ArrayList<>();
 
   /**
    * Armazena a lista de lista de blocos para ser passada para o ListReport.<br>
-   * Cada block representa uma linha do relatÛrio. Cada lista de blocos um relatÛrio diferente a ser gerado dentro do mesmo PDF.
+   * Cada block representa uma linha do relat√≥rio. Cada lista de blocos um relat√≥rio diferente a ser gerado dentro do mesmo PDF.
    */
   private final ArrayList<ArrayList<ReportBlock>> reportBlockLists = new ArrayList<>();
 
   /**
-   * Armazena o Ìndice da prÛxima lista de reportBlocks que ser· retornada na chamada do mÈtodo {@link #getReportBlocksList()}.
+   * Armazena o √≠ndice da pr√≥xima lista de reportBlocks que ser√° retornada na chamada do m√©todo {@link #getReportBlocksList()}.
    */
   private int reportBlockListsIteratorNextIndex = 0;
 
   /**
-   * Lista de Tamanhos reais das colunas depois de processadas para expandir e ocupar o tamanho total da p·gina. Esses valores s„o calculados no {@link #prepareReportData()} e s„o salvos na lista com o mesmo Ìndice da Matrix.
+   * Lista de Tamanhos reais das colunas depois de processadas para expandir e ocupar o tamanho total da p√°gina. Esses valores s√£o calculados no {@link #prepareReportData()} e s√£o salvos na lista com o mesmo √≠ndice da Matrix.
    */
   private final ArrayList<Integer[]> realColumnWidthList = new ArrayList<>();
 
   /**
-   * Lista de index da primeira coluna de cada p·gina. Esses valores s„o calculados no {@link #prepareReportData()} e s„o salvos na lista com o mesmo Ìndice da Matrix.<br>
-   * O array tem sempre o mesmo tamanho da quantidade de colunas totais da Matrix, no entanto o array sÛ ser· totalmente ocupado caso sÛ tenhamos 1 coluna por p·gina. O Ìndex do array È o Ìndex da p·gina lateral. Sendo o Ìndex 0 a p·gina principal "A", 1 a primeira p·gina lateral "B", etc.
+   * Lista de index da primeira coluna de cada p√°gina. Esses valores s√£o calculados no {@link #prepareReportData()} e s√£o salvos na lista com o mesmo √≠ndice da Matrix.<br>
+   * O array tem sempre o mesmo tamanho da quantidade de colunas totais da Matrix, no entanto o array s√≥ ser√° totalmente ocupado caso s√≥ tenhamos 1 coluna por p√°gina. O √≠ndex do array √© o √≠ndex da p√°gina lateral. Sendo o √≠ndex 0 a p√°gina principal "A", 1 a primeira p√°gina lateral "B", etc.
    */
   private final ArrayList<Integer[]> firstColumnOnPageList = new ArrayList<>();
 
   /**
-   * Esta lista contÈm arrays com os cabeÁalhos j· prontos de cada coluna de cada relatÛrio. <Br>
-   * Cada array da list representa um relatÛrio. Cada item dentro do array um cabeÁalho da coluna. O index do array È o index da coluna dentro da matrix.
+   * Esta lista cont√©m arrays com os cabe√ßalhos j√° prontos de cada coluna de cada relat√≥rio. <Br>
+   * Cada array da list representa um relat√≥rio. Cada item dentro do array um cabe√ßalho da coluna. O index do array √© o index da coluna dentro da matrix.
    */
   private final ArrayList<PdfTemplate[]> columnsHeadersTemplates = new ArrayList<>();
 
   /**
-   * Este hash È um auxiliar do {@link #getRowHeight(FWGridReportContent[], FWGridReportMatrix)} para evitar que a altura de cada linha seja recalculada diversas vezes durante a escrita do relatÛrio. Normalmente a mesma chamada para cada linha È realizada a cada escrita da cÈlula de uma linha.<br>
-   * A hash mais externa: sua chave È o index do report sendo gerado e seu valor outra Hash. Essa hash interna: sua chave È o n˙mero da linha e seu valor (Float) a altura computada para alinha.
+   * Este hash √© um auxiliar do {@link #getRowHeight(FWGridReportContent[], FWGridReportMatrix)} para evitar que a altura de cada linha seja recalculada diversas vezes durante a escrita do relat√≥rio. Normalmente a mesma chamada para cada linha √© realizada a cada escrita da c√©lula de uma linha.<br>
+   * A hash mais externa: sua chave √© o index do report sendo gerado e seu valor outra Hash. Essa hash interna: sua chave √© o n√∫mero da linha e seu valor (Float) a altura computada para alinha.
    */
   private final HashMap<Integer, HashMap<Integer, Float>> rowHeightCache = new HashMap<>();
 
   /**
-   * Este hash È um auxiliar do {@link #getCellTemplate(FWGridReportContent, FWGridReportMatrix)} para evitar que o mesmo conte˙do seja gerado m˙ltiplas vezes. O conte˙do gerado È necess·rio para c·lculo da altura da linha diversas vezes e posteriormente para real escrita no ReportBlock. <br>
-   * A hash mais externa: sua chave È o index do report sendo gerado e seu valor outra Hash. Essa hash interna: sua chave È uma string composta pelo n˙mero da linha e coluna separados por um '|'. Ex; "35|12" para a linha 35 coluna 12. E seu valor (PdfTemplate) o template com o conte˙do pronto.
+   * Este hash √© um auxiliar do {@link #getCellTemplate(FWGridReportContent, FWGridReportMatrix)} para evitar que o mesmo conte√∫do seja gerado m√∫ltiplas vezes. O conte√∫do gerado √© necess√°rio para c√°lculo da altura da linha diversas vezes e posteriormente para real escrita no ReportBlock. <br>
+   * A hash mais externa: sua chave √© o index do report sendo gerado e seu valor outra Hash. Essa hash interna: sua chave √© uma string composta pelo n√∫mero da linha e coluna separados por um '|'. Ex; "35|12" para a linha 35 coluna 12. E seu valor (PdfTemplate) o template com o conte√∫do pronto.
    */
   private final HashMap<Integer, HashMap<String, PdfTemplate>> cellTemplateCache = new HashMap<>();
 
@@ -439,34 +439,34 @@ public abstract class FWGridReport extends FWListReport {
 
   @Override
   protected void prepareReportData() throws RFWException {
-    // Vamos converter cada Matrix em um relatÛrio diferente (lista de blocks)
+    // Vamos converter cada Matrix em um relat√≥rio diferente (lista de blocks)
     for (FWGridReportMatrix matrix : this.matrixList) {
-      Integer[] realColumnWidth = new Integer[matrix.getColumns()]; // Armazena o tamanho real a ser utilizado em cada coluna. Tamanho mÌnimo + tamanho excedente caso a coluna seja expansÌvel.
-      realColumnWidthList.add(realColumnWidth); // Salva o array na lista para uso em outros mÈtodos.
+      Integer[] realColumnWidth = new Integer[matrix.getColumns()]; // Armazena o tamanho real a ser utilizado em cada coluna. Tamanho m√≠nimo + tamanho excedente caso a coluna seja expans√≠vel.
+      realColumnWidthList.add(realColumnWidth); // Salva o array na lista para uso em outros m√©todos.
 
       /*
-       * Este array guardar· a informaÁ„o de qual È o Ìndice da primeira coluna alocada naquela p·gina. Definimos o tamanho do array de acordo com o tamanho do n˙mero de colunas para evitar problemas, pois no pior caso teremos 1 coluna por p·gina no mÌnimo. Normalmente este array ser· muito maior doque o necess·rio. O Ìndice do array È o n˙mero da p·gina lateral, comeÁando no Ìndice 0, sendo o
-       * valor o Ìndice da coluna da matrix que È a primeira coluna daquela p·gina.
+       * Este array guardar√° a informa√ß√£o de qual √© o √≠ndice da primeira coluna alocada naquela p√°gina. Definimos o tamanho do array de acordo com o tamanho do n√∫mero de colunas para evitar problemas, pois no pior caso teremos 1 coluna por p√°gina no m√≠nimo. Normalmente este array ser√° muito maior doque o necess√°rio. O √≠ndice do array √© o n√∫mero da p√°gina lateral, come√ßando no √≠ndice 0, sendo o
+       * valor o √≠ndice da coluna da matrix que √© a primeira coluna daquela p√°gina.
        */
       Integer[] firstColumnOnPage = new Integer[matrix.getColumns()];
-      firstColumnOnPageList.add(firstColumnOnPage); // Salva o array na lista para uso em outros mÈtodos.
-      firstColumnOnPage[0] = 0; // Definimos que na primeira p·gina a primeira coluna È a coluna 0. Como È constante e necess·rio para o funcionamento do cÛdigo abaixo sem maiores condiÁıes (IFs) j· fica definido aqui.
+      firstColumnOnPageList.add(firstColumnOnPage); // Salva o array na lista para uso em outros m√©todos.
+      firstColumnOnPage[0] = 0; // Definimos que na primeira p√°gina a primeira coluna √© a coluna 0. Como √© constante e necess√°rio para o funcionamento do c√≥digo abaixo sem maiores condi√ß√µes (IFs) j√° fica definido aqui.
 
-      // O primeiro passo È calcular o tamanho real de cada coluna e quantas colunas v„o caber em cada p·gina. A medida que estrapolem teremos p·ginas laterais.
-      // O c·lculo È feito de acordo com a largura de cada coluna e salvo no array realColumnWidth. Quando a coluna n„o couber mais na mesma p·gina
-      int countExpandable = 0; // Contador de quantas colunas expansÌveis encontramos na mesma p·gina
-      int sidePage = 0; // Contador de p·ginas laterais. Para saber em que p·gina estamos colocando cada coluna. Note que diferente do padr„o da ListReport aqui o contador comeÁa em 0 para facilitar o uso nos arrays logo abaixo.
-      float usedWidth = 0; // SomatÛria das larguras das colunas da p·gina atual.
+      // O primeiro passo √© calcular o tamanho real de cada coluna e quantas colunas v√£o caber em cada p√°gina. A medida que estrapolem teremos p√°ginas laterais.
+      // O c√°lculo √© feito de acordo com a largura de cada coluna e salvo no array realColumnWidth. Quando a coluna n√£o couber mais na mesma p√°gina
+      int countExpandable = 0; // Contador de quantas colunas expans√≠veis encontramos na mesma p√°gina
+      int sidePage = 0; // Contador de p√°ginas laterais. Para saber em que p√°gina estamos colocando cada coluna. Note que diferente do padr√£o da ListReport aqui o contador come√ßa em 0 para facilitar o uso nos arrays logo abaixo.
+      float usedWidth = 0; // Somat√≥ria das larguras das colunas da p√°gina atual.
 
       for (int colCount = 0; colCount < matrix.getColumns(); colCount++) {
-        float remainWidth = getWritableWidth() - usedWidth; // Calcula a largura restante na p·gina
+        float remainWidth = getWritableWidth() - usedWidth; // Calcula a largura restante na p√°gina
 
-        // Verificamos se essa coluna 'i' n„o cabe mais na mesma p·gina. Se n„o couber quebramos a p·gina lateral. Para evitar problemas caso alguÈm faÁa uma coluna maior que o espaÁo livre para escrita forÁamos a falha de entrada no IF caso seja a primeira coluna sendo escrita na p·gina.
+        // Verificamos se essa coluna 'i' n√£o cabe mais na mesma p√°gina. Se n√£o couber quebramos a p√°gina lateral. Para evitar problemas caso algu√©m fa√ßa uma coluna maior que o espa√ßo livre para escrita for√ßamos a falha de entrada no IF caso seja a primeira coluna sendo escrita na p√°gina.
         if (matrix.getColumnMinWidth(colCount) > remainWidth && usedWidth > 0) {
-          // Se n„o cabe na p·gina vamos verificar os itens que j· est„o na p·gina e difividir o espaÁo restante entre as colunas expansÌveis
-          if (countExpandable > 0 && remainWidth > 0) { // Se a coluna for maior que o espaÁo disponÌvel remainWidth retornar· negativo, o que vai foder as contas
+          // Se n√£o cabe na p√°gina vamos verificar os itens que j√° est√£o na p√°gina e difividir o espa√ßo restante entre as colunas expans√≠veis
+          if (countExpandable > 0 && remainWidth > 0) { // Se a coluna for maior que o espa√ßo dispon√≠vel remainWidth retornar√° negativo, o que vai foder as contas
             int splitWidth = (int) (remainWidth / countExpandable);
-            // Reiteramos as colunas desta p·gina para ver quem tem o tamanho expansÌvel para somar a parte que sobrou nele.
+            // Reiteramos as colunas desta p√°gina para ver quem tem o tamanho expans√≠vel para somar a parte que sobrou nele.
             for (int splitCol = firstColumnOnPage[sidePage]; splitCol < colCount; splitCol++) {
               if (matrix.getColumnExpandable(splitCol) != null && matrix.getColumnExpandable(splitCol)) {
                 realColumnWidth[splitCol] += splitWidth;
@@ -475,18 +475,18 @@ public abstract class FWGridReport extends FWListReport {
           }
           usedWidth = 0;
           countExpandable = 0;
-          sidePage++; // Incrementa para a prÛxima p·gina lateral
-          firstColumnOnPage[sidePage] = colCount; // Salva que essa coluna ser· a primeira da prÛxima p·gina lateral.
+          sidePage++; // Incrementa para a pr√≥xima p√°gina lateral
+          firstColumnOnPage[sidePage] = colCount; // Salva que essa coluna ser√° a primeira da pr√≥xima p√°gina lateral.
         }
-        realColumnWidth[colCount] = matrix.getColumnMinWidth(colCount); // Salvamos o valor da coluna atual como tamanho real. Durante a quebra de p·gina lateral recalcularemos para redistribuir o espaÁo restante se houver
+        realColumnWidth[colCount] = matrix.getColumnMinWidth(colCount); // Salvamos o valor da coluna atual como tamanho real. Durante a quebra de p√°gina lateral recalcularemos para redistribuir o espa√ßo restante se houver
         usedWidth += realColumnWidth[colCount];
         if (matrix.getColumnExpandable(colCount) != null && matrix.getColumnExpandable(colCount)) countExpandable++;
       }
-      // quando o for acabar ainda verificamos o espaÁo que sobrou na ˙ltima p·gina para tentar espalhar esse espaÁo entre as demais colunas
-      float remainWidth = getWritableWidth() - usedWidth; // Calcula a largura restante na p·gina
-      if (countExpandable > 0 && remainWidth > 0) { // Se a coluna for maior que o espaÁo disponÌvel remainWidth retornar· negativo, o que vai foder as contas
+      // quando o for acabar ainda verificamos o espa√ßo que sobrou na √∫ltima p√°gina para tentar espalhar esse espa√ßo entre as demais colunas
+      float remainWidth = getWritableWidth() - usedWidth; // Calcula a largura restante na p√°gina
+      if (countExpandable > 0 && remainWidth > 0) { // Se a coluna for maior que o espa√ßo dispon√≠vel remainWidth retornar√° negativo, o que vai foder as contas
         int splitWidth = (int) (remainWidth / countExpandable);
-        // Reiteramos as colunas desta p·gina para ver quem tem o tamanho expansÌvel para somar a parte que sobrou nele.
+        // Reiteramos as colunas desta p√°gina para ver quem tem o tamanho expans√≠vel para somar a parte que sobrou nele.
         for (int splitCol = firstColumnOnPage[sidePage]; splitCol < matrix.getColumns(); splitCol++) {
           if (matrix.getColumnExpandable(splitCol)) {
             realColumnWidth[splitCol] += splitWidth;
@@ -494,26 +494,26 @@ public abstract class FWGridReport extends FWListReport {
         }
       }
 
-      // Uma vez que o FOR acima calculou as larguras reais de cada coluna (depois da expans„o do espaÁo de sobra) podemos comeÁar a montar a lista de reportBlocks j· que sabemos onde cada um vai
+      // Uma vez que o FOR acima calculou as larguras reais de cada coluna (depois da expans√£o do espa√ßo de sobra) podemos come√ßar a montar a lista de reportBlocks j√° que sabemos onde cada um vai
       ArrayList<ReportBlock> blockList = new ArrayList<>();
-      this.reportBlockLists.add(blockList); // J· adiciona esse relatÛrio ‡ lista de relatÛrios
+      this.reportBlockLists.add(blockList); // J√° adiciona esse relat√≥rio √† lista de relat√≥rios
 
       final float lineLeading = TEXTSIZE_NORMAL + LINESPACING; // Define o tamanho de cada linha. Entre Baseline de uma e a Baseline de outra.
-      for (FWGridReportContent[] reportContent : matrix.getGridRows()) { // Iteramos cada linha da matrix para gerar as linhas, incluindo as linhas das p·ginas laterais
-        ReportBlock block = new ReportBlock(); // Report Block que ter· o conte˙do desta linha da Matrix
-        { // Define as configuraÁıes da linha no ReportBlock (se existirem)
+      for (FWGridReportContent[] reportContent : matrix.getGridRows()) { // Iteramos cada linha da matrix para gerar as linhas, incluindo as linhas das p√°ginas laterais
+        ReportBlock block = new ReportBlock(); // Report Block que ter√° o conte√∫do desta linha da Matrix
+        { // Define as configura√ß√µes da linha no ReportBlock (se existirem)
           if (matrix.containsRowOddLineBackgroundColor(reportContent)) block.setOddLineBackgroundColor(matrix.getRowOddLineBackgroundColor(reportContent));
           if (matrix.containsRowLineBackgroundColor(reportContent)) block.setLineBackgroundColor(matrix.getRowLineBackgroundColor(reportContent));
         }
-        if (sidePage > 0) block.setTemplateSidePages(new PdfTemplate[sidePage]); // Se temos p·ginas laterias, j· deixamos o array preparado no tamanho certo para receber os templates que ser„o criados abaixo.
+        if (sidePage > 0) block.setTemplateSidePages(new PdfTemplate[sidePage]); // Se temos p√°ginas laterias, j√° deixamos o array preparado no tamanho certo para receber os templates que ser√£o criados abaixo.
         blockList.add(block);
 
-        for (int sp = 0; sp <= sidePage; sp++) { // Iteramos o total de p·ginas laterais que precisam ser criada
+        for (int sp = 0; sp <= sidePage; sp++) { // Iteramos o total de p√°ginas laterais que precisam ser criada
           PdfTemplate pdfTemplate = getWriter().getDirectContent().createTemplate(getWritableWidth(), lineLeading);
           float position = 0;
-          // Agora vamos iterar as colunas comeÁando na primeira coluna da sidePage atual e limitando atÈ a ˙ltima coluna da matrix (˙ltima sidePage) ou atÈ antes a primeira coluna da prÛxima sidePage. Note que temos que verificar se firstColumnOnPage[sp+1] n„o È nulo porque na ˙ltima p·gina esse valor ser· nulo. Validamos ainda inclusive se sp n„o È maior que o length porque no caso de 1 coluna
-          // por p·gina sp + 1 dar· outofbounds na ˙ltima p·gina.
-          int limitColumn = matrix.getColumns(); // Inicialmente limita a coluna no total de colunas. Abaixo vamos rever esse limite se encontrarmos uma definiÁ„o de primeira coluna para a prÛxima p·gina lateral
+          // Agora vamos iterar as colunas come√ßando na primeira coluna da sidePage atual e limitando at√© a √∫ltima coluna da matrix (√∫ltima sidePage) ou at√© antes a primeira coluna da pr√≥xima sidePage. Note que temos que verificar se firstColumnOnPage[sp+1] n√£o √© nulo porque na √∫ltima p√°gina esse valor ser√° nulo. Validamos ainda inclusive se sp n√£o √© maior que o length porque no caso de 1 coluna
+          // por p√°gina sp + 1 dar√° outofbounds na √∫ltima p√°gina.
+          int limitColumn = matrix.getColumns(); // Inicialmente limita a coluna no total de colunas. Abaixo vamos rever esse limite se encontrarmos uma defini√ß√£o de primeira coluna para a pr√≥xima p√°gina lateral
           if (sp + 1 < firstColumnOnPage.length && firstColumnOnPage[sp + 1] != null) limitColumn = firstColumnOnPage[sp + 1];
           for (int col = firstColumnOnPage[sp]; col < limitColumn; col++) {
             // Escrevemos o content de acordo com seu style definido
@@ -521,7 +521,7 @@ public abstract class FWGridReport extends FWListReport {
             position += realColumnWidth[col];
           }
 
-          // Com o template criado e totalmente escrito, colocamos no Block de acordo com a contagem de p·ginas laterais.
+          // Com o template criado e totalmente escrito, colocamos no Block de acordo com a contagem de p√°ginas laterais.
           if (sp == 0) {
             block.setTemplateMainPage(pdfTemplate);
           } else {
@@ -530,41 +530,41 @@ public abstract class FWGridReport extends FWListReport {
         }
       }
 
-      // Depois de ter os dados preparados, j· vamos deixar preparado os templates dos cabeÁalhos das colunas.
-      // Os cabeÁalhos s„o preparados antes por duas razıes:
-      // 1-Se usarmos os mesmos templates em todas as p·ginas teremos um PDF mais enxuto.
-      // 2-Ter todos os cabeÁalhos j· preparados desde o inÌcio facilita pra calcular o tamanho do template para o PageHeader de todas as p·ginas, j· que diferentes p·ginas poder„o ter diferententes tamanhos de textos e de cabeÁalhos.
+      // Depois de ter os dados preparados, j√° vamos deixar preparado os templates dos cabe√ßalhos das colunas.
+      // Os cabe√ßalhos s√£o preparados antes por duas raz√µes:
+      // 1-Se usarmos os mesmos templates em todas as p√°ginas teremos um PDF mais enxuto.
+      // 2-Ter todos os cabe√ßalhos j√° preparados desde o in√≠cio facilita pra calcular o tamanho do template para o PageHeader de todas as p√°ginas, j√° que diferentes p√°ginas poder√£o ter diferententes tamanhos de textos e de cabe√ßalhos.
 
-      // Vamos iterrar todas as colunas para gerar seus cabeÁalhos e salvar no array
+      // Vamos iterrar todas as colunas para gerar seus cabe√ßalhos e salvar no array
       PdfTemplate[] headerTempls = new PdfTemplate[matrix.getColumns()];
       this.columnsHeadersTemplates.add(headerTempls);
       for (int i = 0; i < matrix.getColumns(); i++) {
-        int alignment = Element.ALIGN_LEFT; // Deixamos o alinhamento a esquerda j· definido para servir de padr„o se nenhum alinhamanheo for definido.
+        int alignment = Element.ALIGN_LEFT; // Deixamos o alinhamento a esquerda j√° definido para servir de padr√£o se nenhum alinhamanheo for definido.
         if (matrix.getColumnStyle(i).getAlignment() == ALIGNMENT.CENTER) {
           alignment = Element.ALIGN_CENTER;
         } else if (matrix.getColumnStyle(i).getAlignment() == ALIGNMENT.RIGHT) {
           alignment = Element.ALIGN_RIGHT;
         }
-        // Cria o template sem limitaÁ„o de altura, afinal os cabeÁalhos s„o feitos pelos programadores, espera-se que sÛ faÁam cabeÁalhos grandes se for realmente necess·rio.
+        // Cria o template sem limita√ß√£o de altura, afinal os cabe√ßalhos s√£o feitos pelos programadores, espera-se que s√≥ fa√ßam cabe√ßalhos grandes se for realmente necess√°rio.
         headerTempls[i] = createTextFieldWraped(matrix.getColumnCaption(i), new Font(getBaseFontBold(), TEXTSIZE_NORMAL), realColumnWidth[i], lineLeading, 3, alignment, Float.MAX_VALUE);
       }
     }
   }
 
   /**
-   * Este mÈtodo tem a finalidade de escrever o valor da cÈlula no template. <Br>
-   * Este mÈtodo altera a altura do template, caso a altura do template seja menor que a altura necess·ria para o template da cÈlula.
+   * Este m√©todo tem a finalidade de escrever o valor da c√©lula no template. <Br>
+   * Este m√©todo altera a altura do template, caso a altura do template seja menor que a altura necess√°ria para o template da c√©lula.
    *
-   * @param pdfTemplate Template PDF no qual o campo ser· escrito.
-   * @param reportContent Conte˙do da Matrix para ser escrito.
-   * @param col Õndice da coluna a ser escrito.
-   * @param matrix Matrix com todas as informaÁıes do relatÛrio.
-   * @param position PosiÁ„o em que a coluna deve ser escrita no template. Essa posiÁ„o È sempre o valor a esquerda da coluna.
-   * @param realColumnWidth Largura real de cada coluna. Calculada depois de redistribuir o espaÁo restante de cada p·gina pelas colunas expansÌveis.
+   * @param pdfTemplate Template PDF no qual o campo ser√° escrito.
+   * @param reportContent Conte√∫do da Matrix para ser escrito.
+   * @param col √çndice da coluna a ser escrito.
+   * @param matrix Matrix com todas as informa√ß√µes do relat√≥rio.
+   * @param position Posi√ß√£o em que a coluna deve ser escrita no template. Essa posi√ß√£o √© sempre o valor a esquerda da coluna.
+   * @param realColumnWidth Largura real de cada coluna. Calculada depois de redistribuir o espa√ßo restante de cada p√°gina pelas colunas expans√≠veis.
    * @throws RFWWarningException
    */
   private void writeCellGrid(PdfTemplate pdfTemplate, FWGridReportContent[] reportContent, int col, FWGridReportMatrix matrix, float position, Integer[] realColumnWidth) throws RFWWarningException {
-    // Se esta cÈlula n„o tem conte˙do (comum em casos de colspan) simplesmente retornamos e n„o fazemos nada.
+    // Se esta c√©lula n√£o tem conte√∫do (comum em casos de colspan) simplesmente retornamos e n√£o fazemos nada.
     if (reportContent[col] == null) return;
 
     FWGridReportStyle style = getMergedStyle(matrix.getColumnStyle(col), reportContent[col].getStyle());
@@ -572,7 +572,7 @@ public abstract class FWGridReport extends FWListReport {
     if (reportContent[col] instanceof FWGridReportStringContent) {
       FWGridReportStringContent content = (FWGridReportStringContent) reportContent[col];
 
-      // Obtem o tamanho da linha para c·lculos
+      // Obtem o tamanho da linha para c√°lculos
       final int row = matrix.getGridRows().indexOf(reportContent);
       Float rowHeight = getRowHeight(reportContent, matrix);
       if (pdfTemplate.getHeight() < rowHeight) pdfTemplate.setHeight(rowHeight);
@@ -583,9 +583,9 @@ public abstract class FWGridReport extends FWListReport {
         colTotalWidth += realColumnWidth[col + i];
       }
 
-      // Verifica se h· algum tipo de quebra de texto definido, se n„o houver sÛ escrevermos o texto, se houver solicitamos a criaÁ„o do template no mÈtodo "centralizador"
+      // Verifica se h√° algum tipo de quebra de texto definido, se n√£o houver s√≥ escrevermos o texto, se houver solicitamos a cria√ß√£o do template no m√©todo "centralizador"
       TextWrapMode wrapMode = matrix.getColumnTextWrapMode(col);
-      if (style.getTextWrapMode() != null) wrapMode = style.getTextWrapMode(); // Se tiver um TextWarp no style, sobrepıe o herdado da Matriz
+      if (style.getTextWrapMode() != null) wrapMode = style.getTextWrapMode(); // Se tiver um TextWarp no style, sobrep√µe o herdado da Matriz
       if (wrapMode == null || wrapMode == TextWrapMode.NONE) {
         float fontSize = TEXTSIZE_NORMAL;
         if (style != null && style.getFontSize() != null) fontSize = style.getFontSize();
@@ -611,7 +611,7 @@ public abstract class FWGridReport extends FWListReport {
           pdfTemplate.setColorFill(style.getBaseColor());
         }
 
-        // Escreve o conte˙do
+        // Escreve o conte√∫do
         if (style == null || style.getAlignment() == null || style.getAlignment() == ALIGNMENT.RIGHT) {
           pdfTemplate.showTextAligned(PdfContentByte.ALIGN_RIGHT, content.getContent(), position + colTotalWidth, y, 0);
         } else if (style.getAlignment() == ALIGNMENT.CENTER) {
@@ -622,26 +622,26 @@ public abstract class FWGridReport extends FWListReport {
         pdfTemplate.endText();
         pdfTemplate.restoreState();
       } else if (wrapMode == TextWrapMode.TEXTWRAP || wrapMode == TextWrapMode.TRUNCATE) {
-        // Para os casos de Truncate e TextWarp, colocamos o template na posiÁ„o descontando o offset de 3 que È dado por padr„o pelo mÈtodo de getCellTemplate
+        // Para os casos de Truncate e TextWarp, colocamos o template na posi√ß√£o descontando o offset de 3 que √© dado por padr√£o pelo m√©todo de getCellTemplate
         PdfTemplate cellTemplate = getCellTemplate(row, col, matrix);
         pdfTemplate.addTemplate(cellTemplate, position, ((rowHeight - cellTemplate.getHeight() + 3) / 2));
       }
     } else {
-      throw new RFWRunTimeException("Conte˙do n„o suportado para escrita pelo FWGridReport!");
+      throw new RFWRunTimeException("Conte√∫do n√£o suportado para escrita pelo FWGridReport!");
     }
   }
 
   /**
-   * Este mÈtodo tem a finalidade de calcular a altura de uma detarminada linha do relatÛrio de acordo com as configuraÁıes das colunas e seus conte˙dos. De forma centralizada, este mÈtodo deve ser capaz de observar todo o conte˙do da linha e calcular sua altura adequadamente para que outros mÈtodos (como o
+   * Este m√©todo tem a finalidade de calcular a altura de uma detarminada linha do relat√≥rio de acordo com as configura√ß√µes das colunas e seus conte√∫dos. De forma centralizada, este m√©todo deve ser capaz de observar todo o conte√∫do da linha e calcular sua altura adequadamente para que outros m√©todos (como o
    * {@link #writeCellGrid(PdfTemplate, FWGridReportContent[], int, FWGridReportMatrix, float, Integer[])} possam utilizar esse valor na hora de escrever.
    *
-   * @param rowContent Linha para an·lise.
-   * @param matrix Matrix do relatÛrio para obter as configuraÁıes e valores necess·rios para o c·lculo.
+   * @param rowContent Linha para an√°lise.
+   * @param matrix Matrix do relat√≥rio para obter as configura√ß√µes e valores necess√°rios para o c√°lculo.
    * @return Retorna a altura da linha.
    * @throws RFWWarningException
    */
   private Float getRowHeight(FWGridReportContent[] rowContent, FWGridReportMatrix matrix) throws RFWWarningException {
-    // Verifica se j· temos algum valor na cache
+    // Verifica se j√° temos algum valor na cache
     HashMap<Integer, Float> reportCache = this.rowHeightCache.get(getReportCount());
     if (reportCache == null) {
       reportCache = new HashMap<>();
@@ -650,7 +650,7 @@ public abstract class FWGridReport extends FWListReport {
     int row = matrix.getGridRows().indexOf(rowContent);
     Float height = reportCache.get(row);
     if (height == null) {
-      // Itera seu conte˙do para processar e verifica a altura de cada um
+      // Itera seu conte√∫do para processar e verifica a altura de cada um
       height = 0f;
       for (int col = 0; col < rowContent.length; col++) {
         FWGridReportContent content = rowContent[col];
@@ -658,24 +658,24 @@ public abstract class FWGridReport extends FWListReport {
           if (content instanceof FWGridReportStringContent) {
             final FWGridReportStyle style = getMergedStyle(matrix.getColumnStyle(col), content.getStyle());
 
-            // Se È do tipo string sua altura tem o tamanho padr„o de tamanho da fonte e espaÁamento entre linhas, exceto se tiver quebra de linha definida. Neste caso teremos de obter o template para saber o tamanho resultante.
+            // Se √© do tipo string sua altura tem o tamanho padr√£o de tamanho da fonte e espa√ßamento entre linhas, exceto se tiver quebra de linha definida. Neste caso teremos de obter o template para saber o tamanho resultante.
             TextWrapMode mode = matrix.getColumnTextWrapMode(col);
-            if (style != null && style.getTextWrapMode() != null) mode = style.getTextWrapMode(); // Se tiver um TextWarp no style, sobrepıe o herdado da Matriz
+            if (style != null && style.getTextWrapMode() != null) mode = style.getTextWrapMode(); // Se tiver um TextWarp no style, sobrep√µe o herdado da Matriz
 
             float fontSize = TEXTSIZE_NORMAL;
             if (style != null && style.getFontSize() != null) fontSize = style.getFontSize();
             if (mode == null || mode == TextWrapMode.NONE || mode == TextWrapMode.TRUNCATE) {
-              // Se n„o tiver modo, ou se for truncate, o tamanho da linha È o tamanho padr„o de Text e espaÁamento de linha.
+              // Se n√£o tiver modo, ou se for truncate, o tamanho da linha √© o tamanho padr√£o de Text e espa√ßamento de linha.
               if (height < fontSize + LINESPACING) height = fontSize + LINESPACING;
             } else if (mode == TextWrapMode.TEXTWRAP) {
-              // Com quebra de texto verificamos o tamanho do template gerado para ver o tamanho que a linha ter· que ter para incorpora-lo.
+              // Com quebra de texto verificamos o tamanho do template gerado para ver o tamanho que a linha ter√° que ter para incorpora-lo.
               PdfTemplate cellTemplate = getCellTemplate(row, col, matrix);
               if (height < cellTemplate.getHeight()) height = cellTemplate.getHeight();
             } else {
-              throw new RFWRunTimeException("Tipo de Quebra de texto desconhecido pelo mÈtodo de c·lculo de altura da linha! ImpossÌvel gerar relatÛrio! " + mode);
+              throw new RFWRunTimeException("Tipo de Quebra de texto desconhecido pelo m√©todo de c√°lculo de altura da linha! Imposs√≠vel gerar relat√≥rio! " + mode);
             }
           } else {
-            throw new RFWRunTimeException("Conte˙do desconhecido pelo mÈtodo de c·lculo de altura da linha! ImpossÌvel gerar relatÛrio! " + content.getClass().getCanonicalName());
+            throw new RFWRunTimeException("Conte√∫do desconhecido pelo m√©todo de c√°lculo de altura da linha! Imposs√≠vel gerar relat√≥rio! " + content.getClass().getCanonicalName());
           }
         }
       }
@@ -686,18 +686,18 @@ public abstract class FWGridReport extends FWListReport {
   }
 
   /**
-   * Este mÈtodo È usado para gerar o template de uma cÈlula quando necess·rio. Exceto pelos conte˙dos de String sem Quebra de linha que s„o escritos diretamente no PDF, este mÈtodo deve gerar o template que representa o conte˙do da cÈlula. Seus tamanhos j· devem estar de acordo com o necess·rio para escrita na linha. <Br>
-   * <B>AtenÁ„o: este mÈtodo pode retornar null se o conte˙do n„o obriga a geraÁ„o do template!</b>
+   * Este m√©todo √© usado para gerar o template de uma c√©lula quando necess√°rio. Exceto pelos conte√∫dos de String sem Quebra de linha que s√£o escritos diretamente no PDF, este m√©todo deve gerar o template que representa o conte√∫do da c√©lula. Seus tamanhos j√° devem estar de acordo com o necess√°rio para escrita na linha. <Br>
+   * <B>Aten√ß√£o: este m√©todo pode retornar null se o conte√∫do n√£o obriga a gera√ß√£o do template!</b>
    *
-   * @param col Coluna do conte˙do
-   * @param row Linha do Conte˙do
-   * @param matrix Matrix do relatÛrio para obter as configuraÁıes da coluna.
+   * @param col Coluna do conte√∫do
+   * @param row Linha do Conte√∫do
+   * @param matrix Matrix do relat√≥rio para obter as configura√ß√µes da coluna.
    *
-   * @return Template com o conte˙do pronto para ser usado como conte˙do da cÈlula do grid.
+   * @return Template com o conte√∫do pronto para ser usado como conte√∫do da c√©lula do grid.
    * @throws RFWWarningException
    */
   private PdfTemplate getCellTemplate(int row, int col, FWGridReportMatrix matrix) throws RFWWarningException {
-    // Verifica se j· temos algum valor na cache
+    // Verifica se j√° temos algum valor na cache
     HashMap<String, PdfTemplate> reportCache = this.cellTemplateCache.get(getReportCount());
     if (reportCache == null) {
       reportCache = new HashMap<>();
@@ -715,7 +715,7 @@ public abstract class FWGridReport extends FWListReport {
 
       final FWGridReportStyle style = getMergedStyle(matrix.getColumnStyle(col), content.getStyle());
 
-      BaseFont baseFont = getBaseFontPlain(); // inicializa a vari·vel com a font comum. Garante que n„o chegar· null nos mÈtodos de uso.
+      BaseFont baseFont = getBaseFontPlain(); // inicializa a vari√°vel com a font comum. Garante que n√£o chegar√° null nos m√©todos de uso.
       if (style != null) {
         if (style.getBold()) {
           if (style.getItalic()) {
@@ -738,11 +738,11 @@ public abstract class FWGridReport extends FWListReport {
         if (style != null && style.getFontSize() != null) fontSize = style.getFontSize();
 
         FWGridReportStringContent c = (FWGridReportStringContent) content;
-        // Se È do tipo string sua altura tem o tamanho padr„o de tamanho da fonte e espaÁamento entre linhas, exceto se tiver quebra de linha definida. Neste caso teremos de obter o template para saber o tamanho resultante.
+        // Se √© do tipo string sua altura tem o tamanho padr√£o de tamanho da fonte e espa√ßamento entre linhas, exceto se tiver quebra de linha definida. Neste caso teremos de obter o template para saber o tamanho resultante.
         TextWrapMode mode = matrix.getColumnTextWrapMode(col);
-        if (style.getTextWrapMode() != null) mode = style.getTextWrapMode(); // Se tiver um TextWarp no style, sobrepıe o herdado da Matriz
+        if (style.getTextWrapMode() != null) mode = style.getTextWrapMode(); // Se tiver um TextWarp no style, sobrep√µe o herdado da Matriz
         if (mode == null || mode == TextWrapMode.NONE) {
-          // N„o gera template neste caso, deixa seguir null
+          // N√£o gera template neste caso, deixa seguir null
         } else if (mode == TextWrapMode.TRUNCATE) {
           int align = Element.ALIGN_LEFT;
           float x = 0f;
@@ -754,7 +754,7 @@ public abstract class FWGridReport extends FWListReport {
             x = colTotalWidth;
           }
 
-          // Por padr„o todos os templates do tipo string est„o sendo escritos com offset de 3 para n„o cortarem as letras com conte˙do abaixo da baseline, e ao serem posicionados o valor È descontado na coordenada para manter o baseline.
+          // Por padr√£o todos os templates do tipo string est√£o sendo escritos com offset de 3 para n√£o cortarem as letras com conte√∫do abaixo da baseline, e ao serem posicionados o valor √© descontado na coordenada para manter o baseline.
           tpl = createTextFieldClipped(baseFont, fontSize, align, c.getContent(), x, 3f, 0f, colTotalWidth, fontSize + LINESPACING);
         } else if (mode == TextWrapMode.TEXTWRAP) {
           int align = Element.ALIGN_LEFT;
@@ -763,10 +763,10 @@ public abstract class FWGridReport extends FWListReport {
           } else if (style.getAlignment() == ALIGNMENT.RIGHT) {
             align = Element.ALIGN_RIGHT;
           }
-          // Por padr„o todos os templates do tipo string est„o sendo escritos com offset de 3 para n„o cortarem as letras com conte˙do abaixo da baseline, e ao serem posicionados o valor È descontado na coordenada para manter o baseline.
+          // Por padr√£o todos os templates do tipo string est√£o sendo escritos com offset de 3 para n√£o cortarem as letras com conte√∫do abaixo da baseline, e ao serem posicionados o valor √© descontado na coordenada para manter o baseline.
           tpl = createTextFieldWraped(c.getContent(), new Font(baseFont, fontSize), colTotalWidth, fontSize + LINESPACING, 3, align, Float.MAX_VALUE);
         } else {
-          throw new RFWRunTimeException("Tipo de Quebra de texto desconhecido pelo mÈtodo de c·lculo de altura da linha! ImpossÌvel gerar relatÛrio! " + mode);
+          throw new RFWRunTimeException("Tipo de Quebra de texto desconhecido pelo m√©todo de c√°lculo de altura da linha! Imposs√≠vel gerar relat√≥rio! " + mode);
         }
       }
       // Salva o template na cache
@@ -776,20 +776,20 @@ public abstract class FWGridReport extends FWListReport {
   }
 
   /**
-   * Este mÈtodo tem a finalidade de unir as definiÁıes em um ˙nico objeto Style.<br>
-   * Lembrando que a prioridade È sempre do style definido diretamente na cÈlula do Grid. Qualquer definiÁ„o que esteja feita no cellStyle n„o ser· sobreescrita.<br>
-   * Para evitar a criaÁ„o de novos objetos, as informaÁıes necess·rias ser„o copiadas do columnStyle para o cellStyle. Como o objeto recebido ser· alterado, este mÈtodo pode destruir as informaÁıes originais do objeto. Caso essas informaÁıes se tornem importantes trocar a implementaÁ„o deste mÈtodo para criar objetos distintos.
+   * Este m√©todo tem a finalidade de unir as defini√ß√µes em um √∫nico objeto Style.<br>
+   * Lembrando que a prioridade √© sempre do style definido diretamente na c√©lula do Grid. Qualquer defini√ß√£o que esteja feita no cellStyle n√£o ser√° sobreescrita.<br>
+   * Para evitar a cria√ß√£o de novos objetos, as informa√ß√µes necess√°rias ser√£o copiadas do columnStyle para o cellStyle. Como o objeto recebido ser√° alterado, este m√©todo pode destruir as informa√ß√µes originais do objeto. Caso essas informa√ß√µes se tornem importantes trocar a implementa√ß√£o deste m√©todo para criar objetos distintos.
    *
    * @param columnStyle Estilo da Coluna
-   * @param cellStyle Estilo da cÈlula.
+   * @param cellStyle Estilo da c√©lula.
    * @return objeto com o estilo resultante da mescla entre os dois. Pode retornar nulo caso ambos os styles passados sejam nulo.
    */
   private FWGridReportStyle getMergedStyle(FWGridReportStyle columnStyle, FWGridReportStyle cellStyle) {
     if (cellStyle == null) {
-      // Se cellstyle È nulo simplesmente retornamos o columnStyle. Se ele for nulo tambÈm paciÍncia...
+      // Se cellstyle √© nulo simplesmente retornamos o columnStyle. Se ele for nulo tamb√©m paci√™ncia...
       cellStyle = columnStyle;
     } else if (columnStyle != null) {
-      // Se cellstyle n„o È nulo, e columnstyle tambÈm n„o, fazemos o merge. Se columnstyle for nulo, retornamos o prÛprio cellStyle pois n„o haver· nada para realizar o merge.
+      // Se cellstyle n√£o √© nulo, e columnstyle tamb√©m n√£o, fazemos o merge. Se columnstyle for nulo, retornamos o pr√≥prio cellStyle pois n√£o haver√° nada para realizar o merge.
       if (cellStyle.getBold() == null) cellStyle.setBold(columnStyle.getBold());
       if (cellStyle.getItalic() == null) cellStyle.setBold(columnStyle.getItalic());
       if (cellStyle.getAlignment() == null) cellStyle.setAlignment(columnStyle.getAlignment());
@@ -808,13 +808,13 @@ public abstract class FWGridReport extends FWListReport {
 
   @Override
   protected PdfTemplate writePageHeader() throws RFWException {
-    // Obtem a Matrix correta de acordo com o relatÛrio atual
+    // Obtem a Matrix correta de acordo com o relat√≥rio atual
     FWGridReportMatrix matrix = this.matrixList.get(getReportCount());
 
-    // Obtemos os cabeÁalhos das colunas criados para este relatÛrio durante o mÈtodo de prepareReportData
+    // Obtemos os cabe√ßalhos das colunas criados para este relat√≥rio durante o m√©todo de prepareReportData
     final PdfTemplate[] headerTempls = this.columnsHeadersTemplates.get(getReportCount());
 
-    // Vamos iterar todos os templates para saber qual È a altura do maior e usar de guia para posicionar todos os demais templates
+    // Vamos iterar todos os templates para saber qual √© a altura do maior e usar de guia para posicionar todos os demais templates
     float maxHeight = 0;
     for (int col = 0; col < headerTempls.length; col++) {
       PdfTemplate hTmpl = headerTempls[col];
@@ -825,15 +825,15 @@ public abstract class FWGridReport extends FWListReport {
 
     // Para saber quais colunas escrever e seus valores vamos separar alguns valores
     Integer[] firstColumnOnPage = this.firstColumnOnPageList.get(getReportCount());
-    Integer firstColumn = firstColumnOnPage[getPageSideCount() - 1]; // Subtraimos 1 do PageSideCount pois ListReport comeÁa sua contagem em 1 para a p·gina A, e n„o em 0 como usado aqui no GridReport
-    Integer lastColumn = matrix.getColumns() - 1; // Iniciamos com o Ìndice da ˙ltima coluna, ai verificamos se temos uma outra p·gina lateral a seguir com a informaÁ„o da primeira coluna que ser· da prÛxima coluna e abaixamos esse valor
+    Integer firstColumn = firstColumnOnPage[getPageSideCount() - 1]; // Subtraimos 1 do PageSideCount pois ListReport come√ßa sua contagem em 1 para a p√°gina A, e n√£o em 0 como usado aqui no GridReport
+    Integer lastColumn = matrix.getColumns() - 1; // Iniciamos com o √≠ndice da √∫ltima coluna, ai verificamos se temos uma outra p√°gina lateral a seguir com a informa√ß√£o da primeira coluna que ser√° da pr√≥xima coluna e abaixamos esse valor
     if (getPageSideCount() < firstColumnOnPage.length && firstColumnOnPage[getPageSideCount()] != null) lastColumn = firstColumnOnPage[getPageSideCount()] - 1;
 
-    // Agora iteramos as colunas de definidas para a p·gina atual
+    // Agora iteramos as colunas de definidas para a p√°gina atual
     int pos = 0;
     for (int col = firstColumn; col <= lastColumn; col++) {
       if (headerTempls[col] == null) continue;
-      // Vamos colocar lado a lado no template a ser retornado cada um dos templates das colunas. A altura do posicionamento È calculada para que ela fique centralizada
+      // Vamos colocar lado a lado no template a ser retornado cada um dos templates das colunas. A altura do posicionamento √© calculada para que ela fique centralizada
       pdfTemplate.addTemplate(headerTempls[col], pos, (maxHeight - headerTempls[col].getHeight()) / 2);
       pos += headerTempls[col].getWidth();
     }

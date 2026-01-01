@@ -19,12 +19,12 @@ import br.eng.rodrigogml.rfw.kernel.vo.GVO;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWVO;
 
 /**
- * Description: Classe com utilit·rios para tratar objetos apartir de reflex„o.<br>
+ * Description: Classe com utilit√°rios para tratar objetos apartir de reflex√£o.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 3.0.0 (SET / 2009)
  * @deprecated Movido para o RFW.Kernel na classe RUReflex
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUReflex {
@@ -32,9 +32,9 @@ public class BUReflex {
   /**
    * Verifica se existe esta propriedade no Bean passado. Caso a propriedade tenha varios nomes separados por pontos ".", estes serao divididos e recuperados recusivamente.
    *
-   * @param bean Object objeto o qual o metodo GET ser· chamado
+   * @param bean Object objeto o qual o metodo GET ser√° chamado
    * @param propertyname String nome da propriedade que deseja-se obter o valor
-   * @return Class objeto retornado pelo mÈtodo get do atributo.
+   * @return Class objeto retornado pelo m√©todo get do atributo.
    */
   public static boolean hasProperty(Class<?> objtype, String propertyname) {
     boolean returned = false;
@@ -73,11 +73,11 @@ public class BUReflex {
   }
 
   /**
-   * Este mÈtodo retorna uma inst„ncia de uma determinada classe. A classe deve estar disponÌvel no ClassLoader para que seja possÌvel recupera-la.
+   * Este m√©todo retorna uma inst√£ncia de uma determinada classe. A classe deve estar dispon√≠vel no ClassLoader para que seja poss√≠vel recupera-la.
    *
    * @param className "CanonicalName" da classe desejada.
-   * @return Inst‚ncia da classe desejada.
-   * @throws RFWException LanÁado caso qualquer falha ocorra.
+   * @return Inst√¢ncia da classe desejada.
+   * @throws RFWException Lan√ßado caso qualquer falha ocorra.
    */
   public static Object getClassInstance(String className) throws RFWException {
     try {
@@ -90,7 +90,7 @@ public class BUReflex {
   }
 
   /**
-   * Transforma uma ColeÁ„o de VOs em um Array contendo todos os IDs dos vos recebidos.
+   * Transforma uma Cole√ß√£o de VOs em um Array contendo todos os IDs dos vos recebidos.
    *
    * @param <VO> Qualquer classe de VO do RFWDeprec (extenda RFWVO).
    * @param vos Array com os VOs
@@ -102,7 +102,7 @@ public class BUReflex {
   }
 
   /**
-   * Transforma uma ColeÁ„o de GVO em um Array contendo todos os IDs dos vos recebidos.
+   * Transforma uma Cole√ß√£o de GVO em um Array contendo todos os IDs dos vos recebidos.
    *
    * @param <VO> Qualquer classe de VO do RFWDeprec (extenda RFWVO).
    * @param vos Array com os VOs
@@ -114,7 +114,7 @@ public class BUReflex {
   }
 
   /**
-   * Transforma uma ColeÁ„o de GVO em uma Lista contendo todos os IDs dos vos recebidos.
+   * Transforma uma Cole√ß√£o de GVO em uma Lista contendo todos os IDs dos vos recebidos.
    *
    * @param <VO> Qualquer classe de VO do RFWDeprec (extenda RFWVO).
    * @param vos Array com os VOs
@@ -150,11 +150,11 @@ public class BUReflex {
   }
 
   /**
-   * Filtra uma lista conforme a definiÁ„o do predicate.
+   * Filtra uma lista conforme a defini√ß√£o do predicate.
    *
    * @param <E> Tipo do objeto dentro do da lista
    * @param list Lista com os objetos para serem filtrados
-   * @param predicate ImplementaÁ„o do predicato para filtro. SÛ permite os itens cujo retorno seja "true".<br>
+   * @param predicate Implementa√ß√£o do predicato para filtro. S√≥ permite os itens cujo retorno seja "true".<br>
    *          Ex: "e -> e.isEnabled()"
    * @return Lista com os objetos que retornaram true no predicate.
    */
@@ -163,24 +163,24 @@ public class BUReflex {
   }
 
   /**
-   * Este mÈtodo copia "todos" os atributos de um VO para outro. Com exceÁ„o dos atributos declarados diretamente no RFWVO.<br>
-   * Atualmente s„o eles (podem aparecer mais no futuro): {@link RFWVO#getId()}, {@link RFWVO#isFullLoaded()} e {@link RFWVO#isInsertWithID()}.<br>
+   * Este m√©todo copia "todos" os atributos de um VO para outro. Com exce√ß√£o dos atributos declarados diretamente no RFWVO.<br>
+   * Atualmente s√£o eles (podem aparecer mais no futuro): {@link RFWVO#getId()}, {@link RFWVO#isFullLoaded()} e {@link RFWVO#isInsertWithID()}.<br>
    * <br>
-   * Este mÈtodo sÛ copia dados/classes imut·veis do Java. Como valores primitivos e suas classes equivalentes. N„o "adentra" arrays, listas, hashs, maps, etc., nem copia outros objetos que n„o sejam imut·veis, inclusive outros RFWVO.<br>
-   * Valores nulos ser„o copiados.<br>
-   * Para que a cÛpia ocorra o objeto deve ser um mÈtodo "set" para a escrita, e um mÈtodo "get", "is" ou "has" para leitura. Atributos que n„o tenham ambos os mÈtodos ser„o ignorados.
+   * Este m√©todo s√≥ copia dados/classes imut√°veis do Java. Como valores primitivos e suas classes equivalentes. N√£o "adentra" arrays, listas, hashs, maps, etc., nem copia outros objetos que n√£o sejam imut√°veis, inclusive outros RFWVO.<br>
+   * Valores nulos ser√£o copiados.<br>
+   * Para que a c√≥pia ocorra o objeto deve ser um m√©todo "set" para a escrita, e um m√©todo "get", "is" ou "has" para leitura. Atributos que n√£o tenham ambos os m√©todos ser√£o ignorados.
    *
    * @param <VO> VO filho de {@link RFWVO}
-   * @param sourceVO objeto que servir· as informaÁıes a serem copiadas.
-   * @param destinationVO objeto em que as informaÁıes ser„o escritas.
+   * @param sourceVO objeto que servir√° as informa√ß√µes a serem copiadas.
+   * @param destinationVO objeto em que as informa√ß√µes ser√£o escritas.
    * @throws RFWException
    */
   public static <VO extends RFWVO> void copyVOs(VO sourceVO, VO destinationVO) throws RFWException {
     Method[] methods = sourceVO.getClass().getMethods();
     for (Method setM : methods) {
-      // Verifica se È um mÈtodo de "Set"
+      // Verifica se √© um m√©todo de "Set"
       if (setM.getName().startsWith("set") && !setM.getName().equals("setId") && !setM.getName().equals("setInsertWithID") && !setM.getName().equals("setFullLoaded")) {
-        // Procura o mÈtodo get equivalente
+        // Procura o m√©todo get equivalente
         Method getM = null;
         try {
           getM = sourceVO.getClass().getMethod("get" + setM.getName().substring(3));
@@ -195,7 +195,7 @@ public class BUReflex {
           }
         }
 
-        if (getM != null) { // Se n„o encontrou um mÈtodo get ou equivalente, simplesmente ignora a cÛpia desse atributo
+        if (getM != null) { // Se n√£o encontrou um m√©todo get ou equivalente, simplesmente ignora a c√≥pia desse atributo
           try {
             Object value = getM.invoke(sourceVO);
             if (value == null
@@ -216,11 +216,11 @@ public class BUReflex {
             } else {
               if (!RFWVO.class.isAssignableFrom(value.getClass())
                   && !List.class.isAssignableFrom(value.getClass())) {
-                System.out.println("Classe n„o copiada: " + value.getClass().getCanonicalName());
+                System.out.println("Classe n√£o copiada: " + value.getClass().getCanonicalName());
               }
             }
           } catch (Throwable e) {
-            throw new RFWCriticalException("Falha ao copiar o valor do mÈtodo '" + getM.getName() + "'!", e);
+            throw new RFWCriticalException("Falha ao copiar o valor do m√©todo '" + getM.getName() + "'!", e);
           }
         }
       }

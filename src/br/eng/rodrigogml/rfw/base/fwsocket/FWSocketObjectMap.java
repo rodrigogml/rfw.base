@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * Description: Object que define um comando a ser transmitido ou recebido travÈs do FWSocket.<BR>
+ * Description: Object que define um comando a ser transmitido ou recebido trav√©s do FWSocket.<BR>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.0.0 (12/11/2014)
  */
 public class FWSocketObjectMap implements Serializable {

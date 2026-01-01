@@ -18,9 +18,9 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWValidationException;
 
 /**
- * Description: Classe do Framework que cria um socket e conecta em um FWSocketSyncServer abstrai a rotina de conex„o de um socket. Simplificando o acesso ao envio de dados e recebimento.<BR>
+ * Description: Classe do Framework que cria um socket e conecta em um FWSocketSyncServer abstrai a rotina de conex√£o de um socket. Simplificando o acesso ao envio de dados e recebimento.<BR>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.0.0 (13/11/2014)
  */
 public class FWSocketSyncClient implements Serializable {
@@ -62,24 +62,24 @@ public class FWSocketSyncClient implements Serializable {
       writer.flush();
       // Depois que enviou o dado, ficamos aguardando pela resposta
       reader = new InputStreamReader(clientsocket.getInputStream(), "UTF-8");
-      final StringBuilder cmdbuff = new StringBuilder(); // Guarda os pedoaÁos dos comandos que chegarem
+      final StringBuilder cmdbuff = new StringBuilder(); // Guarda os pedoa√ßos dos comandos que chegarem
       int expectedlenght = -1;
-      char[] c = new char[1024]; // Bytes a serem lidos por vÍz
+      char[] c = new char[1024]; // Bytes a serem lidos por v√™z
       int readbytes = -1;
       while ((readbytes = reader.read(c)) > 0) {
-        // Colocamos o conte˙do no buffer
+        // Colocamos o conte√∫do no buffer
         cmdbuff.append(c, 0, readbytes);
-        // Verifica se pelo menos j· temos o primeiro pipe na string(o que indica que temos o tamanho completo do comando esperado, caso contr·rio vamos apenas anexando no buffer atÈ ter o mÌnimo de informaÁı necess·ria para processar
+        // Verifica se pelo menos j√° temos o primeiro pipe na string(o que indica que temos o tamanho completo do comando esperado, caso contr√°rio vamos apenas anexando no buffer at√© ter o m√≠nimo de informa√ß√µ necess√°ria para processar
         final int firstpipe = cmdbuff.indexOf("|");
         if (firstpipe > 0) {
-          // Recuperamos o tamanho esperado do comando - definido pelos n˙meros entre o comeÁo do comando e o primeiro pipe
+          // Recuperamos o tamanho esperado do comando - definido pelos n√∫meros entre o come√ßo do comando e o primeiro pipe
           expectedlenght = Integer.parseInt(cmdbuff.substring(0, firstpipe));
           // Interpretamos se o comando montado tem o tamanho esperado
-          // >> Lembre-se que o tamanho descrito no comeÁo e o primeiro pipe, assim como o \n do final, n„o devem ser considerados para "bater" o tamanho esperado, pos isso devem ser descontados do tamanho do cmdbuffer (ou somados no tamanho do expected)
-          final int fullexpected = expectedlenght + (firstpipe + 1) + 1; // Tamanho total entre o experado e o cabeÁalho + '\n' do final
+          // >> Lembre-se que o tamanho descrito no come√ßo e o primeiro pipe, assim como o \n do final, n√£o devem ser considerados para "bater" o tamanho esperado, pos isso devem ser descontados do tamanho do cmdbuffer (ou somados no tamanho do expected)
+          final int fullexpected = expectedlenght + (firstpipe + 1) + 1; // Tamanho total entre o experado e o cabe√ßalho + '\n' do final
           if (cmdbuff.length() >= fullexpected) {
             String serialobj = cmdbuff.substring(firstpipe + 1, fullexpected - 1); // Pula o tamanho esperado e o primeiro pipe, e subtrai 1 do tamanho total para remover o '\n' do final
-            // Limpamos do Buffer apenas a informaÁ„o sendo processada agora. Em casos de receber um comando colado em outro, temos de manter no buffer os comandos ainda n„o processados
+            // Limpamos do Buffer apenas a informa√ß√£o sendo processada agora. Em casos de receber um comando colado em outro, temos de manter no buffer os comandos ainda n√£o processados
             cmdbuff.delete(0, fullexpected);
             // Desserializa o objeto
             ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(serialobj.getBytes("UTF-8")));
@@ -112,7 +112,7 @@ public class FWSocketSyncClient implements Serializable {
         }
       }
     }
-    // Valida se a resposta recebida È um erro, se for, lanÁamos ele como se fosse uma continuaÁ„o do "throw" do server
+    // Valida se a resposta recebida √© um erro, se for, lan√ßamos ele como se fosse uma continua√ß√£o do "throw" do server
     if (response != null) {
       Exception ex = (Exception) response.get(FWSocketObjectMap.PROPERTY_EXCEPTION);
       if (ex != null) {

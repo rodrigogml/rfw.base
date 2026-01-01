@@ -28,24 +28,24 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUReflex;
 import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
- * Description: Classe utilit·ria para conter mÈtodos de auxÌlio do serviÁo de e-mail.<BR>
+ * Description: Classe utilit√°ria para conter m√©todos de aux√≠lio do servi√ßo de e-mail.<BR>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 4.2.0 (30/10/2011)
  */
 public class BUMail {
 
   /**
-   * Patter dos caracteres aceitos em um e-mail. Tanto na ·rea de usu·rio quando de domÌnio.<br>
-   * Esse pattern est· incompleto pois n„o aceita os "escape caracteres", por exemplo segundo as especificaÁıes um email pode ter uma @ como parte do nome do usu·rio deste que seja "escaped" com o caractere \@. Esses caracteres incomuns n„o est„o sendo tratados neste pattern.<Br>
-   * <b>AtenÁ„o:</n> N„o incluir neste patter os caracteres de sintaxe. Por exemplo, o e-mail pode ter o nome do usu·rio cercado por aspas, e o domÌnio em forma de ip se cercado por colchetes. Ex: "rodiro leitao"@[10.0.0.1]. Esses caracteres de "entorno" n„o devem ser considerados neste patter, mesmo que a " possa fazer parte do nome do usu·rio como um escaped caracter \", n„o estamos falando dos
-   * escapade caracteres, apenas dos caracteres de entorno. TambÈm n„o colocar nenhum tipo de definiÁ„o de quantidade de repetiÁ„o, deixar apenas a lista de caracteres v·lidos.
+   * Patter dos caracteres aceitos em um e-mail. Tanto na √°rea de usu√°rio quando de dom√≠nio.<br>
+   * Esse pattern est√° incompleto pois n√£o aceita os "escape caracteres", por exemplo segundo as especifica√ß√µes um email pode ter uma @ como parte do nome do usu√°rio deste que seja "escaped" com o caractere \@. Esses caracteres incomuns n√£o est√£o sendo tratados neste pattern.<Br>
+   * <b>Aten√ß√£o:</n> N√£o incluir neste patter os caracteres de sintaxe. Por exemplo, o e-mail pode ter o nome do usu√°rio cercado por aspas, e o dom√≠nio em forma de ip se cercado por colchetes. Ex: "rodiro leitao"@[10.0.0.1]. Esses caracteres de "entorno" n√£o devem ser considerados neste patter, mesmo que a " possa fazer parte do nome do usu√°rio como um escaped caracter \", n√£o estamos falando dos
+   * escapade caracteres, apenas dos caracteres de entorno. Tamb√©m n√£o colocar nenhum tipo de defini√ß√£o de quantidade de repeti√ß√£o, deixar apenas a lista de caracteres v√°lidos.
    */
   private static final String mailAcceptedChar = "[a-zA-Z0-9\\!\\#\\$\\%\\&\\'\\*\\+\\-\\/\\=\\?\\^\\_\\`\\{\\|\\}\\~\\.]";
 
   /**
-   * Pattern simplificado para localizaÁ„o de endereÁos de e-mail em um texto.<br>
-   * N„o deve ser utilizado para validaÁ„o formal; use {@link #validateMailAddress(String)} para validaÁ„o completa.
+   * Pattern simplificado para localiza√ß√£o de endere√ßos de e-mail em um texto.<br>
+   * N√£o deve ser utilizado para valida√ß√£o formal; use {@link #validateMailAddress(String)} para valida√ß√£o completa.
    */
   private static final String mailPattern = BUMail.mailAcceptedChar + "+@" + BUMail.mailAcceptedChar + "+";
 
@@ -54,13 +54,13 @@ public class BUMail {
   private static final java.nio.charset.Charset DEFAULT_TEMPLATE_CHARSET = StandardCharsets.UTF_8;
 
   /**
-   * Construtor privado para classe est·tica.
+   * Construtor privado para classe est√°tica.
    */
   private BUMail() {
   }
 
   /**
-   * DefiniÁ„o do protocolo de e-mail.
+   * Defini√ß√£o do protocolo de e-mail.
    */
   public static enum MailProtocol {
     /** Define o protocolo SSL */
@@ -74,28 +74,28 @@ public class BUMail {
    */
   public static interface Mail {
 
-    /** EndereÁo do remetente da mensagem. */
+    /** Endere√ßo do remetente da mensagem. */
     public String getFrom();
 
-    /** Lista de destinat·rios principais (campo Para). */
+    /** Lista de destinat√°rios principais (campo Para). */
     public List<String> getTo();
 
-    /** Lista de destinat·rios em cÛpia de carbono (CC). */
+    /** Lista de destinat√°rios em c√≥pia de carbono (CC). */
     public List<String> getCc();
 
-    /** Lista de destinat·rios em cÛpia oculta (BCC). */
+    /** Lista de destinat√°rios em c√≥pia oculta (BCC). */
     public List<String> getBcc();
 
     /** Assunto da mensagem. */
     public String getSubject();
 
-    /** Corpo da mensagem, compatÌvel com o mimeType "text/html". */
+    /** Corpo da mensagem, compat√≠vel com o mimeType "text/html". */
     public String getBody();
 
   }
 
   /**
-   * Valida se o endereÁo È v·lido de acordo com a RFC822.<br>
+   * Valida se o endere√ßo √© v√°lido de acordo com a RFC822.<br>
    *
    * @param mail
    * @throws RFWException
@@ -106,14 +106,14 @@ public class BUMail {
       InternetAddress address = new InternetAddress(mail, true);
       address.validate();
     } catch (AddressException ex) {
-      throw new RFWValidationException("O endereÁo de e-mail n„o È um endereÁo v·lido.", ex);
+      throw new RFWValidationException("O endere√ßo de e-mail n√£o √© um endere√ßo v√°lido.", ex);
     }
   }
 
   /**
-   * Localiza todos os endereÁos de e-mail presentes no texto informado.
+   * Localiza todos os endere√ßos de e-mail presentes no texto informado.
    *
-   * @param data texto que poder· conter endereÁos de e-mail.
+   * @param data texto que poder√° conter endere√ßos de e-mail.
    * @return lista com todos os e-mails encontrados ou lista vazia caso nenhum seja localizado.
    */
   public static List<String> parseMailAddresses(String data) {
@@ -129,10 +129,10 @@ public class BUMail {
   }
 
   /**
-   * Recupera o primeiro endereÁo de e-mail encontrado no texto informado.
+   * Recupera o primeiro endere√ßo de e-mail encontrado no texto informado.
    *
-   * @param data texto que poder· conter um endereÁo de e-mail.
-   * @return endereÁo encontrado ou {@code null} quando n„o houver correspondÍncia.
+   * @param data texto que poder√° conter um endere√ßo de e-mail.
+   * @return endere√ßo encontrado ou {@code null} quando n√£o houver correspond√™ncia.
    */
   public static String parseMailAddress(String data) {
     List<String> addresses = parseMailAddresses(data);
@@ -140,12 +140,12 @@ public class BUMail {
   }
 
   /**
-   * Tenta extrair o nome do remetente de uma string contendo um endereÁo de e-mail.<br>
+   * Tenta extrair o nome do remetente de uma string contendo um endere√ßo de e-mail.<br>
    * Formatos suportados:<br>
-   * <li>Rodrigo Leit„o &lt;rodrigogml@gmail.com&gt;</li>
+   * <li>Rodrigo Leit√£o &lt;rodrigogml@gmail.com&gt;</li>
    *
-   * @param data texto contendo o nome e um endereÁo de e-mail.
-   * @return nome sem o endereÁo ou {@code null} caso nenhum nome seja reconhecido.
+   * @param data texto contendo o nome e um endere√ßo de e-mail.
+   * @return nome sem o endere√ßo ou {@code null} caso nenhum nome seja reconhecido.
    */
   public static String parseMailName(String data) {
     if (data == null) return null;
@@ -171,13 +171,13 @@ public class BUMail {
   }
 
   /**
-   * Procura um Resource no ClassPath, lÍ seu conte˙do e substituÌ vari·veis no formado ${variableName} pelos valores informados.
+   * Procura um Resource no ClassPath, l√™ seu conte√∫do e substitu√≠ vari√°veis no formado ${variableName} pelos valores informados.
    *
-   * @param templateResourceName Nome do recurso que servir· de template. Deve conter o caminho completo desde a "raiz" do pacote em que o arquivo se encontrar.<br>
-   *          <b>ATEN«√O:</B> Os templates devem sempre ser salvos com o charset UTF-8 para evitar problemas com acentuaÁ„o e demais caracteres.
-   * @param fieldContents HashMap com as vari·veis que ser„o substituÌdas no template. A chave da hash deve ser o nome da vari·vel. Informar apenas o nome, sem o entorno ${}.
-   * @return Conte˙do do template com as vari·veis passadas substituÌdas.
-   * @throws RFWException em caso de falha ao ler o recurso ou substituir vari·veis.
+   * @param templateResourceName Nome do recurso que servir√° de template. Deve conter o caminho completo desde a "raiz" do pacote em que o arquivo se encontrar.<br>
+   *          <b>ATEN√á√ÉO:</B> Os templates devem sempre ser salvos com o charset UTF-8 para evitar problemas com acentua√ß√£o e demais caracteres.
+   * @param fieldContents HashMap com as vari√°veis que ser√£o substitu√≠das no template. A chave da hash deve ser o nome da vari√°vel. Informar apenas o nome, sem o entorno ${}.
+   * @return Conte√∫do do template com as vari√°veis passadas substitu√≠das.
+   * @throws RFWException em caso de falha ao ler o recurso ou substituir vari√°veis.
    */
   public static String loadMessageTemplate(String templateResourceName, HashMap<String, String> fieldContents) throws RFWException {
     String content;
@@ -196,18 +196,18 @@ public class BUMail {
   }
 
   /**
-   * Envia um e-mail utilizando JavaMail com autenticaÁ„o e suporte a SSL ou TLS.
+   * Envia um e-mail utilizando JavaMail com autentica√ß√£o e suporte a SSL ou TLS.
    *
-   * @param protocol protocolo a ser utilizado para a conex„o.
+   * @param protocol protocolo a ser utilizado para a conex√£o.
    * @param host host do servidor SMTP.
    * @param port porta do servidor SMTP.
-   * @param accountLogin usu·rio utilizado na autenticaÁ„o.
-   * @param password senha utilizada na autenticaÁ„o.
+   * @param accountLogin usu√°rio utilizado na autentica√ß√£o.
+   * @param password senha utilizada na autentica√ß√£o.
    * @param mail objeto contendo os dados do e-mail a ser enviado.
    * @throws RFWException em caso de falha na montagem ou envio do e-mail.
    */
   public static void sendMail(final MailProtocol protocol, final String host, final String port, final String accountLogin, final String password, Mail mail) throws RFWException {
-    if (mail == null) throw new RFWValidationException("Dados do e-mail n„o informados.");
+    if (mail == null) throw new RFWValidationException("Dados do e-mail n√£o informados.");
 
     Properties props = new Properties();
     props.put("mail.smtp.auth", "true");

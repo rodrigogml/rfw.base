@@ -19,54 +19,54 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
 import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
- * Description: Classe de implementaÁ„o de autenticaÁ„o TOTP/HOTP.<br>
+ * Description: Classe de implementa√ß√£o de autentica√ß√£o TOTP/HOTP.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.1.0 (20 de out de 2016)
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUTOTP {
 
   /**
-   * N˙mero de Bits utilizado na chave secreta. Para utilizar a base 32, o padr„o È de 80bits (10bytes).
+   * N√∫mero de Bits utilizado na chave secreta. Para utilizar a base 32, o padr√£o √© de 80bits (10bytes).
    */
   private static final int SECRET_BITS = 80;
 
   /**
-   * Quantidade de dÌgitos utilizados para a senha din‚mica. Padr„o 6.
+   * Quantidade de d√≠gitos utilizados para a senha din√¢mica. Padr√£o 6.
    */
   private static final int CODEDIGITS = 6;
 
   /**
-   * Valor m·ximo (em decimal) que a senha din‚mica pode ter.
+   * Valor m√°ximo (em decimal) que a senha din√¢mica pode ter.
    */
   private static int PASSMAXVALUE = (int) Math.pow(10, CODEDIGITS);
 
   /**
-   * Define o tamanho da "janela" para verificaÁ„o da senha passada. O padr„o È 3, assim verificamos a senha para o momento atual, a chave anterior e a posterior.
+   * Define o tamanho da "janela" para verifica√ß√£o da senha passada. O padr√£o √© 3, assim verificamos a senha para o momento atual, a chave anterior e a posterior.
    */
   private static int WINDOWSIZE = 3;
 
   /**
-   * Tempo de duraÁ„o de cada janela. O padr„o È 30s.
+   * Tempo de dura√ß√£o de cada janela. O padr√£o √© 30s.
    */
   private static long TIMESTEPSIZEINMILLIS = TimeUnit.SECONDS.toMillis(30);
 
   /**
-   * Define o tipo de criptografia que ser· utilizado para calcular as chaves. O padr„o È HMAC SHA1.
+   * Define o tipo de criptografia que ser√° utilizado para calcular as chaves. O padr√£o √© HMAC SHA1.
    */
   private static final String HMAC_HASH_FUNCTION = "HmacSHA1";
 
   private BUTOTP() {
-    // Contrutor privado para classe Utilit·ria/Est·tica
+    // Contrutor privado para classe Utilit√°ria/Est√°tica
   }
 
   public static String genRandomKey() {
     // Aloca o tamanho do buffer
     byte[] buffer = new byte[SECRET_BITS / 8];
 
-    // Enche o Buffer de bytes aleatÛrios
+    // Enche o Buffer de bytes aleat√≥rios
     new Random().nextBytes(buffer);
 
     // Extrai os bytes para gerar a chave
@@ -85,23 +85,23 @@ public class BUTOTP {
       throw new RFWCriticalException("RFW_ERR_200447");
     }
 
-    // Verifica se o cÛdigo de verificaÁ„o tem o camanho correto
+    // Verifica se o c√≥digo de verifica√ß√£o tem o camanho correto
     if (verificationCode <= 0 || verificationCode >= PASSMAXVALUE) {
       return false;
     }
 
-    // Realiza a validaÁ„o
+    // Realiza a valida√ß√£o
     return checkCode(secret, verificationCode, time, WINDOWSIZE);
   }
 
   /**
-   * Este mÈtodo implementa o algorÌtimo RFC6238 para validar uma senha din‚mica de acordo com o momento passado.
+   * Este m√©todo implementa o algor√≠timo RFC6238 para validar uma senha din√¢mica de acordo com o momento passado.
    *
-   * @param secret Chave em base32 do usu·rio.
-   * @param code Senha din‚mica para validaÁ„o.
-   * @param timestamp O "tempo" (em miliseconds) para o momento em que o cÛdigo deve ser v·lido.
-   * @param window Total de janelas que devemos considerar para considerar a senha v·lida. Entende-se por janela a cada tempo que a senha muda.
-   * @return true caso a senha seja v·lida, false caso contr·rio.
+   * @param secret Chave em base32 do usu√°rio.
+   * @param code Senha din√¢mica para valida√ß√£o.
+   * @param timestamp O "tempo" (em miliseconds) para o momento em que o c√≥digo deve ser v√°lido.
+   * @param window Total de janelas que devemos considerar para considerar a senha v√°lida. Entende-se por janela a cada tempo que a senha muda.
+   * @return true caso a senha seja v√°lida, false caso contr√°rio.
    * @throws RFWException
    */
   private static boolean checkCode(String secret, long code, long timestamp, int window) throws RFWException {
@@ -110,26 +110,26 @@ public class BUTOTP {
     // Converte o tempo passado em "janelas", para saber em que "passo" da senha que estamos.
     final long timeWindow = timestamp / TIMESTEPSIZEINMILLIS;
 
-    // De acordo com as janelas a quantidade de janelas a serem consideradas, vamos considerar metade delas "antes" da janela atual, e outra metade depois. Assim calculamos quantos passos temos de andar pra tr·s.
+    // De acordo com as janelas a quantidade de janelas a serem consideradas, vamos considerar metade delas "antes" da janela atual, e outra metade depois. Assim calculamos quantos passos temos de andar pra tr√°s.
     int firstWindow = -((window - 1) / 2);
     int lastWindow = (window / 2);
 
-    // Agora iteremos, desde o passo pra tr·s, atÈ a metade de passos pra "frente" da janela atual
+    // Agora iteremos, desde o passo pra tr√°s, at√© a metade de passos pra "frente" da janela atual
     for (int windowOffset = firstWindow; windowOffset <= lastWindow; ++windowOffset) {
-      // Calculamos a senha para cada janela de iteraÁ„o
+      // Calculamos a senha para cada janela de itera√ß√£o
       long hash = calculateCode(decodedKey, timeWindow + windowOffset);
-      // Se for v·lida, j· retornamos que a autenticaÁ„o È v·lida.
+      // Se for v√°lida, j√° retornamos que a autentica√ß√£o √© v√°lida.
       if (hash == code) return true;
     }
 
-    // Se saiu do for sem validar a chave, retornamos que a autenticaÁ„o È inv·lida
+    // Se saiu do for sem validar a chave, retornamos que a autentica√ß√£o √© inv√°lida
     return false;
   }
 
   /**
-   * Recupera o cÛdigo de autenticaÁ„o de uma determinada chave.
+   * Recupera o c√≥digo de autentica√ß√£o de uma determinada chave.
    *
-   * @param secret Chave segredo conforme exporta no QRCode compatÌvel com o Google Authenticator
+   * @param secret Chave segredo conforme exporta no QRCode compat√≠vel com o Google Authenticator
    * @return
    * @throws RFWException
    */
@@ -138,10 +138,10 @@ public class BUTOTP {
   }
 
   /**
-   * Recupera o cÛdigo de autenticaÁ„o de uma determinada chave.
+   * Recupera o c√≥digo de autentica√ß√£o de uma determinada chave.
    *
-   * @param secret Chave segredo conforme exporta no QRCode compatÌvel com o Google Authenticator
-   * @param offset muda a janela de autenticaÁ„o. Ex.: 1 - pega o prÛximo cÛdigo em relaÁ„o ao atual, -1 recupera o anterior em relaÁ„o ao atual.
+   * @param secret Chave segredo conforme exporta no QRCode compat√≠vel com o Google Authenticator
+   * @param offset muda a janela de autentica√ß√£o. Ex.: 1 - pega o pr√≥ximo c√≥digo em rela√ß√£o ao atual, -1 recupera o anterior em rela√ß√£o ao atual.
    * @return
    * @throws RFWException
    */
@@ -158,11 +158,11 @@ public class BUTOTP {
   }
 
   /**
-   * Calcula o cÛdigo de verificaÁ„o TOTP/HOTP.
+   * Calcula o c√≥digo de verifica√ß√£o TOTP/HOTP.
    *
-   * @param key chave secreta do usu·rio.
-   * @param tm janela de validaÁ„o.
-   * @return O cÛdigo de validaÁ„o para a chave secreta e janela fornecida.
+   * @param key chave secreta do usu√°rio.
+   * @param tm janela de valida√ß√£o.
+   * @return O c√≥digo de valida√ß√£o para a chave secreta e janela fornecida.
    * @throws RFWException
    */
   private static int calculateCode(byte[] key, long tm) throws RFWException {
@@ -171,16 +171,16 @@ public class BUTOTP {
 
     // Converting the instant of time from the long representation to a
     // big-endian array of bytes (RFC4226, 5.2. Description).
-    // Convertemos a janela de tempo para um long utilizando a formaÁ„o big-endian de representaÁ„o. CapÌtulo 5.2 da RFC4226.
+    // Convertemos a janela de tempo para um long utilizando a forma√ß√£o big-endian de representa√ß√£o. Cap√≠tulo 5.2 da RFC4226.
     for (int i = 8; i-- > 0; value >>>= 8) {
       data[i] = (byte) value;
     }
 
-    // Cria a especificaÁ„o da criptografia a ser utilizada.
+    // Cria a especifica√ß√£o da criptografia a ser utilizada.
     SecretKeySpec signKey = new SecretKeySpec(key, HMAC_HASH_FUNCTION);
 
     try {
-      // Utiliza o prÛprio mecanismo do java para calcular a criptografia
+      // Utiliza o pr√≥prio mecanismo do java para calcular a criptografia
       Mac mac = Mac.getInstance(HMAC_HASH_FUNCTION);
       mac.init(signKey);
       byte[] hash = mac.doFinal(data);
@@ -190,15 +190,15 @@ public class BUTOTP {
       long truncatedHash = 0;
       for (int i = 0; i < 4; ++i) {
         truncatedHash <<= 8;
-        truncatedHash |= (hash[offset + i] & 0xFF); // Como os bytes do java s„o "signed" (tem sinal positivo/negativo) e precisamos apenas dos bytes livres de sinal, realizamos uma operaÁ„o bin·ria para limpar tudos os bits menos o valor que precisamos (o LSB Less Significant Bit ou algo assim).
+        truncatedHash |= (hash[offset + i] & 0xFF); // Como os bytes do java s√£o "signed" (tem sinal positivo/negativo) e precisamos apenas dos bytes livres de sinal, realizamos uma opera√ß√£o bin√°ria para limpar tudos os bits menos o valor que precisamos (o LSB Less Significant Bit ou algo assim).
       }
 
-      // limpamos tudo do 32∞ bit para frente para garantir que temos apenas os valores v·lidos para n„o atrapalhar na prÛxima operaÁ„o
+      // limpamos tudo do 32¬∞ bit para frente para garantir que temos apenas os valores v√°lidos para n√£o atrapalhar na pr√≥xima opera√ß√£o
       truncatedHash &= 0x7FFFFFFF;
-      // Tiramos o mÛdulo do valor obtido com o valor m·ximo possÌvel da chave para descartar todo o valor de que n„o necessitamos
+      // Tiramos o m√≥dulo do valor obtido com o valor m√°ximo poss√≠vel da chave para descartar todo o valor de que n√£o necessitamos
       truncatedHash %= PASSMAXVALUE;
 
-      return (int) truncatedHash; // Retornamos como INT, apesar de ter usado tudo como Long. Isso porque o java n„o tem int unsigned, sÛ por isso usamos int durante todo o mÈtodo, para que a vari·vel tivesse "espaÁo" de bits suficientes para o c·lculo sem que o java estragasse o valor com o signedbit.
+      return (int) truncatedHash; // Retornamos como INT, apesar de ter usado tudo como Long. Isso porque o java n√£o tem int unsigned, s√≥ por isso usamos int durante todo o m√©todo, para que a vari√°vel tivesse "espa√ßo" de bits suficientes para o c√°lculo sem que o java estragasse o valor com o signedbit.
     } catch (NoSuchAlgorithmException | InvalidKeyException e) {
       throw new RFWCriticalException("RFW_ERR_200448", new String[] { e.getMessage() }, e);
     }
@@ -206,7 +206,7 @@ public class BUTOTP {
 
   /**
    *
-   * @param label RÛtulo de identificaÁ„o que aparecer· na chave do usu·rio. Este parametro n„o pode conter nenhum dos caracteres ":?/", se tiver ser· removido!
+   * @param label R√≥tulo de identifica√ß√£o que aparecer√° na chave do usu√°rio. Este parametro n√£o pode conter nenhum dos caracteres ":?/", se tiver ser√° removido!
    * @param secretKey Chave secreta de controle da senha
    * @return URI para ser colocada no QRCode. Ex: "otpauth://totp/user@host.com?secret=FQU3Q6FUTTBYN3QK"
    * @throws RFWException

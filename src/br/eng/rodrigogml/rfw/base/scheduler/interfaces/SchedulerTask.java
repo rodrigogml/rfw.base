@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
- * Description: Interface que define os métodos fachada de uma tarefa para executar no Scheduler.<br>
+ * Description: Interface que define os mÃ©todos fachada de uma tarefa para executar no Scheduler.<br>
  *
  * @author Rodrigo GML
  * @since 10.0 (19 de out de 2020)
@@ -14,61 +14,61 @@ public interface SchedulerTask {
   public static enum RepeatFrequency {
 
     /**
-     * Executa a tarefa de X em X tempo a partir da data de início. O tempo de repetição é configurado no attributo {@link SchedulerTask#getTimeToRepeat()}
+     * Executa a tarefa de X em X tempo a partir da data de inÃ­cio. O tempo de repetiÃ§Ã£o Ã© configurado no attributo {@link SchedulerTask#getTimeToRepeat()}
      */
     TIMED,
     /**
-     * Executa a tarefa Mensalmente. Isto é, a cada execução a data da próxima execução é calculada somando-se +1 (ou o valor definido em {@link SchedulerTask#getRecurrence()}) no mês.<br>
-     * A frequência mensal permite que se crie a frequência anual também, bastando colocar a cada 12 meses a partir da data de início.
+     * Executa a tarefa Mensalmente. Isto Ã©, a cada execuÃ§Ã£o a data da prÃ³xima execuÃ§Ã£o Ã© calculada somando-se +1 (ou o valor definido em {@link SchedulerTask#getRecurrence()}) no mÃªs.<br>
+     * A frequÃªncia mensal permite que se crie a frequÃªncia anual tambÃ©m, bastando colocar a cada 12 meses a partir da data de inÃ­cio.
      */
     MONTHLY,
     /**
-     * Executa a tarefa diariamente. Isto é, a cada execução a data da próxima execução é calculada somando-se +1 (ou o valor definido em {@link SchedulerTask#getRecurrence()}) no dia.<Br>
-     * A frequência diária também permite criar a frequência semanal, bastando colocar a cada 7 dias a partir da data de início.
+     * Executa a tarefa diariamente. Isto Ã©, a cada execuÃ§Ã£o a data da prÃ³xima execuÃ§Ã£o Ã© calculada somando-se +1 (ou o valor definido em {@link SchedulerTask#getRecurrence()}) no dia.<Br>
+     * A frequÃªncia diÃ¡ria tambÃ©m permite criar a frequÃªncia semanal, bastando colocar a cada 7 dias a partir da data de inÃ­cio.
      */
     DAILY,
   }
 
   /**
-   * Classe que implementa a interface {@link SchedulerRunnable} que deve ser chamada no momento de execução da tarefa.
+   * Classe que implementa a interface {@link SchedulerRunnable} que deve ser chamada no momento de execuÃ§Ã£o da tarefa.
    *
    * @return CanonicalName da casse que implementa a interface {@link SchedulerRunnable}
    */
   public String getTaskClass();
 
   /**
-   * Identificador único da tarefa. Este ID deve ser único para a tarefa em todo o sistema. A tarefa é identificada pelo seu ID, logo, tarefas com o mesmo ID serão tratadas comos e fosem uma. Evitando que sejam executadas simultaneamente, sendo canceladas, etc.
+   * Identificador Ãºnico da tarefa. Este ID deve ser Ãºnico para a tarefa em todo o sistema. A tarefa Ã© identificada pelo seu ID, logo, tarefas com o mesmo ID serÃ£o tratadas comos e fosem uma. Evitando que sejam executadas simultaneamente, sendo canceladas, etc.
    *
-   * @return Identificador Long único. Quando salvas no banco de dados pode ser usado o ID do banco de dados. Quando não, pode-ser utilizar algum gerador único de Longs. Desde que se use em todo o sistema de forma a evitar duplicidades.
+   * @return Identificador Long Ãºnico. Quando salvas no banco de dados pode ser usado o ID do banco de dados. Quando nÃ£o, pode-ser utilizar algum gerador Ãºnico de Longs. Desde que se use em todo o sistema de forma a evitar duplicidades.
    */
   public Long getId();
 
   /**
-   * Horário do próximo agendamento. Essa data não tem problema em ser uma data passada. No entanto para saber se a tarefa será executada ou não, mesmo com data atrasada serão avaliadas as demais definições da tarefa.
+   * HorÃ¡rio do prÃ³ximo agendamento. Essa data nÃ£o tem problema em ser uma data passada. No entanto para saber se a tarefa serÃ¡ executada ou nÃ£o, mesmo com data atrasada serÃ£o avaliadas as demais definiÃ§Ãµes da tarefa.
    *
    * @return Data/Hora do agendamento.
    */
   public LocalDateTime getScheduleTime();
 
   /**
-   * Determina a frequência com que essa tarefa se repete, caso seja uma tarefa recursiva. Caso seja 'null' indica que a tarefa não se repete. Sobre as opções leia mais em {@link RepeatFrequency}.
+   * Determina a frequÃªncia com que essa tarefa se repete, caso seja uma tarefa recursiva. Caso seja 'null' indica que a tarefa nÃ£o se repete. Sobre as opÃ§Ãµes leia mais em {@link RepeatFrequency}.
    *
-   * @return Frequência de repetição da tarefa.
+   * @return FrequÃªncia de repetiÃ§Ã£o da tarefa.
    */
   public RepeatFrequency getRepeatFrequency();
 
   /**
-   * Recupera o define o tempo máximo de atraso em milisegundos no qual a tarefa ainda pode ser executada.<br>
-   * Defina NULL para impedir que seja executada em caso de atraso ou -1 para executar independente de quanto tempo já esteja atrasada.
+   * Recupera o define o tempo mÃ¡ximo de atraso em milisegundos no qual a tarefa ainda pode ser executada.<br>
+   * Defina NULL para impedir que seja executada em caso de atraso ou -1 para executar independente de quanto tempo jÃ¡ esteja atrasada.
    *
-   * @return Define o tempo máximo de atraso em milisegundos no qual a tarefa ainda pode ser executada
+   * @return Define o tempo mÃ¡ximo de atraso em milisegundos no qual a tarefa ainda pode ser executada
    */
   public Long getLateExecution();
 
   /**
-   * Recupera Data da última execução. Data em que a tarefa terminou de ser executada!.
+   * Recupera Data da Ãºltima execuÃ§Ã£o. Data em que a tarefa terminou de ser executada!.
    *
-   * @return Data da última execução.
+   * @return Data da Ãºltima execuÃ§Ã£o.
    */
   public LocalDateTime getLastExecution();
 
@@ -80,60 +80,60 @@ public interface SchedulerTask {
   public Long getTimeToRepeat();
 
   /**
-   * Data para que a tarefa não seja mais executada. NULL para que a tarefa não tenha uma data fim.<br>
-   * Note que se uma tarefa estiver atrasada, e sua configurações de execução atrasada permitirem, uma tarefa atrasada pode ser executada mesmo depois da data fim.<br>
-   * Para garantir que uma tarefa atrasada não seja executada porteriormente à data fim, configure o tempo limite de execução atrasado coerentemente.
+   * Data para que a tarefa nÃ£o seja mais executada. NULL para que a tarefa nÃ£o tenha uma data fim.<br>
+   * Note que se uma tarefa estiver atrasada, e sua configuraÃ§Ãµes de execuÃ§Ã£o atrasada permitirem, uma tarefa atrasada pode ser executada mesmo depois da data fim.<br>
+   * Para garantir que uma tarefa atrasada nÃ£o seja executada porteriormente Ã  data fim, configure o tempo limite de execuÃ§Ã£o atrasado coerentemente.
    *
-   * @return Data para que a tarefa não seja mais executada
+   * @return Data para que a tarefa nÃ£o seja mais executada
    */
   public LocalDateTime getStopDate();
 
   /**
-   * Tempo da recorrência. Pode ter sentidos diferentes para cada frequência de repetição:<br>
-   * Para {@link RepeatFrequency#MONTHLY}: de quantos em quantos meses o agendamento é executado. Se null o valor padrão considerado será 1. Se qualquer inteiro positivo, fará com que a repetição ocorra somente a cada X meses.<br>
-   * Para {@link RepeatFrequency#DAILY}: de quantos em quantos dias o agendamento é executado. Se null o valor padrão considerado será 1. Se qualquer inteiro positivo, fará com que a repetição ocorra somente a cada X dias.<br>
+   * Tempo da recorrÃªncia. Pode ter sentidos diferentes para cada frequÃªncia de repetiÃ§Ã£o:<br>
+   * Para {@link RepeatFrequency#MONTHLY}: de quantos em quantos meses o agendamento Ã© executado. Se null o valor padrÃ£o considerado serÃ¡ 1. Se qualquer inteiro positivo, farÃ¡ com que a repetiÃ§Ã£o ocorra somente a cada X meses.<br>
+   * Para {@link RepeatFrequency#DAILY}: de quantos em quantos dias o agendamento Ã© executado. Se null o valor padrÃ£o considerado serÃ¡ 1. Se qualquer inteiro positivo, farÃ¡ com que a repetiÃ§Ã£o ocorra somente a cada X dias.<br>
    *
-   * @return Tempo da recorrência
+   * @return Tempo da recorrÃªncia
    */
   public Integer getRecurrence();
 
   /**
-   * Para o {@link RepeatFrequency#MONTHLY} define se a repetição se dará pelo dia do mês (caso true ou null) ou pelo n° dia da semana (caso false), como por exemplo 2° quinta feira, etc.
+   * Para o {@link RepeatFrequency#MONTHLY} define se a repetiÃ§Ã£o se darÃ¡ pelo dia do mÃªs (caso true ou null) ou pelo nÂ° dia da semana (caso false), como por exemplo 2Â° quinta feira, etc.
    *
-   * @return Para o {@link RepeatFrequency#MONTHLY} define se a repetição se dará pelo dia do mês (caso true ou null) ou pelo n° dia da semana (caso false), como por exemplo 2° quinta feira, etc
+   * @return Para o {@link RepeatFrequency#MONTHLY} define se a repetiÃ§Ã£o se darÃ¡ pelo dia do mÃªs (caso true ou null) ou pelo nÂ° dia da semana (caso false), como por exemplo 2Â° quinta feira, etc
    */
   public Boolean getMonthlyRepeatByDayOfMonth();
 
   /**
-   * Mapa com as propriedades da tarefa. Essas propriedades são passadas como argumento da tarefa {@link SchedulerRunnable}, e podem ser retornadas no fim da sua execução. O retorno da execução da tarefa será passado pelo método {@link #setProperties(Map)}.
+   * Mapa com as propriedades da tarefa. Essas propriedades sÃ£o passadas como argumento da tarefa {@link SchedulerRunnable}, e podem ser retornadas no fim da sua execuÃ§Ã£o. O retorno da execuÃ§Ã£o da tarefa serÃ¡ passado pelo mÃ©todo {@link #setProperties(Map)}.
    *
    * @return Propriedades da tarefa.
    */
   public Map<String, String> getProperties();
 
   /**
-   * Utilizado para receber o mapa das propriedades recebido no fim da execução da tarefa. Veja mais detalhes em {@link #getProperties()}.<Br>
-   * Note que este método só é chamado se a tarefa retornar um objeto. Caso seja nulo entendemos que não há nada para ser atualizado e este método não é chamado.<br>
-   * Nota 2: Embora este método não seja chamado se retornar nulo, o Map passado pode acabar sendo alterado se estivermos sempre na mesma instância da JVM, uma vez que passamos apenas a referência da memória do objeto.
+   * Utilizado para receber o mapa das propriedades recebido no fim da execuÃ§Ã£o da tarefa. Veja mais detalhes em {@link #getProperties()}.<Br>
+   * Note que este mÃ©todo sÃ³ Ã© chamado se a tarefa retornar um objeto. Caso seja nulo entendemos que nÃ£o hÃ¡ nada para ser atualizado e este mÃ©todo nÃ£o Ã© chamado.<br>
+   * Nota 2: Embora este mÃ©todo nÃ£o seja chamado se retornar nulo, o Map passado pode acabar sendo alterado se estivermos sempre na mesma instÃ¢ncia da JVM, uma vez que passamos apenas a referÃªncia da memÃ³ria do objeto.
    *
    * @param properties Mapa de Propriedades
    */
   public void setProperties(Map<String, String> properties);
 
   /**
-   * Chamado depois que a tarefa é executada para atualizar a data da última execução da tarefa. O valor passado aqui deve ser salvo e retornado no método {@link #getLastExecution()} para um funcionamento adequado do Scheduler.<br>
+   * Chamado depois que a tarefa Ã© executada para atualizar a data da Ãºltima execuÃ§Ã£o da tarefa. O valor passado aqui deve ser salvo e retornado no mÃ©todo {@link #getLastExecution()} para um funcionamento adequado do Scheduler.<br>
    * Para mais detalhes veja {@link #getLastExecution()}.
    *
-   * @param lastExecution Horario da última execução
+   * @param lastExecution Horario da Ãºltima execuÃ§Ã£o
    */
   public void setLastExecution(LocalDateTime lastExecution);
 
   /**
-   * Chamado depois que a tarefa é executada para atualiza a data do agendamento. Note que a data informada será passada, na verdade a data da última execução agendada. Esse valor é utilizado no cálculo para reagendamento da tarefa, o valor é atualizado para trazer o agendamento para uma data passada "mas mais próxima" da atual.<br>
-   * O conteúdo passado aqui deve ser retornado no método {@link #getScheduleTime()} para um funcionamento adequado do Scheduler.<br>
+   * Chamado depois que a tarefa Ã© executada para atualiza a data do agendamento. Note que a data informada serÃ¡ passada, na verdade a data da Ãºltima execuÃ§Ã£o agendada. Esse valor Ã© utilizado no cÃ¡lculo para reagendamento da tarefa, o valor Ã© atualizado para trazer o agendamento para uma data passada "mas mais prÃ³xima" da atual.<br>
+   * O conteÃºdo passado aqui deve ser retornado no mÃ©todo {@link #getScheduleTime()} para um funcionamento adequado do Scheduler.<br>
    * Para mais detalhes veja {@link #getScheduleTime()}.
    *
-   * @param scheduleTime Horário da próxima execução
+   * @param scheduleTime HorÃ¡rio da prÃ³xima execuÃ§Ã£o
    */
   public void setScheduleTime(LocalDateTime scheduleTime);
 }

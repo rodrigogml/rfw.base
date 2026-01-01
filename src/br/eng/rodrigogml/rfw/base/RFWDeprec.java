@@ -6,29 +6,29 @@ import br.eng.rodrigogml.rfw.kernel.eventdispatcher.EventDispatcher;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;;
 
 /**
- * Description: Classe utilit·ria geral do RFW com mÈtodos utilit·rios comuns genÈricos.<br>
+ * Description: Classe utilit√°ria geral do RFW com m√©todos utilit√°rios comuns gen√©ricos.<br>
  *
  * @author Rodrigo GML
  * @since 10.0 (12 de out de 2020)
- * @deprecated Deve ser utilizada a Classe que foi passada para o mÛdulo RFW.Kernel
+ * @deprecated Deve ser utilizada a Classe que foi passada para o m√≥dulo RFW.Kernel
  */
 @Deprecated
 public class RFWDeprec {
 
   /**
-   * Construtor privado para uma classe completamente est·tica
+   * Construtor privado para uma classe completamente est√°tica
    */
   private RFWDeprec() {
   }
 
   /**
-   * Inicializa o serviÁo de Controle de Sess„o do RFW.
+   * Inicializa o servi√ßo de Controle de Sess√£o do RFW.
    *
-   * @param timeToLive Tempo que a sess„o sobrevive sem atividade atÈ ser descartada.<br>
+   * @param timeToLive Tempo que a sess√£o sobrevive sem atividade at√© ser descartada.<br>
    *          Valor em segundos.
-   * @param backOperation ImplementaÁ„o da interface que far· a autenticaÁ„o dos usu·rios e acesso por tokens.
-   * @param tokenPrefix Prefixo dos tokens de acesso. Quando o sistema permite que m·quinas se conectem ‡ fachada, o acesso pode ser feito por um token ao invÈs do usu·rio/senha. Mas para que o {@link SessionManager} identifique que se trata de um Token e n„o de um UUID È preciso definir um prefixo de Token. <b>Caso n„o utilize acesso por token para m·quinas, passe "" neste par‚metro por
-   *          seguranÁa, n„o passe NULL.</b>
+   * @param backOperation Implementa√ß√£o da interface que far√° a autentica√ß√£o dos usu√°rios e acesso por tokens.
+   * @param tokenPrefix Prefixo dos tokens de acesso. Quando o sistema permite que m√°quinas se conectem √† fachada, o acesso pode ser feito por um token ao inv√©s do usu√°rio/senha. Mas para que o {@link SessionManager} identifique que se trata de um Token e n√£o de um UUID √© preciso definir um prefixo de Token. <b>Caso n√£o utilize acesso por token para m√°quinas, passe "" neste par√¢metro por
+   *          seguran√ßa, n√£o passe NULL.</b>
    * @throws RFWException
    */
   public static void initializeSessionManager(long timeToLive, SessionBackOperation backOperation, String tokenPrefix) throws RFWException {
@@ -38,9 +38,9 @@ public class RFWDeprec {
   }
 
   /**
-   * Este mÈtodo inicializa {@link EventDispatcher}.<br>
+   * Este m√©todo inicializa {@link EventDispatcher}.<br>
    *
-   * @param eventThreadPriority Prioridade que as Threads de disparo dos eventos devem ser executadas. Valor padr„o {@link Thread#MIN_PRIORITY}.
+   * @param eventThreadPriority Prioridade que as Threads de disparo dos eventos devem ser executadas. Valor padr√£o {@link Thread#MIN_PRIORITY}.
    * @throws RFWException
    */
   public static void initializeEventDispatcher(Integer eventThreadPriority) throws RFWException {

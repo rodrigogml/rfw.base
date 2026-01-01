@@ -6,9 +6,9 @@ import java.util.Locale;
 import br.eng.rodrigogml.rfw.kernel.RFW;
 
 /**
- * Description: Bean de configuraÁ„o geral de relatÛrios. Deve ser estendido pelos de VOs de configuraÁ„o de cada relatÛrio.<br>
+ * Description: Bean de configura√ß√£o geral de relat√≥rios. Deve ser estendido pelos de VOs de configura√ß√£o de cada relat√≥rio.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 4.2.0 (13/02/2012)
  */
 
@@ -17,53 +17,53 @@ public abstract class FWReportOptionBean implements Serializable {
   private static final long serialVersionUID = 6546390082261081700L;
 
   /**
-   * DefiniÁ„o da orientaÁ„o do relatÛrio.
+   * Defini√ß√£o da orienta√ß√£o do relat√≥rio.
    */
   public static enum PAGE_ORIENTATION {
     PORTRAIT, LANDSCAPE
   }
 
   /**
-   * Locale que deve ser utilizado para formatar as informaÁıes do relatÛrio
+   * Locale que deve ser utilizado para formatar as informa√ß√µes do relat√≥rio
    */
   private Locale locale = null;
 
   /**
-   * Nome do empreendimento, configur·vel para sair no relatÛrio.
+   * Nome do empreendimento, configur√°vel para sair no relat√≥rio.
    */
   private String enterpriseName = null;
 
   /**
-   * OrientaÁ„o da p·gina do relatÛrio.
+   * Orienta√ß√£o da p√°gina do relat√≥rio.
    */
   private PAGE_ORIENTATION orientation = PAGE_ORIENTATION.PORTRAIT;
 
   /**
-   * Margem esquerda que deve ser obedecida na impress„o.
+   * Margem esquerda que deve ser obedecida na impress√£o.
    */
   private float marginLeft = 10;
   /**
-   * Margem direita que deve ser obedecida na impress„o.
+   * Margem direita que deve ser obedecida na impress√£o.
    */
   private float marginRight = 10;
   /**
-   * Margem superior que deve ser obedecida na impress„o.
+   * Margem superior que deve ser obedecida na impress√£o.
    */
   private float marginTop = 10;
   /**
-   * Margem inferior que deve ser obedecida na impress„o.
+   * Margem inferior que deve ser obedecida na impress√£o.
    */
   private float marginBottom = 10;
 
   /**
-   * Define o nome que ser· dado ao arquivo tempor·rio da escrita do relatÛrio. N√O INCLUIR A EXTENS√O DO ARQUIVO, APENAS O NOME PRINCIPAL DO ARQUIVO
+   * Define o nome que ser√° dado ao arquivo tempor√°rio da escrita do relat√≥rio. N√ÉO INCLUIR A EXTENS√ÉO DO ARQUIVO, APENAS O NOME PRINCIPAL DO ARQUIVO
    */
   private final String reportFileName;
 
   /**
    * Inicializa o Bean
    *
-   * @param reportFileName Define o nome que ser· dado ao arquivo tempor·rio da escrita do relatÛrio. N√O INCLUIR A EXTENS√O DO ARQUIVO, APENAS O NOME PRINCIPAL DO ARQUIVO
+   * @param reportFileName Define o nome que ser√° dado ao arquivo tempor√°rio da escrita do relat√≥rio. N√ÉO INCLUIR A EXTENS√ÉO DO ARQUIVO, APENAS O NOME PRINCIPAL DO ARQUIVO
    */
   public FWReportOptionBean(String enterpriseName, String reportFileName) {
     this(enterpriseName, null, reportFileName);
@@ -72,9 +72,9 @@ public abstract class FWReportOptionBean implements Serializable {
   /**
    * Inicializa o Bean
    *
-   * @param enterpriseName Nome da empresa nos relatÛrios
-   * @param locale Define a localidade a ser utilizada no relatÛrio. Se nenhuma for passada o bean È inicializado com o Locale do sistema do servidor.
-   * @param reportFileName Define o nome que ser· dado ao arquivo tempor·rio da escrita do relatÛrio. N√O INCLUIR A EXTENS√O DO ARQUIVO, APENAS O NOME PRINCIPAL DO ARQUIVO
+   * @param enterpriseName Nome da empresa nos relat√≥rios
+   * @param locale Define a localidade a ser utilizada no relat√≥rio. Se nenhuma for passada o bean √© inicializado com o Locale do sistema do servidor.
+   * @param reportFileName Define o nome que ser√° dado ao arquivo tempor√°rio da escrita do relat√≥rio. N√ÉO INCLUIR A EXTENS√ÉO DO ARQUIVO, APENAS O NOME PRINCIPAL DO ARQUIVO
    */
   public FWReportOptionBean(String enterpriseName, Locale locale, String reportFileName) {
     this.enterpriseName = enterpriseName;
@@ -87,135 +87,135 @@ public abstract class FWReportOptionBean implements Serializable {
   }
 
   /**
-   * # margem superior que deve ser obedecida na impress„o.
+   * # margem superior que deve ser obedecida na impress√£o.
    *
-   * @param marginTop the new margem superior que deve ser obedecida na impress„o
+   * @param marginTop the new margem superior que deve ser obedecida na impress√£o
    */
   public void setMarginTop(float marginTop) {
     this.marginTop = marginTop;
   }
 
   /**
-   * # margem direita que deve ser obedecida na impress„o.
+   * # margem direita que deve ser obedecida na impress√£o.
    *
-   * @param marginRight the new margem direita que deve ser obedecida na impress„o
+   * @param marginRight the new margem direita que deve ser obedecida na impress√£o
    */
   public void setMarginRight(float marginRight) {
     this.marginRight = marginRight;
   }
 
   /**
-   * # margem esquerda que deve ser obedecida na impress„o.
+   * # margem esquerda que deve ser obedecida na impress√£o.
    *
-   * @param marginLeft the new margem esquerda que deve ser obedecida na impress„o
+   * @param marginLeft the new margem esquerda que deve ser obedecida na impress√£o
    */
   public void setMarginLeft(float marginLeft) {
     this.marginLeft = marginLeft;
   }
 
   /**
-   * # margem inferior que deve ser obedecida na impress„o.
+   * # margem inferior que deve ser obedecida na impress√£o.
    *
-   * @param marginBottom the new margem inferior que deve ser obedecida na impress„o
+   * @param marginBottom the new margem inferior que deve ser obedecida na impress√£o
    */
   public void setMarginBottom(float marginBottom) {
     this.marginBottom = marginBottom;
   }
 
   /**
-   * # locale que deve ser utilizado para formatar as informaÁıes do relatÛrio.
+   * # locale que deve ser utilizado para formatar as informa√ß√µes do relat√≥rio.
    *
-   * @param locale the new locale que deve ser utilizado para formatar as informaÁıes do relatÛrio
+   * @param locale the new locale que deve ser utilizado para formatar as informa√ß√µes do relat√≥rio
    */
   public void setLocale(Locale locale) {
     this.locale = locale;
   }
 
   /**
-   * # margem superior que deve ser obedecida na impress„o.
+   * # margem superior que deve ser obedecida na impress√£o.
    *
-   * @return the margem superior que deve ser obedecida na impress„o
+   * @return the margem superior que deve ser obedecida na impress√£o
    */
   public float getMarginTop() {
     return marginTop;
   }
 
   /**
-   * # margem direita que deve ser obedecida na impress„o.
+   * # margem direita que deve ser obedecida na impress√£o.
    *
-   * @return the margem direita que deve ser obedecida na impress„o
+   * @return the margem direita que deve ser obedecida na impress√£o
    */
   public float getMarginRight() {
     return marginRight;
   }
 
   /**
-   * # margem esquerda que deve ser obedecida na impress„o.
+   * # margem esquerda que deve ser obedecida na impress√£o.
    *
-   * @return the margem esquerda que deve ser obedecida na impress„o
+   * @return the margem esquerda que deve ser obedecida na impress√£o
    */
   public float getMarginLeft() {
     return marginLeft;
   }
 
   /**
-   * # margem inferior que deve ser obedecida na impress„o.
+   * # margem inferior que deve ser obedecida na impress√£o.
    *
-   * @return the margem inferior que deve ser obedecida na impress„o
+   * @return the margem inferior que deve ser obedecida na impress√£o
    */
   public float getMarginBottom() {
     return marginBottom;
   }
 
   /**
-   * # locale que deve ser utilizado para formatar as informaÁıes do relatÛrio.
+   * # locale que deve ser utilizado para formatar as informa√ß√µes do relat√≥rio.
    *
-   * @return the locale que deve ser utilizado para formatar as informaÁıes do relatÛrio
+   * @return the locale que deve ser utilizado para formatar as informa√ß√µes do relat√≥rio
    */
   public Locale getLocale() {
     return locale;
   }
 
   /**
-   * # orientaÁ„o da p·gina do relatÛrio.
+   * # orienta√ß√£o da p√°gina do relat√≥rio.
    *
-   * @return the orientaÁ„o da p·gina do relatÛrio
+   * @return the orienta√ß√£o da p√°gina do relat√≥rio
    */
   public PAGE_ORIENTATION getOrientation() {
     return orientation;
   }
 
   /**
-   * # orientaÁ„o da p·gina do relatÛrio.
+   * # orienta√ß√£o da p√°gina do relat√≥rio.
    *
-   * @param orientation the new orientaÁ„o da p·gina do relatÛrio
+   * @param orientation the new orienta√ß√£o da p√°gina do relat√≥rio
    */
   public void setOrientation(PAGE_ORIENTATION orientation) {
     this.orientation = orientation;
   }
 
   /**
-   * # nome do empreendimento, configur·vel para sair no relatÛrio.
+   * # nome do empreendimento, configur√°vel para sair no relat√≥rio.
    *
-   * @return the nome do empreendimento, configur·vel para sair no relatÛrio
+   * @return the nome do empreendimento, configur√°vel para sair no relat√≥rio
    */
   public String getEnterpriseName() {
     return enterpriseName;
   }
 
   /**
-   * # nome do empreendimento, configur·vel para sair no relatÛrio.
+   * # nome do empreendimento, configur√°vel para sair no relat√≥rio.
    *
-   * @param enterpriseName the new nome do empreendimento, configur·vel para sair no relatÛrio
+   * @param enterpriseName the new nome do empreendimento, configur√°vel para sair no relat√≥rio
    */
   public void setEnterpriseName(String enterpriseName) {
     this.enterpriseName = enterpriseName;
   }
 
   /**
-   * # define o nome que ser· dado ao arquivo tempor·rio da escrita do relatÛrio. N√O INCLUIR A EXTENS√O DO ARQUIVO, APENAS O NOME PRINCIPAL DO ARQUIVO.
+   * # define o nome que ser√° dado ao arquivo tempor√°rio da escrita do relat√≥rio. N√ÉO INCLUIR A EXTENS√ÉO DO ARQUIVO, APENAS O NOME PRINCIPAL DO ARQUIVO.
    *
-   * @return the define o nome que ser· dado ao arquivo tempor·rio da escrita do relatÛrio
+   * @return the define o nome que ser√° dado ao arquivo tempor√°rio da escrita do relat√≥rio
    */
   public String getReportFileName() {
     return reportFileName;

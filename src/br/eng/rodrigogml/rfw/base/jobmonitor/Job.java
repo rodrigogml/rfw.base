@@ -5,7 +5,7 @@ import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 
 /**
- * Description: Classe respons·vel por inciar e gerenciar a tarefa. Esta classe deve ser extendida para iniciar a execuÁ„o da tarefa em paralelo (outra Thread).<br>
+ * Description: Classe respons√°vel por inciar e gerenciar a tarefa. Esta classe deve ser extendida para iniciar a execu√ß√£o da tarefa em paralelo (outra Thread).<br>
  *
  * @author Rodrigo GML
  * @since 10.0 (18 de mar de 2020)
@@ -13,7 +13,7 @@ import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 public abstract class Job extends Thread {
 
   /**
-   * Recupera o Bean com as informaÁıes de jobStatus da tarefa, quando a tarefa suportar novas informaÁıes e mensagens podem ser retornadas (definidas) no bean durante a execuÁ„o do mÈtodo para que cheguem atÈ o usu·rio, como textos, percentual de progresso, etc.
+   * Recupera o Bean com as informa√ß√µes de jobStatus da tarefa, quando a tarefa suportar novas informa√ß√µes e mensagens podem ser retornadas (definidas) no bean durante a execu√ß√£o do m√©todo para que cheguem at√© o usu√°rio, como textos, percentual de progresso, etc.
    */
   private final JobStatus jobStatus;
 
@@ -27,7 +27,7 @@ public abstract class Job extends Thread {
   }
 
   /**
-   * MÈtodo chamado quando comeÁar a Thread.
+   * M√©todo chamado quando come√ßar a Thread.
    */
   @Override
   public void run() {
@@ -44,20 +44,20 @@ public abstract class Job extends Thread {
   }
 
   /**
-   * MÈtodo chamado quando a Thread do Job È iniciada.
+   * M√©todo chamado quando a Thread do Job √© iniciada.
    *
-   * @param job Inst‚ncia do {@link Job}.
-   * @param jStatus Bean para atualizaÁ„o do jobStatus de execuÁ„o pela tarefa.
+   * @param job Inst√¢ncia do {@link Job}.
+   * @param jStatus Bean para atualiza√ß√£o do jobStatus de execu√ß√£o pela tarefa.
    *
-   * @return Deve retornar o retorno da prÛpria tarefa, para que o retorno fique salvo dentro do Job. Ou nulo caso o mÈtodo n„o retorne nada.
-   * @throws Throwable Qualquer exceÁ„o que ocorra dentro do mÈtodo ser· capturada e salva dentro do Job para que possa ser recuperada posteriormente.
+   * @return Deve retornar o retorno da pr√≥pria tarefa, para que o retorno fique salvo dentro do Job. Ou nulo caso o m√©todo n√£o retorne nada.
+   * @throws Throwable Qualquer exce√ß√£o que ocorra dentro do m√©todo ser√° capturada e salva dentro do Job para que possa ser recuperada posteriormente.
    */
   public abstract Object runJob(Job job, JobStatus jStatus) throws Throwable;
 
   /**
-   * Recupera o recupera o Bean com as informaÁıes de jobStatus da tarefa, quando a tarefa suportar novas informaÁıes e mensagens podem ser retornadas (definidas) no bean durante a execuÁ„o do mÈtodo para que cheguem atÈ o usu·rio, como textos, percentual de progresso, etc.
+   * Recupera o recupera o Bean com as informa√ß√µes de jobStatus da tarefa, quando a tarefa suportar novas informa√ß√µes e mensagens podem ser retornadas (definidas) no bean durante a execu√ß√£o do m√©todo para que cheguem at√© o usu√°rio, como textos, percentual de progresso, etc.
    *
-   * @return the recupera o Bean com as informaÁıes de jobStatus da tarefa, quando a tarefa suportar novas informaÁıes e mensagens podem ser retornadas (definidas) no bean durante a execuÁ„o do mÈtodo para que cheguem atÈ o usu·rio, como textos, percentual de progresso, etc
+   * @return the recupera o Bean com as informa√ß√µes de jobStatus da tarefa, quando a tarefa suportar novas informa√ß√µes e mensagens podem ser retornadas (definidas) no bean durante a execu√ß√£o do m√©todo para que cheguem at√© o usu√°rio, como textos, percentual de progresso, etc
    */
   public JobStatus getJobStatus() {
     return jobStatus;

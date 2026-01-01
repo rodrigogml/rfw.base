@@ -8,26 +8,26 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
- * Description: Classe utilit·ria com mÈtodos de IO.<br>
+ * Description: Classe utilit√°ria com m√©todos de IO.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.1.0 (8 de mai de 2019)
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUIO {
 
   /**
-   * Construtor privado para classe utilit·ria.
+   * Construtor privado para classe utilit√°ria.
    */
   private BUIO() {
   }
 
   /**
-   * Este mÈtodo lanÁa uma execuÁ„o java baseada na estrutura atual (se estamos em um jar ou executando classes em pasta aberta como nos momentos de development), e lanÁa uma nova execuÁ„o.<br>
-   * Note que este mÈtodo N√O FOR«A A FINALIZA«√O DESTA APLICA«√O, algo como System.exit(0). Isso pq depois que este mÈtodo È chamado pode ser necess·rio ainda executar algum processo de finalizaÁ„o. <br>
+   * Este m√©todo lan√ßa uma execu√ß√£o java baseada na estrutura atual (se estamos em um jar ou executando classes em pasta aberta como nos momentos de development), e lan√ßa uma nova execu√ß√£o.<br>
+   * Note que este m√©todo N√ÉO FOR√áA A FINALIZA√á√ÉO DESTA APLICA√á√ÉO, algo como System.exit(0). Isso pq depois que este m√©todo √© chamado pode ser necess√°rio ainda executar algum processo de finaliza√ß√£o. <br>
    * <br>
-   * ATEN«√O ESTE M…TODO PRECISA DE MAIS ATEN«√O E ALGUNS REPAROS... N√O FUNCIONA BEM TODOS OS CEN¡RIOS, Ex; execuÁ„o em JAR, execuÁ„o dentor e fora do eclipse, etc...
+   * ATEN√á√ÉO ESTE M√âTODO PRECISA DE MAIS ATEN√á√ÉO E ALGUNS REPAROS... N√ÉO FUNCIONA BEM TODOS OS CEN√ÅRIOS, Ex; execu√ß√£o em JAR, execu√ß√£o dentro e fora do eclipse, etc...
    *
    * @param executableClass
    * @throws RFWException
@@ -52,7 +52,7 @@ public class BUIO {
         command.add("-classpath");
         String classPath = currentJar.getPath();
         if (RFW.isDevelopmentEnvironment()) {
-          // IncluÌmos a pasta de libs na pasta anterior a de classes, que de forma geral dos projetos do RFWDeprec para aplicaÁıes, È onde os jars de dependÍncias s„o copiados
+          // Inclu√≠mos a pasta de libs na pasta anterior a de classes, que de forma geral dos projetos do RFWDeprec para aplica√ß√µes, √© onde os jars de depend√™ncias s√£o copiados
           classPath += File.pathSeparator + currentJar.getPath() + File.separator + ".." + File.separator + "libs" + File.separator + "*";
         }
         command.add(classPath);
@@ -62,7 +62,7 @@ public class BUIO {
         builder.start();
       }
     } catch (Throwable t) {
-      throw new RFWCriticalException("Falha ao montar o comando para reiniciar a aplicaÁ„o.");
+      throw new RFWCriticalException("Falha ao montar o comando para reiniciar a aplica√ß√£o.");
     }
   }
 

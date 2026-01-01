@@ -17,9 +17,9 @@ import br.eng.rodrigogml.rfw.kernel.preprocess.PreProcess;
 import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
 
 /**
- * Description: Classe utilizada para gerenciar as sessıes de usu·rios atravÈs da Thread.<br>
+ * Description: Classe utilizada para gerenciar as sess√µes de usu√°rios atrav√©s da Thread.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 10.0.0 (13 de jul de 2018)
  */
 public class SessionManager {
@@ -30,51 +30,51 @@ public class SessionManager {
   private static Boolean shutingdown = false;
 
   /**
-   * ReferÍncia para a Thread do SessionManager.
+   * Refer√™ncia para a Thread do SessionManager.
    */
   private static Thread controlThread = null;
 
   /**
-   * Define um prefixo que ser· utilizado para identificar quando a String de acesso n„o È o UUID da sess„o, mas sim um Token utilizado para criar a sess„o de acesso de uma "m·quina".<br>
+   * Define um prefixo que ser√° utilizado para identificar quando a String de acesso n√£o √© o UUID da sess√£o, mas sim um Token utilizado para criar a sess√£o de acesso de uma "m√°quina".<br>
    * Note:
-   * <li>que se este valor n„o for definido, o SessionManager n„o permitir· criar autenticaÁ„o por m·quina;
-   * <li>Para inutilizar o acesso ao sistema via m·quina defina esse atributo como "";
-   * <li>Por quest„o de seguranÁa esse valor sÛ pode ser definido uma ˙nica vez.
+   * <li>que se este valor n√£o for definido, o SessionManager n√£o permitir√° criar autentica√ß√£o por m√°quina;
+   * <li>Para inutilizar o acesso ao sistema via m√°quina defina esse atributo como "";
+   * <li>Por quest√£o de seguran√ßa esse valor s√≥ pode ser definido uma √∫nica vez.
    */
   private static String tokenPrefix = null;
 
   /**
-   * Esta hash mantÈm o timeMillis() da ˙ltima vez que a sess„o foi utilizada. … utilizada pelo mÈtodo de limpeza.<br>
-   * Chave È o UUID da sess„o.
+   * Esta hash mant√©m o timeMillis() da √∫ltima vez que a sess√£o foi utilizada. √â utilizada pelo m√©todo de limpeza.<br>
+   * Chave √© o UUID da sess√£o.
    */
   private static final HashMap<String, Long> sessionsHeartBeat = new HashMap<>();
 
   /**
-   * Cache com as sessıes criadas indexadas pelo UUID da sess„o.<Br>
-   * Chave UUID da sess„o, valor Objeto da sess„o.
+   * Cache com as sess√µes criadas indexadas pelo UUID da sess√£o.<Br>
+   * Chave UUID da sess√£o, valor Objeto da sess√£o.
    */
   private static final HashMap<String, SessionVO> sessionsByUUID = new HashMap<>();
 
   /**
-   * Cache com as sessıes indexadas pela Thread ‡ qual foi associada.<br>
-   * Chave Thread associada, valor UUID da sess„o.
+   * Cache com as sess√µes indexadas pela Thread √† qual foi associada.<br>
+   * Chave Thread associada, valor UUID da sess√£o.
    */
   private static final HashMap<Thread, String> sessionsByThread = new HashMap<>();
 
   /**
-   * Cache com a ligaÁ„o entre o token e o UUID da sess„o.<br>
-   * Chave Token de acesso, Valor UUID da sess„o.
+   * Cache com a liga√ß√£o entre o token e o UUID da sess√£o.<br>
+   * Chave Token de acesso, Valor UUID da sess√£o.
    */
   private static final HashMap<String, String> sessionsByToken = new HashMap<>();
 
   /**
-   * ReferÍncia para a implementaÁ„o da OperaÁ„o de Retaguarda do sistema. Interface que provÍ as informaÁıes de autenticaÁ„o e acessos do usu·rio.
+   * Refer√™ncia para a implementa√ß√£o da Opera√ß√£o de Retaguarda do sistema. Interface que prov√™ as informa√ß√µes de autentica√ß√£o e acessos do usu√°rio.
    */
   private static SessionBackOperation backOperation = null;
 
   /**
-   * Define o tempo (em segundos) que uma sess„o pode viver sem ser requisitada pelo Sessionmanager. Ao ocorrer o timeout, o SessionManager descarta a sess„o.<br>
-   * Tempo em Segundos. Valor padr„o 20 minutos.
+   * Define o tempo (em segundos) que uma sess√£o pode viver sem ser requisitada pelo Sessionmanager. Ao ocorrer o timeout, o SessionManager descarta a sess√£o.<br>
+   * Tempo em Segundos. Valor padr√£o 20 minutos.
    */
   private static long timeToLive = 1200;
 
@@ -85,7 +85,7 @@ public class SessionManager {
   }
 
   /**
-   * MÈtodo chamado internamente para iniciar a thread de controle das sessoes.
+   * M√©todo chamado internamente para iniciar a thread de controle das sessoes.
    */
   private static void startSessionThread() {
     SessionManager.controlThread = new Thread("### SessionManager Control Thread") {
@@ -106,17 +106,17 @@ public class SessionManager {
                 RFW.pDev("[RFWSessionmanager] [REMOVED] Thread removida por estado 'TERMINATED'" + thread.getName());
               } else {
                 final String uuid = sessionsByThread.get(thread);
-                // Se est· viva, atualizamos o tempo de vida desta sess„o.
+                // Se est√° viva, atualizamos o tempo de vida desta sess√£o.
                 updateCardio(uuid);
-                RFW.pDev("[RFWSessionmanager] [ALIVE] Thread da sess„o continua viva" + thread.getName() + " /  UUID: " + uuid);
+                RFW.pDev("[RFWSessionmanager] [ALIVE] Thread da sess√£o continua viva" + thread.getName() + " /  UUID: " + uuid);
               }
             }
 
-            // Iteramos todas as sessıes de usu·rios existente em busca do ˙ltimo momento de vida
+            // Iteramos todas as sess√µes de usu√°rios existente em busca do √∫ltimo momento de vida
             final ArrayList<String> tmpUUIDList = new ArrayList<>(sessionsByUUID.keySet());
             for (String uuid : tmpUUIDList) {
-              // Verificamos a data do ˙ltimo batimento da sess„o, se for maior que 10 minutos, acabamos com a sess„o
-              // Note que se houver uma Thread ativa para a sess„o (como em um caso de processo demorado), o loop acima j· atualizou o tempo para o momento atual, impedindo que a sess„o n„o seja assassinada pq o usu·rio est· esperando o sistema responder.
+              // Verificamos a data do √∫ltimo batimento da sess√£o, se for maior que 10 minutos, acabamos com a sess√£o
+              // Note que se houver uma Thread ativa para a sess√£o (como em um caso de processo demorado), o loop acima j√° atualizou o tempo para o momento atual, impedindo que a sess√£o n√£o seja assassinada pq o usu√°rio est√° esperando o sistema responder.
               final Long time = sessionsHeartBeat.get(uuid);
               if (System.currentTimeMillis() - time > timeToLive * 1000) {
                 final SessionVO sVO = sessionsByUUID.remove(uuid);
@@ -131,26 +131,26 @@ public class SessionManager {
       }
     };
     SessionManager.controlThread.setDaemon(true);
-    SessionManager.controlThread.setPriority(Thread.MIN_PRIORITY); // N„o h· muita prioridade em fechar as sessıes dos usu·rios.
+    SessionManager.controlThread.setPriority(Thread.MIN_PRIORITY); // N√£o h√° muita prioridade em fechar as sess√µes dos usu√°rios.
     SessionManager.controlThread.start();
   }
 
   /**
-   * Atualiza o hor·rio do ˙ltimo batimento
+   * Atualiza o hor√°rio do √∫ltimo batimento
    *
-   * @param uuid UUID da sess„o do usu·rio
+   * @param uuid UUID da sess√£o do usu√°rio
    */
   private static void updateCardio(String uuid) {
     sessionsHeartBeat.put(uuid, System.currentTimeMillis());
   }
 
   /**
-   * Permite que um usu·rio faÁa login no sistema atravÈs de usu·rio e senha e crie uma sess„o no sistema.
+   * Permite que um usu√°rio fa√ßa login no sistema atrav√©s de usu√°rio e senha e crie uma sess√£o no sistema.
    *
-   * @param user Usu·rio para autenticaÁ„o
-   * @param password Senha do usu·rio para autenticaÁ„o
-   * @param locale Locale do usu·rio para formataÁ„o de informaÁıes regionais.
-   * @return {@link SessionVO} com as informaÁıes da sess„o, incluindo o UUID ({@link SessionVO#getUUID()}) que identica a sess„o no {@link SessionManager}
+   * @param user Usu√°rio para autentica√ß√£o
+   * @param password Senha do usu√°rio para autentica√ß√£o
+   * @param locale Locale do usu√°rio para formata√ß√£o de informa√ß√µes regionais.
+   * @return {@link SessionVO} com as informa√ß√µes da sess√£o, incluindo o UUID ({@link SessionVO#getUUID()}) que identica a sess√£o no {@link SessionManager}
    * @throws RFWException
    */
   public static SessionVO doLogin(String user, String password, Locale locale) throws RFWException {
@@ -158,10 +158,10 @@ public class SessionManager {
   }
 
   /**
-   * Permite que um usu·rio faÁa login no sistema atravÈs de token e crie uma sess„o no sistema.
+   * Permite que um usu√°rio fa√ßa login no sistema atrav√©s de token e crie uma sess√£o no sistema.
    *
-   * @param token Token de identificaÁ„o e autorizaÁ„o do sistema.
-   * @return {@link SessionVO} com as informaÁıes da sess„o, incluindo o UUID ({@link SessionVO#getUUID()}) que identica a sess„o no {@link SessionManager}
+   * @param token Token de identifica√ß√£o e autoriza√ß√£o do sistema.
+   * @return {@link SessionVO} com as informa√ß√µes da sess√£o, incluindo o UUID ({@link SessionVO#getUUID()}) que identica a sess√£o no {@link SessionManager}
    * @throws RFWException
    */
   public static SessionVO doLogin(String token) throws RFWException {
@@ -169,18 +169,18 @@ public class SessionManager {
   }
 
   /**
-   * Este mÈtodo concentra a operaÁ„o de realizar o login internamente, aceitando o login por usu·rio/senha ou por token.
+   * Este m√©todo concentra a opera√ß√£o de realizar o login internamente, aceitando o login por usu√°rio/senha ou por token.
    *
-   * @param user Usu·rio para o login por usu·rio/senha.
-   * @param password Senha para o login por usu·rio/senha.
-   * @param token Token de acesso para realizar o login por token de m·quina. SÛ È levado em consideraÁ„o se Usu·rio e Senha forem nulos.
-   * @param locale Locale do usu·rio para formataÁ„o de informaÁıes regionais.
-   * @return {@link SessionVO} com as informaÁıes da sess„o, incluindo o UUID ({@link SessionVO#getUUID()}) que identica a sess„o no {@link SessionManager}
+   * @param user Usu√°rio para o login por usu√°rio/senha.
+   * @param password Senha para o login por usu√°rio/senha.
+   * @param token Token de acesso para realizar o login por token de m√°quina. S√≥ √© levado em considera√ß√£o se Usu√°rio e Senha forem nulos.
+   * @param locale Locale do usu√°rio para formata√ß√£o de informa√ß√µes regionais.
+   * @return {@link SessionVO} com as informa√ß√µes da sess√£o, incluindo o UUID ({@link SessionVO#getUUID()}) que identica a sess√£o no {@link SessionManager}
    * @throws RFWException
    */
   private static SessionVO doLogin(String user, String password, String token, Locale locale) throws RFWException {
     if (SessionManager.controlThread == null) startSessionThread();
-    PreProcess.requiredNonNull(SessionManager.backOperation, "A implementaÁ„o so SessionBackOperation n„o foi definida no SessionManager! Inicializa o SessionManager adequadamente antes de utiliza-lo!");
+    PreProcess.requiredNonNull(SessionManager.backOperation, "A implementa√ß√£o so SessionBackOperation n√£o foi definida no SessionManager! Inicializa o SessionManager adequadamente antes de utiliza-lo!");
 
     String uuid = null;
     do {
@@ -195,8 +195,8 @@ public class SessionManager {
       sessionsByToken.put(token, uuid);
     }
 
-    if (ssVO == null) throw new RFWCriticalException("O sistema n„o gerou um objeto de sess„o v·lido!");
-    if (!uuid.equals(ssVO.getUUID())) throw new RFWCriticalException("O SessionVO n„o retornou o mesmo UUID passado na autenticaÁ„o. Por favor veja a documentaÁ„o do mÈtodo de doLogin para entender o funcioanmento do UUID.");
+    if (ssVO == null) throw new RFWCriticalException("O sistema n√£o gerou um objeto de sess√£o v√°lido!");
+    if (!uuid.equals(ssVO.getUUID())) throw new RFWCriticalException("O SessionVO n√£o retornou o mesmo UUID passado na autentica√ß√£o. Por favor veja a documenta√ß√£o do m√©todo de doLogin para entender o funcioanmento do UUID.");
 
     sessionsByUUID.put(uuid, ssVO);
     sessionsByThread.put(Thread.currentThread(), uuid);
@@ -207,19 +207,19 @@ public class SessionManager {
   }
 
   /**
-   * Recupera a sess„o da thread atual.
+   * Recupera a sess√£o da thread atual.
    *
-   * @return {@link SessionVO} associada ‡ Thread atual.
-   * @throws RFWException caso ocorra alguma exception ou se a Thread atual n„o for encontrada (Exception com o cÛdigo "RFW_ERR_000005")
+   * @return {@link SessionVO} associada √† Thread atual.
+   * @throws RFWException caso ocorra alguma exception ou se a Thread atual n√£o for encontrada (Exception com o c√≥digo "RFW_ERR_000005")
    */
   public static SessionVO getSession() throws RFWException {
     return getSession(sessionsByThread.get(Thread.currentThread()));
   }
 
   /**
-   * Mesma operaÁ„o que o mÈtodo {@link #getSession()}, porÈm se a sess„o n„o for encontrada retorna nulo ao invÈs da Exception
+   * Mesma opera√ß√£o que o m√©todo {@link #getSession()}, por√©m se a sess√£o n√£o for encontrada retorna nulo ao inv√©s da Exception
    *
-   * @return {@link SessionVO} associada ‡ Thread atual. Ou nulo caso a sess„o n„o seja encontrada.
+   * @return {@link SessionVO} associada √† Thread atual. Ou nulo caso a sess√£o n√£o seja encontrada.
    * @throws RFWException caso ocorra alguma exception
    */
   public static SessionVO getSessionIfExists() throws RFWException {
@@ -232,10 +232,10 @@ public class SessionManager {
   }
 
   /**
-   * Recupera a sess„o pelo UUID
+   * Recupera a sess√£o pelo UUID
    *
-   * @param uuid ID da sess„o
-   * @throws RFWException LanÁado em caso de erro. Caso a sess„o n„o exista, esteja expirada, inv·lida, etc. o cÛdigo da exception ser· "RFW_ERR_000005".
+   * @param uuid ID da sess√£o
+   * @throws RFWException Lan√ßado em caso de erro. Caso a sess√£o n√£o exista, esteja expirada, inv√°lida, etc. o c√≥digo da exception ser√° "RFW_ERR_000005".
    */
   public static SessionVO getSession(String uuid) throws RFWException {
     if (uuid == null) {
@@ -243,66 +243,66 @@ public class SessionManager {
     }
 
     SessionVO sessionVO = null;
-    // verifica se o valor pode ser um Token de autenticaÁ„o ao invÈs de do UUID
+    // verifica se o valor pode ser um Token de autentica√ß√£o ao inv√©s de do UUID
     if (SessionManager.tokenPrefix != null && !"".equals(tokenPrefix) && uuid.startsWith(SessionManager.tokenPrefix)) {
       String token = uuid;
 
-      // Se È um token de station, verificamos se j· temos uma sess„o criada para ele
+      // Se √© um token de station, verificamos se j√° temos uma sess√£o criada para ele
       uuid = SessionManager.sessionsByToken.get(token);
       if (uuid != null) {
         sessionVO = SessionManager.sessionsByUUID.get(uuid);
       }
 
       if (sessionVO == null) {
-        // Se n„o encontramos uma sess„o v·lida, tentamos realizar o Login pelo Token e criar uma nova sess„o.
+        // Se n√£o encontramos uma sess√£o v√°lida, tentamos realizar o Login pelo Token e criar uma nova sess√£o.
         sessionVO = doLogin(null, null, token, null);
       }
     } else {
-      // Busca pelo UUID de sess„o
+      // Busca pelo UUID de sess√£o
       sessionVO = sessionsByUUID.get(uuid);
     }
     if (sessionVO == null) {
       throw new RFWValidationException("RFW_ERR_000005");
     }
 
-    // Atualiza o heartBeat da Sess„o para mante-la viva
+    // Atualiza o heartBeat da Sess√£o para mante-la viva
     updateCardio(uuid);
 
     return sessionVO;
   }
 
   /**
-   * Registra uma sess„o de usu·rio ‡ Thread. Este mÈtodo deve ser utilizado apra associar a Sess„o nas Threads. Incluindo as de Login/Interceptor quanto as threads de "Fork" usadas no CRUD.
+   * Registra uma sess√£o de usu√°rio √† Thread. Este m√©todo deve ser utilizado apra associar a Sess√£o nas Threads. Incluindo as de Login/Interceptor quanto as threads de "Fork" usadas no CRUD.
    *
-   * @param thread Thread para associaÁ„o da sess„o
-   * @param uuid Identificador da sess„o
-   * @throws RFWException LanÁado caso ocorra algum erro ou a sess„o n„o seja v·lida.
+   * @param thread Thread para associa√ß√£o da sess√£o
+   * @param uuid Identificador da sess√£o
+   * @throws RFWException Lan√ßado caso ocorra algum erro ou a sess√£o n√£o seja v√°lida.
    */
   public static void attachSessionToThread(Thread thread, String uuid) throws RFWException {
-    // Verificamos se a Thread j· tem alguma sess„o associada. N„o È pertido sobreescrever a sess„o.
+    // Verificamos se a Thread j√° tem alguma sess√£o associada. N√£o √© pertido sobreescrever a sess√£o.
     String threadUUID = sessionsByThread.get(thread);
     if (threadUUID != null && !uuid.equals(threadUUID)) {
       throw new RFWCriticalException("RFW_ERR_300037");
     }
 
-    // Recupera a sess„o pelo UUID, assim j· verifica se est· valida
+    // Recupera a sess√£o pelo UUID, assim j√° verifica se est√° valida
     getSession(uuid);
 
-    // Se tudo OK, associamos essa sess„o na nova Thread
+    // Se tudo OK, associamos essa sess√£o na nova Thread
     sessionsByThread.put(thread, uuid);
   }
 
   /**
-   * Remove a associaÁ„o da sess„o ‡ uma determinada Thread.
+   * Remove a associa√ß√£o da sess√£o √† uma determinada Thread.
    *
-   * @param currentThread Thread a ter a sess„o removida.
+   * @param currentThread Thread a ter a sess√£o removida.
    */
   public static void cleanThread(Thread currentThread) {
     sessionsByThread.remove(currentThread);
   }
 
   /**
-   * Finaliza o Sessionmanager. Uma vez finalizado nenhum tipo de Login ser· mais permitido e nenhuma sess„o ser· autorizada.
+   * Finaliza o Sessionmanager. Uma vez finalizado nenhum tipo de Login ser√° mais permitido e nenhuma sess√£o ser√° autorizada.
    */
   public static final void shutdown() {
     SessionManager.shutingdown = true;
@@ -316,16 +316,16 @@ public class SessionManager {
   }
 
   /**
-   * Este mÈtodo simplesmente "cancela" a sess„o passada. Uma vez que a sess„o seja desregistrada, ela passar· a dar erro de login/falha de acesso, como se j· tivesse expirado. Obrigado o usu·rio a refazer o login.
+   * Este m√©todo simplesmente "cancela" a sess√£o passada. Uma vez que a sess√£o seja desregistrada, ela passar√° a dar erro de login/falha de acesso, como se j√° tivesse expirado. Obrigado o usu√°rio a refazer o login.
    *
-   * @param uuid Identificador ˙nico da sess„o do usu·rio.
+   * @param uuid Identificador √∫nico da sess√£o do usu√°rio.
    */
   public static void unregisterSession(String uuid) {
     SessionVO ssVO = null;
     try {
       ssVO = getSession(uuid);
     } catch (RFWException e) {
-      // se a sess„o n„o existir n„o tem problema, n„o lanÁa erro
+      // se a sess√£o n√£o existir n√£o tem problema, n√£o lan√ßa erro
     }
 
     if (ssVO != null) {
@@ -341,10 +341,10 @@ public class SessionManager {
   }
 
   /**
-   * Este mÈtodo simplesmente "cancela" a sess„o passada.<br>
-   * Uma vez que a sess„o seja desregistrada, ela passar· a dar erro de login/falha de acesso, como se j· tivesse expirado. Obrigado o usu·rio a refazer o login.
+   * Este m√©todo simplesmente "cancela" a sess√£o passada.<br>
+   * Uma vez que a sess√£o seja desregistrada, ela passar√° a dar erro de login/falha de acesso, como se j√° tivesse expirado. Obrigado o usu√°rio a refazer o login.
    *
-   * @param token Identificador ˙nico da sess„o do usu·rio.
+   * @param token Identificador √∫nico da sess√£o do usu√°rio.
    */
   public static void unregisterSessionByToken(String token) {
     String uuid = sessionsByToken.get(token);
@@ -352,10 +352,10 @@ public class SessionManager {
   }
 
   /**
-   * Este mÈtodo "cancela" a sess„o conforme o identificador ˙nico do usu·rio. Qualquer sess„o cujo mÈtodo {@link SessionVO#getUniqueID()} tenha um .equals() verdadeiro para o identificador passado ter· a sess„o finalizada.<br>
-   * Uma vez que a sess„o seja desregistrada, ela passar· a dar erro de login/falha de acesso, como se j· tivesse expirado. Obrigado o usu·rio a refazer o login.
+   * Este m√©todo "cancela" a sess√£o conforme o identificador √∫nico do usu√°rio. Qualquer sess√£o cujo m√©todo {@link SessionVO#getUniqueID()} tenha um .equals() verdadeiro para o identificador passado ter√° a sess√£o finalizada.<br>
+   * Uma vez que a sess√£o seja desregistrada, ela passar√° a dar erro de login/falha de acesso, como se j√° tivesse expirado. Obrigado o usu√°rio a refazer o login.
    *
-   * @param uniqueID Identificador ˙nico da sess„o do usu·rio.
+   * @param uniqueID Identificador √∫nico da sess√£o do usu√°rio.
    */
   public static void unregisterSessionByUniqueID(String uniqueID) {
     for (Entry<String, SessionVO> entry : new ArrayList<>(sessionsByUUID.entrySet())) {
@@ -367,69 +367,69 @@ public class SessionManager {
   }
 
   /**
-   * # referÍncia para a implementaÁ„o da OperaÁ„o de Retaguarda do sistema. Interface que provÍ as informaÁıes de autenticaÁ„o e acessos do usu·rio.
+   * # refer√™ncia para a implementa√ß√£o da Opera√ß√£o de Retaguarda do sistema. Interface que prov√™ as informa√ß√µes de autentica√ß√£o e acessos do usu√°rio.
    *
-   * @param backOperation the new referÍncia para a implementaÁ„o da OperaÁ„o de Retaguarda do sistema
+   * @param backOperation the new refer√™ncia para a implementa√ß√£o da Opera√ß√£o de Retaguarda do sistema
    */
   public static void setBackOperation(SessionBackOperation backOperation) throws RFWException {
-    PreProcess.requiredNonNull(backOperation, "SessionBackOperation n„o pode ser nulo!");
-    if (SessionManager.backOperation != null) throw new RFWCriticalException("N„o È permitido trocar o SessionBackOperation por questıes de seguranÁa.");
+    PreProcess.requiredNonNull(backOperation, "SessionBackOperation n√£o pode ser nulo!");
+    if (SessionManager.backOperation != null) throw new RFWCriticalException("N√£o √© permitido trocar o SessionBackOperation por quest√µes de seguran√ßa.");
     SessionManager.backOperation = backOperation;
   }
 
   /**
-   * # define um prefixo que ser· utilizado para identificar quando a String de acesso n„o È o UUID da sess„o, mas sim um Token utilizado para criar a sess„o de acesso de uma "m·quina".<br>
+   * # define um prefixo que ser√° utilizado para identificar quando a String de acesso n√£o √© o UUID da sess√£o, mas sim um Token utilizado para criar a sess√£o de acesso de uma "m√°quina".<br>
    * Note:
-   * <li>que se este valor n„o for definido, o SessionManager n„o permitir· criar autenticaÁ„o por m·quina;
-   * <li>Para inutilizar o acesso ao sistema via m·quina defina esse atributo como "";
-   * <li>Por quest„o de seguranÁa esse valor sÛ pode ser definido uma ˙nica vez.
+   * <li>que se este valor n√£o for definido, o SessionManager n√£o permitir√° criar autentica√ß√£o por m√°quina;
+   * <li>Para inutilizar o acesso ao sistema via m√°quina defina esse atributo como "";
+   * <li>Por quest√£o de seguran√ßa esse valor s√≥ pode ser definido uma √∫nica vez.
    *
-   * @param tokenPrefix the new define um prefixo que ser· utilizado para identificar quando a String de acesso n„o È o UUID da sess„o, mas sim um Token utilizado para criar a sess„o de acesso de uma "m·quina"
+   * @param tokenPrefix the new define um prefixo que ser√° utilizado para identificar quando a String de acesso n√£o √© o UUID da sess√£o, mas sim um Token utilizado para criar a sess√£o de acesso de uma "m√°quina"
    */
   public static void setTokenPrefix(String tokenPrefix) throws RFWException {
-    PreProcess.requiredNonNull(tokenPrefix, "Prefixo de Token Inv·lido!");
-    if (SessionManager.tokenPrefix != null) throw new RFWCriticalException("O prefixo de Token j· foi definido anteriormente! Por questıes de seguranÁa ele n„o pode ser alterado!");
+    PreProcess.requiredNonNull(tokenPrefix, "Prefixo de Token Inv√°lido!");
+    if (SessionManager.tokenPrefix != null) throw new RFWCriticalException("O prefixo de Token j√° foi definido anteriormente! Por quest√µes de seguran√ßa ele n√£o pode ser alterado!");
     SessionManager.tokenPrefix = tokenPrefix;
   }
 
   /**
-   * # define o tempo (em segundos) que uma sess„o pode viver sem ser requisitada pelo Sessionmanager. Ao ocorrer o timeout, o SessionManager descarta a sess„o.<br>
-   * Tempo em Segundos. Valor padr„o 20 minutos.
+   * # define o tempo (em segundos) que uma sess√£o pode viver sem ser requisitada pelo Sessionmanager. Ao ocorrer o timeout, o SessionManager descarta a sess√£o.<br>
+   * Tempo em Segundos. Valor padr√£o 20 minutos.
    *
-   * @param timeToLive the new define o tempo (em segundos) que uma sess„o pode viver sem ser requisitada pelo Sessionmanager
+   * @param timeToLive the new define o tempo (em segundos) que uma sess√£o pode viver sem ser requisitada pelo Sessionmanager
    */
   public static void setTimeToLive(long timeToLive) throws RFWException {
-    PreProcess.requiredNonNullPositive(timeToLive, "O TimeToLeave da Sess„o deve ser um n˙mero positivo!");
+    PreProcess.requiredNonNullPositive(timeToLive, "O TimeToLeave da Sess√£o deve ser um n√∫mero positivo!");
     SessionManager.timeToLive = timeToLive;
   }
 
   /**
-   * # define um prefixo que ser· utilizado para identificar quando a String de acesso n„o È o UUID da sess„o, mas sim um Token utilizado para criar a sess„o de acesso de uma "m·quina".<br>
+   * # define um prefixo que ser√° utilizado para identificar quando a String de acesso n√£o √© o UUID da sess√£o, mas sim um Token utilizado para criar a sess√£o de acesso de uma "m√°quina".<br>
    * Note:
-   * <li>que se este valor n„o for definido, o SessionManager n„o permitir· criar autenticaÁ„o por m·quina;
-   * <li>Para inutilizar o acesso ao sistema via m·quina defina esse atributo como "";
-   * <li>Por quest„o de seguranÁa esse valor sÛ pode ser definido uma ˙nica vez.
+   * <li>que se este valor n√£o for definido, o SessionManager n√£o permitir√° criar autentica√ß√£o por m√°quina;
+   * <li>Para inutilizar o acesso ao sistema via m√°quina defina esse atributo como "";
+   * <li>Por quest√£o de seguran√ßa esse valor s√≥ pode ser definido uma √∫nica vez.
    *
-   * @return the define um prefixo que ser· utilizado para identificar quando a String de acesso n„o È o UUID da sess„o, mas sim um Token utilizado para criar a sess„o de acesso de uma "m·quina"
+   * @return the define um prefixo que ser√° utilizado para identificar quando a String de acesso n√£o √© o UUID da sess√£o, mas sim um Token utilizado para criar a sess√£o de acesso de uma "m√°quina"
    */
   public static String getTokenPrefix() {
     return tokenPrefix;
   }
 
   /**
-   * # define o tempo (em segundos) que uma sess„o pode viver sem ser requisitada pelo Sessionmanager. Ao ocorrer o timeout, o SessionManager descarta a sess„o.<br>
-   * Tempo em Segundos. Valor padr„o 20 minutos.
+   * # define o tempo (em segundos) que uma sess√£o pode viver sem ser requisitada pelo Sessionmanager. Ao ocorrer o timeout, o SessionManager descarta a sess√£o.<br>
+   * Tempo em Segundos. Valor padr√£o 20 minutos.
    *
-   * @return the define o tempo (em segundos) que uma sess„o pode viver sem ser requisitada pelo Sessionmanager
+   * @return the define o tempo (em segundos) que uma sess√£o pode viver sem ser requisitada pelo Sessionmanager
    */
   public static long getTimeToLive() {
     return timeToLive;
   }
 
   /**
-   * Repassa a notificaÁ„o de SessionLastActiviry para o {@link SessionBackOperation}.
+   * Repassa a notifica√ß√£o de SessionLastActiviry para o {@link SessionBackOperation}.
    *
-   * @param ssVO Sess„o a ser notificada.
+   * @param ssVO Sess√£o a ser notificada.
    * @throws RFWException
    */
   public static void updateSessionVOActivity(SessionVO ssVO) throws RFWException {

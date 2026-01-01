@@ -14,9 +14,9 @@ public class BUGeneratorsTest {
 
   @Test
   public void t00_generateString() {
-    // Testa a geração de 100 Strings
+    // Testa a geraÃ§Ã£o de 100 Strings
     for (int i = 0; i < 100; i++) {
-      Assert.assertTrue("String gerada fora do padrão prometido!", RUGenerators.generateString(300).matches("[0-9a-zA-Z]{300}"));
+      Assert.assertTrue("String gerada fora do padrÃ£o prometido!", RUGenerators.generateString(300).matches("[0-9a-zA-Z]{300}"));
     }
   }
 
@@ -25,7 +25,7 @@ public class BUGeneratorsTest {
     for (int i = 0; i < 1000; i++) {
       String uuid = RUGenerators.generateUUID();
       // System.out.println(uuid);
-      assertTrue("UUID fora do padrão esperado!", uuid.matches("[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"));
+      assertTrue("UUID fora do padrÃ£o esperado!", uuid.matches("[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"));
     }
   }
 }

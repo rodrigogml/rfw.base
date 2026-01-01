@@ -8,9 +8,9 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 /**
  * Description: Interface do JobMonitor que permite implementar um "Supplier".<br>
  *
- * Supplier È um pattern semelhante ao Factory, mas ao invÈs de criar um objeto, ele È capaz de encontrar um j· existente.<Br>
+ * Supplier √© um pattern semelhante ao Factory, mas ao inv√©s de criar um objeto, ele √© capaz de encontrar um j√° existente.<Br>
  * <br>
- * No caso do {@link JobStatusSupplier} sua funÁ„o È encontrar o {@link JobStatus} de uma determinada tarefa. Quando estamos utilizando a mesma JVM de quem criou o {@link Job}, podemos encontrar o objeto apenas chamando o {@link JobMonitor#getJobStatus(String)} estaticamente. Mas se a tarefa estiver rodando em outra VM ser· preciso acessa-lo a partir de uma Fachada de serviÁos. Nesses casos È
+ * No caso do {@link JobStatusSupplier} sua fun√ß√£o √© encontrar o {@link JobStatus} de uma determinada tarefa. Quando estamos utilizando a mesma JVM de quem criou o {@link Job}, podemos encontrar o objeto apenas chamando o {@link JobMonitor#getJobStatus(String)} estaticamente. Mas se a tarefa estiver rodando em outra VM ser√° preciso acessa-lo a partir de uma Fachada de servi√ßos. Nesses casos √©
  * preciso imeplementar essa busca utilizando essa interface.
  *
  * @author Rodrigo GML
@@ -28,16 +28,16 @@ public interface JobStatusSupplier {
   public JobStatus getJobStatus(String jobUUID) throws RFWException;
 
   /**
-   * Deve chamar o mÈtodo de limpeza {@link JobMonitor#cleanJob(String)} para liberar os recursos do sistema.
+   * Deve chamar o m√©todo de limpeza {@link JobMonitor#cleanJob(String)} para liberar os recursos do sistema.
    *
    * @param jobUUID Idenficiador do Job.
-   * @return true caso o job tenha sido encontrado no JobMonitor, false caso contr·rio.
+   * @return true caso o job tenha sido encontrado no JobMonitor, false caso contr√°rio.
    * @throws RFWException
    */
   public boolean cleanJob(String jobUUID) throws RFWException;
 
   /**
-   * Solicita que a tarefa seja interrompida (se suportar). Aborta no meio do processamento laÁando exceÁ„o de ValidaÁ„o com o cÛdigo "RFW_ERR_000004".
+   * Solicita que a tarefa seja interrompida (se suportar). Aborta no meio do processamento la√ßando exce√ß√£o de Valida√ß√£o com o c√≥digo "RFW_ERR_000004".
    *
    * @param jobUUID Idenficiador do Job.
    */

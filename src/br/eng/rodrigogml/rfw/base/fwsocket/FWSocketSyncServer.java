@@ -17,10 +17,10 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 
 /**
- * Description: Classe do RFWDeprec quer permite "levantar um servidor" que aceita conexıes do tipo "requisiÁ„o->resposta", similar a um servidor HTTP. Cada conex„o recebe uma resposta, resultado de um processamento e È finalizada.<BR>
- * Utiliza como base a transmiss„o de arquivos serializados encapsulado dentro do {@link FWSocketObjectMap}.
+ * Description: Classe do RFWDeprec quer permite "levantar um servidor" que aceita conex√µes do tipo "requisi√ß√£o->resposta", similar a um servidor HTTP. Cada conex√£o recebe uma resposta, resultado de um processamento e √© finalizada.<BR>
+ * Utiliza como base a transmiss√£o de arquivos serializados encapsulado dentro do {@link FWSocketObjectMap}.
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.0.0 (13/11/2014)
  */
 public class FWSocketSyncServer {
@@ -31,12 +31,12 @@ public class FWSocketSyncServer {
   private ServerSocket serverSocket = null;
 
   /**
-   * Flag que indica se o servidor est· em processo de finalizaÁ„o, evita que LOG de erros que o socket emite enquanto est· sendo desligado
+   * Flag que indica se o servidor est√° em processo de finaliza√ß√£o, evita que LOG de erros que o socket emite enquanto est√° sendo desligado
    */
   private boolean stopped = false;
 
   /**
-   * N˙mero da porta que o servidor escutar·.
+   * N√∫mero da porta que o servidor escutar√°.
    */
   private final int port;
 
@@ -51,8 +51,8 @@ public class FWSocketSyncServer {
   }
 
   /**
-   * Este mÈtodo para o listener completamente.<br>
-   * <b>AtenÁ„o: este mÈtodo n„o encerra as conexıes existentes!!!</b>
+   * Este m√©todo para o listener completamente.<br>
+   * <b>Aten√ß√£o: este m√©todo n√£o encerra as conex√µes existentes!!!</b>
    */
   public synchronized void stopServer() throws RFWException {
     stopped = true;
@@ -68,7 +68,7 @@ public class FWSocketSyncServer {
   }
 
   /**
-   * Este mÈtodo Indica se o socket est· funcionando aguardo novas conexıes.
+   * Este m√©todo Indica se o socket est√° funcionando aguardo novas conex√µes.
    *
    * @throws RFWException
    */
@@ -77,7 +77,7 @@ public class FWSocketSyncServer {
   }
 
   /**
-   * Este mÈtodo inicializa o listener caso ele ainda n„o esteja operante, ou reinicia (finaliza o anterior e cria um novo) caso j· exista algum em funcionamento.<br>
+   * Este m√©todo inicializa o listener caso ele ainda n√£o esteja operante, ou reinicia (finaliza o anterior e cria um novo) caso j√° exista algum em funcionamento.<br>
    *
    * @throws RFWException
    */
@@ -86,14 +86,14 @@ public class FWSocketSyncServer {
     try {
       stopServer();
     } catch (Exception e) {
-      // Loga a exceÁ„o mas n„o se importa em continuar o mÈtodo pois este erro n„o deve atrapalhar o
+      // Loga a exce√ß√£o mas n√£o se importa em continuar o m√©todo pois este erro n√£o deve atrapalhar o
       RFWLogger.logException(e);
     }
     // Cria e inicializa o novo socket
     stopped = false;
     try {
       serverSocket = new ServerSocket(this.port);
-      // Dispara thread que aceitar· m˙ltiplas inst‚ncias de conex„o
+      // Dispara thread que aceitar√° m√∫ltiplas inst√¢ncias de conex√£o
       Thread thread = new Thread() {
         @Override
         public void run() {
@@ -104,36 +104,36 @@ public class FWSocketSyncServer {
       thread.setName("FWSocket Sync Listener");
       thread.start();
     } catch (IOException e) {
-      throw new RFWCriticalException("ImpossÌvel inicializar o listener!", e);
+      throw new RFWCriticalException("Imposs√≠vel inicializar o listener!", e);
     }
   }
 
   protected void socketListenerThread() {
-    long startTime = System.currentTimeMillis(); // Tempo em que a Thread comeÁou
+    long startTime = System.currentTimeMillis(); // Tempo em que a Thread come√ßou
     while (!this.serverSocket.isClosed() && this.serverSocket.isBound()) {
       try {
-        // Define um time out para o accept, se ninguÈm solicitar uma conex„o ser· lanÁada uma exception e aproveitamos para reiniciar o socket. ⁄til para limpara a mÈmÛria contra o BUG do socket do java, que cresce feito um gremiling
-        serverSocket.setSoTimeout(60000); // Deixa um timeout de 1min para que de mÌnuto em minuto faÁa a verificaÁ„o se devemos reiniciar a thread ou n„o
+        // Define um time out para o accept, se ningu√©m solicitar uma conex√£o ser√° lan√ßada uma exception e aproveitamos para reiniciar o socket. √ötil para limpara a m√©m√≥ria contra o BUG do socket do java, que cresce feito um gremiling
+        serverSocket.setSoTimeout(60000); // Deixa um timeout de 1min para que de m√≠nuto em minuto fa√ßa a verifica√ß√£o se devemos reiniciar a thread ou n√£o
         Socket clientsocket = serverSocket.accept();
-        // Cria Thread Separada para gerenciar essa nvoa conex„o e n„o atrapalhar o listener
+        // Cria Thread Separada para gerenciar essa nvoa conex√£o e n√£o atrapalhar o listener
         FWSocketServerConnectionThread t = new FWSocketServerConnectionThread(clientsocket, this.listener);
         t.setDaemon(true);
         t.setName("### FWSocket Sync Client");
         t.start();
       } catch (SocketTimeoutException e) {
-        // Se for exception de timeout E o socket ainda estiver OK E a thread j· estiver viva a mais de 12 Horas (12h x 60m x 60s x 1000ms = 43200000ms), formaÁamos uma reinicializaÁ„o dele para livrar memÛria do BUG do socket que n„o para de crescer
+        // Se for exception de timeout E o socket ainda estiver OK E a thread j√° estiver viva a mais de 12 Horas (12h x 60m x 60s x 1000ms = 43200000ms), forma√ßamos uma reinicializa√ß√£o dele para livrar mem√≥ria do BUG do socket que n√£o para de crescer
         if (!this.serverSocket.isClosed() && this.serverSocket.isBound() && System.currentTimeMillis() - startTime > 43200000) {
           try {
             RFWLogger.logDebug("Restarting FWSocket Sync Listener");
             startServer();
-            return; // Se reiniciamos, saÌmos dessa thread pois j· tem outra no lugar para ouvir o socket
+            return; // Se reiniciamos, sa√≠mos dessa thread pois j√° tem outra no lugar para ouvir o socket
           } catch (Exception e1) {
-            RFWLogger.logInfo("N„o foi possÌvel reiniciar o Listener!");
+            RFWLogger.logInfo("N√£o foi poss√≠vel reiniciar o Listener!");
             RFWLogger.logException(e1);
           }
         }
       } catch (Exception e) {
-        if (!stopped) RFWLogger.logException(new RFWCriticalException("Erro ao aceitar a conex„o do cliente.", e));
+        if (!stopped) RFWLogger.logException(new RFWCriticalException("Erro ao aceitar a conex√£o do cliente.", e));
       }
     }
 
@@ -141,7 +141,7 @@ public class FWSocketSyncServer {
     try {
       serverSocket.close();
     } catch (IOException e) {
-      // SÛ loga o erro, mas n„o h· muito interesse nesta exceÁ„o
+      // S√≥ loga o erro, mas n√£o h√° muito interesse nesta exce√ß√£o
       RFWLogger.logException(e);
     }
     RFWLogger.logDebug("FWSocket Sync Listener Thread Terminated!");
@@ -150,9 +150,9 @@ public class FWSocketSyncServer {
 }
 
 /**
- * Description: Thread utilizada para gerenciar as conexıes de cada novo cliente que se conectar ao servidor.<BR>
+ * Description: Thread utilizada para gerenciar as conex√µes de cada novo cliente que se conectar ao servidor.<BR>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.0.0 (13/11/2014)
  */
 class FWSocketServerConnectionThread extends Thread {
@@ -169,35 +169,35 @@ class FWSocketServerConnectionThread extends Thread {
       this.reader = new InputStreamReader(clientsocket.getInputStream(), "UTF-8");
       this.writer = new PrintStream(clientsocket.getOutputStream(), true, "UTF-8");
     } catch (Exception e) {
-      throw new RFWCriticalException("Erro ao iniciar streams de comunicaÁ„o do FWSocket!");
+      throw new RFWCriticalException("Erro ao iniciar streams de comunica√ß√£o do FWSocket!");
     }
   }
 
   @Override
   public void run() {
-    // Cria Leitor e Escritor no formato de String que manter· os bytes exatamente como precisamos atravÈs do socket, e assim nos permite trabalhar diretamente com strings.
+    // Cria Leitor e Escritor no formato de String que manter√° os bytes exatamente como precisamos atrav√©s do socket, e assim nos permite trabalhar diretamente com strings.
 
-    long processtime = 0L; // MantÈm a hora em que comeÁamos a processar o comando para calcular o tempo que levamos para enviar a resposta para o servidor. (nanotime)
-    final StringBuilder cmdbuff = new StringBuilder(); // Guarda os pedoaÁos dos comandos que chegarem
+    long processtime = 0L; // Mant√©m a hora em que come√ßamos a processar o comando para calcular o tempo que levamos para enviar a resposta para o servidor. (nanotime)
+    final StringBuilder cmdbuff = new StringBuilder(); // Guarda os pedoa√ßos dos comandos que chegarem
     int expectedlenght = -1;
-    char[] c = new char[1024]; // Bytes a serem lidos por vÍz
+    char[] c = new char[1024]; // Bytes a serem lidos por v√™z
     int readbytes = -1;
 
-    // LÍ o Input enquanto possÌvel
+    // L√™ o Input enquanto poss√≠vel
     try {
-      this.clientsocket.setSoTimeout(300000); // 5Min - Se n„o tiver resposta em 5 minutos encerra a conex„o
+      this.clientsocket.setSoTimeout(300000); // 5Min - Se n√£o tiver resposta em 5 minutos encerra a conex√£o
       while ((readbytes = reader.read(c)) > 0) {
-        // Colocamos o conte˙do no buffer
+        // Colocamos o conte√∫do no buffer
         cmdbuff.append(c, 0, readbytes);
-        // Verifica se pelo menos j· temos o primeiro pipe na string(o que indica que temos o tamanho completo do comando esperado, caso contr·rio vamos apenas anexando no buffer atÈ ter o mÌnimo de informaÁı necess·ria para processar
+        // Verifica se pelo menos j√° temos o primeiro pipe na string(o que indica que temos o tamanho completo do comando esperado, caso contr√°rio vamos apenas anexando no buffer at√© ter o m√≠nimo de informa√ß√µ necess√°ria para processar
         final int firstpipe = cmdbuff.indexOf("|");
         if (firstpipe > 0) {
-          // Recuperamos o tamanho esperado do comando - definido pelos n˙meros entre o comeÁo do comando e o primeiro pipe
+          // Recuperamos o tamanho esperado do comando - definido pelos n√∫meros entre o come√ßo do comando e o primeiro pipe
           expectedlenght = Integer.parseInt(cmdbuff.substring(0, firstpipe));
 
           // Interpretamos se o comando montado tem o tamanho esperado
-          // >> Lembre-se que o tamanho descrito no comeÁo e o primeiro pipe, assim como o \n do final, n„o devem ser considerados para "bater" o tamanho esperado, pos isso devem ser descontados do tamanho do cmdbuffer (ou somados no tamanho do expected)
-          final int fullexpected = expectedlenght + (firstpipe + 1) + 1; // Tamanho total entre o experado e o cabeÁalho + '\n' do final
+          // >> Lembre-se que o tamanho descrito no come√ßo e o primeiro pipe, assim como o \n do final, n√£o devem ser considerados para "bater" o tamanho esperado, pos isso devem ser descontados do tamanho do cmdbuffer (ou somados no tamanho do expected)
+          final int fullexpected = expectedlenght + (firstpipe + 1) + 1; // Tamanho total entre o experado e o cabe√ßalho + '\n' do final
           if (cmdbuff.length() >= fullexpected) {
             String serialobj = cmdbuff.substring(firstpipe + 1, fullexpected - 1); // Pula o tamanho esperado e o primeiro pipe, e subtrai 1 do tamanho total para remover o '\n' do final
             // Desserializa o objeto
@@ -217,7 +217,7 @@ class FWSocketServerConnectionThread extends Thread {
             if (processtime < -1000000000) {
               RFWLogger.logDebug("Processamento Lento!!!! Tempo total de processamento: " + (-processtime / 1000000) + "ms");
             }
-            // Finalizamos o loop agora que j· respondemos
+            // Finalizamos o loop agora que j√° respondemos
             break;
           }
         }
