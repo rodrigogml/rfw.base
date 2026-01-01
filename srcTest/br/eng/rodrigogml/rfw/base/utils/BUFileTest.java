@@ -34,9 +34,9 @@ public class BUFileTest {
       }
     }
 
-    assertTrue("O Marcador de P·gina 1 n„o foi encontrado!", foundPageMarker1);
-    assertTrue("O Marcador de P·gina 2 n„o foi encontrado!", foundPageMarker2);
-    assertTrue("A linha procurada 1 n„o foi encontrada!", foundLine1);
+    assertTrue("O Marcador de P√°gina 1 n√£o foi encontrado!", foundPageMarker1);
+    assertTrue("O Marcador de P√°gina 2 n√£o foi encontrado!", foundPageMarker2);
+    assertTrue("A linha procurada 1 n√£o foi encontrada!", foundLine1);
   }
 
 }

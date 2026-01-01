@@ -5,7 +5,7 @@ import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus;
 import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus.JobStep;
 
 /**
- * Description: Interface que define um Listener Utilizado pelo {@link JobChecker} para notificar sobre as alterações da tarefa.<br>
+ * Description: Interface que define um Listener Utilizado pelo {@link JobChecker} para notificar sobre as alteraÃ§Ãµes da tarefa.<br>
  *
  * @author Rodrigo GML
  * @since 10.0 (31 de out de 2020)
@@ -13,12 +13,12 @@ import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus.JobStep;
 public interface JobCheckerListener {
 
   /**
-   * Método que será chamado periodicamente com o status do Job.<br>
-   * Este método só será chamado quando o JobChecker notar alguma diferença entre os atributos do objeto.<br>
-   * É garantida a chamada do método updateStatus() depois do {@link #start()} pelo menos uma única vez depois que o set chegar em {@link JobStep#FINISHED}.
+   * MÃ©todo que serÃ¡ chamado periodicamente com o status do Job.<br>
+   * Este mÃ©todo sÃ³ serÃ¡ chamado quando o JobChecker notar alguma diferenÃ§a entre os atributos do objeto.<br>
+   * Ã‰ garantida a chamada do mÃ©todo updateStatus() depois do {@link #start()} pelo menos uma Ãºnica vez depois que o set chegar em {@link JobStep#FINISHED}.
    *
    * @param status Objeto com os status do Job.
-   * @param lastCall caso true, indica que é a última chamada do JobChecker
+   * @param lastCall caso true, indica que Ã© a Ãºltima chamada do JobChecker
    */
   public void updateStatus(JobStatus jobStatus, boolean lastCall);
 

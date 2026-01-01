@@ -9,10 +9,10 @@ import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
 
 /**
- * Description: JobMonitor È o serviÁo do Framework respons·vel por manter referÍncia de Thread que est„o rodando "trabalhos" pesados em paralelo.<br>
- * O JobMonitor pode ser ser utilizado sempre que alguma requisiÁ„o do usu·rio leve muito tempo para ser realizada e alÈm de n„o querermos que a interface fique parada, queremos atualizar o usu·rio sobre os passos da tarefa sendo realizado.<br>
+ * Description: JobMonitor √© o servi√ßo do Framework respons√°vel por manter refer√™ncia de Thread que est√£o rodando "trabalhos" pesados em paralelo.<br>
+ * O JobMonitor pode ser ser utilizado sempre que alguma requisi√ß√£o do usu√°rio leve muito tempo para ser realizada e al√©m de n√£o querermos que a interface fique parada, queremos atualizar o usu√°rio sobre os passos da tarefa sendo realizado.<br>
  *
- * Esta classe È a respons·vel por manter o registro, identificar e remover da memÛria (depois de terminado) o resultado dos JOBs.<br>
+ * Esta classe √© a respons√°vel por manter o registro, identificar e remover da mem√≥ria (depois de terminado) o resultado dos JOBs.<br>
  *
  * @author Rodrigo GML
  * @since 10.0 (18 de mar de 2020)
@@ -21,18 +21,18 @@ public class JobMonitor {
 
   /**
    * Hash com os registros dos Jobs do sistema.<Br>
-   * A chave È o UUID gerado na criaÁ„o do Job
+   * A chave √© o UUID gerado na cria√ß√£o do Job
    */
   private static HashMap<String, Job> hashJob = new HashMap<String, Job>();
 
   /**
-   * Hash com os Timers de finalizaÁ„o da tarefa.<br>
-   * A chave È o UUID gerado na criaÁ„o do Job
+   * Hash com os Timers de finaliza√ß√£o da tarefa.<br>
+   * A chave √© o UUID gerado na cria√ß√£o do Job
    */
   private static HashMap<String, Timer> hashTimer = new HashMap<String, Timer>();
 
   /**
-   * Construtor privado apra classe est·tica
+   * Construtor privado apra classe est√°tica
    */
   private JobMonitor() {
   }
@@ -41,7 +41,7 @@ public class JobMonitor {
    * Registra o Job no JobMonitor para er acompanhado posteriormente
    *
    * @param job {@link Job} a ser registrado para posterior consulta.
-   * @return Identificador ˙nico para referÍncia futura da tarefa.
+   * @return Identificador √∫nico para refer√™ncia futura da tarefa.
    */
   static String registerJob(final Job job) {
     String jobUUID = RUGenerators.generateUUID();
@@ -49,7 +49,7 @@ public class JobMonitor {
 
     final String jobTitle = "##### JobMonitorTimer LeakCatcher: " + jobUUID;
 
-    // Ao criar a tarefa j· vamos ter um prazo m·ximo de vida para essa tarefa fica no Monitor. No momento damos 6horas (exagero?)
+    // Ao criar a tarefa j√° vamos ter um prazo m√°ximo de vida para essa tarefa fica no Monitor. No momento damos 6horas (exagero?)
     Timer timer = new Timer(jobTitle, true);
     timer.schedule(new TimerTask() {
       @Override
@@ -59,13 +59,13 @@ public class JobMonitor {
           case EXCEPTION:
           case FINISHED:
             if (cleanJob(jobUUID)) {
-              // Esse cÛdigo "jamais" deve acontecer.
-              // Se acontecer ou È uma tarefa levando mais de 6 horas para ser terminada, ou, alguma tarefa foi alocada mas n„o iniciada, ou, a notificaÁ„o de endOfJob falhou
+              // Esse c√≥digo "jamais" deve acontecer.
+              // Se acontecer ou √© uma tarefa levando mais de 6 horas para ser terminada, ou, alguma tarefa foi alocada mas n√£o iniciada, ou, a notifica√ß√£o de endOfJob falhou
               RFWLogger.logError("Job foi descartado pela Thread de Vazamento da JobMonitor! '" + jobTitle + "'.");
             }
             break;
           case RUNNING:
-            RFWLogger.logImprovement("A tarefa est· rodando a mais tempo que o limite de execuÁ„o do JobMonitor! '" + jobTitle + "'.");
+            RFWLogger.logImprovement("A tarefa est√° rodando a mais tempo que o limite de execu√ß√£o do JobMonitor! '" + jobTitle + "'.");
             break;
         }
       }
@@ -80,7 +80,7 @@ public class JobMonitor {
    * Obtem o objeto de status de uma determinada tarefa.
    *
    * @param jobUUID Identificador da tarefa.
-   * @return Objeto com o Status da Tarefa, ou NULL caso n„o encontre a tarefa
+   * @return Objeto com o Status da Tarefa, ou NULL caso n√£o encontre a tarefa
    */
   public static JobStatus getJobStatus(String jobUUID) {
     Job job = hashJob.get(jobUUID);
@@ -89,7 +89,7 @@ public class JobMonitor {
   }
 
   /**
-   * Este mÈtodo deve ser chamado pelo Job quando for finalizado. Colocamos assim um timer para remover o Job da memÛria (caso ele n„o seja dado baixa pela manualmente).
+   * Este m√©todo deve ser chamado pelo Job quando for finalizado. Colocamos assim um timer para remover o Job da mem√≥ria (caso ele n√£o seja dado baixa pela manualmente).
    *
    * @param jobUUID
    */
@@ -101,10 +101,10 @@ public class JobMonitor {
       hashTimer.remove(jobUUID);
     }
 
-    // Criamos o novo (se a tarefa ainda existir, pois o mÈtodo cleanJob pode ter sido chamado a partir do JobChecker antes de iniciar o notify (por isso a sincronizaÁ„o dos mÈtodos), dando um tempo para que o usu·rio possa recuperar o status da tarefa, depois limpamos o Job da memÛria.
+    // Criamos o novo (se a tarefa ainda existir, pois o m√©todo cleanJob pode ter sido chamado a partir do JobChecker antes de iniciar o notify (por isso a sincroniza√ß√£o dos m√©todos), dando um tempo para que o usu√°rio possa recuperar o status da tarefa, depois limpamos o Job da mem√≥ria.
     if (hashJob.containsKey(jobUUID)) {
       final Timer timer = new Timer("##### JobMonitorTimer EndOfJob: " + jobUUID, true);
-      hashTimer.put(jobUUID, timer); // Colocamos o novo para que seja possÌvel cancela-lo manualmente caso o usu·rio chame o mÈtodo cleanJob()
+      hashTimer.put(jobUUID, timer); // Colocamos o novo para que seja poss√≠vel cancela-lo manualmente caso o usu√°rio chame o m√©todo cleanJob()
       timer.schedule(new TimerTask() {
         @Override
         public void run() {
@@ -113,9 +113,9 @@ public class JobMonitor {
       }, 600000); // 10min
 
       try {
-        // BUG: Aguardamos a Thread do Timer subir, assim garantimos que se em seguida ela chamar o .cancel() no timer, o Timer de fato ser· cancelado. Se a thread n„o tiver subido ainda, o .cancel n„o faz nada.
-        // Ao invÈs do sleep poderiamos ter algum mÈtodo que identificasse que a Thread j· subiu.
-        // A chamada do mÈtodo cleanJob vai aguardar pq estamos sincronizados. O problema È que a sincronizaÁ„o vai travar todos os usu·rios
+        // BUG: Aguardamos a Thread do Timer subir, assim garantimos que se em seguida ela chamar o .cancel() no timer, o Timer de fato ser√° cancelado. Se a thread n√£o tiver subido ainda, o .cancel n√£o faz nada.
+        // Ao inv√©s do sleep poderiamos ter algum m√©todo que identificasse que a Thread j√° subiu.
+        // A chamada do m√©todo cleanJob vai aguardar pq estamos sincronizados. O problema √© que a sincroniza√ß√£o vai travar todos os usu√°rios
         Thread.sleep(1000);
       } catch (InterruptedException e) {
       }
@@ -123,11 +123,11 @@ public class JobMonitor {
   }
 
   /**
-   * Remove o Job da memÛria (do JobMonitor). ForÁa a interrupÁ„o da tarefa (caso n„o tenha terminado).<br>
-   * Este mÈtodo tem o intuÌto de livrar os Jobs da memÛria para livrar recurso.
+   * Remove o Job da mem√≥ria (do JobMonitor). For√ßa a interrup√ß√£o da tarefa (caso n√£o tenha terminado).<br>
+   * Este m√©todo tem o intu√≠to de livrar os Jobs da mem√≥ria para livrar recurso.
    *
-   * @param jobUUID Identificador ˙nico da tarefa.
-   * @return true caso o job tenha sido encontrado no JobMonitor, false caso contr·rio.
+   * @param jobUUID Identificador √∫nico da tarefa.
+   * @return true caso o job tenha sido encontrado no JobMonitor, false caso contr√°rio.
    */
   public synchronized static boolean cleanJob(String jobUUID) {
     Job job = hashJob.remove(jobUUID);
@@ -143,7 +143,7 @@ public class JobMonitor {
   }
 
   /**
-   * Solicita que a tarefa seja interrompida (se suportar). Aborta no meio do processamento laÁando exceÁ„o de ValidaÁ„o com o cÛdigo "RFW_ERR_000004".
+   * Solicita que a tarefa seja interrompida (se suportar). Aborta no meio do processamento la√ßando exce√ß√£o de Valida√ß√£o com o c√≥digo "RFW_ERR_000004".
    *
    * @param jobUUID Idenficiador do Job.
    */

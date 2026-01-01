@@ -9,17 +9,17 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 
 /**
- * Description: Classe est·tica com mÈtodos utilit·rios para a interpretaÁ„o da linguagem MarkDown.<br>
+ * Description: Classe est√°tica com m√©todos utilit√°rios para a interpreta√ß√£o da linguagem MarkDown.<br>
  *
  * @author Rodrigo GML
  * @since 10.0 (31 de out de 2020)
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUMarkdown {
 
   /**
-   * Construtor privado para classe est·tica.
+   * Construtor privado para classe est√°tica.
    */
   private BUMarkdown() {
   }
@@ -34,7 +34,7 @@ public class BUMarkdown {
 
       while ((line = reader.readLine()) != null) {
         if (line.length() > 0) {
-          // Substitui todos os caracteres especÌficos
+          // Substitui todos os caracteres espec√≠ficos
           line = line.replaceAll("\\&", "&amp;");
           line = line.replaceAll("\\<", "&lt;");
 
@@ -43,7 +43,7 @@ public class BUMarkdown {
           final String[] prefixSplit = line.split(" ");
           if (prefixSplit.length > 0) {
             String linePrefix = prefixSplit[0];
-            // ##> Processa os formatores de inÌcio de linha
+            // ##> Processa os formatores de in√≠cio de linha
             if ("=====".equals(linePrefix)) {
               line = new StringBuilder().append("<h5>").append(RUString.subString(line, 6, line.length())).append("</h5>").toString();
               beforeBR = false;
@@ -91,8 +91,8 @@ public class BUMarkdown {
             }
           }
 
-          // ##> Processa os formatores de conte˙do de linha.
-          // ####> Negrito e It·lico '''''
+          // ##> Processa os formatores de conte√∫do de linha.
+          // ####> Negrito e It√°lico '''''
           {
             boolean on = false;
             int index = -1;
@@ -124,7 +124,7 @@ public class BUMarkdown {
             }
           }
 
-          // ####> It·lico ''
+          // ####> It√°lico ''
           {
             boolean on = false;
             int index = -1;
@@ -146,7 +146,7 @@ public class BUMarkdown {
         }
       }
     } catch (IOException e) {
-      throw new RFWCriticalException("Falha ao lÍr String para converter para HTML", e);
+      throw new RFWCriticalException("Falha ao l√™r String para converter para HTML", e);
     }
     return buff.toString();
   }

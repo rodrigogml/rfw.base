@@ -48,13 +48,13 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 /**
  * Description: Classe principal de relatorios. Todas as classes geradoras de relatorios do sistema deve extender esta classe.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 4.2.0 (13/02/2012)
  */
 public abstract class FWReport {
 
   /**
-   * Bean de ConfiguraÁ„o e PersonalizaÁ„o do relatÛrio.
+   * Bean de Configura√ß√£o e Personaliza√ß√£o do relat√≥rio.
    */
   private FWReportOptionBean reportBean = null;
 
@@ -68,21 +68,21 @@ public abstract class FWReport {
   private BaseFont bfBoldItalic = null;
 
   /**
-   * Tamanho do texto padr„o.
+   * Tamanho do texto padr√£o.
    */
-  protected final float TEXTSIZE_NORMAL = 10; // Tamanho padr„o da Fonte
-  protected final float TEXTSIZE_T1 = 16; // Tamanho do TÌtulo 1
-  protected final float TEXTSIZE_T2 = 12; // Tamanho do TÌtulo 2
+  protected final float TEXTSIZE_NORMAL = 10; // Tamanho padr√£o da Fonte
+  protected final float TEXTSIZE_T1 = 16; // Tamanho do T√≠tulo 1
+  protected final float TEXTSIZE_T2 = 12; // Tamanho do T√≠tulo 2
 
   /**
-   * EspaÁamento entre linhas. Este valor deve ser adicionado ao tamanho da letra em uso.
+   * Espa√ßamento entre linhas. Este valor deve ser adicionado ao tamanho da letra em uso.
    */
-  protected final float LINESPACING = 5; // Altura padr„o da linha
+  protected final float LINESPACING = 5; // Altura padr√£o da linha
 
   /**
-   * Inicializa o Engine de geraÁ„o do relatÛrio.
+   * Inicializa o Engine de gera√ß√£o do relat√≥rio.
    *
-   * @param reportbean Bean com as configuraÁıes do relatÛrio.
+   * @param reportbean Bean com as configura√ß√µes do relat√≥rio.
    */
   public FWReport(FWReportOptionBean reportbean) throws RFWException {
     this.reportBean = reportbean;
@@ -95,15 +95,15 @@ public abstract class FWReport {
       }
       document = new Document(pageSize, reportbean.getMarginLeft(), reportbean.getMarginRight(), reportbean.getMarginTop(), reportbean.getMarginBottom());
 
-      // Escrevemos o conte˙do em um arquivo tempor·rio
+      // Escrevemos o conte√∫do em um arquivo tempor√°rio
       try {
         this.tmpFile = RUFile.createFileInGeneratedTemporaryPath(this.reportBean.getReportFileName() + ".pdf", null, StandardCharsets.UTF_8);
         writer = PdfWriter.getInstance(document, new FileOutputStream(this.tmpFile));
       } catch (FileNotFoundException e) {
-        throw new RFWCriticalException("Falha ao inicializar o arquivo tempor·rio para escrita do relatÛrio!");
+        throw new RFWCriticalException("Falha ao inicializar o arquivo tempor√°rio para escrita do relat√≥rio!");
       }
     } catch (DocumentException ex) {
-      throw new RFWWarningException("Erro ao inicializar o documento para criar relatÛrio!", ex);
+      throw new RFWWarningException("Erro ao inicializar o documento para criar relat√≥rio!", ex);
     }
 
     // Inicializa as fontes para o relatorio
@@ -113,12 +113,12 @@ public abstract class FWReport {
       bfItalic = BaseFont.createFont(BaseFont.HELVETICA_OBLIQUE, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
       bfBoldItalic = BaseFont.createFont(BaseFont.HELVETICA_BOLDOBLIQUE, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
     } catch (Exception ex) {
-      throw new RFWWarningException("Erro ao inicializar as fontes para criar relatÛrio!", ex);
+      throw new RFWWarningException("Erro ao inicializar as fontes para criar relat√≥rio!", ex);
     }
   }
 
   /**
-   * MÈtodo chamado para realizar a escrita do relatÛrio no "documento PDF".
+   * M√©todo chamado para realizar a escrita do relat√≥rio no "documento PDF".
    *
    * @throws RFWException
    */
@@ -128,20 +128,20 @@ public abstract class FWReport {
       writeReportContent();
       document.close();
     } catch (ExceptionConverter e) {
-      // O iText lanÁa essa exceÁ„o para converter exceÁıes em RuntimeExceptions, tratamos ela como erro critico... ExceÁıes n„o crÌticas devem ser melhor tratada abaixo
-      throw new RFWCriticalException("Falha ao gerar relatÛrio.", e);
+      // O iText lan√ßa essa exce√ß√£o para converter exce√ß√µes em RuntimeExceptions, tratamos ela como erro critico... Exce√ß√µes n√£o cr√≠ticas devem ser melhor tratada abaixo
+      throw new RFWCriticalException("Falha ao gerar relat√≥rio.", e);
     }
   }
 
   /**
-   * Escreve o texto em um template e aplica o Clip para cortar o template nos tamanhos especificados. Calcula a posiÁ„o do texto automaticamente de acordo com o tamanho da fonte e alinhamento do texto.<br>
-   * Este mÈtodo sempre coloca o texto um pouco acima do baseline '0' para evitar o corte das letras e ',' que ficam abaixo da baseline.
+   * Escreve o texto em um template e aplica o Clip para cortar o template nos tamanhos especificados. Calcula a posi√ß√£o do texto automaticamente de acordo com o tamanho da fonte e alinhamento do texto.<br>
+   * Este m√©todo sempre coloca o texto um pouco acima do baseline '0' para evitar o corte das letras e ',' que ficam abaixo da baseline.
    *
    * @param font Fonte a ser utilizada.
    * @param textsize Tamanho da Fonte
    * @param align Alinhamento do texto, verifique as constantes <code>PdfContentByte.ALIGN_*</code>
-   * @param content Conte˙do a ser escrito.
-   * @param rotate RotaÁ„o a ser aplicada no texto, em graus, no sentido anti-hor·rio.
+   * @param content Conte√∫do a ser escrito.
+   * @param rotate Rota√ß√£o a ser aplicada no texto, em graus, no sentido anti-hor√°rio.
    * @param fieldwidth largura do clip a ser executado.
    * @param fieldheight altura do clip a ser executado.
    * @return
@@ -156,20 +156,20 @@ public abstract class FWReport {
         x = fieldwidth;
         break;
     }
-    float y = (float) (Math.ceil(textsize) * 0.15f); // Sempre que este mÈtodo cortar o texto, vamos ajutando ele aumentando graduamnete em unidades de .01f nesta multiplicaÁ„o
+    float y = (float) (Math.ceil(textsize) * 0.15f); // Sempre que este m√©todo cortar o texto, vamos ajustando ele aumentando gradualmente em unidades de .01f nesta multiplica√ß√£o
 
     return createTextFieldClipped(font, textsize, align, content, x, y, rotate, fieldwidth, fieldheight);
   }
 
   /**
-   * Escreve o texto em um template e aplica o Clip para cortar o template nos tamanhos especificados. Calcula a posiÁ„o do texto automaticamente de acordo com o tamanho da fonte e alinhamento do texto.<br>
-   * Este mÈtodo sempre coloca o texto um pouco acima do baseline '0' para evitar o corte das letras e ',' que ficam abaixo da baseline.
+   * Escreve o texto em um template e aplica o Clip para cortar o template nos tamanhos especificados. Calcula a posi√ß√£o do texto automaticamente de acordo com o tamanho da fonte e alinhamento do texto.<br>
+   * Este m√©todo sempre coloca o texto um pouco acima do baseline '0' para evitar o corte das letras e ',' que ficam abaixo da baseline.
    *
    * @param font Fonte a ser utilizada.
    * @param TEXTSIZE Tamanho da Fonte
    * @param align Alinhamento do texto, verifique as constantes <code>PdfContentByte.ALIGN_*</code>
-   * @param content Conte˙do a ser escrito.
-   * @param rotate RotaÁ„o a ser aplicada no texto, em graus, no sentido anti-hor·rio.
+   * @param content Conte√∫do a ser escrito.
+   * @param rotate Rota√ß√£o a ser aplicada no texto, em graus, no sentido anti-hor√°rio.
    * @param fieldwidth largura do clip a ser executado.
    * @param fieldheight altura do clip a ser executado.
    * @param fontColor Cor da Fonte a ser usada na escrita
@@ -191,15 +191,15 @@ public abstract class FWReport {
   }
 
   /**
-   * Escreve o texto em um template e aplica o Clip para cortar o template nos tamanhos especificados. E permite especificar onde ficar· a ancora do texto dentro desto Clip.
+   * Escreve o texto em um template e aplica o Clip para cortar o template nos tamanhos especificados. E permite especificar onde ficar√° a ancora do texto dentro desto Clip.
    *
    * @param font Fonte a ser utilizada.
    * @param TEXTSIZE Tamanho da Fonte
    * @param align Alinhamento do texto, verifique as constantes <code>PdfContentByte.ALIGN_*</code>
-   * @param content Conte˙do a ser escrito.
-   * @param x PosiÁ„o no eixo X da "‚ncora" do texto.
-   * @param y PosiÁ„o no eixo Y da "‚ncora" do texto.
-   * @param rotate RotaÁ„o a ser aplicada no texto, em graus, no sentido anti-hor·rio.
+   * @param content Conte√∫do a ser escrito.
+   * @param x Posi√ß√£o no eixo X da "√¢ncora" do texto.
+   * @param y Posi√ß√£o no eixo Y da "√¢ncora" do texto.
+   * @param rotate Rota√ß√£o a ser aplicada no texto, em graus, no sentido anti-hor√°rio.
    * @param fieldwidth largura do clip a ser executado.
    * @param fieldheight altura do clip a ser executado.
    * @return
@@ -209,15 +209,15 @@ public abstract class FWReport {
   }
 
   /**
-   * Escreve o texto em um template e aplica o Clip para cortar o template nos tamanhos especificados. E permite especificar onde ficar· a ancora do texto dentro desto Clip.
+   * Escreve o texto em um template e aplica o Clip para cortar o template nos tamanhos especificados. E permite especificar onde ficar√° a ancora do texto dentro desto Clip.
    *
    * @param font Fonte a ser utilizada.
    * @param TEXTSIZE Tamanho da Fonte
    * @param align Alinhamento do texto, verifique as constantes <code>PdfContentByte.ALIGN_*</code>
-   * @param content Conte˙do a ser escrito.
-   * @param x PosiÁ„o no eixo X da "‚ncora" do texto.
-   * @param y PosiÁ„o no eixo Y da "‚ncora" do texto.
-   * @param rotate RotaÁ„o a ser aplicada no texto, em graus, no sentido anti-hor·rio.
+   * @param content Conte√∫do a ser escrito.
+   * @param x Posi√ß√£o no eixo X da "√¢ncora" do texto.
+   * @param y Posi√ß√£o no eixo Y da "√¢ncora" do texto.
+   * @param rotate Rota√ß√£o a ser aplicada no texto, em graus, no sentido anti-hor√°rio.
    * @param fieldwidth largura do clip a ser executado.
    * @param fieldheight altura do clip a ser executado.
    * @param fontColor Cor da Fonte a ser usada na escrita
@@ -235,11 +235,11 @@ public abstract class FWReport {
     tmpl.clip();
     tmpl.newPath();
     tmpl.beginText();
-    // Deixa o Null com o Label "null" de propÛsito, pois valores nulos devem ser tratados antes de serem enviados atÈ este mÈtodo.
+    // Deixa o Null com o Label "null" de prop√≥sito, pois valores nulos devem ser tratados antes de serem enviados at√© este m√©todo.
     tmpl.showTextAligned(align, (content == null ? "null" : content), x, y, rotate);
     tmpl.endText();
 
-    // Faz uma borda em volta do clip para DEBUG, ver exatamente onde o campo est·
+    // Faz uma borda em volta do clip para DEBUG, ver exatamente onde o campo est√°
     // tmpl.rectangle(0, 0, fieldwidth, fieldheight);
     // tmpl.setColorStroke(BaseColor.RED);
     // tmpl.setLineWidth(1f);
@@ -250,22 +250,22 @@ public abstract class FWReport {
   }
 
   /**
-   * Este mÈtodo cria um template com largura definida contendo um determinado texto. O texto ser· quebrado nos espaÁos entre as palavras sempre que o texto extrapolar a largura definida ou for encontrado o caracter '\n'.
+   * Este m√©todo cria um template com largura definida contendo um determinado texto. O texto ser√° quebrado nos espa√ßos entre as palavras sempre que o texto extrapolar a largura definida ou for encontrado o caracter '\n'.
    *
    * @param content Texto a ser escrito no campo.
-   * @param font Fonte para escrita do conte˙do.
-   * @param columnWidth Largura m·xima do campo.
-   * @param lineLeading dist‚ncia entre linhas. Este tamanho È o espaÁo entre a "baseline" de uma linha e a "baseline" de outra. Como em um caderno escolar o espaÁo entre as linhas, tendo texto ou n„o e independente de seu tamanho. Um valor menor que o tamanho da fonte aqui far· com que as linhas se sobreponham.
-   * @param yoffset Por padr„o o texto È escrito em y=0. Isto È, a baseline da ˙ltima linha fica na posiÁ„o (0,0) do template. Isso ocasionalmente "corta" parte dos caracteres com conte˙do abaixo da baseline, como 'p', 'g', ',', 'q', etc. Para evitar esse corete pode-se definir um valor posisivo aqui para que o texto seja escrito um pouco acima evitando que o texto seja "cliped" pelo template. No
-   *          entanto, para manter a baseline do texto criado aqui com o restante esse offset deve ser levado em consideraÁ„o no momento de posicionar o template no conte˙do principal.
-   * @param alignment Define o alinhamento dentro da "caixa de texto" que vai ser criada. O valor È inteiro por que passamos direto os valores do prÛprio iText. Verifique as constantes em {@link Element}, como {@link Element#ALIGN_CENTER}.
-   * @param maxHeight Define uma altura m·xima para o campo. Caso a altura necess·ria para este campo seja maior que o valor aqui deifnido, o campo ser· cortado e o texto ser· escrito sÛ atÈ a linha que couber. Para n„o ter limite defina um valor grande, como {@link Float#MAX_VALUE}. Para limitar em n˙mero de linhas, calcule o valor a ser passado como linhas * lineLeading
+   * @param font Fonte para escrita do conte√∫do.
+   * @param columnWidth Largura m√°xima do campo.
+   * @param lineLeading dist√¢ncia entre linhas. Este tamanho √© o espa√ßo entre a "baseline" de uma linha e a "baseline" de outra. Como em um caderno escolar o espa√ßo entre as linhas, tendo texto ou n√£o e independente de seu tamanho. Um valor menor que o tamanho da fonte aqui far√° com que as linhas se sobreponham.
+   * @param yoffset Por padr√£o o texto √© escrito em y=0. Isto √©, a baseline da √∫ltima linha fica na posi√ß√£o (0,0) do template. Isso ocasionalmente "corta" parte dos caracteres com conte√∫do abaixo da baseline, como 'p', 'g', ',', 'q', etc. Para evitar esse corete pode-se definir um valor posisivo aqui para que o texto seja escrito um pouco acima evitando que o texto seja "cliped" pelo template. No
+   *          entanto, para manter a baseline do texto criado aqui com o restante esse offset deve ser levado em considera√ß√£o no momento de posicionar o template no conte√∫do principal.
+   * @param alignment Define o alinhamento dentro da "caixa de texto" que vai ser criada. O valor √© inteiro por que passamos direto os valores do pr√≥prio iText. Verifique as constantes em {@link Element}, como {@link Element#ALIGN_CENTER}.
+   * @param maxHeight Define uma altura m√°xima para o campo. Caso a altura necess√°ria para este campo seja maior que o valor aqui deifnido, o campo ser√° cortado e o texto ser√° escrito s√≥ at√© a linha que couber. Para n√£o ter limite defina um valor grande, como {@link Float#MAX_VALUE}. Para limitar em n√∫mero de linhas, calcule o valor a ser passado como linhas * lineLeading
    * @return Retorna o template para ser colocado no documento.
    *
-   * @throws RFWWarningException LanÁado caso algum objeto n„o possa ser criado corretamente.
+   * @throws RFWWarningException Lan√ßado caso algum objeto n√£o possa ser criado corretamente.
    */
   public PdfTemplate createTextFieldWraped(String content, Font font, float columnWidth, float lineLeading, float yoffset, int alignment, float maxHeight) throws RFWWarningException {
-    final PdfTemplate tmpl = getWriter().getDirectContent().createTemplate(columnWidth, 100); // Inicia o template com uma altura de 100, mas ser· corrijido no final de acordo com o tamanho necess·rio para que o texto caiba.
+    final PdfTemplate tmpl = getWriter().getDirectContent().createTemplate(columnWidth, 100); // Inicia o template com uma altura de 100, mas ser√° corrijido no final de acordo com o tamanho necess√°rio para que o texto caiba.
 
     try {
       int lines = 0;
@@ -275,37 +275,37 @@ public abstract class FWReport {
       final Phrase phrase = new Phrase(lineLeading, content, font);
       do {
         lines++;
-        height = lines * lineLeading; // Calculamos a altura necess·ria de acordo com a quantidade de linhas
+        height = lines * lineLeading; // Calculamos a altura necess√°ria de acordo com a quantidade de linhas
         if (height > maxHeight) {
           height = --lines * lineLeading; // Retorna Height para seu valor anterior
           clipped = true;
           break;
         }
-        ColumnText ct = new ColumnText(tmpl); // ATEN«√O: O ColumnText È "descart·vel", mesmo que chame o mÈtodo ct.go em simulaÁ„o as prÛximas iteraÁıes d„o problema e retornam valores errados. Por isso passamos a criar o objeto dentro do FOR, e depois outro para quando formos escrever em definitivo.
+        ColumnText ct = new ColumnText(tmpl); // ATEN√á√ÉO: O ColumnText √© "descart√°vel", mesmo que chame o m√©todo ct.go em simula√ß√£o as pr√≥ximas itera√ß√µes d√£o problema e retornam valores errados. Por isso passamos a criar o objeto dentro do FOR, e depois outro para quando formos escrever em definitivo.
         ct.setSimpleColumn(phrase, 0, 0 + yoffset, columnWidth, height + yoffset, lineLeading, alignment); // Colocamos a nova frase limitando o tamanho na largura definida e testando a altura gradualmente (calculada em height)
-        go = ct.go(true); // Simulamos a colocaÁ„o do texto para verifica se vai caber ou n„o
-      } while (go != ColumnText.NO_MORE_TEXT); // Continua testando e aumentando a quantidade de linhas atÈ que o texto caiba.
+        go = ct.go(true); // Simulamos a coloca√ß√£o do texto para verifica se vai caber ou n√£o
+      } while (go != ColumnText.NO_MORE_TEXT); // Continua testando e aumentando a quantidade de linhas at√© que o texto caiba.
 
-      // Uma ves que as simulaÁıes obtiveram sucesso j· temos a altura correta, podemos agora escrever o texto pra valer
-      ColumnText ct = new ColumnText(tmpl); // ATEN«√O: O ColumnText È "descart·vel", mesmo que chameo mÈtodo ct.go em simulaÁ„o as prÛximas iteraÁıes d„o problema e retornam valores errados. Por isso passamos a criar o objeto dentro do FOR, e depois outro para quando formos escrever em definitivo.
+      // Uma ves que as simula√ß√µes obtiveram sucesso j√° temos a altura correta, podemos agora escrever o texto pra valer
+      ColumnText ct = new ColumnText(tmpl); // ATEN√á√ÉO: O ColumnText √© "descart√°vel", mesmo que chame o m√©todo ct.go em simula√ß√£o as pr√≥ximas itera√ß√µes d√£o problema e retornam valores errados. Por isso passamos a criar o objeto dentro do FOR, e depois outro para quando formos escrever em definitivo.
       ct.setSimpleColumn(phrase, 0, 0 + yoffset, columnWidth, height + yoffset, lineLeading, alignment); // Colocamos a nova frase limitando o tamanho na largura definida e testando a altura gradualmente (calculada em height)
       ct.go();
 
-      // Se o texto est· incompleto, escrevemos o "..."
+      // Se o texto est√° incompleto, escrevemos o "..."
       if (clipped) {
         tmpl.saveState();
         tmpl.setFontAndSize(font.getBaseFont(), font.getSize());
         tmpl.beginText();
-        // Coloca o caracter sempre com uma fonte comum e 2 pontos abaixo da linha base, para que mesmo quando o tempo chegar atÈ o fim do espaÁo o simbolo continue aparecendo por baixo do texto.
+        // Coloca o caracter sempre com uma fonte comum e 2 pontos abaixo da linha base, para que mesmo quando o tempo chegar at√© o fim do espa√ßo o simbolo continue aparecendo por baixo do texto.
         tmpl.showTextAligned(Element.ALIGN_RIGHT, "\u2026", columnWidth, yoffset - 2, 0);
         tmpl.endText();
         tmpl.restoreState();
       }
 
-      // Agora corrigimos o tamanho do template para n„o cortar o texto de acordo com as dimensıes usadas.
+      // Agora corrigimos o tamanho do template para n√£o cortar o texto de acordo com as dimens√µes usadas.
       tmpl.setHeight(height);
 
-      // Faz uma borda em volta do clip para DEBUG, ver exatamente onde o campo est·
+      // Faz uma borda em volta do clip para DEBUG, ver exatamente onde o campo est√°
       // tmpl.rectangle(0, 0, columnWidth, height);
       // tmpl.setColorStroke(BaseColor.RED);
       // tmpl.setLineWidth(1f);
@@ -318,18 +318,18 @@ public abstract class FWReport {
   }
 
   /**
-   * Cria um template com o CabeÁalho de RelatÛrio modelo 1.
+   * Cria um template com o Cabe√ßalho de Relat√≥rio modelo 1.
    *
-   * @param reportname Nome do RelatÛrio
-   * @param locale Locale (usado para formatar a data de impress„o do relatÛrio)
+   * @param reportname Nome do Relat√≥rio
+   * @param locale Locale (usado para formatar a data de impress√£o do relat√≥rio)
    * @return Template criado
    */
   protected PdfTemplate createTemplateReportHeaderModel1(String reportname, Locale locale) {
     final PdfTemplate tmpl = getWriter().getDirectContent().createTemplate(getWritableWidth(), 40);
-    float yoffset = 5; // Contador de offset para saber o quando j· temos que pular a cada linha - comeÁa em 5 para n„o encostar com a linha desenhada para separar o cabeÁalho
+    float yoffset = 5; // Contador de offset para saber o quando j√° temos que pular a cada linha - come√ßa em 5 para n√£o encostar com a linha desenhada para separar o cabe√ßalho
 
     /*
-     * Como o iText faz o y crescente para "cima" vamos escrever o cabeÁalho das linhas de baixo pra as de cima.
+     * Como o iText faz o y crescente para "cima" vamos escrever o cabe√ßalho das linhas de baixo pra as de cima.
      */
     tmpl.beginText();
     {
@@ -355,7 +355,7 @@ public abstract class FWReport {
     }
     tmpl.endText();
 
-    // Desenha a linha de fim do cabeÁalho de relatÛrio
+    // Desenha a linha de fim do cabe√ßalho de relat√≥rio
     tmpl.setColorStroke(new BaseColor(251, 150, 34));
     tmpl.setLineWidth(2f);
     tmpl.moveTo(0, 2);
@@ -368,11 +368,11 @@ public abstract class FWReport {
   }
 
   /**
-   * Cria o template de rodapÈ PageFooterModel1 mas aceita os valores de actualPage e actualSidePage para gerar a numeraÁ„o de p·ginas e p·ginas laterais.
+   * Cria o template de rodap√© PageFooterModel1 mas aceita os valores de actualPage e actualSidePage para gerar a numera√ß√£o de p√°ginas e p√°ginas laterais.
    *
-   * @param locale Localidade para formataÁ„o (sem uso atual)
-   * @param actualPage P·gina atual. O valor passado deve ser o valor que sair· na p·gina. Se passar zero, sai '0'.
-   * @param actualSidePage P·gina lateral atual. O valor passado deve ser 1 para a p·gina A, 2 para a P·gina B etc. Por padr„o se passado o valor 1, equivalente a letra A, p·gina principal, ela simplesmente È ignorada mostrando apenas a numeraÁ„o de p·ginas comum.
+   * @param locale Localidade para formata√ß√£o (sem uso atual)
+   * @param actualPage P√°gina atual. O valor passado deve ser o valor que sair√° na p√°gina. Se passar zero, sai '0'.
+   * @param actualSidePage P√°gina lateral atual. O valor passado deve ser 1 para a p√°gina A, 2 para a P√°gina B etc. Por padr√£o se passado o valor 1, equivalente a letra A, p√°gina principal, ela simplesmente √© ignorada mostrando apenas a numera√ß√£o de p√°ginas comum.
    * @return
    */
   protected PdfTemplate createTemplatePageFooterModel1(Locale locale, int actualPage, int actualSidePage) {
@@ -388,34 +388,34 @@ public abstract class FWReport {
   }
 
   /**
-   * Este modelo de rodapÈ È identico ao {@link #createTemplatePageFooterModel1(Locale, String)} porÈm ele permite colocar um tÌtulo do lado esquerdo do rodapÈ.
+   * Este modelo de rodap√© √© identico ao {@link #createTemplatePageFooterModel1(Locale, String)} por√©m ele permite colocar um t√≠tulo do lado esquerdo do rodap√©.
    *
-   * @param title TÌtulo a ser exibido no rodapÈ da p·gina.
+   * @param title T√≠tulo a ser exibido no rodap√© da p√°gina.
    * @param locale
    * @param actualpage
    * @return
    */
   protected PdfTemplate createTemplatePageFooterModel1(String title, Locale locale, String actualpage) {
     final PdfTemplate tmpl = getWriter().getDirectContent().createTemplate(getWritableWidth(), 40);
-    String pages = "P·gina: " + actualpage;
+    String pages = "P√°gina: " + actualpage;
 
     final int t2size = 12;
-    float yoffset = 0; // Contador de offset para saber o quando j· temos que pular a cada linha
+    float yoffset = 0; // Contador de offset para saber o quando j√° temos que pular a cada linha
 
     tmpl.beginText();
     {
-      // Escreve o numero da p·gina
+      // Escreve o numero da p√°gina
       tmpl.setFontAndSize(getBaseFontItalic(), t2size);
       tmpl.showTextAligned(PdfContentByte.ALIGN_RIGHT, pages, tmpl.getWidth(), yoffset + 3, 0);
-      // Escreve o tÌtulo
+      // Escreve o t√≠tulo
       if (title != null) tmpl.showTextAligned(PdfContentByte.ALIGN_LEFT, title, 0f, yoffset + 3, 0);
 
       yoffset += t2size + 5; // Pula o tamanho da linha maior mais uma margem de 5
     }
-    // Terminamos as operaÁıes com texto
+    // Terminamos as opera√ß√µes com texto
     tmpl.endText();
 
-    // Desenha a linha de limite do cabeÁalho de relatÛrio
+    // Desenha a linha de limite do cabe√ßalho de relat√≥rio
     tmpl.setColorStroke(new BaseColor(251, 150, 34));
     tmpl.setLineWidth(2f);
     tmpl.moveTo(0, yoffset);
@@ -431,33 +431,33 @@ public abstract class FWReport {
   protected abstract void writeReportContent() throws RFWException;
 
   /**
-   * Define que o relatÛrio ficar· no formato retrato.
+   * Define que o relat√≥rio ficar√° no formato retrato.
    */
   public void setPageSizeA4Portrait() {
     getDocument().setPageSize(PageSize.A4);
   }
 
   /**
-   * Define que o relatÛrio ficar· no formato paisagem.
+   * Define que o relat√≥rio ficar√° no formato paisagem.
    */
   public void setPageSizeA4Landscape() {
     getDocument().setPageSize(PageSize.A4.rotate());
   }
 
   /**
-   * Define as margens que ser„o utilizadas no relatÛrio.
+   * Define as margens que ser√£o utilizadas no relat√≥rio.
    *
-   * @param left margem esquerda - padr„o 36
-   * @param right margem direita - padr„o 36
-   * @param top margem superior - padr„o 36
-   * @param bottom margem inferior - padr„o 36
+   * @param left margem esquerda - padr√£o 36
+   * @param right margem direita - padr√£o 36
+   * @param top margem superior - padr√£o 36
+   * @param bottom margem inferior - padr√£o 36
    */
   public void setMargins(float left, float right, float top, float bottom) {
     getDocument().setMargins(left, right, top, bottom);
   }
 
   /**
-   * Recupera o arquivo tempor·rio com o conte˙do do relatÛrio.
+   * Recupera o arquivo tempor√°rio com o conte√∫do do relat√≥rio.
    */
   public File getReportFile() {
     return this.tmpFile;
@@ -524,9 +524,9 @@ public abstract class FWReport {
   }
 
   /**
-   * Cria um template com um SVG convertido para imagem dentro. O template ter· o tamanho definido na string SVG.
+   * Cria um template com um SVG convertido para imagem dentro. O template ter√° o tamanho definido na string SVG.
    *
-   * @param svgContent CÛdigo SVG para geraÁ„o da Imagem.
+   * @param svgContent C√≥digo SVG para gera√ß√£o da Imagem.
    * @return Template PDF para ser colocado no documento.
    * @throws RFWException
    */
@@ -535,9 +535,9 @@ public abstract class FWReport {
   }
 
   /**
-   * Cria um template com um SVG convertido para imagem dentro. O template ter· o tamanho definido na string svg multiplcado pelo valor de scale.
+   * Cria um template com um SVG convertido para imagem dentro. O template ter√° o tamanho definido na string svg multiplcado pelo valor de scale.
    *
-   * @param svgContent CÛdigo SVG para geraÁ„o da Imagem.
+   * @param svgContent C√≥digo SVG para gera√ß√£o da Imagem.
    * @param scale valor do fator de escala. Para tamanho real utilize 1, para reduzir utilize um valor entre 0 e 1, para aumentar utilize valores maiores que 1. Ex. para metade utilize 0.5, para o dobre utilize 2.
    * @return Template PDF para ser colocado no documento.
    * @throws RFWException
@@ -547,12 +547,12 @@ public abstract class FWReport {
   }
 
   /**
-   * Cria um template com um SVG convertido para imagem dentro. O template ter· o tamanho definido de acordo com os tamanho m·ximos e o atributo de preservar o aspecto da imagem.
+   * Cria um template com um SVG convertido para imagem dentro. O template ter√° o tamanho definido de acordo com os tamanho m√°ximos e o atributo de preservar o aspecto da imagem.
    *
-   * @param svgContent CÛdigo SVG para geraÁ„o da Imagem.
-   * @param maxwidth Largura m·xima da imagem. (n„o podem ser nulo, por isso foi usado o tipo primitivo)
-   * @param maxheight Altura m·xima da imagem. (n„o podem ser nulo, por isso foi usado o tipo primitivo)
-   * @param preservratio Indica se a imagem deve preservar o aspecto (true) ou se permite distorÁ„o (false). Caso true, a largura e/ou a altura ser· o limite de dimens„o da imagem gerada dependendo da proporÁ„o da imagem SVG e das medidas definidas em maxwidth e maxheight. Caso false, a imagem ter· exatamente a largura e altura desejada no entando a imagem poder· ser distorcida para chegar ‡s
+   * @param svgContent C√≥digo SVG para gera√ß√£o da Imagem.
+   * @param maxwidth Largura m√°xima da imagem. (n√£o podem ser nulo, por isso foi usado o tipo primitivo)
+   * @param maxheight Altura m√°xima da imagem. (n√£o podem ser nulo, por isso foi usado o tipo primitivo)
+   * @param preservratio Indica se a imagem deve preservar o aspecto (true) ou se permite distor√ß√£o (false). Caso true, a largura e/ou a altura ser√° o limite de dimens√£o da imagem gerada dependendo da propor√ß√£o da imagem SVG e das medidas definidas em maxwidth e maxheight. Caso false, a imagem ter√° exatamente a largura e altura desejada, entretanto a imagem poder√° ser distorcida para chegar √†s
    *          medidas solicitadas.
    * @return Template PDF para ser colocado no documento.
    * @throws RFWException
@@ -562,7 +562,7 @@ public abstract class FWReport {
   }
 
   /*
-   * MÈtodo privado com o cÛdigo, n„o È p˙blico para n„o oferecer para as classe filhas um mÈtodo com as opÁıes de "escala" e de "tamanho" ao mesmo tempo, j· que s„o atirbutos contr·rios. Este mÈtodo ignora a escala caso o tamanho seja definido.
+   * M√©todo privado com o c√≥digo, n√£o √© p√∫blico para n√£o oferecer para as classe filhas um m√©todo com as op√ß√µes de "escala" e de "tamanho" ao mesmo tempo, j√° que s√£o atirbutos contr√°rios. Este m√©todo ignora a escala caso o tamanho seja definido.
    */
   private PdfTemplate drawSvg(String svgContent, double scale, Double maxwidth, Double maxheight, boolean preservratio) throws RFWException {
     UserAgent userAgent = new UserAgentAdapter();
@@ -584,7 +584,7 @@ public abstract class FWReport {
     double scalex = scale;
     double scaley = scale;
 
-    // Se a largura ou altura m·ximas foram definidas, calculamos a escala adequada para seus valores
+    // Se a largura ou altura m√°ximas foram definidas, calculamos a escala adequada para seus valores
     if (maxwidth != null) {
       scalex = maxwidth / width;
     }
@@ -592,7 +592,7 @@ public abstract class FWReport {
       scaley = maxheight / height;
     }
 
-    // Agora, se preservratio estiver definido escolhemos a menor scala para respeitar ambos os tamanho m·ximos e n„o distorcer a imagem aplicando escalas diferentes
+    // Agora, se preservratio estiver definido escolhemos a menor scala para respeitar ambos os tamanho m√°ximos e n√£o distorcer a imagem aplicando escalas diferentes
     if (preservratio) {
       if (scalex < scaley)
         scaley = scalex;
@@ -600,7 +600,7 @@ public abstract class FWReport {
         scalex = scaley;
     }
 
-    // Com a escala definida de acordo com definiÁıes, atualizamos as vari·veis de largura e altura para que os templates sejam feitos corretamente.
+    // Com a escala definida de acordo com defini√ß√µes, atualizamos as vari√°veis de largura e altura para que os templates sejam feitos corretamente.
     width *= scalex;
     height *= scaley;
 
@@ -618,32 +618,32 @@ public abstract class FWReport {
   }
 
   /**
-   * Converte um tamanho em mm (milÌmetros) para o tamanho utilizado no iText.<br>
-   * O valor È aproximado, e utiliza como base do calculo a dimens„o definida pelo prÛprio iText para o papel A4.<br>
+   * Converte um tamanho em mm (mil√≠metros) para o tamanho utilizado no iText.<br>
+   * O valor √© aproximado, e utiliza como base do calculo a dimens√£o definida pelo pr√≥prio iText para o papel A4.<br>
    *
-   * @param mm Tamanho em milÌmetros
+   * @param mm Tamanho em mil√≠metros
    * @return Tamanho a ser utilizado no iText
    */
   public static float fromMilimeters(float mm) {
-    // (PageSize.A4.getHeight() / 297f) = 2.8350167f (a Parte constante da regra de trÍs j· est· resolvida para acelerar o mÈtodo, afinal ele È usado muitas vezes durante a produÁ„o de um relatÛrio
+    // (PageSize.A4.getHeight() / 297f) = 2.8350167f (a Parte constante da regra de tr√™s j√° est√° resolvida para acelerar o m√©todo, afinal ele √© usado muitas vezes durante a produ√ß√£o de um relat√≥rio
     return 2.8350167f * mm;
   }
 
   /**
-   * Cria um novo template nas dimensıes desejadas e j· aplica um Clip para evitar que conte˙do escrito fora dele sejam exibidos.
+   * Cria um novo template nas dimens√µes desejadas e j√° aplica um Clip para evitar que conte√∫do escrito fora dele sejam exibidos.
    *
    * @param width Largura do template
    * @param height Altura do template
-   * @return Template para ediÁ„o e escrita de novo conte˙do.
+   * @return Template para edi√ß√£o e escrita de novo conte√∫do.
    */
   public PdfTemplate createTemplateClipped(float width, float height) {
     return getWriter().getDirectContent().createTemplate(width, height);
   }
 
   /**
-   * MÈtodo usado para desenhar uma Linha dentro de um template.<br>
+   * M√©todo usado para desenhar uma Linha dentro de um template.<br>
    * <br>
-   * <B>ATEN«√O: </b> Este mÈtodo interpreta as coordenadas como sendo a origem (0,0) no topo esquerdo. <br>
+   * <B>ATEN√á√ÉO: </b> Este m√©todo interpreta as coordenadas como sendo a origem (0,0) no topo esquerdo. <br>
    * <br>
    *
    */
@@ -659,9 +659,9 @@ public abstract class FWReport {
   }
 
   /**
-   * MÈtodo usado para desenhar um retangulo dentro de um template.<br>
+   * M√©todo usado para desenhar um retangulo dentro de um template.<br>
    * <br>
-   * <B>ATEN«√O: </b> Este mÈtodo interpreta as coordenadas como sendo a origem (0,0) no topo esquerdo. <br>
+   * <B>ATEN√á√ÉO: </b> Este m√©todo interpreta as coordenadas como sendo a origem (0,0) no topo esquerdo. <br>
    * <br>
    *
    */
@@ -676,9 +676,9 @@ public abstract class FWReport {
   }
 
   /**
-   * MÈtodo usado para desenhar um retangulo dentro de um template.<br>
+   * M√©todo usado para desenhar um retangulo dentro de um template.<br>
    * <br>
-   * <B>ATEN«√O: </b> Este mÈtodo interpreta as coordenadas como sendo a origem (0,0) no topo esquerdo. <br>
+   * <B>ATEN√á√ÉO: </b> Este m√©todo interpreta as coordenadas como sendo a origem (0,0) no topo esquerdo. <br>
    * <br>
    */
   public void drawRetangleFill(PdfTemplate tmpl, float x, float y, float width, float height, float radius, BaseColor fillColor) {
@@ -691,9 +691,9 @@ public abstract class FWReport {
   }
 
   /**
-   * MÈtodo usado para desenhar um retangulo dentro de um template.<br>
+   * M√©todo usado para desenhar um retangulo dentro de um template.<br>
    * <br>
-   * <B>ATEN«√O: </b> Este mÈtodo interpreta as coordenadas como sendo a origem (0,0) no topo esquerdo. <br>
+   * <B>ATEN√á√ÉO: </b> Este m√©todo interpreta as coordenadas como sendo a origem (0,0) no topo esquerdo. <br>
    * <br>
    */
   public void drawRetangleStrokeAndFill(PdfTemplate tmpl, float x, float y, float width, float height, float radius, BaseColor strokeColor, float strokeWidth, BaseColor fillColor) {
@@ -709,46 +709,46 @@ public abstract class FWReport {
   }
 
   /**
-   * Este mÈtodo inverte uma posiÁ„o Y em relaÁ„o ao padr„o do iText. Como o iText considera que a posiÁ„o 0 È no fim da p·gina, este mÈtodo ajuda a inverter os valores.<br>
-   * Isto È, se passar o valor 0 para este mÈtodo, ele retorna o valor a ser utilizado como se 0 fosse no topo da p·gina.<br>
-   * Este mÈtodo inverte os valores em consideraÁ„o ‡ p·gina.
+   * Este m√©todo inverte uma posi√ß√£o Y em rela√ß√£o ao padr√£o do iText. Como o iText considera que a posi√ß√£o 0 √© no fim da p√°gina, este m√©todo ajuda a inverter os valores.<br>
+   * Isto √©, se passar o valor 0 para este m√©todo, ele retorna o valor a ser utilizado como se 0 fosse no topo da p√°gina.<br>
+   * Este m√©todo inverte os valores em considera√ß√£o √† p√°gina.
    *
-   * @param y PosiÁ„o y desejada como se a coordenada 0 fosse no topo da p·gina.
-   * @return retorna valor utilizado pelo iText para representar a posiÁ„o desejada.
+   * @param y Posi√ß√£o y desejada como se a coordenada 0 fosse no topo da p√°gina.
+   * @return retorna valor utilizado pelo iText para representar a posi√ß√£o desejada.
    */
   public float iY(float y) {
     return getDocument().getPageSize().getHeight() - y;
   }
 
   /**
-   * Este mÈtodo inverte uma posiÁ„o Y em relaÁ„o ao padr„o do iText. Como o iText considera que a posiÁ„o 0 È no fim da p·gina, este mÈtodo ajuda a inverter os valores.<br>
-   * Isto È, se passar o valor 0 para este mÈtodo, ele retorna o valor a ser utilizado como se 0 fosse no topo da p·gina.<br>
-   * Este mÈtodo inverte os valores em consideraÁ„o ao tamanho do template passado.
+   * Este m√©todo inverte uma posi√ß√£o Y em rela√ß√£o ao padr√£o do iText. Como o iText considera que a posi√ß√£o 0 √© no fim da p√°gina, este m√©todo ajuda a inverter os valores.<br>
+   * Isto √©, se passar o valor 0 para este m√©todo, ele retorna o valor a ser utilizado como se 0 fosse no topo da p√°gina.<br>
+   * Este m√©todo inverte os valores em considera√ß√£o ao tamanho do template passado.
    *
-   * @param y PosiÁ„o y desejada como se a coordenada 0 fosse no topo da p·gina.
-   * @return retorna valor utilizado pelo iText para representar a posiÁ„o desejada.
+   * @param y Posi√ß√£o y desejada como se a coordenada 0 fosse no topo da p√°gina.
+   * @return retorna valor utilizado pelo iText para representar a posi√ß√£o desejada.
    */
   public float iY(PdfTemplate tmpl, float y) {
     return tmpl.getHeight() - y;
   }
 
   /**
-   * Adiciona um template dentro de outro nas posiÁıes desejadas.<br>
+   * Adiciona um template dentro de outro nas posi√ß√µes desejadas.<br>
    * <br>
-   * <B>ATEN«√O: </b> Este mÈtodo interpreta as coordenadas como sendo a origem (0,0) no topo esquerdo. <br>
+   * <B>ATEN√á√ÉO: </b> Este m√©todo interpreta as coordenadas como sendo a origem (0,0) no topo esquerdo. <br>
    * <br>
    *
-   * @param tmpl Template pai, onde o conte˙do ser· escrito.
-   * @param block Template com o conte˙do que dever· ser adiconado ao template pai.
-   * @param x posiÁ„o x onde ser· colocada a lateral esquerda do "block"
-   * @param y posiÁ„o y onde ser· colocado o topo do "block"
+   * @param tmpl Template pai, onde o conte√∫do ser√° escrito.
+   * @param block Template com o conte√∫do que dever√° ser adiconado ao template pai.
+   * @param x posi√ß√£o x onde ser√° colocada a lateral esquerda do "block"
+   * @param y posi√ß√£o y onde ser√° colocado o topo do "block"
    */
   public void add(PdfTemplate tmpl, PdfTemplate block, float x, float y) {
-    tmpl.addTemplate(block, x, iY(tmpl, y) - block.getHeight());// Soma o Height do block pois o iText tambÈm considera o lado inferior do block na hora de posicionar
+    tmpl.addTemplate(block, x, iY(tmpl, y) - block.getHeight());// Soma o Height do block pois o iText tamb√©m considera o lado inferior do block na hora de posicionar
   }
 
   /**
-   * Cria uma nova p·gina no documento.
+   * Cria uma nova p√°gina no documento.
    */
   public void newPage() {
     getDocument().newPage();
@@ -757,10 +757,10 @@ public abstract class FWReport {
   /**
    * Retornar a largura que um texto precisa para ser escrito totalmente.
    *
-   * @param font Fonte que ser· utilizada para escrever
-   * @param fontSize Tamanho da fonte que ser· utilizada
-   * @param content Conte˙do do Texto.
-   * @return Tamanho em pontos (unidade padr„o do iText)
+   * @param font Fonte que ser√° utilizada para escrever
+   * @param fontSize Tamanho da fonte que ser√° utilizada
+   * @param content Conte√∫do do Texto.
+   * @return Tamanho em pontos (unidade padr√£o do iText)
    */
   public float getTextWidth(BaseFont font, float fontSize, String content) {
     return font.getWidthPoint(content, fontSize);

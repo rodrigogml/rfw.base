@@ -8,12 +8,12 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
- * Description: Esta classe tem a finalidade de concentrar funÁıes de configuraÁ„o e inicializaÁ„o de conexıes.<BR>
- * A classe nasceu com a necessidade da configuraÁ„o da comunicaÁ„o SSL para comunicaÁ„o com WebServices (Para os mÛdulos da NFp e NFe).<br>
+ * Description: Esta classe tem a finalidade de concentrar fun√ß√µes de configura√ß√£o e inicializa√ß√£o de conex√µes.<BR>
+ * A classe nasceu com a necessidade da configura√ß√£o da comunica√ß√£o SSL para comunica√ß√£o com WebServices (Para os m√≥dulos da NFp e NFe).<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 5.1.0 (13/10/2013)
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUConnection {
@@ -22,29 +22,29 @@ public class BUConnection {
   }
 
   /**
-   * Prepara o java para conseseguir realizar conexıes HTTPS com encriptaÁ„o SSL.
+   * Prepara o java para conseseguir realizar conex√µes HTTPS com encripta√ß√£o SSL.
    *
-   * @param km define o KeyStore com os certificados privados que podem ser usados para criptografia da conex„o.
-   * @param tm define o TrustManager, gerenciador de confiabilidade de certificados, para permitir que o java valide a realize a conex„o com os servidores que usem um desses certificados.
+   * @param km define o KeyStore com os certificados privados que podem ser usados para criptografia da conex√£o.
+   * @param tm define o TrustManager, gerenciador de confiabilidade de certificados, para permitir que o java valide a realize a conex√£o com os servidores que usem um desses certificados.
    * @throws RFWException
    */
   public static void setupSSLConnection(final KeyManager[] km, final TrustManager[] tm) throws RFWException {
-    // Define que as conexıes que usam o protocolo de encriptaÁ„o PKGS devem utilizar a classe do pacote da SUN. Isso È necess·rio porque a implementaÁ„o nativa do java.net.URL n„o d· suporte ‡ HTTPS
+    // Define que as conex√µes que usam o protocolo de encripta√ß√£o PKGS devem utilizar a classe do pacote da SUN. Isso √© necess√°rio porque a implementa√ß√£o nativa do java.net.URL n√£o d√° suporte √† HTTPS
     System.setProperty("java.protocol.handler.pkgs", "com.sun.net.ssl.internal.www.protocol");
 
     try {
       // Recupera o Contexto do SSL e define os certificados definidos
       SSLContext sc = SSLContext.getInstance("SSL");
       sc.init(km, tm, null);
-      SSLContext.setDefault(sc); // Define esse contexto de chaves para as conexıes SSL
+      SSLContext.setDefault(sc); // Define esse contexto de chaves para as conex√µes SSL
     } catch (Exception e) {
       throw new RFWCriticalException("RFW_ERR_200055", e);
     }
   }
 
   /**
-   * Define que o java deve permitir a renegociaÁ„o de SSL/TLS.<br>
-   * Usada por alguns provedores HTTPS ao tentar negociar o protocolo de encriptaÁ„o a ser usado. Por padr„o a renegociaÁ„o foi desabilitada no java por "problemas de seguranÁa". Para comunicar com alguns provedores, essa propriedade deve ser definida como TRUE.
+   * Define que o java deve permitir a renegocia√ß√£o de SSL/TLS.<br>
+   * Usada por alguns provedores HTTPS ao tentar negociar o protocolo de encripta√ß√£o a ser usado. Por padr√£o a renegocia√ß√£o foi desabilitada no java por "problemas de seguran√ßa". Para comunicar com alguns provedores, essa propriedade deve ser definida como TRUE.
    */
   public static void setUnsafeRenegotiation(final Boolean allow) {
     if (allow) {
@@ -55,11 +55,11 @@ public class BUConnection {
   }
 
   // /**
-  // * Cria um SocketFatory com KeyManager e TrustManager customizados e registra no protoclo HTTPS na porta 443. Assim, qualquer conex„o que o sistema fizer com esse protocolo e porta (como acessar um webservice) utilizar· um socket personalizado.
+  // * Cria um SocketFatory com KeyManager e TrustManager customizados e registra no protoclo HTTPS na porta 443. Assim, qualquer conex√£o que o sistema fizer com esse protocolo e porta (como acessar um webservice) utilizar√° um socket personalizado.
   // *
-  // * @param keyManagers Gerenciadores de Certificados para identificaÁ„o/autenticaÁ„o na conex„o.
-  // * @param trustManagers Gerenciadores de validaÁ„o do certificado do servidor.
-  // * @param sslProtocol CÛdigo do protocolo SSL. Ex: SSLv3, TLSv1, TLSv1.1 and TLSv1.2
+  // * @param keyManagers Gerenciadores de Certificados para identifica√ß√£o/autentica√ß√£o na conex√£o.
+  // * @param trustManagers Gerenciadores de valida√ß√£o do certificado do servidor.
+  // * @param sslProtocol C√≥digo do protocolo SSL. Ex: SSLv3, TLSv1, TLSv1.1 and TLSv1.2
   // * @throws RFWException
   // */
   // public static void createSocketFactoryHTTPS443(KeyManager[] keyManagers, TrustManager[] trustManagers, String sslProtocol) throws RFWException {
@@ -69,8 +69,8 @@ public class BUConnection {
   // }
 
   // /**
-  // * Description: ProtocolSocketFactory que permite configurar as conexıes antes de se criar os sockets para conex„o de v·rios mÛdulos.<br>
-  // * Veja os mÈtodos disponÌveis em {@link BUConnection} para criaÁ„o do socketFactory
+  // * Description: ProtocolSocketFactory que permite configurar as conex√µes antes de se criar os sockets para conex√£o de v√°rios m√≥dulos.<br>
+  // * Veja os m√©todos dispon√≠veis em {@link BUConnection} para cria√ß√£o do socketFactory
   // *
   // * @author Rodrigo GML
   // * @since 10.0 (26 de ago de 2021)

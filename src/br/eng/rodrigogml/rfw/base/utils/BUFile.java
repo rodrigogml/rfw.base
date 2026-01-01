@@ -38,12 +38,12 @@ import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.utils.RUFile;
 
 /**
- * Description: Utilit·rios para gerenciar arquivos, escrever, ler, etc.<br>
+ * Description: Utilit√°rios para gerenciar arquivos, escrever, ler, etc.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 3.1.0 (NOV / 2009)
- * @deprecated Movida para o o RFWDeprec.Kernel com o nome de RUFile - mÈtodos sendo migrados pouco a pouco conforme a necessidade (Ao levar o mÈtodo para l·, excluir daqui).
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated Movida para o o RFWDeprec.Kernel com o nome de RUFile - m√©todos sendo migrados pouco a pouco conforme a necessidade (Ao levar o m√©todo para l√°, excluir daqui).
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUFile {
@@ -57,10 +57,10 @@ public class BUFile {
   }
 
   /**
-   * Retorna os arquivos de um determinado diretÛrio que tenham a data de criaÁ„o maiores ou iguais a uma determinada data.
+   * Retorna os arquivos de um determinado diret√≥rio que tenham a data de cria√ß√£o maiores ou iguais a uma determinada data.
    *
-   * @param path Caminho/DiretÛrio dos arquivos
-   * @param timemillis Data de criaÁ„o inicial em milisegundos (Equivalente ao System.currentTimemillis)
+   * @param path Caminho/Diret√≥rio dos arquivos
+   * @param timemillis Data de cria√ß√£o inicial em milisegundos (Equivalente ao System.currentTimemillis)
    * @return Arquivos criados depois da data definida
    * @throws RFWException
    */
@@ -118,8 +118,8 @@ public class BUFile {
    * Renomeia um arquivo do sistema.
    *
    * @param original Caminho do arquvio a ser renomeado
-   * @param destination Caminho de destino (e nome desejado) do arquivo. Mais informaÁıes {@link File#renameTo(File)}.
-   * @return true caso tenha renomeado com sucesso, false caso contr·rio (n„o lanÁa exception).
+   * @param destination Caminho de destino (e nome desejado) do arquivo. Mais informa√ß√µes {@link File#renameTo(File)}.
+   * @return true caso tenha renomeado com sucesso, false caso contr√°rio (n√£o lan√ßa exception).
    */
   public static boolean renameFile(String original, String destination) {
     return renameFile(new File(original), new File(destination));
@@ -129,8 +129,8 @@ public class BUFile {
    * Renomeia um arquivo do sistema.
    *
    * @param original Caminho do arquvio a ser renomeado
-   * @param destination Caminho de destino (e nome desejado) do arquivo. Mais informaÁıes {@link File#renameTo(File)}.
-   * @return true caso tenha renomeado com sucesso, false caso contr·rio (n„o lanÁa exception).
+   * @param destination Caminho de destino (e nome desejado) do arquivo. Mais informa√ß√µes {@link File#renameTo(File)}.
+   * @return true caso tenha renomeado com sucesso, false caso contr√°rio (n√£o lan√ßa exception).
    */
   public static boolean renameFile(File original, File destination) {
     return original.renameTo(destination);
@@ -148,14 +148,14 @@ public class BUFile {
   }
 
   /**
-   * Retorna a data e hora de criaÁ„o de um arquivo.
+   * Retorna a data e hora de cria√ß√£o de um arquivo.
    *
-   * @param fileName Caminho completo ou relativo ‡ aplicaÁ„o que leve ao arquivo.
-   * @return Objeto Date criado com o timezone padr„o do sistema, que deve equivaler como do arquivo.
+   * @param fileName Caminho completo ou relativo √† aplica√ß√£o que leve ao arquivo.
+   * @return Objeto Date criado com o timezone padr√£o do sistema, que deve equivaler como do arquivo.
    * @throws RFWException
    */
   public static Date getCreationDate(String fileName) throws RFWException {
-    // Se o arquivo n„o existir lanÁa crÌtico, isso deve ser validado adequadamente fora da classe utilit·ria
+    // Se o arquivo n√£o existir lan√ßa cr√≠tico, isso deve ser validado adequadamente fora da classe utilit√°ria
     if (!RUFile.fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName });
 
     Path path = new File(fileName).toPath();
@@ -169,14 +169,14 @@ public class BUFile {
   }
 
   /**
-   * Retorna a data e hora do ˙ltimo acesso ao arquivo.
+   * Retorna a data e hora do √∫ltimo acesso ao arquivo.
    *
-   * @param fileName Caminho completo ou relativo ‡ aplicaÁ„o que leve ao arquivo.
-   * @return Objeto Date criado com o timezone padr„o do sistema, que deve equivaler como do arquivo.
+   * @param fileName Caminho completo ou relativo √† aplica√ß√£o que leve ao arquivo.
+   * @return Objeto Date criado com o timezone padr√£o do sistema, que deve equivaler como do arquivo.
    * @throws RFWException
    */
   public static Date getLastAccessTime(String fileName) throws RFWException {
-    // Se o arquivo n„o existir lanÁa crÌtico, isso deve ser validado adequadamente fora da classe utilit·ria
+    // Se o arquivo n√£o existir lan√ßa cr√≠tico, isso deve ser validado adequadamente fora da classe utilit√°ria
     if (!RUFile.fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName });
 
     Path path = new File(fileName).toPath();
@@ -190,14 +190,14 @@ public class BUFile {
   }
 
   /**
-   * Retorna a data e hora da ˙ltima modificaÁ„o do arquivo.
+   * Retorna a data e hora da √∫ltima modifica√ß√£o do arquivo.
    *
-   * @param fileName Caminho completo ou relativo ‡ aplicaÁ„o que leve ao arquivo.
-   * @return Objeto Date criado com o timezone padr„o do sistema, que deve equivaler como do arquivo.
+   * @param fileName Caminho completo ou relativo √† aplica√ß√£o que leve ao arquivo.
+   * @return Objeto Date criado com o timezone padr√£o do sistema, que deve equivaler como do arquivo.
    * @throws RFWException
    */
   public static Date getLastModifiedTime(String fileName) throws RFWException {
-    // Se o arquivo n„o existir lanÁa crÌtico, isso deve ser validado adequadamente fora da classe utilit·ria
+    // Se o arquivo n√£o existir lan√ßa cr√≠tico, isso deve ser validado adequadamente fora da classe utilit√°ria
     if (!RUFile.fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName });
 
     Path path = new File(fileName).toPath();
@@ -211,10 +211,10 @@ public class BUFile {
   }
 
   /**
-   * Retorna se o objeto do caminho passado È um Symbolic Link.
+   * Retorna se o objeto do caminho passado √© um Symbolic Link.
    *
-   * @param fileName Caminho completo ou relativo ‡ aplicaÁ„o que leve ao arquivo.
-   * @return Boolean indicando 'true' caso o objeto seja um SymLink, 'false' n„o seja.
+   * @param fileName Caminho completo ou relativo √† aplica√ß√£o que leve ao arquivo.
+   * @return Boolean indicando 'true' caso o objeto seja um SymLink, 'false' n√£o seja.
    * @throws RFWException
    */
   public static boolean isSymbolicLink(String fileName) throws RFWException {
@@ -222,14 +222,14 @@ public class BUFile {
   }
 
   /**
-   * Retorna se o objeto do caminho passado È um Symbolic Link.
+   * Retorna se o objeto do caminho passado √© um Symbolic Link.
    *
-   * @param fileName Caminho completo ou relativo ‡ aplicaÁ„o que leve ao arquivo.
-   * @return Boolean indicando 'true' caso o objeto seja um SymLink, 'false' n„o seja.
+   * @param fileName Caminho completo ou relativo √† aplica√ß√£o que leve ao arquivo.
+   * @return Boolean indicando 'true' caso o objeto seja um SymLink, 'false' n√£o seja.
    * @throws RFWException
    */
   public static boolean isSymbolicLink(File fileName) throws RFWException {
-    // Se o arquivo n„o existir lanÁa crÌtico, isso deve ser validado adequadamente fora da classe utilit·ria
+    // Se o arquivo n√£o existir lan√ßa cr√≠tico, isso deve ser validado adequadamente fora da classe utilit√°ria
     if (!RUFile.fileExists(fileName)) throw new RFWCriticalException("RFW_ERR_200444", new String[] { fileName.getAbsolutePath() });
 
     Path path = fileName.toPath();
@@ -243,27 +243,27 @@ public class BUFile {
   }
 
   /**
-   * Este mÈtodo verifica a existÍncia do caminho e, caso n„o exista ainda, o cria.<br>
-   * <b>Este mÈtodo aceita o caminho do diretÛrio sem o nome do arquivo. Caso tenha o caminho com o nome do arquivo utilize o {@link #createPathOfFile(String)}</b>
+   * Este m√©todo verifica a exist√™ncia do caminho e, caso n√£o exista ainda, o cria.<br>
+   * <b>Este m√©todo aceita o caminho do diret√≥rio sem o nome do arquivo. Caso tenha o caminho com o nome do arquivo utilize o {@link #createPathOfFile(String)}</b>
    *
-   * @param pathName Caminho para o diretÛrio a ser criado.
+   * @param pathName Caminho para o diret√≥rio a ser criado.
    * @throws RFWException
    */
   public static void createPath(String pathName) throws RFWException {
     File file = new File(pathName);
-    file.mkdirs(); // ForÁa criar os diretÛrios caso n„o existam
+    file.mkdirs(); // For√ßa criar os diret√≥rios caso n√£o existam
   }
 
   /**
-   * Este mÈtodo verifica a existÍncia dos diretÛrios do caminho ddo arquivo passado, caso n„o exista ainda, o cria.<br>
-   * <b>Este mÈtodo aceita o caminho completo incluindo o nome do arquivo, e garante que sua pasta seja criada. Caso tenha apenas os nomes dos diretÛrios utilize o {@link #createPath(String)}</b>
+   * Este m√©todo verifica a exist√™ncia dos diret√≥rios do caminho ddo arquivo passado, caso n√£o exista ainda, o cria.<br>
+   * <b>Este m√©todo aceita o caminho completo incluindo o nome do arquivo, e garante que sua pasta seja criada. Caso tenha apenas os nomes dos diret√≥rios utilize o {@link #createPath(String)}</b>
    *
-   * @param filePath Caminho completo do arquivo, cujo diretÛrio deve ser criado.
+   * @param filePath Caminho completo do arquivo, cujo diret√≥rio deve ser criado.
    * @throws RFWException
    */
   public static void createPathOfFile(String filePath) throws RFWException {
     File file = new File(filePath);
-    file.mkdirs(); // ForÁa criar os diretÛrios caso n„o existam
+    file.mkdirs(); // For√ßa criar os diret√≥rios caso n√£o existam
   }
 
   /**
@@ -278,7 +278,7 @@ public class BUFile {
   }
 
   /**
-   * Extrai o nome e extenÁ„o do arquivo de um caminho completo recebido.
+   * Extrai o nome e exten√ß√£o do arquivo de um caminho completo recebido.
    *
    * @param file Caminho com o nome do arquivo
    * @return
@@ -288,7 +288,7 @@ public class BUFile {
   }
 
   /**
-   * Extrai o caminho (diretÛrio) de um caminho completo recebido. N√O RETORNA O ⁄LTIMO SEPARADOR! Nem mesmo quando est· na raiz: Windows = "c:", no Linux = "".
+   * Extrai o caminho (diret√≥rio) de um caminho completo recebido. N√ÉO RETORNA O √öLTIMO SEPARADOR! Nem mesmo quando est√° na raiz: Windows = "c:", no Linux = "".
    *
    * @param file Caminho com o nome do arquivo
    * @return
@@ -298,7 +298,7 @@ public class BUFile {
   }
 
   /**
-   * Este mÈtodo tenta descobrir o charset correto de um arquivo. Note para identificar o charset correto ser· testado um decoder de cada charset no arquivo, e alguns deles podem dar m˙ltiplos positivos, o que n„o garante uma exatid„o na detecÁ„o.<br>
+   * Este m√©todo tenta descobrir o charset correto de um arquivo. Note para identificar o charset correto ser√° testado um decoder de cada charset no arquivo, e alguns deles podem dar m√∫ltiplos positivos, o que n√£o garante uma exatid√£o na detec√ß√£o.<br>
    * Teste os seguintes charsets:
    * <li>StandardCharsets.ISO_8859_1
    * <li>StandardCharsets.UTF_8
@@ -306,7 +306,7 @@ public class BUFile {
    * <li>StandardCharsets.UTF_16<br>
    *
    * @param filePath Caminho para o Arquivo a ser detectado o charset.
-   * @return Charset em que o conte˙do do arquivo foi validado, ou null caso nenhum Charset tenha sido identificado.
+   * @return Charset em que o conte√∫do do arquivo foi validado, ou null caso nenhum Charset tenha sido identificado.
    * @throws RFWException
    */
   public static Charset detectTextFileCharset(String filePath) throws RFWException {
@@ -327,22 +327,22 @@ public class BUFile {
             charset = charsetTmp;
             break found;
           } catch (CharacterCodingException e) {
-            // n„o faz nada, mantÈm o identified em false
+            // n√£o faz nada, mant√©m o identified em false
             break;
           }
         }
       } catch (Exception e) {
-        throw new RFWCriticalException("Falha ao lÍr o conte˙do do arquivo!", e);
+        throw new RFWCriticalException("Falha ao l√™r o conte√∫do do arquivo!", e);
       }
     }
     return charset;
   }
 
   /**
-   * Exclui todos os arquivos encontrados dentro de um diretÛrio.<br>
-   * Mesmo que o mÈtodo {@link #deleteAllFilesFromPath(String, boolean)} com a opÁ„o de symLink em false.
+   * Exclui todos os arquivos encontrados dentro de um diret√≥rio.<br>
+   * Mesmo que o m√©todo {@link #deleteAllFilesFromPath(String, boolean)} com a op√ß√£o de symLink em false.
    *
-   * @param path Caminho/DiretÛrio para se excluir os arquivos (note que o diretÛrio n„o È excluÌdo).
+   * @param path Caminho/Diret√≥rio para se excluir os arquivos (note que o diret√≥rio n√£o √© exclu√≠do).
    * @throws RFWException Em caso de falhas
    */
   public static void deleteAllFilesFromPath(String path) throws RFWException {
@@ -350,17 +350,17 @@ public class BUFile {
   }
 
   /**
-   * Exclui todos os arquivos encontrados dentro de um diretÛrio.
+   * Exclui todos os arquivos encontrados dentro de um diret√≥rio.
    *
-   * @param path Caminho/DiretÛrio para se excluir os arquivos (note que o diretÛrio n„o È excluÌdo).
-   * @param deleteSymlinks se true, forÁa a exclus„o mesmo que seja um Symbolic Link e n„o um arquivo real.
+   * @param path Caminho/Diret√≥rio para se excluir os arquivos (note que o diret√≥rio n√£o √© exclu√≠do).
+   * @param deleteSymlinks se true, for√ßa a exclus√£o mesmo que seja um Symbolic Link e n√£o um arquivo real.
    * @throws RFWException Em caso de falhas
    */
   public static void deleteAllFilesFromPath(String path, boolean deleteSymlinks) throws RFWException {
     File fPath = new File(path);
-    if (!fPath.exists()) throw new RFWValidationException("O caminho '" + path + "' n„o existe!");
-    if (!fPath.isDirectory()) throw new RFWValidationException("O caminho '" + path + "' n„o È um diretÛrio v·lido!");
-    if (!fPath.canWrite()) throw new RFWValidationException("N„o temos permiss„o para escrever no diretÛrio '" + path + "'!");
+    if (!fPath.exists()) throw new RFWValidationException("O caminho '" + path + "' n√£o existe!");
+    if (!fPath.isDirectory()) throw new RFWValidationException("O caminho '" + path + "' n√£o √© um diret√≥rio v√°lido!");
+    if (!fPath.canWrite()) throw new RFWValidationException("N√£o temos permiss√£o para escrever no diret√≥rio '" + path + "'!");
 
     for (File file : RUFile.getFilesFromDirectory(path)) {
       if (deleteSymlinks || !isSymbolicLink(file)) deleteFile(file);
@@ -368,10 +368,10 @@ public class BUFile {
   }
 
   /**
-   * Abre um arquivo de PDF e tenta extrair o seu conte˙do de texto com uma estratÈgia simples de texto. Escreve o conte˙do em um arquivo tempor·rio e retorna o caminho do arquivo.
+   * Abre um arquivo de PDF e tenta extrair o seu conte√∫do de texto com uma estrat√©gia simples de texto. Escreve o conte√∫do em um arquivo tempor√°rio e retorna o caminho do arquivo.
    *
    * @param filePath caminho para o arquivo PDF a ser lido
-   * @return Caminho para o arquivo tempor·rio com o texto encontrado no PDF.
+   * @return Caminho para o arquivo tempor√°rio com o texto encontrado no PDF.
    * @throws RFWException
    */
   public static String scrapPDFText(String filePath) throws RFWException {
@@ -379,11 +379,11 @@ public class BUFile {
   }
 
   /**
-   * Abre um arquivo de PDF e tenta extrair o seu conte˙do de texto com uma estratÈgia simples de texto. Escreve o conte˙do em um arquivo tempor·rio e retorna o caminho do arquivo.
+   * Abre um arquivo de PDF e tenta extrair o seu conte√∫do de texto com uma estrat√©gia simples de texto. Escreve o conte√∫do em um arquivo tempor√°rio e retorna o caminho do arquivo.
    *
    * @param filePath caminho para o arquivo PDF a ser lido
-   * @param pageMarker Caso passada algum valor, esse valor ser· escrito no comeÁo de cada p·gina. Se essa marcaÁ„o contiver o texto "${0}", ele ser· substituÌdo pelo n˙mero da p·gina.
-   * @return Caminho para o arquivo tempor·rio com o texto encontrado no PDF.
+   * @param pageMarker Caso passada algum valor, esse valor ser√° escrito no come√ßo de cada p√°gina. Se essa marca√ß√£o contiver o texto "${0}", ele ser√° substitu√≠do pelo n√∫mero da p√°gina.
+   * @return Caminho para o arquivo tempor√°rio com o texto encontrado no PDF.
    * @throws RFWException
    */
   public static String scrapPDFText(String filePath, String pageMarker) throws RFWException {
@@ -400,7 +400,7 @@ public class BUFile {
       }
       return file.getAbsolutePath();
     } catch (Throwable e) {
-      throw new RFWCriticalException("Falha ao lÍr o arquivo recebido!", new String[] { filePath }, e);
+      throw new RFWCriticalException("Falha ao l√™r o arquivo recebido!", new String[] { filePath }, e);
     }
   }
 
@@ -409,7 +409,7 @@ public class BUFile {
    *
    * @param source Caminho do arquivo de origem (arquivo)
    * @param target Caminho de destino
-   * @param options OpÁıe de cÛpia. Verifique as opÁıes de {@link StandardCopyOption}
+   * @param options Op√ß√µe de c√≥pia. Verifique as op√ß√µes de {@link StandardCopyOption}
    * @throws RFWException
    */
   public static void copyFile(String source, String target, CopyOption... options) throws RFWException {
@@ -421,7 +421,7 @@ public class BUFile {
    *
    * @param source Caminho do arquivo de origem (arquivo)
    * @param target Caminho de destino
-   * @param options OpÁıe de cÛpia. Verifique as opÁıes de {@link StandardCopyOption}
+   * @param options Op√ß√µe de c√≥pia. Verifique as op√ß√µes de {@link StandardCopyOption}
    * @throws RFWException
    */
   public static void copyFile(File source, File target, CopyOption... options) throws RFWException {
@@ -433,7 +433,7 @@ public class BUFile {
    *
    * @param source Caminho do arquivo de origem (arquivo)
    * @param target Caminho de destino
-   * @param options OpÁıe de cÛpia. Verifique as opÁıes de {@link StandardCopyOption}
+   * @param options Op√ß√µe de c√≥pia. Verifique as op√ß√µes de {@link StandardCopyOption}
    * @throws RFWException
    */
   public static void copyFile(Path source, Path target, CopyOption... options) throws RFWException {
@@ -447,9 +447,9 @@ public class BUFile {
   /**
    * Tenta identificar o charset do arquivo para uma leitura mais correta.
    *
-   * @param file Arquivo para identificaÁ„o do charset.
-   * @return Constante com o charset para leitura do arquivo, ou null caso a identificaÁ„o tenha falhado.
-   * @throws RFWException LanÁado em casos de erro de leitura do arquivo, acesso, etc. N„o È lanÁado por n„o identificar o charset.
+   * @param file Arquivo para identifica√ß√£o do charset.
+   * @return Constante com o charset para leitura do arquivo, ou null caso a identifica√ß√£o tenha falhado.
+   * @throws RFWException Lan√ßado em casos de erro de leitura do arquivo, acesso, etc. N√£o √© lan√ßado por n√£o identificar o charset.
    */
   public static Charset detectCharset(File file) throws RFWException {
     try {
@@ -468,7 +468,7 @@ public class BUFile {
         } else if (charset.equals(Constants.CHARSET_WINDOWS_1252)) {
           return Charsets.WINDOWS_1252;
         } else {
-          RFWLogger.logImprovement("N„o foi possÌvel relacionar o charset detectado: '${0}'", new String[] { charset });
+          RFWLogger.logImprovement("N√£o foi poss√≠vel relacionar o charset detectado: '${0}'", new String[] { charset });
         }
       }
       return null;
@@ -478,20 +478,20 @@ public class BUFile {
   }
 
   /**
-   * Cria um {@link BufferedReader} para lÍr um arquivo. Tenta detectar o charset a ser utilizado atravÈs do mÈtodo {@link #detectCharset(File)}.<Br>
+   * Cria um {@link BufferedReader} para l√™r um arquivo. Tenta detectar o charset a ser utilizado atrav√©s do m√©todo {@link #detectCharset(File)}.<Br>
    * <br>
-   * Sugest„o de utilizaÁ„o:
+   * Sugest√£o de utiliza√ß√£o:
    *
    * <pre>
    * try (BufferedReader r = BUFile.createFileBufferedReader(filePath)) {
    *   String line = null;
    *   while ((line = r.readLine()) != null) {
-   *     // LÍr o conte˙do do arquivo
+   *     // L√™r o conte√∫do do arquivo
    *   }
    * }
    * </pre>
    *
-   * @param filePath Caminho do arquivo para criaÁ„o do {@link BufferedReader}.
+   * @param filePath Caminho do arquivo para cria√ß√£o do {@link BufferedReader}.
    * @return {@link BufferedReader} pronto para a leitura do arquivo.
    * @throws RFWException
    */
@@ -500,7 +500,7 @@ public class BUFile {
       Charset charset = BUFile.detectCharset(new File(filePath));
       return new BufferedReader(new InputStreamReader(new FileInputStream(filePath), charset));
     } catch (FileNotFoundException e) {
-      throw new RFWCriticalException("Arquivo n„o encontrado!", e);
+      throw new RFWCriticalException("Arquivo n√£o encontrado!", e);
     }
   }
 

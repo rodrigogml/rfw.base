@@ -11,16 +11,16 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 public interface SchedulerListener {
 
   /**
-   * Chamado quando a tarefa encontra algum problema de execuÁ„o.
+   * Chamado quando a tarefa encontra algum problema de execu√ß√£o.
    *
-   * @param task Tarefa em execuÁ„o que deu problema.
-   * @param e Exception com a descriÁ„o do Problema.
+   * @param task Tarefa em execu√ß√£o que deu problema.
+   * @param e Exception com a descri√ß√£o do Problema.
    */
   public void fail(SchedulerTask task, RFWException e);
 
   /**
    * Chamado quando a tarefa for executada com sucesso.<br>
-   * Este mÈtodo È chamado no fim da execuÁ„o, j· depois de terem sido chamados os mÈtodos de "set" para atualizaÁ„o dos atributos da tarefa.
+   * Este m√©todo √© chamado no fim da execu√ß√£o, j√° depois de terem sido chamados os m√©todos de "set" para atualiza√ß√£o dos atributos da tarefa.
    *
    * @param task Tarefa que foi executada com sucesso.
    */

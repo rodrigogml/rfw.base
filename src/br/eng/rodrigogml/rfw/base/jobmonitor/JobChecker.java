@@ -11,8 +11,8 @@ import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 
 /**
- * Description: JobChecker é uma classe utilitária para forçar a verificação temporária de um Job em background.<br>
- * O JobChecker, depois de chamado o método {@link #start()}, inicia um Thread que verifica o status do Job de tempos em tempos e dispara o método para atualização.<br>
+ * Description: JobChecker Ã© uma classe utilitÃ¡ria para forÃ§ar a verificaÃ§Ã£o temporÃ¡ria de um Job em background.<br>
+ * O JobChecker, depois de chamado o mÃ©todo {@link #start()}, inicia um Thread que verifica o status do Job de tempos em tempos e dispara o mÃ©todo para atualizaÃ§Ã£o.<br>
  * A Thread para automaticamente quando o {@link JobStep#FINISHED}.
  *
  * @author Rodrigo GML
@@ -21,31 +21,31 @@ import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 public class JobChecker implements Runnable {
 
   /**
-   * Identificador único do Job a ser verificado.
+   * Identificador Ãºnico do Job a ser verificado.
    */
   private final String jobUUID;
 
   /**
-   * Thread de verificação do Job
+   * Thread de verificaÃ§Ã£o do Job
    */
   private Thread t;
 
   /**
-   * Referência para o {@link JobStatusSupplier} do {@link JobStatus}
+   * ReferÃªncia para o {@link JobStatusSupplier} do {@link JobStatus}
    */
   private final JobStatusSupplier jobSupplier;
 
   /**
-   * Listeners que receberão as notificações da tarefa.
+   * Listeners que receberÃ£o as notificaÃ§Ãµes da tarefa.
    */
   private final LinkedList<JobCheckerListener> listeners = new LinkedList<JobCheckerListener>();
 
-  // Deixei o construtor sem fornecer o JobStatusSupplier comentado de propósito, para forçar o dev a lembrar em que classloader ele está e a necessidade de passar o JobStatusSupplier ou null para o padrão.
+  // Deixei o construtor sem fornecer o JobStatusSupplier comentado de propÃ³sito, para forÃ§ar o dev a lembrar em que classloader ele estÃ¡ e a necessidade de passar o JobStatusSupplier ou null para o padrÃ£o.
   // /**
-  // * Cria uma nova instância de JobChecker para monitorar um Job.<br>
-  // * <b>Atenção:</b> Este construtor só deve ser utilizado quando o JobChecker está sendo instânciado dentro da mesma JVM que a tarefa foi criada. Caso contrário ele não encontrará o mesmo {@link JobMonitor} e consequentemente não encontrará a tarefa.
+  // * Cria uma nova instÃ¢ncia de JobChecker para monitorar um Job.<br>
+  // * <b>AtenÃ§Ã£o:</b> Este construtor sÃ³ deve ser utilizado quando o JobChecker estÃ¡ sendo instÃ¢nciado dentro da mesma JVM que a tarefa foi criada. Caso contrÃ¡rio ele nÃ£o encontrarÃ¡ o mesmo {@link JobMonitor} e consequentemente nÃ£o encontrarÃ¡ a tarefa.
   // *
-  // * @param jobUUID Identificador único do Job.
+  // * @param jobUUID Identificador Ãºnico do Job.
   // * @throws RFWException
   // */
   // public JobChecker(String jobUUID) throws RFWException {
@@ -53,10 +53,10 @@ public class JobChecker implements Runnable {
   // }
 
   /**
-   * Cria uma nova instância de JobChecker para monitorar um Job.
+   * Cria uma nova instÃ¢ncia de JobChecker para monitorar um Job.
    *
-   * @param jobUUID Identificador único do Job.
-   * @param supplier Fornecedor de uma "ponte" até o JobMonitor, quando JobMonitor for criado em uma outra JVM. Como uma máquina remota ou uma ClassLoader diferenciado. Para acessar o JobStatus dentro da mesma VM passe null.
+   * @param jobUUID Identificador Ãºnico do Job.
+   * @param supplier Fornecedor de uma "ponte" atÃ© o JobMonitor, quando JobMonitor for criado em uma outra JVM. Como uma mÃ¡quina remota ou uma ClassLoader diferenciado. Para acessar o JobStatus dentro da mesma VM passe null.
    * @throws RFWException
    */
   public JobChecker(String jobUUID, JobStatusSupplier supplier) throws RFWException {
@@ -68,7 +68,7 @@ public class JobChecker implements Runnable {
 
     // Valida se a tarefa existe
     JobStatus status = supplier.getJobStatus(jobUUID);
-    if (status == null) throw new RFWCriticalException("A tarefa '" + jobUUID + "' não pode ser encontrada no JobMonitor! Verifique a UUID e/ou a necessidade de implementar um JobStatusSupplier diferente.");
+    if (status == null) throw new RFWCriticalException("A tarefa '" + jobUUID + "' nÃ£o pode ser encontrada no JobMonitor! Verifique a UUID e/ou a necessidade de implementar um JobStatusSupplier diferente.");
   }
 
   /**
@@ -82,9 +82,9 @@ public class JobChecker implements Runnable {
   }
 
   /**
-   * Inicia o procedimento de verificação do Job.<br>
-   * Este método só pode ser chamado uma única vez.<br>
-   * Chamadas subsequêntes serão apenas ignoradas.
+   * Inicia o procedimento de verificaÃ§Ã£o do Job.<br>
+   * Este mÃ©todo sÃ³ pode ser chamado uma Ãºnica vez.<br>
+   * Chamadas subsequÃªntes serÃ£o apenas ignoradas.
    *
    * @throws RFWException
    */
@@ -92,7 +92,7 @@ public class JobChecker implements Runnable {
     if (this.t == null) {
       t = new Thread(this);
       t.setName("### JobChecker: " + this.jobSupplier.getJobStatus(this.jobUUID).getJobTitle());
-      t.setPriority(Thread.MIN_PRIORITY); // Este é só um verificador, não a execução da tarefa, não precisa competir pelo processador.
+      t.setPriority(Thread.MIN_PRIORITY); // Este Ã© sÃ³ um verificador, nÃ£o a execuÃ§Ã£o da tarefa, nÃ£o precisa competir pelo processador.
       t.start();
     }
   }
@@ -106,13 +106,13 @@ public class JobChecker implements Runnable {
         if (jobStatus.getLastChange() > lastchange) {
           lastchange = jobStatus.getLastChange();
 
-          // Verifica se será última rodada antes do método update para
+          // Verifica se serÃ¡ Ãºltima rodada antes do mÃ©todo update para
           boolean lastCall = jobStatus.getStep() == JobStep.FINISHED || jobStatus.getStep() == JobStep.EXCEPTION;
 
           for (JobCheckerListener listener : listeners) {
             try {
               listener.updateStatus(jobStatus, lastCall);
-            } catch (Throwable t) { // Não permite que exceções do usuário interrompam o JobChecker
+            } catch (Throwable t) { // NÃ£o permite que exceÃ§Ãµes do usuÃ¡rio interrompam o JobChecker
               RFWLogger.logException(t);
             }
           }
@@ -131,7 +131,7 @@ public class JobChecker implements Runnable {
   }
 
   /**
-   * Adiciona um listener para receber os eventos de alteração da tarefa.
+   * Adiciona um listener para receber os eventos de alteraÃ§Ã£o da tarefa.
    *
    * @param listener
    */
@@ -140,9 +140,9 @@ public class JobChecker implements Runnable {
   }
 
   /**
-   * # referência para o {@link JobStatusSupplier} do {@link JobStatus}.
+   * # referÃªncia para o {@link JobStatusSupplier} do {@link JobStatus}.
    *
-   * @return the referência para o {@link JobStatusSupplier} do {@link JobStatus}
+   * @return the referÃªncia para o {@link JobStatusSupplier} do {@link JobStatus}
    */
   public JobStatusSupplier getJobSupplier() {
     return jobSupplier;

@@ -13,20 +13,20 @@ import br.eng.rodrigogml.rfw.base.fwreports.bean.FWListReportOptionBean;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
- * Description: Classe de execuÁ„o de relatÛrio de listagem.<BR>
+ * Description: Classe de execu√ß√£o de relat√≥rio de listagem.<BR>
  * <br>
- * O {@link FWListReport} extende a classe principal de relatÛrios {@link FWReport} e cria um template mais simples para relatÛrios do tipo "listagem". Bastando que o relatÛrio de listagem implemente os mÈtodos definidos aqui como abstratos.<br>
- * O funcionamento "b·sico" consiste em receber da classe filha uma lista de {@link ReportBlock} que representam os "blocos" a serem colocados na p·gina um a baixo do outro. Normalmente cada bloco representa uma linha do relatÛrio, mas podem tambÈm conter gr·ficos, imagens, e qualquer informaÁ„o desejada. Quando n„o couberem mais blocos na mesma linha o relatÛrio ser· automaticamente quebrado em
- * uma nova p·gina.<br>
- * H· a possibilidade tambÈm de criar blocos para p·ginas "laterais". Para relatÛrios com muitas colunas È possÌvel expandi-lo para p·ginas que ser„o colocadas "‡ direita" de cada p·gina do relatÛrio. Essas p·ginas, quando existentes receber„o letras para indicar a numeraÁ„o de p·ginas adicionais. Formando uma espÈcie de grid, similar ‡ uma planilha de c·lculo.
+ * O {@link FWListReport} extende a classe principal de relat√≥rios {@link FWReport} e cria um template mais simples para relat√≥rios do tipo "listagem". Bastando que o relat√≥rio de listagem implemente os m√©todos definidos aqui como abstratos.<br>
+ * O funcionamento "b√°sico" consiste em receber da classe filha uma lista de {@link ReportBlock} que representam os "blocos" a serem colocados na p√°gina um a baixo do outro. Normalmente cada bloco representa uma linha do relat√≥rio, mas podem tamb√©m conter gr√°ficos, imagens, e qualquer informa√ß√£o desejada. Quando n√£o couberem mais blocos na mesma linha o relat√≥rio ser√° automaticamente quebrado em
+ * uma nova p√°gina.<br>
+ * H√° a possibilidade tamb√©m de criar blocos para p√°ginas "laterais". Para relat√≥rios com muitas colunas √© poss√≠vel expandi-lo para p√°ginas que ser√£o colocadas "√† direita" de cada p√°gina do relat√≥rio. Essas p√°ginas, quando existentes receber√£o letras para indicar a numera√ß√£o de p√°ginas adicionais. Formando uma esp√©cie de grid, similar √† uma planilha de c√°lculo.
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 7.1.0 (06/06/2015)
  */
 public abstract class FWListReport extends FWReport {
 
   /**
-   * Classe que representa um "bloco" do relatÛrio. Um bloco normalmente È uma linha, um gr·fio, etc. Uma coleÁ„o de blocos compıe um relatÛrio.
+   * Classe que representa um "bloco" do relat√≥rio. Um bloco normalmente √© uma linha, um gr√°fio, etc. Uma cole√ß√£o de blocos comp√µe um relat√≥rio.
    */
   public static class ReportBlock {
 
@@ -40,48 +40,48 @@ public abstract class FWListReport extends FWReport {
     private ALIGNMENT alighnment = ALIGNMENT.LEFT;
 
     /**
-     * Define o template a ser desenhado no p·gina "principal" do relatÛrio.<br>
+     * Define o template a ser desenhado no p√°gina "principal" do relat√≥rio.<br>
      */
     private PdfTemplate templateMainPage = null;
 
     /**
-     * Define os templates que ser„o colocados nas p·ginas ‡ direita da p·gina principal. Cada item deste array ser· colocado em um nova p·gina "‡ direita" da p·gina principal do relatÛrio.
+     * Define os templates que ser√£o colocados nas p√°ginas √† direita da p√°gina principal. Cada item deste array ser√° colocado em um nova p√°gina "√† direita" da p√°gina principal do relat√≥rio.
      */
     private PdfTemplate[] templateSidePages = null;
 
     /**
      * Define uma margem superior para ser adicionada ao bloco. Usada para separar o bloco do bloco superior.<br>
-     * <b>Esta margem È descartada caso seja o primeiro bloco da p·gina.</b>
+     * <b>Esta margem √© descartada caso seja o primeiro bloco da p√°gina.</b>
      */
     private float margintop = 0f;
 
     /**
-     * Este atributo define a cor a ser usada para imprimir o background de linha impar. Para que o background apareÁa È obrigatÛrio que a funcionalidade esteja ligada no ReportBean.<br>
-     * Para garantir que algum bloco especÌfico n„o ter· uma cor de fundo defina este atributo como null. Ao definir como null o relatÛrio reiniciar· a contagem das linhas, para que no prÛximo bloco as linhas reiniciem a contagem de linha impar novamente. Isso evita que a cada bloco (com linha de fundo) depois de blocos sem linhas de fundo comecem com cores diferentes.<br>
-     * O valor da cor deve ser definido como padr„o WEB, sempre contendo o "#" para deixar evidente e incluir os 6 dÌgitos.
+     * Este atributo define a cor a ser usada para imprimir o background de linha impar. Para que o background apare√ßa √© obrigat√≥rio que a funcionalidade esteja ligada no ReportBean.<br>
+     * Para garantir que algum bloco espec√≠fico n√£o ter√° uma cor de fundo defina este atributo como null. Ao definir como null o relat√≥rio reiniciar√° a contagem das linhas, para que no pr√≥ximo bloco as linhas reiniciem a contagem de linha impar novamente. Isso evita que a cada bloco (com linha de fundo) depois de blocos sem linhas de fundo comecem com cores diferentes.<br>
+     * O valor da cor deve ser definido como padr√£o WEB, sempre contendo o "#" para deixar evidente e incluir os 6 d√≠gitos.
      */
     private String oddLineBackgroundColor = "#F5F5F5";
 
     /**
-     * Define a cor de fundo de uma linha do relatÛrio. Essa propriedade se sobrepıe a cor definida em oddLineBackgroundColor.<br>
-     * O valor da cor deve ser definido como padr„o WEB, sempre contendo o "#" para deixar evidente e incluir os 6 dÌgitos.
+     * Define a cor de fundo de uma linha do relat√≥rio. Essa propriedade se sobrep√µe a cor definida em oddLineBackgroundColor.<br>
+     * O valor da cor deve ser definido como padr√£o WEB, sempre contendo o "#" para deixar evidente e incluir os 6 d√≠gitos.
      */
     private String lineBackgroundColor = null;
 
     /**
-     * Caso true, a p·gina È quebrada antes de escrever este bloco (n„o ser· quebrada se for o primei block j· de uma nova p·gina)
+     * Caso true, a p√°gina √© quebrada antes de escrever este bloco (n√£o ser√° quebrada se for o primei block j√° de uma nova p√°gina)
      */
     private Boolean newPage = Boolean.FALSE;
 
     /**
-     * Se True, nenhum cabeÁalho ser· escrito na p·gina.<br>
-     * <b>ATEN«√O:</b> Para funcionar essa opÁ„o deve estar habilitada no primeiro bloco da p·gina.
+     * Se True, nenhum cabe√ßalho ser√° escrito na p√°gina.<br>
+     * <b>ATEN√á√ÉO:</b> Para funcionar essa op√ß√£o deve estar habilitada no primeiro bloco da p√°gina.
      */
     private Boolean forbidHeaders = Boolean.FALSE;
 
     /**
-     * Se True, nenhum rodapÈ ser· escrito na p·gina.<br>
-     * <b>ATEN«√O:</b> Para funcionar essa opÁ„o deve estar habilitada no primeiro bloco da p·gina.
+     * Se True, nenhum rodap√© ser√° escrito na p√°gina.<br>
+     * <b>ATEN√á√ÉO:</b> Para funcionar essa op√ß√£o deve estar habilitada no primeiro bloco da p√°gina.
      */
     private Boolean forbidFooters = Boolean.FALSE;
 
@@ -168,23 +168,23 @@ public abstract class FWListReport extends FWReport {
     }
   }
 
-  // Vari·veis de Controle do RelatÛrio
-  private boolean wroteReportHeader = false; // Indica se o cabeÁalho do relatÛrio j· foi escrito.
-  private boolean wrotePageHeader = false; // Indica se o cabeÁalho do p·gina j· foi escrito.
-  private boolean wrotePageFooter = false; // Indica se o rodapÈ do p·gina j· foi escrito.
-  private int blocksOnPageCount = 0; // Contador de blocos na p·gina. Em outras palavras: 0 indica que ainda n„o temos nenhum block escrito na p·gina, >0, indica que j· temos a quantidade indicada escrita na p·gina.
+  // Vari√°veis de Controle do Relat√≥rio
+  private boolean wroteReportHeader = false; // Indica se o cabe√ßalho do relat√≥rio j√° foi escrito.
+  private boolean wrotePageHeader = false; // Indica se o cabe√ßalho do p√°gina j√° foi escrito.
+  private boolean wrotePageFooter = false; // Indica se o rodap√© do p√°gina j√° foi escrito.
+  private int blocksOnPageCount = 0; // Contador de blocos na p√°gina. Em outras palavras: 0 indica que ainda n√£o temos nenhum block escrito na p√°gina, >0, indica que j√° temos a quantidade indicada escrita na p√°gina.
   private boolean oddPage = true; // Flag que indica se estamos em uma linha impar
-  private int pageCount = 1; // Indica em qual p·gina o relatÛrio est· atualmente.
-  private int pageSideCount = 1; // Indica em qual p·gina lateral est· atualmente. 1 È a p·gina A, 2 a p·gina B, etc.
-  private float y = 0; // Vari·vel que guarda o ponto vertical em que podemos continuar a escrever/desenhar
-  private float wastePageFooterHeight = 0; // Armazena a altura perdida com o RodapÈ de P·gina na p·gina atual.
-  private int reportCount = 0; // Conta o Ìndex do relatÛrio atual. Sendo 0 o primeiro relatÛrio, 1 o segundo relatÛrio, etc.. Consireramos 1 realatÛrio cada lista de ReportBlocks retornados atravÈs do mÈtodo getReportBlocksList(); Pode se considerar que È um contador de quantas vezes o mÈtodo j· foi chamado, embora o valor v· permanecer no "zero" (no mesmo valor) atÈ que o mÈtodo seja chamado
+  private int pageCount = 1; // Indica em qual p√°gina o relat√≥rio est√° atualmente.
+  private int pageSideCount = 1; // Indica em qual p√°gina lateral est√° atualmente. 1 √© a p√°gina A, 2 a p√°gina B, etc.
+  private float y = 0; // Vari√°vel que guarda o ponto vertical em que podemos continuar a escrever/desenhar
+  private float wastePageFooterHeight = 0; // Armazena a altura perdida com o Rodap√© de P√°gina na p√°gina atual.
+  private int reportCount = 0; // Conta o √≠ndex do relat√≥rio atual. Sendo 0 o primeiro relat√≥rio, 1 o segundo relat√≥rio, etc.. Consireramos 1 realat√≥rio cada lista de ReportBlocks retornados atrav√©s do m√©todo getReportBlocksList(); Pode se considerar que √© um contador de quantas vezes o m√©todo j√° foi chamado, embora o valor v√° permanecer no "zero" (no mesmo valor) at√© que o m√©todo seja chamado
   // novamente.
 
   /**
-   * Esta hash È usada para que, durante a iteraÁ„o e criaÁ„o da p·gina principal, seja salvo quais blocos pertencem a cada p·gina.<br>
-   * Depois que a p·gina principal È criada, essas informaÁıes ser„o utilizadas para gerar as p·ginas laterias com os mesmos blocks.<br>
-   * A chave da hash È o n˙mero da p·gina (valor de {@link #pageCount} no momento da criaÁ„o. O valor È uma lista com ReportBlocks ordenados conforme recebido da classe filha.
+   * Esta hash √© usada para que, durante a itera√ß√£o e cria√ß√£o da p√°gina principal, seja salvo quais blocos pertencem a cada p√°gina.<br>
+   * Depois que a p√°gina principal √© criada, essas informa√ß√µes ser√£o utilizadas para gerar as p√°ginas laterias com os mesmos blocks.<br>
+   * A chave da hash √© o n√∫mero da p√°gina (valor de {@link #pageCount} no momento da cria√ß√£o. O valor √© uma lista com ReportBlocks ordenados conforme recebido da classe filha.
    */
   private final HashMap<Integer, ArrayList<ReportBlock>> pageBlocksIndexMap = new HashMap<Integer, ArrayList<ReportBlock>>();
 
@@ -193,18 +193,18 @@ public abstract class FWListReport extends FWReport {
   }
 
   /**
-   * Este mÈtodo È chamado depois que o Documento j· foi aberto, mas antes de iterar os relatÛrios.<br>
-   * Tem a finalidade de permitir que a classe filha possa preparar os relatÛrios antes da iteraÁ„o.
+   * Este m√©todo √© chamado depois que o Documento j√° foi aberto, mas antes de iterar os relat√≥rios.<br>
+   * Tem a finalidade de permitir que a classe filha possa preparar os relat√≥rios antes da itera√ß√£o.
    *
    * @throws RFWException
    */
   protected abstract void prepareReportData() throws RFWException;
 
   /**
-   * Este mÈtodo ser· chamado diversas vezes para obter a lista de blocos de cada relatÛrio.<br>
-   * A classe filha deve retornar uma lista de PdfTemplate, sendo que cada Template representa o prÛximo bloco a ser escrito na listagem. O bloco normalmente È uma linha do relatÛrio, embora possa ser atÈ uma linha dupla ou algum conte˙do mais especÌfico. Sempre que o bloco couber na mesma p·gina ele ser· imprsso na mesma p·gina. Quando o bloco n„o couber na mesma p·gina ele automaticamente ser·
-   * jogado na prÛxima folha.<br>
-   * Este mÈtodo ser· chamado recursivamente atÈ que retorne null. A cada bloco retornado o sistema considerar· como um "relatÛrio diferente". Far· parte do mesmo PDF gerado, mas reiniciar· a contagem de p·ginas, redesenhar· o cabeÁalho de relatÛrio e assim por diante. O resultado È similar ‡ diversos relatÛrios concatenados em um ˙nico arquivo.
+   * Este m√©todo ser√° chamado diversas vezes para obter a lista de blocos de cada relat√≥rio.<br>
+   * A classe filha deve retornar uma lista de PdfTemplate, sendo que cada Template representa o pr√≥ximo bloco a ser escrito na listagem. O bloco normalmente √© uma linha do relat√≥rio, embora possa ser at√© uma linha dupla ou algum conte√∫do mais espec√≠fico. Sempre que o bloco couber na mesma p√°gina ele ser√° imprsso na mesma p√°gina. Quando o bloco n√£o couber na mesma p√°gina ele automaticamente ser√°
+   * jogado na pr√≥xima folha.<br>
+   * Este m√©todo ser√° chamado recursivamente at√© que retorne null. A cada bloco retornado o sistema considerar√° como um "relat√≥rio diferente". Far√° parte do mesmo PDF gerado, mas reiniciar√° a contagem de p√°ginas, redesenhar√° o cabe√ßalho de relat√≥rio e assim por diante. O resultado √© similar √† diversos relat√≥rios concatenados em um √∫nico arquivo.
    *
    * @return
    * @throws RFWException
@@ -212,21 +212,21 @@ public abstract class FWListReport extends FWReport {
   protected abstract List<ReportBlock> getReportBlocksList() throws RFWException;
 
   /**
-   * Este mÈtodo deve escrever o cabeÁalho de relatÛrio e retorna-lo como um template.<br>
-   * O CabeÁalho de relatÛrio sÛ aparece no comeÁo de um novo relatÛrio. N„o ser· repetido a cada nova p·gina. Escreva neste cabeÁalho apenas as informaÁıes de identificaÁ„o do relatÛrio.
+   * Este m√©todo deve escrever o cabe√ßalho de relat√≥rio e retorna-lo como um template.<br>
+   * O Cabe√ßalho de relat√≥rio s√≥ aparece no come√ßo de um novo relat√≥rio. N√£o ser√° repetido a cada nova p√°gina. Escreva neste cabe√ßalho apenas as informa√ß√µes de identifica√ß√£o do relat√≥rio.
    */
   protected abstract PdfTemplate writeReportHeader() throws RFWException;
 
   /**
-   * Este mÈtodo deve escrever o cabeÁalho de p·gina e retorna-lo como um template.<br>
-   * O CabeÁalho de p·gina normalmente repete os nomes das colunas da listagem para que o leitor saiba o que significam os dados. Noralmente È um conte˙do curto para ocupar pouco espaÁo e evitar o consumo desnecess·rio de folhas.
+   * Este m√©todo deve escrever o cabe√ßalho de p√°gina e retorna-lo como um template.<br>
+   * O Cabe√ßalho de p√°gina normalmente repete os nomes das colunas da listagem para que o leitor saiba o que significam os dados. Noralmente √© um conte√∫do curto para ocupar pouco espa√ßo e evitar o consumo desnecess√°rio de folhas.
    */
   protected abstract PdfTemplate writePageHeader() throws RFWException;
 
   /**
-   * Este mÈtodo È chamado quando a {@link FWListReport} termina de imprimir o relatÛrio.<br>
-   * Sua implementaÁ„o pode ser "vazia", n„o h· necessidade dela para a {@link FWListReport}.<br>
-   * Sua existÍncia tem a finalidade de proporcionar ‡s classes filhas que possam fazer ˙ltimos ajustes do relatÛrio. Como por exemplo, a impress„o do n˙mero de p·ginas em cada p·gina passada no formato "P·gina X de Y" sÛ pode ser feita no final, que È quando saberemos o valor de Y.
+   * Este m√©todo √© chamado quando a {@link FWListReport} termina de imprimir o relat√≥rio.<br>
+   * Sua implementa√ß√£o pode ser "vazia", n√£o h√° necessidade dela para a {@link FWListReport}.<br>
+   * Sua exist√™ncia tem a finalidade de proporcionar √†s classes filhas que possam fazer √∫ltimos ajustes do relat√≥rio. Como por exemplo, a impress√£o do n√∫mero de p√°ginas em cada p√°gina passada no formato "P√°gina X de Y" s√≥ pode ser feita no final, que √© quando saberemos o valor de Y.
    */
   protected abstract void onReportFinished() throws RFWException;
 
@@ -237,52 +237,52 @@ public abstract class FWListReport extends FWReport {
     List<ReportBlock> blocklist = getReportBlocksList();
 
     while (blocklist != null) {
-      // Inicializa as vari·veis de controle neste ponto, antes de comeÁar a iteraÁ„o. Isso porque atÈ chegar neste ponto a classe filha pode ter alterado algumas configuraÁıes do relatÛrio que podem redefinir os valores dessas vari·veis. Como por exemplo, tamanho do papel ou margens.
+      // Inicializa as vari√°veis de controle neste ponto, antes de come√ßar a itera√ß√£o. Isso porque at√© chegar neste ponto a classe filha pode ter alterado algumas configura√ß√µes do relat√≥rio que podem redefinir os valores dessas vari√°veis. Como por exemplo, tamanho do papel ou margens.
       y = getCoordFromTop(0);
 
       for (ReportBlock rblock : blocklist) {
         writeBlockOnCurrentPage(rblock);
       }
 
-      // Depois de iterarmos todo o conte˙do do relatÛrio, verificamos se temos p·ginas lateria para serem feitas E SE a orientaÁ„o È vertical. Isso porque quando a orientaÁ„o È horizontal o tratamento de impress„o das p·ginas laterais È feito a cada quebra de p·gina.
+      // Depois de iterarmos todo o conte√∫do do relat√≥rio, verificamos se temos p√°ginas lateria para serem feitas E SE a orienta√ß√£o √© vertical. Isso porque quando a orienta√ß√£o √© horizontal o tratamento de impress√£o das p√°ginas laterais √© feito a cada quebra de p√°gina.
       if (getReportBean().getVerticalOrderPage()) {
-        int maxPages = this.pageCount; // Salva o n˙mero da ˙ltima p·gina para orientar a iteraÁ„o
+        int maxPages = this.pageCount; // Salva o n√∫mero da √∫ltima p√°gina para orientar a itera√ß√£o
         int maxSidePages = countMaxSidePages(blocklist);
 
-        // iteramos a quantidade de p·ginas laterais que ser„o criadas
+        // iteramos a quantidade de p√°ginas laterais que ser√£o criadas
         while (this.pageSideCount <= maxSidePages) {
-          this.pageCount = 1; // Reiniciamos a contagem da primeira p·gina.
-          createPage(false); // Cria nova p·gina lateral - o que j· incrementa pageSideCount
-          boolean usedpage = false; // Flag usada para definir se a p·gina foi usada ou n„o. Se ela n„o fui usada (caso nenhum bloco indexado na pagina atual tenha um template para esta p·gina ela n„o È usada, podendo ser aproveitada para a prÛxima iteraÁ„o sem gerar uma p·gina em branco).
+          this.pageCount = 1; // Reiniciamos a contagem da primeira p√°gina.
+          createPage(false); // Cria nova p√°gina lateral - o que j√° incrementa pageSideCount
+          boolean usedpage = false; // Flag usada para definir se a p√°gina foi usada ou n√£o. Se ela n√£o fui usada (caso nenhum bloco indexado na pagina atual tenha um template para esta p√°gina ela n√£o √© usada, podendo ser aproveitada para a pr√≥xima itera√ß√£o sem gerar uma p√°gina em branco).
 
-          // Para cada coluna de pagina lateral, vamos iterar p·gina por p·gina criada
+          // Para cada coluna de pagina lateral, vamos iterar p√°gina por p√°gina criada
           while (this.pageCount <= maxPages) {
             ArrayList<ReportBlock> pageBlocks = getReportBlockFromPageIndex(this.pageCount);
-            // Iteramos cada um dos blocos indexados na p·gina atual
+            // Iteramos cada um dos blocos indexados na p√°gina atual
             for (ReportBlock rblock : pageBlocks) {
               if (rblock.getTemplateSidePages() != null && rblock.getTemplateSidePages().length >= this.pageSideCount - 1 && rblock.getTemplateSidePages()[this.pageSideCount - 2] != null) {
                 writeBlockOnCurrentPage(rblock);
                 usedpage = true;
               }
             }
-            // Quando acaba a iteraÁ„o dos itens da uma p·gina, temos que quebrar a p·gina, isso porque os blocks j· est„o na medida e n„o quebram a p·gina dentro do mÈtodo writeBlockOnCurrentPage.
+            // Quando acaba a itera√ß√£o dos itens da uma p√°gina, temos que quebrar a p√°gina, isso porque os blocks j√° est√£o na medida e n√£o quebram a p√°gina dentro do m√©todo writeBlockOnCurrentPage.
             if (usedpage) {
               breakPage();
             } else {
-              // se n„o utilizou a p·gina temos que pelo menos avanÁar o n˙mro da p·gina para n„o ter erro de que p·gina estamos agora
+              // se n√£o utilizou a p√°gina temos que pelo menos avan√ßar o n√∫mro da p√°gina para n√£o ter erro de que p√°gina estamos agora
               this.pageCount++;
             }
           }
         }
-      } else { // Se a ordem È Horizontal, na ˙ltima p·gina temos que escrever as p·ginas laterias da ˙ltima p·gina
+      } else { // Se a ordem √© Horizontal, na √∫ltima p√°gina temos que escrever as p√°ginas laterias da √∫ltima p√°gina
         ArrayList<ReportBlock> pageBlocks = getReportBlockFromPageIndex(this.pageCount);
 
-        // Se temos que quebrar na horizontal, primeiro calculamos o m·ximo de p·ginas laterais que esta p·gina tem em seu Ìndice (evitando de imprimir p·ginas em branco caso os templates n„o tenham todos p·ginas laterais).
+        // Se temos que quebrar na horizontal, primeiro calculamos o m√°ximo de p√°ginas laterais que esta p√°gina tem em seu √≠ndice (evitando de imprimir p√°ginas em branco caso os templates n√£o tenham todos p√°ginas laterais).
         int maxLateralPages = countMaxSidePages(pageBlocks);
-        // Verificamos se temos mais P·gina lateral para avanÁar ou se j· finalizamos o m·ximo de p·ginas laterais
+        // Verificamos se temos mais P√°gina lateral para avan√ßar ou se j√° finalizamos o m√°ximo de p√°ginas laterais
         while (this.pageSideCount < maxLateralPages + 1) {
           createPage(false);
-          // Note que no caso de avanÁo horizontal ao invÈs do vertical, a lÛgica de iniciar a escrita da prÛxima p·gina fica aqui no break page, afinal aqui conseguimos saber quando a p·gina acabou para avanÁar para a lateral. Quando o avanÁo È vertical, a lÛgica de escrever as p·ginas laterais È controla pelo mÈtodo de writeReportContent
+          // Note que no caso de avan√ßo horizontal ao inv√©s do vertical, a l√≥gica de iniciar a escrita da pr√≥xima p√°gina fica aqui no break page, afinal aqui conseguimos saber quando a p√°gina acabou para avan√ßar para a lateral. Quando o avan√ßo √© vertical, a l√≥gica de escrever as p√°ginas laterais √© controla pelo m√©todo de writeReportContent
           for (ReportBlock rblock : pageBlocks) {
             writeBlockOnCurrentPage(rblock);
           }
@@ -290,23 +290,23 @@ public abstract class FWListReport extends FWReport {
 
       }
 
-      // Quando acabamos de fazer o relatÛrio, avisamos a classe filha
+      // Quando acabamos de fazer o relat√≥rio, avisamos a classe filha
       onReportFinished();
 
-      // Agora que acabou o relatÛrio recebido, verificamos se teremos um novo para fazer:
+      // Agora que acabou o relat√≥rio recebido, verificamos se teremos um novo para fazer:
       blocklist = getReportBlocksList();
       if (blocklist != null) {
-        // Se temos um novo relatÛrio fazemos a quebra de relatÛrio
+        // Se temos um novo relat√≥rio fazemos a quebra de relat√≥rio
         breakReport();
       }
-      reportCount++; // Incrementa o contador de relatÛrios prontos antes de comeÁar o prÛximo.
+      reportCount++; // Incrementa o contador de relat√≥rios prontos antes de come√ßar o pr√≥ximo.
     }
   }
 
   /**
-   * Este mÈtodo separa a lÛgica de escrever um determinado bloco em uma p·gina.<br>
-   * Este mÈtodo tambÈm È respons·vel por "analisar" a p·gina e verificar a necessidade de escrever cabeÁalhos, rodapÈs, espaÁo restante etc.<br>
-   * <b>Note que caso o bloco a ser escrito n„o caiba na p·gina atual, este mÈtodo forÁar· a quebra da p·gina!!!</b>
+   * Este m√©todo separa a l√≥gica de escrever um determinado bloco em uma p√°gina.<br>
+   * Este m√©todo tamb√©m √© respons√°vel por "analisar" a p√°gina e verificar a necessidade de escrever cabe√ßalhos, rodap√©s, espa√ßo restante etc.<br>
+   * <b>Note que caso o bloco a ser escrito n√£o caiba na p√°gina atual, este m√©todo for√ßar√° a quebra da p√°gina!!!</b>
    *
    * @param cb
    * @param rblock
@@ -322,22 +322,22 @@ public abstract class FWListReport extends FWReport {
     }
     final PdfContentByte cb = getWriter().getDirectContent();
 
-    // Se n„o È o primeiro bloco adicioamos a "margem superior" do bloco em "y" para que o c·lculo do espaÁo j· considere o lugar correto de colocar o template.
+    // Se n√£o √© o primeiro bloco adicioamos a "margem superior" do bloco em "y" para que o c√°lculo do espa√ßo j√° considere o lugar correto de colocar o template.
     if (blocksOnPageCount > 0) y -= rblock.getMargintop();
 
-    // buscamos e trabalhamos com o tamanho do maior template de qualquer p·gina (entre principal e laterais) para que ao iterar cada p·gina (laterais e principal) todas fiquem sincronizadas caso os templates tenham tamanhos diferentes.
+    // buscamos e trabalhamos com o tamanho do maior template de qualquer p√°gina (entre principal e laterais) para que ao iterar cada p√°gina (laterais e principal) todas fiquem sincronizadas caso os templates tenham tamanhos diferentes.
     float maxBlockHights = getMaxBlockHights(rblock);
 
-    // Verificamos se N√O Temos espaÁo na folha para escrever o prÛximo bloco. Lembrando que em toda p·gina o rodapÈ de p·gina È obrigatÛrio e deve ser descontado do espaÁo "livre" restante.
-    // TambÈm quebra a p·gina caso o bloco exiga uma nova p·gina e j· tivermos algum bloco escrito na p·gina atual.
+    // Verificamos se N√ÉO Temos espa√ßo na folha para escrever o pr√≥ximo bloco. Lembrando que em toda p√°gina o rodap√© de p√°gina √© obrigat√≥rio e deve ser descontado do espa√ßo "livre" restante.
+    // Tamb√©m quebra a p√°gina caso o bloco exiga uma nova p√°gina e j√° tivermos algum bloco escrito na p√°gina atual.
     if (y - maxBlockHights - this.wastePageFooterHeight < getCoordFromBottom(0) || (rblock.getNewPage() && this.blocksOnPageCount > 0)) {
-      // NOTA: na primeira iteraÁ„o da p·gina ou do relatÛrio o valor de espaÁo restante n„o È 100% preciso j· que ainda n„o escrevemos os cabeÁalhos. No entanto, sÛ teremos um erro se alguÈm fizer um relatÛrio absurdo em que em uma folha n„o caiba ambos os cabeÁalhos, o rodapÈ e 1 bloco.
-      // Se n„o temos espaÁo temos que quebrar a folha automaticamente
+      // NOTA: na primeira itera√ß√£o da p√°gina ou do relat√≥rio o valor de espa√ßo restante n√£o √© 100% preciso j√° que ainda n√£o escrevemos os cabe√ßalhos. No entanto, s√≥ teremos um erro se algu√©m fizer um relat√≥rio absurdo em que em uma folha n√£o caiba ambos os cabe√ßalhos, o rodap√© e 1 bloco.
+      // Se n√£o temos espa√ßo temos que quebrar a folha automaticamente
       breakPage();
     }
 
-    // Os cabeÁalhos e RodapÈs sÛ ser„o escritos se: 1-Ainda n„o tiverem sido escritos; 2-Se ainda n„o tiver nenhum bloco escrito na p·gina; 3-Se o primeiro bloco da p·gina n„o tiver as opÁıes de forbidHeaders ou forbidFooters desligadas
-    // Antes de escrever a nova linha, verificamos se j· escrevemos o cabeÁalho de relatÛrio
+    // Os cabe√ßalhos e Rodap√©s s√≥ ser√£o escritos se: 1-Ainda n√£o tiverem sido escritos; 2-Se ainda n√£o tiver nenhum bloco escrito na p√°gina; 3-Se o primeiro bloco da p√°gina n√£o tiver as op√ß√µes de forbidHeaders ou forbidFooters desligadas
+    // Antes de escrever a nova linha, verificamos se j√° escrevemos o cabe√ßalho de relat√≥rio
     if (!wroteReportHeader && this.blocksOnPageCount == 0 && !rblock.getForbidHeaders()) {
       final PdfTemplate t = writeReportHeader();
       if (t != null) {
@@ -346,7 +346,7 @@ public abstract class FWListReport extends FWReport {
       }
       this.wroteReportHeader = true;
     }
-    // Em seguida verificamos se precisamos escrever o cabeÁalho de p·gina
+    // Em seguida verificamos se precisamos escrever o cabe√ßalho de p√°gina
     if (!wrotePageHeader && this.blocksOnPageCount == 0 && !rblock.getForbidHeaders()) {
       final PdfTemplate t = writePageHeader();
       if (t != null) {
@@ -358,15 +358,15 @@ public abstract class FWListReport extends FWReport {
     if (!wrotePageFooter && this.blocksOnPageCount == 0 && !rblock.getForbidFooters()) {
       final PdfTemplate t = writePageFooter();
       if (t != null) {
-        // O rodapÈ nÛs escrevemos mas n„o movimentamos "y", j· que ele È escrito no final da p·gina e n„o precisa "empurrar o conte˙do" mais para baixo. Apenas salvamos o seu tamanho para calcular quando a folha acaba
+        // O rodap√© n√≥s escrevemos mas n√£o movimentamos "y", j√° que ele √© escrito no final da p√°gina e n√£o precisa "empurrar o conte√∫do" mais para baixo. Apenas salvamos o seu tamanho para calcular quando a folha acaba
         this.wastePageFooterHeight = t.getHeight();
         cb.addTemplate(t, getCoordFromLeft(0), getCoordFromBottom(0));
       }
       this.wrotePageFooter = true;
     }
-    // Por fim escreve o bloco agora que temos "y" definido de acordo com a posiÁ„o livre do campo
-    y -= +maxBlockHights; // primeiro decrementa a posiÁ„o de y porque o template tem sua origem no canto bottomleft
-    // Calcula a posiÁ„o X para colocar o bloco de acordo com a definiÁ„o de alinhamento
+    // Por fim escreve o bloco agora que temos "y" definido de acordo com a posi√ß√£o livre do campo
+    y -= +maxBlockHights; // primeiro decrementa a posi√ß√£o de y porque o template tem sua origem no canto bottomleft
+    // Calcula a posi√ß√£o X para colocar o bloco de acordo com a defini√ß√£o de alinhamento
     float x = getCoordFromLeft(0); // LEFT
     if (rblock.getAlighnment() == ALIGNMENT.CENTER) {
       x = getCoordFromMiddleX(0) - (template.getWidth() / 2);
@@ -383,7 +383,7 @@ public abstract class FWListReport extends FWReport {
       cb.restoreState();
     } else {
       if (rblock.getOddLineBackgroundColor() != null) {
-        // Verificamos se vamos escrever um background, obviamente antes de escrever o template, e sÛ escrito em linhas pares
+        // Verificamos se vamos escrever um background, obviamente antes de escrever o template, e s√≥ escrito em linhas pares
         if (getReportBean().isPrintOddBackgrounds() && !oddPage) {
           cb.saveState();
           cb.rectangle(x, y - 5, template.getWidth(), template.getHeight());
@@ -392,13 +392,13 @@ public abstract class FWListReport extends FWReport {
           cb.restoreState();
         }
       } else {
-        // Se a cor de fundo est· nula, significa que este bloco n„o "conta" como fundo de linha, neste caso reiniciamos a flag para que o prÛximo bloco que possa ter o fundo pintado seja considerado como bloco Ìmpar.
-        oddPage = false; // Reiniciamos como par, pois logo abaixo o valor ser· invertido
+        // Se a cor de fundo est√° nula, significa que este bloco n√£o "conta" como fundo de linha, neste caso reiniciamos a flag para que o pr√≥ximo bloco que possa ter o fundo pintado seja considerado como bloco √≠mpar.
+        oddPage = false; // Reiniciamos como par, pois logo abaixo o valor ser√° invertido
       }
     }
 
     cb.addTemplate(template, x, y - 5);
-    addReportBlockToCurrentPageIndex(rblock); // Se escrevemos o bloco na p·gina j· o indexamos a esta p·gina
+    addReportBlockToCurrentPageIndex(rblock); // Se escrevemos o bloco na p√°gina j√° o indexamos a esta p√°gina
     blocksOnPageCount++;
     oddPage = !oddPage;
 
@@ -409,7 +409,7 @@ public abstract class FWListReport extends FWReport {
   }
 
   /**
-   * MÈtodo que busca entre todos os templates do block (templates da p·gina principal e laterais) o maior tamanho usado.
+   * M√©todo que busca entre todos os templates do block (templates da p√°gina principal e laterais) o maior tamanho usado.
    *
    * @param rblock Bloco contendo os templates
    * @return
@@ -427,9 +427,9 @@ public abstract class FWListReport extends FWReport {
   }
 
   /**
-   * Este mÈtodo salva um bloco ‡ uma determinada p·gina. Com a vantagem de abstrair a validaÁ„o de j· existir uma List para a p·gina. Se n„o existir uma nova È criada automaticamente. AlÈm de n„o permitir que itens sejam adicionados em duplicidade.
+   * Este m√©todo salva um bloco √† uma determinada p√°gina. Com a vantagem de abstrair a valida√ß√£o de j√° existir uma List para a p√°gina. Se n√£o existir uma nova √© criada automaticamente. Al√©m de n√£o permitir que itens sejam adicionados em duplicidade.
    *
-   * @param rblock Bloco a ser salvo no Ìndice da p·gina.
+   * @param rblock Bloco a ser salvo no √≠ndice da p√°gina.
    */
   private void addReportBlockToCurrentPageIndex(ReportBlock rblock) {
     ArrayList<ReportBlock> pageList = this.pageBlocksIndexMap.get(this.pageCount);
@@ -441,62 +441,62 @@ public abstract class FWListReport extends FWReport {
   }
 
   /**
-   * Este mÈtodo retorna a lista de blocks que est„o atualmente indexados para uma determinada p·gina. Note que este mÈtodo pode retornar nulo se nenhum bloco foi indexado para a p·gina ainda.
+   * Este m√©todo retorna a lista de blocks que est√£o atualmente indexados para uma determinada p√°gina. Note que este m√©todo pode retornar nulo se nenhum bloco foi indexado para a p√°gina ainda.
    *
-   * @param page n˙mero da p·gina que se deseja a lista de blocos.
-   * @return Lista de blocos indexados na p·gina solicitada, ou nulo caso nenhum item tenha sido indexado ainda.
+   * @param page n√∫mero da p√°gina que se deseja a lista de blocos.
+   * @return Lista de blocos indexados na p√°gina solicitada, ou nulo caso nenhum item tenha sido indexado ainda.
    */
   private ArrayList<ReportBlock> getReportBlockFromPageIndex(int page) {
     return this.pageBlocksIndexMap.get(page);
   }
 
   /**
-   * Este mÈtodo È usado para forÁar uma quebra de relatÛrio. Fazendo com que as vari·veis de controle sejam reiniciadas como se tivessemos comeÁando o relatÛrio a partir deste ponto.
+   * Este m√©todo √© usado para for√ßar uma quebra de relat√≥rio. Fazendo com que as vari√°veis de controle sejam reiniciadas como se tivessemos come√ßando o relat√≥rio a partir deste ponto.
    *
    * @throws RFWException
    */
   private void breakReport() throws RFWException {
-    // O primeiro passo È encerrar a p·gina atual e comeÁar uma nova
+    // O primeiro passo √© encerrar a p√°gina atual e come√ßar uma nova
     breakPage();
-    // No entanto ainda temos que reiniciar as vari·veis de relatÛrio:
+    // No entanto ainda temos que reiniciar as vari√°veis de relat√≥rio:
     this.wroteReportHeader = false;
     this.pageCount = 1;
   }
 
   /**
-   * Este mÈtodo È usado para forÁar uma quebra de p·gina.
+   * Este m√©todo √© usado para for√ßar uma quebra de p√°gina.
    *
    * @throws RFWException
    */
   private void breakPage() throws RFWException {
 
-    // Para saber para qual p·gina vamos (para a pagina lateral ou para a p·gina ‡ baixo, temos que ver a definiÁ„o do bean
+    // Para saber para qual p√°gina vamos (para a pagina lateral ou para a p√°gina √† baixo, temos que ver a defini√ß√£o do bean
     if (getReportBean().getVerticalOrderPage()) {
       createPage(true);
     } else {
       ArrayList<ReportBlock> pageBlocks = getReportBlockFromPageIndex(this.pageCount);
 
-      // Se temos que quebrar na horizontal, primeiro calculamos o m·ximo de p·ginas laterais que esta p·gina tem em seu Ìndice (evitando de imprimir p·ginas em branco caso os templates n„o tenham todos p·ginas laterais).
+      // Se temos que quebrar na horizontal, primeiro calculamos o m√°ximo de p√°ginas laterais que esta p√°gina tem em seu √≠ndice (evitando de imprimir p√°ginas em branco caso os templates n√£o tenham todos p√°ginas laterais).
       int maxLateralPages = countMaxSidePages(pageBlocks);
-      // Verificamos se temos mais P·gina lateral para avanÁar ou se j· finalizamos o m·ximo de p·ginas laterais
+      // Verificamos se temos mais P√°gina lateral para avan√ßar ou se j√° finalizamos o m√°ximo de p√°ginas laterais
       if (this.pageSideCount < maxLateralPages + 1) {
         createPage(false);
-        // Note que no caso de avanÁo horizontal ao invÈs do vertical, a lÛgica de iniciar a escrita da prÛxima p·gina fica aqui no break page, afinal aqui conseguimos saber quando a p·gina acabou para avanÁar para a lateral. Quando o avanÁo È vertical, a lÛgica de escrever as p·ginas laterais È controla pelo mÈtodo de writeReportContent
+        // Note que no caso de avan√ßo horizontal ao inv√©s do vertical, a l√≥gica de iniciar a escrita da pr√≥xima p√°gina fica aqui no break page, afinal aqui conseguimos saber quando a p√°gina acabou para avan√ßar para a lateral. Quando o avan√ßo √© vertical, a l√≥gica de escrever as p√°ginas laterais √© controla pelo m√©todo de writeReportContent
         for (ReportBlock rblock : pageBlocks) {
           writeBlockOnCurrentPage(rblock);
         }
-        // A escrita da p·gina lateral n„o chega a quebrar a p·gina pois isso j· foi calculado durante a escrita da p·gina principal. Assim, os blocks indexados na p·gina s„o exatamente a medida da p·gina. Por isso temos que ao final da iteraÁ„o desses blocos quebrar a p·gina novamente.
+        // A escrita da p√°gina lateral n√£o chega a quebrar a p√°gina pois isso j√° foi calculado durante a escrita da p√°gina principal. Assim, os blocks indexados na p√°gina s√£o exatamente a medida da p√°gina. Por isso temos que ao final da itera√ß√£o desses blocos quebrar a p√°gina novamente.
         breakPage();
       } else {
-        createPage(true); // Se n„o temos mais p·ginas para quebrar na horizontal, quebramos na vertical
-        this.pageSideCount = 1; // E neste caso voltamos garantimos que voltamos para a p·gina principal para continuar a iteraÁ„o padr„o.
+        createPage(true); // Se n√£o temos mais p√°ginas para quebrar na horizontal, quebramos na vertical
+        this.pageSideCount = 1; // E neste caso voltamos garantimos que voltamos para a p√°gina principal para continuar a itera√ß√£o padr√£o.
       }
     }
 
   }
 
   private void createPage(boolean isVertical) {
-    // quebramos a p·gina no documento
+    // quebramos a p√°gina no documento
     getDocument().newPage();
 
     if (isVertical) {
@@ -505,10 +505,10 @@ public abstract class FWListReport extends FWReport {
       this.pageSideCount++;
     }
 
-    // Caso ao criar uma nova p·gina ainda estejamos na p·gina 1 (acontece no caso das p·ginas laterais da p·gina 1 sendo criadas) redefinimos que o cabeÁalho de relatÛrio n„o foi escrito para que seja escrito novamente nesta p·gina
+    // Caso ao criar uma nova p√°gina ainda estejamos na p√°gina 1 (acontece no caso das p√°ginas laterais da p√°gina 1 sendo criadas) redefinimos que o cabe√ßalho de relat√≥rio n√£o foi escrito para que seja escrito novamente nesta p√°gina
     if (this.pageCount == 1) this.wroteReportHeader = false;
 
-    // Reinicia valores que quebra de p·gina padr„o, indiferente da direÁ„o quebrada
+    // Reinicia valores que quebra de p√°gina padr√£o, indiferente da dire√ß√£o quebrada
     this.wrotePageFooter = false;
     this.wrotePageHeader = false;
     this.wastePageFooterHeight = 0;
@@ -518,7 +518,7 @@ public abstract class FWListReport extends FWReport {
   }
 
   private int countMaxSidePages(List<ReportBlock> pageBlocks) {
-    int maxLateralPages = 0; // SÛ calcula o total de p·ginas lateral, n„o inclui a p·gina principal
+    int maxLateralPages = 0; // S√≥ calcula o total de p√°ginas lateral, n√£o inclui a p√°gina principal
     if (pageBlocks != null) {
       for (ReportBlock block : pageBlocks) {
         if (block.getTemplateSidePages() != null && block.getTemplateSidePages().length > maxLateralPages) maxLateralPages = block.getTemplateSidePages().length;
@@ -532,7 +532,7 @@ public abstract class FWListReport extends FWReport {
   }
 
   /**
-   * Faz o override apenas para j· deixar o cast certo para esta classe
+   * Faz o override apenas para j√° deixar o cast certo para esta classe
    */
   @Override
   protected FWListReportOptionBean getReportBean() {
@@ -544,8 +544,8 @@ public abstract class FWListReport extends FWReport {
   }
 
   /**
-   * Este mÈtodo deve escrever o rodapÈ de p·gina e retorna-lo como um template.<br>
-   * O RodapÈ de p·gina normalmente apresenta o n˙mero da p·gina e algumas outras informaÁıes sucintas. Noralmente È um conte˙do curto para ocupar pouco espaÁo e evitar o consumo desnecess·rio de folhas.
+   * Este m√©todo deve escrever o rodap√© de p√°gina e retorna-lo como um template.<br>
+   * O Rodap√© de p√°gina normalmente apresenta o n√∫mero da p√°gina e algumas outras informa√ß√µes sucintas. Noralmente √© um conte√∫do curto para ocupar pouco espa√ßo e evitar o consumo desnecess√°rio de folhas.
    */
   protected PdfTemplate writePageFooter() throws RFWException {
     return createTemplatePageFooterModel1(getReportBean().getLocale(), getPageCount(), getPageSideCount());

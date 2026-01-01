@@ -12,17 +12,17 @@ import br.eng.rodrigogml.rfw.kernel.bundle.RFWBundle;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWCriticalException;
 
 /**
- * Description: Classe utilit·ria para ajudar a escrever e criar documentos do Office utilizando a ferramenta POI.<br>
+ * Description: Classe utilit√°ria para ajudar a escrever e criar documentos do Office utilizando a ferramenta POI.<br>
  *
  * @author Rodrigo GML
  * @since 10.0 (21 de dez de 2019)
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUPOI {
 
   private BUPOI() {
-    // Construtor privado para calsse utilit·ria
+    // Construtor privado para calsse utilit√°ria
   }
 
   public static void writeCellValue(Cell cell, Object value) throws RFWCriticalException {
@@ -52,7 +52,7 @@ public class BUPOI {
       } else if (value instanceof Enum<?>) {
         cell.setCellValue(RFWBundle.get((Enum<?>) value));
       } else {
-        throw new RFWCriticalException("N„o foi possÌvel escrever um objeto do tipo '" + value.getClass().getCanonicalName() + "' na cÈlula da planilha.");
+        throw new RFWCriticalException("N√£o foi poss√≠vel escrever um objeto do tipo '" + value.getClass().getCanonicalName() + "' na c√©lula da planilha.");
       }
     }
   }

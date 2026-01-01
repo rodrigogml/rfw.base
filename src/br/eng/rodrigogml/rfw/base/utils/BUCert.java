@@ -61,11 +61,11 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUString;
 import br.eng.rodrigogml.rfw.kernel.utils.RUTypes;
 
 /**
- * Description: Classe utilit·ria com os mÈtodos de manipulaÁ„o de certificados.<BR>
+ * Description: Classe utilit√°ria com os m√©todos de manipula√ß√£o de certificados.<BR>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 5.1.0 (21/10/2013)
- * @deprecated TODOS OS M…TODOS DAS CLASSES UTILIT¡RIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√O DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT¡RIOS ESPECÕFICOS PARA A FUNCIONALIDADE.
+ * @deprecated TODOS OS M√âTODOS DAS CLASSES UTILIT√ÅRIAS DO RFW.BASE DEVEM SER MIGRADAS PARA AS CLASSES DO RFW.KERNEL QUANDO N√ÉO DEPENDEREM DE BIBLIOTECA EXTERNA. QUANDO DEPENDENREM DE BIBILIOTECA EXTERNA DEVEM SER AVALIADAS E CRIADO PROJETOS UTILIT√ÅRIOS ESPEC√çFICOS PARA A FUNCIONALIDADE.
  */
 @Deprecated
 public class BUCert {
@@ -74,7 +74,7 @@ public class BUCert {
   }
 
   /**
-   * Cria um TrustManager que aceita qualquer certificado como v·lido para conexıes SSL.
+   * Cria um TrustManager que aceita qualquer certificado como v√°lido para conex√µes SSL.
    *
    * @return
    * @throws RFWException
@@ -98,22 +98,22 @@ public class BUCert {
   }
 
   /**
-   * Cria um TrustManager para ser usado em conexıes SSL a partir de cadeias de certificados carregados de um arquivo criado pelo keytool (KeyStore).<Br>
-   * Melhor explicaÁ„o de como usar o keytool na documentaÁ„o do Framework.
+   * Cria um TrustManager para ser usado em conex√µes SSL a partir de cadeias de certificados carregados de um arquivo criado pelo keytool (KeyStore).<Br>
+   * Melhor explica√ß√£o de como usar o keytool na documenta√ß√£o do Framework.
    *
    * @param in arquivo com uma ou mais cadeias de certificados para serem confiados.
-   * @param pass senha do arquivo para importaÁ„o dos certificados.
+   * @param pass senha do arquivo para importa√ß√£o dos certificados.
    * @return
    * @throws RFWException
    *           <li>RFW_ERR_000002 - Falha ao abrir certificado. Verifique o arquivo e a senha.
    */
   public static TrustManager[] createTrustManager(final InputStream in, final String pass) throws RFWException {
     try {
-      // Cria um novo KeyStore com o tipo de algorÌtimo JKS
+      // Cria um novo KeyStore com o tipo de algor√≠timo JKS
       KeyStore truststore = KeyStore.getInstance("JKS");
       truststore.load(in, pass.toCharArray());
       try {
-        // Uma vez que j· foi lido, forÁamos seu fechamento para garantir que n„o teremos vazamento de recurso, mas se falhar n„o ligamos, logamos mas continuamos o mÈtodo.
+        // Uma vez que j√° foi lido, for√ßamos seu fechamento para garantir que n√£o teremos vazamento de recurso, mas se falhar n√£o ligamos, logamos mas continuamos o m√©todo.
         in.close();
       } catch (Exception e) {
         RFWLogger.logException(e);
@@ -137,12 +137,12 @@ public class BUCert {
   }
 
   /**
-   * Coloca a KeyStore dentro da KeyManager do java. Essas Keymanager podem ser usadas nas conexıes SSL para autenticar a origem da conex„o.<br>
-   * Utiliza o Algoritimo "SunX509" como padr„o do certificado.
+   * Coloca a KeyStore dentro da KeyManager do java. Essas Keymanager podem ser usadas nas conex√µes SSL para autenticar a origem da conex√£o.<br>
+   * Utiliza o Algoritimo "SunX509" como padr√£o do certificado.
    *
-   * @param clientkeystore KeyStore contendo o certificado do usu·rio.
+   * @param clientkeystore KeyStore contendo o certificado do usu√°rio.
    * @param certpass Senha da KeyStore.
-   * @return Array com as KeyManager atualmente carregadas na aplicaÁ„o.
+   * @return Array com as KeyManager atualmente carregadas na aplica√ß√£o.
    * @throws RFWException
    *           <li>RFW_ERR_000002 - Falha ao abrir certificado. Verifique o arquivo e a senha.
    */
@@ -158,7 +158,7 @@ public class BUCert {
   }
 
   /**
-   * Este mÈtodo carrega um certificado do tipo A1 dentro de uma keystore.<br>
+   * Este m√©todo carrega um certificado do tipo A1 dentro de uma keystore.<br>
    *
    * @param certpfx InputStream com o arquivo do certificado A1.
    * @param certpass Senha para acesso do certificado.
@@ -177,15 +177,15 @@ public class BUCert {
   }
 
   /**
-   * Este mÈtodo retorna o fingerprint MD5 do certificado.
+   * Este m√©todo retorna o fingerprint MD5 do certificado.
    *
    * @param certificate instancia do certificado.
    * @return retorna o fingerprint do certificado, Ex: '1A:DE:60:21:DE:B1:BF:C3:D1:AD:11:F1:21:22:D7:9E'
-   * @throws RFWException LanÁado caso o certificado n„o possua algorÌtimo MD5, ou ocorra algum erro ao decodificar o certificado.
+   * @throws RFWException Lan√ßado caso o certificado n√£o possua algor√≠timo MD5, ou ocorra algum erro ao decodificar o certificado.
    */
   public static String getMD5FingerPrintFromCertificate(Certificate certificate) throws RFWException {
     /*
-     * Este cÛdigo foi criado com base no cÛdigo fonte da ferramenta keytool fornecida junto com o java. N„o sei explicar exatamente seu funcionamento nem hoje, que estou implementando, n„o me pergunte no futuro! Link do SourceCode usado de Base: http://www.docjar.com/html/api/sun/security/tools/KeyTool.java.html
+     * Este c√≥digo foi criado com base no c√≥digo fonte da ferramenta keytool fornecida junto com o java. N√£o sei explicar exatamente seu funcionamento nem hoje, que estou implementando, n√£o me pergunte no futuro! Link do SourceCode usado de Base: http://www.docjar.com/html/api/sun/security/tools/KeyTool.java.html
      */
     try {
       byte[] digest = MessageDigest.getInstance("MD5").digest(certificate.getEncoded());
@@ -205,21 +205,21 @@ public class BUCert {
     } catch (NoSuchAlgorithmException e) {
       throw new RFWValidationException("RFW_ERR_200219", e);
     } catch (CertificateEncodingException e) {
-      // LanÁado como erro crÌtico porque n„o sei quando esse erro ocorrer·, a medida que for acontecendo vamos melhorando o tratamento do erro
+      // Lan√ßado como erro cr√≠tico porque n√£o sei quando esse erro ocorrer√°, a medida que for acontecendo vamos melhorando o tratamento do erro
       throw new RFWCriticalException("RFW_ERR_200220", e);
     }
   }
 
   /**
-   * Este mÈtodo retorna o fingerprint SHA1 do certificado.
+   * Este m√©todo retorna o fingerprint SHA1 do certificado.
    *
    * @param certificate instancia do certificado.
    * @return retorna o fingerprint do certificado, Ex: '72:3A:D9:2E:1A:DE:60:21:DE:B1:BF:C3:D1:AD:11:F1:21:22:D7:9E'
-   * @throws RFWException LanÁado caso o certificado n„o possua algorÌtimo SHA1, ou ocorra algum erro ao decodificar o certificado.
+   * @throws RFWException Lan√ßado caso o certificado n√£o possua algor√≠timo SHA1, ou ocorra algum erro ao decodificar o certificado.
    */
   public static String getSHA1FingerPrintFromCertificate(Certificate certificate) throws RFWException {
     /*
-     * Este cÛdigo foi criado com base no cÛdigo fonte da ferramenta keytool fornecida junto com o java. N„o sei explicar exatamente seu funcionamento nem hoje, que estou implementando, n„o me pergunte no futuro! Link do SourceCode usado de Base: http://www.docjar.com/html/api/sun/security/tools/KeyTool.java.html
+     * Este c√≥digo foi criado com base no c√≥digo fonte da ferramenta keytool fornecida junto com o java. N√£o sei explicar exatamente seu funcionamento nem hoje, que estou implementando, n√£o me pergunte no futuro! Link do SourceCode usado de Base: http://www.docjar.com/html/api/sun/security/tools/KeyTool.java.html
      */
     try {
       byte[] digest = MessageDigest.getInstance("SHA1").digest(certificate.getEncoded());
@@ -239,15 +239,15 @@ public class BUCert {
     } catch (NoSuchAlgorithmException e) {
       throw new RFWValidationException("RFW_ERR_200219", e);
     } catch (CertificateEncodingException e) {
-      // LanÁado como erro crÌtico porque n„o sei quando esse erro ocorrer·, a medida que for acontecendo vamos melhorando o tratamento do erro
+      // Lan√ßado como erro cr√≠tico porque n√£o sei quando esse erro ocorrer√°, a medida que for acontecendo vamos melhorando o tratamento do erro
       throw new RFWCriticalException("RFW_ERR_200220", e);
     }
   }
 
   /**
-   * Este mÈtodo carrega certificados do tipo A3 dentro de uma keystore, do primeiro provider que encontrar.<br>
-   * Para encontrar um certificado mais precisamente, verifique outros mÈtodos que carregam os providers e listam seus certificados.<br>
-   * <b>Lembre-se que em casos de haver mais de um cart„o/token ligado a m·quina o sistema pode usar a senha no cart„o errada, e a insistÍncia da operaÁ„o pode travar o device atÈ que a senha PUK seja colocada.</b>
+   * Este m√©todo carrega certificados do tipo A3 dentro de uma keystore, do primeiro provider que encontrar.<br>
+   * Para encontrar um certificado mais precisamente, verifique outros m√©todos que carregam os providers e listam seus certificados.<br>
+   * <b>Lembre-se que em casos de haver mais de um cart√£o/token ligado a m√°quina o sistema pode usar a senha no cart√£o errada, e a insist√™ncia da opera√ß√£o pode travar o device at√© que a senha PUK seja colocada.</b>
    *
    * @param certpass Senha para ser usada no equipamento.
    * @return
@@ -258,16 +258,16 @@ public class BUCert {
   }
 
   /**
-   * Este mÈtodo carrega certificados do tipo A3 dentro de uma keystore.<br>
-   * Caso exista mais de um certificado do mesmo provider, todos ser„o importados para dentro da mesma KeyStore, cada um com seu Alias.<br>
-   * No caso de m˙ltiplos tokens (devices) que compartilhem o mesmo "name" de provider, È necess·rio saber o nome extado do provider, carregado no slot correto! Para ter uma lista dos providers completa e seus slots disponÌveis consulte outros mÈtodos.
+   * Este m√©todo carrega certificados do tipo A3 dentro de uma keystore.<br>
+   * Caso exista mais de um certificado do mesmo provider, todos ser√£o importados para dentro da mesma KeyStore, cada um com seu Alias.<br>
+   * No caso de m√∫ltiplos tokens (devices) que compartilhem o mesmo "name" de provider, √© necess√°rio saber o nome extado do provider, carregado no slot correto! Para ter uma lista dos providers completa e seus slots dispon√≠veis consulte outros m√©todos.
    *
    * @param certpass Senha para acesso do certificado.
    * @param provider Nome do provedor do certificado.
    * @return
    * @throws RFWException
    *           <li>RFW_ERR_000002 - Falha ao abrir certificado. Verifique o arquivo e a senha.
-   *           <li>RFW_ERR_000003 - Login inv·lido para abrir o certificado! Verifique a senha e tente novamente.
+   *           <li>RFW_ERR_000003 - Login inv√°lido para abrir o certificado! Verifique a senha e tente novamente.
    */
   public static KeyStore loadKeyStoreFromPKCS11(String certpass, String provider) throws RFWException {
     try {
@@ -290,8 +290,8 @@ public class BUCert {
   // *
   // *
   // * @param librarypath caminho completo para a biblioteca do equipamento (Token/SmartCard), .dll para Windows ou .so para linux.
-  // * @return Slots que podem ser utilizados para carregar o provider desejado. Retorna um Array de tamanho 0 se conseguir carregar a biblioteca mas n„o encontrar nenhum dispositivo, como nenhum cart„o inserido ou tokenUSB plugado.
-  // * @throws RFWException LanÁado caso ocorra algum problema ao executar a operaÁ„o.
+  // * @return Slots que podem ser utilizados para carregar o provider desejado. Retorna um Array de tamanho 0 se conseguir carregar a biblioteca mas n√£o encontrar nenhum dispositivo, como nenhum cart√£o inserido ou tokenUSB plugado.
+  // * @throws RFWException Lan√ßado caso ocorra algum problema ao executar a opera√ß√£o.
   // */
   // public static long[] getSlotsPKCS11(String librarypath) throws RFWException {
   // CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
@@ -324,13 +324,13 @@ public class BUCert {
   // }
 
   // /**
-  // * Obtem um objeto com as informaÁıes do token de um determinado slot de uma biblioteca PKCS11.<br>
+  // * Obtem um objeto com as informa√ß√µes do token de um determinado slot de uma biblioteca PKCS11.<br>
   // *
   // *
   // * @param librarypath caminho completo para a biblioteca do equipamento (Token/SmartCard), .dll para Windows ou .so para linux.
-  // * @param slot n˙mero do slot do device que desejamos obter informaÁıes do token inserido.
-  // * @return Objeto com as informaÁıes obtidas do device plugado nesse slot.
-  // * @throws RFWException LanÁado caso ocorra algum problema ao executar a operaÁ„o.
+  // * @param slot n√∫mero do slot do device que desejamos obter informa√ß√µes do token inserido.
+  // * @return Objeto com as informa√ß√µes obtidas do device plugado nesse slot.
+  // * @throws RFWException Lan√ßado caso ocorra algum problema ao executar a opera√ß√£o.
   // */
   // public static CK_TOKEN_INFO getTokenInfoPKCS11(String librarypath, long slot) throws RFWException {
   // CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
@@ -361,13 +361,13 @@ public class BUCert {
   // }
 
   // /**
-  // * Obtem um objeto com as informaÁıes de um determinado slot de uma biblioteca PKCS11.<br>
+  // * Obtem um objeto com as informa√ß√µes de um determinado slot de uma biblioteca PKCS11.<br>
   // *
   // *
   // * @param librarypath caminho completo para a biblioteca do equipamento (Token/SmartCard), .dll para Windows ou .so para linux.
-  // * @param slot n˙mero do slot do device que desejamos obter informaÁıes.
-  // * @return Objeto com as informaÁıes obtidas do device plugado nesse slot.
-  // * @throws RFWException LanÁado caso ocorra algum problema ao executar a operaÁ„o.
+  // * @param slot n√∫mero do slot do device que desejamos obter informa√ß√µes.
+  // * @return Objeto com as informa√ß√µes obtidas do device plugado nesse slot.
+  // * @throws RFWException Lan√ßado caso ocorra algum problema ao executar a opera√ß√£o.
   // */
   // public static CK_SLOT_INFO getSlotsInfoPKCS11(String librarypath, long slot) throws RFWException {
   // CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
@@ -398,13 +398,13 @@ public class BUCert {
   // }
 
   // /**
-  // * MÈtodo auxiliar que retorna uma lista com todos os atributos que puderam ser lidos do objeto encontrado dentro de um Token.<br>
-  // * <b>Note que nem todos os atributos s„o suportados por todos os tipos de objetos, esse mÈtodo ignora os atributos que resultaram em erro automaticamente.</b><br>
-  // * Antes de chamar esse mÈtodo o mÈtodo C_FindObjects j· deve ter sido evocado e, depois do retorno desse mÈtodo, deve ser fechado e tratado normalmente.
+  // * M√©todo auxiliar que retorna uma lista com todos os atributos que puderam ser lidos do objeto encontrado dentro de um Token.<br>
+  // * <b>Note que nem todos os atributos s√£o suportados por todos os tipos de objetos, esse m√©todo ignora os atributos que resultaram em erro automaticamente.</b><br>
+  // * Antes de chamar esse m√©todo o m√©todo C_FindObjects j√° deve ter sido evocado e, depois do retorno desse m√©todo, deve ser fechado e tratado normalmente.
   // *
-  // * @param tmpPKCS11 objeto com sess„o aberta para o device.
-  // * @param session ID de sess„o aberta para a a consulta.
-  // * @param findindex Ìndice do objeto retornado na busca para obter os parametros.
+  // * @param tmpPKCS11 objeto com sess√£o aberta para o device.
+  // * @param session ID de sess√£o aberta para a a consulta.
+  // * @param findindex √≠ndice do objeto retornado na busca para obter os parametros.
   // *
   // * @return Lista com todos os atributos que retornaram sem erro na consulta do objeto.
   // */
@@ -422,16 +422,16 @@ public class BUCert {
   // CK_ATTRIBUTE(PKCS11Constants.CKA_VALUE_LEN), new CK_ATTRIBUTE(PKCS11Constants.CKA_VENDOR_DEFINED), new CK_ATTRIBUTE(PKCS11Constants.CKA_VERIFY), new CK_ATTRIBUTE(PKCS11Constants.CKA_VERIFY_RECOVER), new CK_ATTRIBUTE(PKCS11Constants.CKA_WRAP) };
   // final List<CK_ATTRIBUTE> resultlist = new ArrayList<>();
   //
-  // // Itera cada attriuto em busca dos atributos v·lidos para este objeto
+  // // Itera cada attriuto em busca dos atributos v√°lidos para este objeto
   // for (int i = 0; i < attributes.length; i++) {
   // CK_ATTRIBUTE[] cka = new CK_ATTRIBUTE[1];
   // cka[0] = attributes[i];
   // try {
-  // // LÍ os objetos
+  // // L√™ os objetos
   // tmpPKCS11.C_GetAttributeValue(session, findindex, cka);
   // resultlist.add(cka[0]);
   // } catch (PKCS11Exception e) {
-  // // se n„o È suportado nem verificamos erro, apenas seguimos para o prÛximo atributo e n„o o adicionamos na lista de retorno
+  // // se n√£o √© suportado nem verificamos erro, apenas seguimos para o pr√≥ximo atributo e n√£o o adicionamos na lista de retorno
   // }
   // }
   // // retorna lista final
@@ -442,9 +442,9 @@ public class BUCert {
   // * Conecta-se no dispositivo e obtem uma lista de atributos de cada objeto encontrado no dispositivo.
   // *
   // * @param librarypath biblioteca de acesso ao dispositivo
-  // * @param slot n˙mero do slot do objeto.
+  // * @param slot n√∫mero do slot do objeto.
   // * @return Lista com uma lista de atributos encontrados em cada objeto.
-  // * @throws RFWException LanÁado caso n„o seja possÌvel concluir algum passo.
+  // * @throws RFWException Lan√ßado caso n√£o seja poss√≠vel concluir algum passo.
   // */
   // public static List<List<CK_ATTRIBUTE>> getSlotsObjectsInfoPKCS11(String librarypath, long slot) throws RFWException {
   // CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
@@ -470,7 +470,7 @@ public class BUCert {
   //
   // long session = -1;
   // try {
-  // // Abre a sess„o com o dispositivo
+  // // Abre a sess√£o com o dispositivo
   // session = tmpPKCS11.C_OpenSession(slot, PKCS11Constants.CKF_SERIAL_SESSION, null, null);
   //
   // // Cria o filtro dos objetos que queremos buscar
@@ -480,7 +480,7 @@ public class BUCert {
   // attributes[0].pValue = true;
   // tmpPKCS11.C_FindObjectsInit(session, attributes);
   //
-  // // Lista que retornar· com as informaÁıes
+  // // Lista que retornar√° com as informa√ß√µes
   // final List<List<CK_ATTRIBUTE>> objectsinfolist = new ArrayList<>();
   //
   // // Buscamos os objetos
@@ -513,10 +513,10 @@ public class BUCert {
   // }
 
   // /**
-  // * Este mÈtodo tenta carregar todos os "Provider" possÌveis (conhecidos por esta classe) para certificados tipo A3.<br>
+  // * Este m√©todo tenta carregar todos os "Provider" poss√≠veis (conhecidos por esta classe) para certificados tipo A3.<br>
   // *
   // * @throws RFWException Caso nenhum provider suportado/conhecido pelo Framework possa ser encontrado.
-  // * @Deprecated Este mÈtodo deve ser inutilizado por manter os caminhos das bibliotexas constantes.
+  // * @Deprecated Este m√©todo deve ser inutilizado por manter os caminhos das bibliotexas constantes.
   // */
   // public static void loadProvidersA3Token() throws RFWException {
   // // p = new sun.security.pkcs11.SunPKCS11(getClass().getClassLoader().getResourceAsStream("token_smartcard.cfg"));
@@ -584,7 +584,7 @@ public class BUCert {
   // }
 
   /**
-   * Este mÈtodo verifica j· temos o provider de seguranÁa SSL carregado no sistema. Se n„o encontrar, iniciamos e carregarmos na VM. Providers necess·rios para certificados do tipo A1.<br>
+   * Este m√©todo verifica j√° temos o provider de seguran√ßa SSL carregado no sistema. Se n√£o encontrar, iniciamos e carregarmos na VM. Providers necess√°rios para certificados do tipo A1.<br>
    *
    * @throws RFWException Caso nenhum provider suportado/conhecido pelo RFWDeprec possa ser encontrado.
    */
@@ -596,8 +596,8 @@ public class BUCert {
       try {
         // p = new com.sun.net.ssl.internal.ssl.Provider();
         // Security.addProvider(p);
-        // Troquei as linhas acima pela linha a seguir, pq diz j· carregar o provider e n„o gera o warning do acesso interno ‡ classe SunPKCS11
-        SSLContext.getInstance("TLS"); // Isso j· carrega o provider necess·rio
+        // Troquei as linhas acima pela linha a seguir, pq diz j√° carregar o provider e n√£o gera o warning do acesso interno √† classe SunPKCS11
+        SSLContext.getInstance("TLS"); // Isso j√° carrega o provider necess√°rio
         loaded = true;
       } catch (ProviderException e) {
       } catch (NoSuchAlgorithmException e) {
@@ -607,14 +607,14 @@ public class BUCert {
       loaded = true;
     }
     if (!loaded) {
-      throw new RFWWarningException("Falha ao encontrar/carregar o Provider de seguranÁa para certificados A1");
+      throw new RFWWarningException("Falha ao encontrar/carregar o Provider de seguran√ßa para certificados A1");
     }
   }
 
   /**
-   * Este mÈtodo retorna uma string com as informaÁıes coletadas do Certificado.
+   * Este m√©todo retorna uma string com as informa√ß√µes coletadas do Certificado.
    *
-   * @return String com as informaÁıes coletadas do Certificado
+   * @return String com as informa√ß√µes coletadas do Certificado
    * @throws RFWException
    */
   public static String getCertificateInfo(Certificate certificate) throws RFWException {
@@ -638,12 +638,12 @@ public class BUCert {
       try {
         buff.append("\tMD5:").append(BUCert.getMD5FingerPrintFromCertificate(certificate)).append('\n');
       } catch (Exception e) {
-        // SÛ n„o escreve se n„o tiver fingerprint md5
+        // S√≥ n√£o escreve se n√£o tiver fingerprint md5
       }
       try {
         buff.append("\tSHA1:").append(BUCert.getSHA1FingerPrintFromCertificate(certificate)).append('\n');
       } catch (Exception e) {
-        // SÛ n„o escreve se n„o tiver fingerprint sha1
+        // S√≥ n√£o escreve se n√£o tiver fingerprint sha1
       }
       buff.append("\tSignature algorithm name: ").append(x509.getSigAlgName()).append('\n');
       buff.append("\tVersion: ").append(x509.getVersion()).append('\n');
@@ -661,8 +661,8 @@ public class BUCert {
   }
 
   /**
-   * Este mÈtodo retorna uma string com as informaÁıes coletadas do Certificado montadas em um Array BiDimensional String[x][y].<br>
-   * Onde x tem tamanho indefinido de acordo com a quantidade de parametros encontratos no certificado; e y vai de 0 ‡ 1, sendo 0 o tÌtulo do atributo e 1 o valor do atributo.
+   * Este m√©todo retorna uma string com as informa√ß√µes coletadas do Certificado montadas em um Array BiDimensional String[x][y].<br>
+   * Onde x tem tamanho indefinido de acordo com a quantidade de parametros encontratos no certificado; e y vai de 0 √† 1, sendo 0 o t√≠tulo do atributo e 1 o valor do atributo.
    *
    * @return
    * @throws RFWException
@@ -713,9 +713,9 @@ public class BUCert {
   }
 
   /**
-   * Este mÈtodo retorna uma string com as informaÁıes coletadas do Certificado montadas em um Array BiDimensional String[x][y].<br>
-   * Onde x tem tamanho indefinido de acordo com a quantidade de parametros encontratos no certificado; e y vai de 0 ‡ 1, sendo 0 o tÌtulo do atributo e 1 o valor do atributo.<br>
-   * A didiferenÁa deste mÈtodo para o {@link #getCertificateInfoArray(Certificate)} È que este mÈtodo utiliza a biblioteca BouncyCastle e adentra as informaÁıes adicionais do certificado.
+   * Este m√©todo retorna uma string com as informa√ß√µes coletadas do Certificado montadas em um Array BiDimensional String[x][y].<br>
+   * Onde x tem tamanho indefinido de acordo com a quantidade de parametros encontratos no certificado; e y vai de 0 √† 1, sendo 0 o t√≠tulo do atributo e 1 o valor do atributo.<br>
+   * A didiferen√ßa deste m√©todo para o {@link #getCertificateInfoArray(Certificate)} √© que este m√©todo utiliza a biblioteca BouncyCastle e adentra as informa√ß√µes adicionais do certificado.
    *
    * @return
    * @throws RFWException
@@ -783,7 +783,7 @@ public class BUCert {
 
               if ((valueOfTag != null) && (!"".equals(valueOfTag))) {
                 if (asn1ObjectIdentifier.equals(new ASN1ObjectIdentifier("2.16.76.1.3.2"))) {
-                  topic.add("Nome do Respons·vel");
+                  topic.add("Nome do Respons√°vel");
                   value.add(valueOfTag);
                 } else if (asn1ObjectIdentifier.equals(new ASN1ObjectIdentifier("2.16.76.1.3.3"))) {
                   topic.add("CNPJ/CPF");
@@ -810,11 +810,11 @@ public class BUCert {
   }
 
   /**
-   * Este mÈtodo retorna a data de inÌcio de vigÍncia (validade) do certificado.
+   * Este m√©todo retorna a data de in√≠cio de vig√™ncia (validade) do certificado.
    *
    * @return
    * @throws RFWException
-   *           <li>RFW_ERR_000001 - Caso n„o seja possÌvel lÍr a data do certificado.
+   *           <li>RFW_ERR_000001 - Caso n√£o seja poss√≠vel l√™r a data do certificado.
    */
   public static LocalDateTime getCertificateValidityStart(Certificate certificate) throws RFWException {
     Date dt = null;
@@ -829,11 +829,11 @@ public class BUCert {
   }
 
   /**
-   * Este mÈtodo retorna a data de fim de vigÍncia (validade) do certificado.
+   * Este m√©todo retorna a data de fim de vig√™ncia (validade) do certificado.
    *
    * @return
    * @throws RFWException
-   *           <li>RFW_ERR_000001 - Caso n„o seja possÌvel lÍr a data do certificado.
+   *           <li>RFW_ERR_000001 - Caso n√£o seja poss√≠vel l√™r a data do certificado.
    */
   public static LocalDateTime getCertificateValidityEnd(Certificate certificate) throws RFWException {
     Date dt = null;
@@ -849,10 +849,10 @@ public class BUCert {
 
   /**
    * Tenta encontrar o CNPJ do certificado.<br>
-   * Por padr„o o certificado para emiss„o de NFe tem o CNPJ no OID "2.16.76.1.3.3.", e È esta informaÁ„o do certificado que este mÈtodo procura e retorna.
+   * Por padr√£o o certificado para emiss√£o de NFe tem o CNPJ no OID "2.16.76.1.3.3.", e √© esta informa√ß√£o do certificado que este m√©todo procura e retorna.
    *
    * @param certificate
-   * @return CNPJ sem formataÁ„o, ou null caso o valor n„o seja encontrado no certificado
+   * @return CNPJ sem formata√ß√£o, ou null caso o valor n√£o seja encontrado no certificado
    * @throws RFWException
    */
   public static String getCertificateCNPJ(Certificate certificate) throws RFWException {
@@ -898,11 +898,11 @@ public class BUCert {
 
   // /**
   // * Tenta encontrar o CNPJ do certificado.<br>
-  // * Por padr„o o certificado para emiss„o de NFe tem o CNPJ no OID "2.16.76.1.3.3.", e È esta informaÁ„o do certificado que este mÈtodo procura e retorna.
+  // * Por padr√£o o certificado para emiss√£o de NFe tem o CNPJ no OID "2.16.76.1.3.3.", e √© esta informa√ß√£o do certificado que este m√©todo procura e retorna.
   // *
   // * @param certificate Objeto {@link RFWCertificateVO} com o certificado dentro
   // * @return
-  // * @return CNPJ sem formataÁ„o, ou null caso o valor n„o seja encontrado no certificado
+  // * @return CNPJ sem formata√ß√£o, ou null caso o valor n√£o seja encontrado no certificado
   // * @throws RFWException
   // */
   // public static String getCertificateCNPJ(CertificateVO certVO) throws RFWException {
@@ -927,13 +927,13 @@ public class BUCert {
   // }
 
   /**
-   * Cria uma Hash do conte˙do com o SHA-256 e o assina com a chave privada do certificado passado. O conte˙do assinado È retornado em uma String de base 64.<br>
-   * Este tipo de assinatura È utilizado para gerar o cÛdigo de vinculaÁ„o do SAT, favor n„o alterar seu conte˙do/modo de operaÁ„o.
+   * Cria uma Hash do conte√∫do com o SHA-256 e o assina com a chave privada do certificado passado. O conte√∫do assinado √© retornado em uma String de base 64.<br>
+   * Este tipo de assinatura √© utilizado para gerar o c√≥digo de vincula√ß√£o do SAT, favor n√£o alterar seu conte√∫do/modo de opera√ß√£o.
    *
    * @return
    */
   public static String signContentSHA256andRSA(final String content, final KeyStore keyStore, final String alias, final String pin) throws RFWException {
-    // throw new RFWCriticalException("Desde a atualizaÁ„o do BounceCastle, este mÈtodo precisa de revis„o! - signContentSHA256andRSA(...)");
+    // throw new RFWCriticalException("Desde a atualiza√ß√£o do BounceCastle, este m√©todo precisa de revis√£o! - signContentSHA256andRSA(...)");
     try {
       PrivateKey pKey = (PrivateKey) keyStore.getKey(alias, pin.toCharArray());
 
@@ -948,7 +948,7 @@ public class BUCert {
       rsaSignature.initSign(pKey);
       rsaSignature.update(di.toASN1Primitive().getEncoded());
       byte[] signed = rsaSignature.sign();
-      // Codifica na base 64 e remove os "enters" e espaÁos da string
+      // Codifica na base 64 e remove os "enters" e espa√ßos da string
       final String finalKey = RUString.encodeMimeBase64(signed).replaceAll("[\r\n ]", "");
       return finalKey;
     } catch (Throwable e) {
@@ -957,10 +957,10 @@ public class BUCert {
   }
 
   /**
-   * Este mÈtodo aplica ‡ um {@link HttpsURLConnection} os certificados encontrados no KeyStore (que deve estar no mesmo pacote desta classe em "keystore/keystore.jks").<br>
-   * … preciso incluir neste keystore o certificado dos endereÁos em que ser· possÌvel realizar uma conex„o https.
+   * Este m√©todo aplica √† um {@link HttpsURLConnection} os certificados encontrados no KeyStore (que deve estar no mesmo pacote desta classe em "keystore/keystore.jks").<br>
+   * √â preciso incluir neste keystore o certificado dos endere√ßos em que ser√° poss√≠vel realizar uma conex√£o https.
    *
-   * @param conn Conex„o a ser preparada para aceitar o HTTPS.
+   * @param conn Conex√£o a ser preparada para aceitar o HTTPS.
    * @throws RFWException
    */
   public static void configureSSLCertificatesOnConnection(HttpsURLConnection conn) throws RFWException {
@@ -972,7 +972,7 @@ public class BUCert {
     } catch (KeyManagementException e) {
       throw new RFWCriticalException("Falha gerenciar o arquivo de certificados.", e);
     } catch (NoSuchAlgorithmException e) {
-      throw new RFWCriticalException("Falha ao recuperar o protocolo SSL para conex„o.", e);
+      throw new RFWCriticalException("Falha ao recuperar o protocolo SSL para conex√£o.", e);
     }
   }
 }

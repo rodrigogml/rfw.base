@@ -22,9 +22,9 @@ import br.eng.rodrigogml.rfw.kernel.utils.RUGenerators;
 import br.eng.rodrigogml.rfw.kernel.vo.RFWRecursiveClonable;
 
 /**
- * Description: Claase interceptadora da chamada da fachada para verificaÁ„o de sess„o, autorizaÁ„o e necessidade de rollback.<br>
+ * Description: Claase interceptadora da chamada da fachada para verifica√ß√£o de sess√£o, autoriza√ß√£o e necessidade de rollback.<br>
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 10.0.0 (12 de jul de 2018)
  */
 @Interceptor
@@ -42,45 +42,45 @@ public class SMInterceptor {
     boolean commited = false;
 
     try {
-      // Por padr„o o Security Espera sempre que o primeiro parametro seja o UUID de uma transaÁ„o v·lida. SÛ "pulamos" a validaÁ„o da transaÁ„o se o mÈtodo chamado tiver a Annotation
+      // Por padr√£o o Security Espera sempre que o primeiro parametro seja o UUID de uma transa√ß√£o v√°lida. S√≥ "pulamos" a valida√ß√£o da transa√ß√£o se o m√©todo chamado tiver a Annotation
       final Security annSec = ctx.getMethod().getAnnotation(Security.class);
-      // Validamos a seguranÁa de acordo com as definiÁıes do mÈtodo
-      SecurityAction action = SecurityAction.HASSESSION; // Define como a aÁ„o padr„o caso n„o tenha a annotation
+      // Validamos a seguran√ßa de acordo com as defini√ß√µes do m√©todo
+      SecurityAction action = SecurityAction.HASSESSION; // Define como a a√ß√£o padr√£o caso n√£o tenha a annotation
       if (annSec != null) action = annSec.action();
-      SessionVO ssVO = null; // Salva a sess„o se conseguir identifica-la
+      SessionVO ssVO = null; // Salva a sess√£o se conseguir identifica-la
       switch (action) {
         case SKIP:
-          // N„o faz nada
+          // N√£o faz nada
           break;
         case HASSESSION: {
-          // Verificamos se recebemos uma sess„o v·lida
+          // Verificamos se recebemos uma sess√£o v√°lida
           int type = checkSession(ctx, parameters);
-          if (type != 0 && type != 1) throw new RFWCriticalException("O mÈtodo exige uma sess„o v·lida! Nenhum UUID ou TOKEN v·lido foi encontrado!");
-          // Se È uma chave v·lida, verificamos se a sess„o È v·lida. Se a sess„o n„o for v·lida o mÈtodo lanÁar· a exception
+          if (type != 0 && type != 1) throw new RFWCriticalException("O m√©todo exige uma sess√£o v√°lida! Nenhum UUID ou TOKEN v√°lido foi encontrado!");
+          // Se √© uma chave v√°lida, verificamos se a sess√£o √© v√°lida. Se a sess√£o n√£o for v√°lida o m√©todo lan√ßar√° a exception
           ssVO = SessionManager.getSession((String) parameters[0]);
-          // Se n„o deu exception, a transaÁ„o È v·lida, registramos a sess„o nesta Thread
+          // Se n√£o deu exception, a transa√ß√£o √© v√°lida, registramos a sess√£o nesta Thread
           SessionManager.attachSessionToThread(Thread.currentThread(), ssVO.getUUID());
         }
           break;
         case HASKEY: {
-          // Verificamos se recebemos uma sess„o v·lida
+          // Verificamos se recebemos uma sess√£o v√°lida
           int type = checkSession(ctx, parameters);
-          if (type != 0 && type != 1) throw new RFWCriticalException("O mÈtodo exige uma sess„o v·lida! Nenhum UUID ou TOKEN v·lido foi encontrado!");
-          // Se È uma chave v·lida, verificamos se a sess„o È v·lida. Se a sess„o n„o for v·lida o mÈtodo lanÁar· a exception
+          if (type != 0 && type != 1) throw new RFWCriticalException("O m√©todo exige uma sess√£o v√°lida! Nenhum UUID ou TOKEN v√°lido foi encontrado!");
+          // Se √© uma chave v√°lida, verificamos se a sess√£o √© v√°lida. Se a sess√£o n√£o for v√°lida o m√©todo lan√ßar√° a exception
           ssVO = SessionManager.getSession((String) parameters[0]);
-          // Verificamos se o usu·rio tem a chave definida
+          // Verificamos se o usu√°rio tem a chave definida
           if (!ssVO.hasAccess(annSec.key())) throw new RFWWarningException("RFW_ERR_300070", new String[] { ssVO.getUser(), RUArray.concatArrayIntoString(annSec.key(), 999) });
-          // Se n„o deu exception, a transaÁ„o È v·lida, registramos a sess„o nesta Thread
+          // Se n√£o deu exception, a transa√ß√£o √© v√°lida, registramos a sess√£o nesta Thread
           SessionManager.attachSessionToThread(Thread.currentThread(), ssVO.getUUID());
         }
           break;
         case HASTOKENSESSION: {
-          // Verificamos se recebemos uma sess„o v·lida
+          // Verificamos se recebemos uma sess√£o v√°lida
           int type = checkSession(ctx, parameters);
-          if (type != 1) throw new RFWCriticalException("O mÈtodo exige uma autenticaÁ„o por token! Nenhum Token v·lido foi encontrado!");
-          // Se È uma chave v·lida, verificamos se a sess„o È v·lida. Se a sess„o n„o for v·lida o mÈtodo lanÁar· a exception
+          if (type != 1) throw new RFWCriticalException("O m√©todo exige uma autentica√ß√£o por token! Nenhum Token v√°lido foi encontrado!");
+          // Se √© uma chave v√°lida, verificamos se a sess√£o √© v√°lida. Se a sess√£o n√£o for v√°lida o m√©todo lan√ßar√° a exception
           ssVO = SessionManager.getSession((String) parameters[0]);
-          // Se n„o deu exception, a transaÁ„o È v·lida, registramos a sess„o nesta Thread
+          // Se n√£o deu exception, a transa√ß√£o √© v√°lida, registramos a sess√£o nesta Thread
           SessionManager.attachSessionToThread(Thread.currentThread(), ssVO.getUUID());
         }
           break;
@@ -89,7 +89,7 @@ public class SMInterceptor {
       try {
         // Faz o interceptor processar o cloneRecursive para todos os VOs e remover as chamadas espalhadas atualmente em algumas fachadas
         if (parameters != null) {
-          final HashMap<RFWRecursiveClonable, RFWRecursiveClonable> clonedObjects = new HashMap<RFWRecursiveClonable, RFWRecursiveClonable>(); // Mantemos a mesma referÍncia da hash no clone para que, se em dois par‚metros distintos do mÈtodo forem passados o memo objeto (mesmo que aninhados) o clone detecte que s„o o mesmo e n„o crie mais int‚ncias diferentes para passar para o mÈtodo
+          final HashMap<RFWRecursiveClonable, RFWRecursiveClonable> clonedObjects = new HashMap<RFWRecursiveClonable, RFWRecursiveClonable>(); // Mantemos a mesma refer√™ncia da hash no clone para que, se em dois par√¢metros distintos do m√©todo forem passados o memo objeto (mesmo que aninhados) o clone detecte que s√£o o mesmo e n√£o crie mais int√¢ncias diferentes para passar para o m√©todo
           for (int i = 0; i < parameters.length; i++) {
             Object object = parameters[i];
             if (object instanceof RFWRecursiveClonable) {
@@ -98,17 +98,17 @@ public class SMInterceptor {
           }
           ctx.setParameters(parameters);
         }
-        // Invoca o mÈtodo da fachada
+        // Invoca o m√©todo da fachada
         Object proceed = ctx.proceed();
 
         commited = true;
 
         return proceed;
       } catch (Throwable e) {
-        // ForÁa o Rollback em qualquer caso de exception. Algumas vezes a exception que chega aqui n„o È a do FrameWork, e sem forÁar o rollback parte da transaÁ„o continua terminando em Comited.
+        // For√ßa o Rollback em qualquer caso de exception. Algumas vezes a exception que chega aqui n√£o √© a do FrameWork, e sem for√ßar o rollback parte da transa√ß√£o continua terminando em Comited.
         if (context != null) context.setRollbackOnly();
         if (RFW.isDevelopmentEnvironment()) e.printStackTrace();
-        // Deixa a exceÁ„o seguir normalmente
+        // Deixa a exce√ß√£o seguir normalmente
         throw e;
       }
     } finally {
@@ -118,17 +118,17 @@ public class SMInterceptor {
   }
 
   /**
-   * Verifica se recebemos a UUID no primeiro par‚metro e se a sess„o È valida.
+   * Verifica se recebemos a UUID no primeiro par√¢metro e se a sess√£o √© valida.
    *
-   * @param ctx Context da Chamada da Fachada para que seja possÌvel retirar os par‚metreos sendo recebidos e informaÁıes para log.
-   * @param parameters Par‚metros do mÈtodo da fachada para tentar detectar o UUID.
+   * @param ctx Context da Chamada da Fachada para que seja poss√≠vel retirar os par√¢metreos sendo recebidos e informa√ß√µes para log.
+   * @param parameters Par√¢metros do m√©todo da fachada para tentar detectar o UUID.
    * @return 0 caso seja detectado um UUID, 1 caso seja detectado um Token de Acesso.
-   * @throws RFWException LanÁado caso n„o se encontre nem um UUID v·lido nem um Token de acesso.
+   * @throws RFWException Lan√ßado caso n√£o se encontre nem um UUID v√°lido nem um Token de acesso.
    */
   private int checkSession(InvocationContext ctx, Object[] parameters) throws RFWException {
     Integer type = null;
     if (parameters == null || parameters.length < 1 || parameters[0] == null || !(parameters[0] instanceof String)) {
-      throw new RFWCriticalException("ID de sess„o inv·lida para chamada da fachada: ${0}", new String[] { ctx.getMethod().getDeclaringClass().getCanonicalName() + "#" + ctx.getMethod().getName() });
+      throw new RFWCriticalException("ID de sess√£o inv√°lida para chamada da fachada: ${0}", new String[] { ctx.getMethod().getDeclaringClass().getCanonicalName() + "#" + ctx.getMethod().getName() });
     } else if (((String) parameters[0]).matches(RUGenerators.UUID_REGEXP)) {
       type = 0;
     } else if (((String) parameters[0]).matches("(\\Q" + SessionManager.getTokenPrefix() + "\\E)?[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}")) {

@@ -5,7 +5,7 @@ import br.eng.rodrigogml.rfw.base.jobmonitor.JobStatus;
 import br.eng.rodrigogml.rfw.kernel.exceptions.RFWException;
 
 /**
- * Description: ImplementaÁ„o padr„o (para JobMonitor dentro da mesma JVM) da {@link JobStatusSupplierDefault}.<br>
+ * Description: Implementa√ß√£o padr√£o (para JobMonitor dentro da mesma JVM) da {@link JobStatusSupplierDefault}.<br>
  *
  * @author Rodrigo GML
  * @since 10.0 (31 de out de 2020)

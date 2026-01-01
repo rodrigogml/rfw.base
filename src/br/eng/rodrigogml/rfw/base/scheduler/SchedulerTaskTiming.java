@@ -18,9 +18,9 @@ import br.eng.rodrigogml.rfw.kernel.logger.RFWLogger;
 import br.eng.rodrigogml.rfw.kernel.utils.RUTypes;
 
 /**
- * Description: Esta classe serve para gerenciar execuÁ„o da tarefa que est· agendada pelo SchedulerController.
+ * Description: Esta classe serve para gerenciar execu√ß√£o da tarefa que est√° agendada pelo SchedulerController.
  *
- * @author Rodrigo Leit„o
+ * @author Rodrigo Leit√£o
  * @since 4.2.0 (27/10/2011)
  */
 public class SchedulerTaskTiming extends TimerTask implements Serializable {
@@ -29,15 +29,15 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
 
   public static enum TaskStatus {
     /**
-     * Este status indica que a tarefa est· agendada para ser executada em algum momento.
+     * Este status indica que a tarefa est√° agendada para ser executada em algum momento.
      */
     SCHEDULED,
     /**
-     * Este status indica que a tarefa est· em execuÁ„o neste momento.
+     * Este status indica que a tarefa est√° em execu√ß√£o neste momento.
      */
     RUNNING,
     /**
-     * Este status indica que a tarefa est· parada, isto È, n„o est· sendo executada e nem est· agendada executar no futuro.
+     * Este status indica que a tarefa est√° parada, isto √©, n√£o est√° sendo executada e nem est√° agendada executar no futuro.
      */
     STOPED
   }
@@ -48,22 +48,22 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
   private final Timer timer;
 
   /**
-   * Inst‚ncia da task a ser executada.
+   * Inst√¢ncia da task a ser executada.
    */
   private SchedulerRunnable task = null;
 
   /**
-   * ReferÍncia para o SchedulerVO que critou esse SchedulerTaskTiming.
+   * Refer√™ncia para o SchedulerVO que critou esse SchedulerTaskTiming.
    */
   private SchedulerTask schedulerTask = null;
 
   /**
-   * Status atual da "operaÁ„o".
+   * Status atual da "opera√ß√£o".
    */
   private TaskStatus status = TaskStatus.STOPED;
 
   /**
-   * Hor·rio definido para prÛxima execuÁ„o. Hor·rio futuro enquanto o status for {@link TaskStatus#SCHEDULED}
+   * Hor√°rio definido para pr√≥xima execu√ß√£o. Hor√°rio futuro enquanto o status for {@link TaskStatus#SCHEDULED}
    */
   private LocalDateTime lastScheduledTime = null;
 
@@ -83,7 +83,7 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
   }
 
   /**
-   * Agenda a tarefa para um terminado hor·rio.
+   * Agenda a tarefa para um terminado hor√°rio.
    *
    * @param time Data/Hora para executar a tarefa.
    */
@@ -92,10 +92,10 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
   }
 
   /**
-   * Agenda a tarefa para um terminado hor·rio.
+   * Agenda a tarefa para um terminado hor√°rio.
    *
    * @param time Data/Hora para executar a tarefa.
-   * @param runNow Apesar do hor·rio de agendamento, se aqui for passado como True a tarefa ser· executada imediatamente. A data passada ser· utilizada apenas para o c·lculo da prÛxima execuÁ„o, caso de ser uma tarefa recorrente.
+   * @param runNow Apesar do hor√°rio de agendamento, se aqui for passado como True a tarefa ser√° executada imediatamente. A data passada ser√° utilizada apenas para o c√°lculo da pr√≥xima execu√ß√£o, caso de ser uma tarefa recorrente.
    */
   public synchronized void schedule(LocalDateTime time, boolean runNow) {
     this.status = TaskStatus.SCHEDULED;
@@ -108,7 +108,7 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
   }
 
   /**
-   * Este mÈtodo sÛ cancela o timer, n„o interrompe sua execuÁ„o caso a atividade j· esteja em execuÁ„o.
+   * Este m√©todo s√≥ cancela o timer, n√£o interrompe sua execu√ß√£o caso a atividade j√° esteja em execu√ß√£o.
    */
   public synchronized void cancelTimer() {
     this.cancel();
@@ -117,7 +117,7 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
   }
 
   /**
-   * MÈtodo chamado quando chegar a hora da task ser executada.
+   * M√©todo chamado quando chegar a hora da task ser executada.
    */
   @Override
   public synchronized void run() {
@@ -129,7 +129,7 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
           this.status = TaskStatus.RUNNING;
           // Converte as propriedades para a interface da tarefa
           Map<String, String> newProperties = getTask().runTask(this.schedulerTask.getProperties());
-          // Caso a Hash retornada n„o seja nula, significa que devemos salvar as novas propriedades
+          // Caso a Hash retornada n√£o seja nula, significa que devemos salvar as novas propriedades
           if (newProperties != null) {
             this.schedulerTask.setProperties(newProperties);
           }
@@ -139,8 +139,8 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
         }
 
         this.status = TaskStatus.STOPED;
-        this.schedulerTask.setLastExecution(RFW.getDateTime()); // SEMPRE salvamos a data em que a execuÁ„o terminou, n„o confundir com a data de ˙ltimo agendamento (que n„o È salva em lugar nenhum). Dependendo do tipo de repetiÁ„o (Se timed ou por periodo do calend·rio) ser· utilizada esta data ou a data original da primeira execuÁ„o para o c·lculo da repetiÁ„o
-        this.schedulerTask.setScheduleTime(lastScheduledTime); // Atualiza a data de atualizaÁ„o (que agora È passada) para uma referÍncia mais prÛxima. Caso contr·rio com o tempo a data ficar· muito antiga e a cada processamento do agendamento teremos mais iteraÁıes para encontrar uma data futura (nas tarefas de repetiÁ„o).
+        this.schedulerTask.setLastExecution(RFW.getDateTime()); // SEMPRE salvamos a data em que a execu√ß√£o terminou, n√£o confundir com a data de √∫ltimo agendamento (que n√£o √© salva em lugar nenhum). Dependendo do tipo de repeti√ß√£o (Se timed ou por periodo do calend√°rio) ser√° utilizada esta data ou a data original da primeira execu√ß√£o para o c√°lculo da repeti√ß√£o
+        this.schedulerTask.setScheduleTime(lastScheduledTime); // Atualiza a data de atualiza√ß√£o (que agora √© passada) para uma refer√™ncia mais pr√≥xima. Caso contr√°rio com o tempo a data ficar√° muito antiga e a cada processamento do agendamento teremos mais itera√ß√µes para encontrar uma data futura (nas tarefas de repeti√ß√£o).
 
         try {
           if (failEx == null) {
@@ -149,10 +149,10 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
             SchedulerController.fireFailEvent(this.schedulerTask, new RFWCriticalException("Erro ao executar a tarefa: '" + this.getSchedulerTask().getTaskClass() + "'", failEx));
           }
         } catch (Throwable e) {
-          // Se ocorrer algum erro logamos, mas deixamos a tarefa continuar sua programaÁ„o
+          // Se ocorrer algum erro logamos, mas deixamos a tarefa continuar sua programa√ß√£o
           RFWLogger.logException(e);
         }
-        // Agora que a task terminou, processamos a task novamente, caso ela tenha repetiÁ„o precisa ser reagendada
+        // Agora que a task terminou, processamos a task novamente, caso ela tenha repeti√ß√£o precisa ser reagendada
         SchedulerController.processTask(this.schedulerTask, false);
       }
     } catch (Throwable e) {
@@ -161,9 +161,9 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
   }
 
   /**
-   * # inst‚ncia da task a ser executada.
+   * # inst√¢ncia da task a ser executada.
    *
-   * @return the inst‚ncia da task a ser executada
+   * @return the inst√¢ncia da task a ser executada
    */
   public SchedulerRunnable getTask() throws RFWCriticalException {
     if (this.task == null) {
@@ -178,27 +178,27 @@ public class SchedulerTaskTiming extends TimerTask implements Serializable {
   }
 
   /**
-   * # referÍncia para o SchedulerVO que critou esse SchedulerTaskTiming.
+   * # refer√™ncia para o SchedulerVO que critou esse SchedulerTaskTiming.
    *
-   * @return the referÍncia para o SchedulerVO que critou esse SchedulerTaskTiming
+   * @return the refer√™ncia para o SchedulerVO que critou esse SchedulerTaskTiming
    */
   public SchedulerTask getSchedulerTask() {
     return schedulerTask;
   }
 
   /**
-   * # status atual da "operaÁ„o".
+   * # status atual da "opera√ß√£o".
    *
-   * @return the status atual da "operaÁ„o"
+   * @return the status atual da "opera√ß√£o"
    */
   public TaskStatus getStatus() {
     return status;
   }
 
   /**
-   * # hor·rio definido para prÛxima execuÁ„o. Hor·rio futuro enquanto o status for {@link TaskStatus#SCHEDULED}.
+   * # hor√°rio definido para pr√≥xima execu√ß√£o. Hor√°rio futuro enquanto o status for {@link TaskStatus#SCHEDULED}.
    *
-   * @return the hor·rio definido para prÛxima execuÁ„o
+   * @return the hor√°rio definido para pr√≥xima execu√ß√£o
    */
   public LocalDateTime getLastScheduledTime() {
     return lastScheduledTime;
