@@ -45,11 +45,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<!-- <version>2.5.1</version> -->
+				<version>3.7.0</version>
 				<executions>
 					<execution>
 						<id>libs</id>
-						<phase>package</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>copy-dependencies</goal>
 						</goals>
@@ -108,7 +108,8 @@
 			<artifactId>bcpkix-jdk15on</artifactId>
 			<version>1.68</version>
 		</dependency>
-		<!-- Ao tentar atualizar obtivemos problemas de conflito de versões, pois outros módulos utilizam a versão 1.68 acima -->
+		<!-- Ao tentar atualizar obtivemos problemas de conflito de versões,
+		pois outros módulos utilizam a versão 1.68 acima -->
 		<!--		<dependency>-->
 		<!--			<groupId>org.bouncycastle</groupId>-->
 		<!--			<artifactId>bcprov-jdk16</artifactId>-->
@@ -151,11 +152,11 @@
 		</dependency>
 
 		<!-- Classes utilizadas no utilitário de BUConnections -->
-<!--		<dependency>-->
-<!--			<groupId>org.apache.httpcomponents</groupId>-->
-<!--			<artifactId>httpclient</artifactId>-->
-<!--			<version>4.5.13</version>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>org.apache.httpcomponents</groupId>-->
+		<!--			<artifactId>httpclient</artifactId>-->
+		<!--			<version>4.5.13</version>-->
+		<!--		</dependency>-->
 
 		<!-- Apache POI Classes para gerar documentos do Office -->
 		<dependency>
@@ -164,14 +165,6 @@
 			<version>5.0.0</version>
 		</dependency>
 
-		<!-- iText para manipulação com arquivos PDF -->
-		<!-- https://mvnrepository.com/artifact/com.itextpdf/itext7-core -->
-		<dependency>
-			<groupId>com.itextpdf</groupId>
-			<artifactId>itext7-core</artifactId>
-			<version>7.1.16</version>
-			<type>pom</type>
-		</dependency>
 
 		<!-- Permite a identificação do charset de arquivos e conteúdos String 
 			- Utilizado no BUString para lêr conteúdos corretamente -->
@@ -190,10 +183,9 @@
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>itext7-core</artifactId>
-			<version>7.1.10</version>
+			<version>7.1.16</version>
 			<type>pom</type>
 		</dependency>
-
 
 		<!--		<dependency>-->
 		<!--		    <groupId>org.w3c</groupId>-->
