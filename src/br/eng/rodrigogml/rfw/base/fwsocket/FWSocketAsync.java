@@ -333,7 +333,7 @@ class FWSocketAsyncConnectionThread extends Thread {
 
     long processtime = 0L; // Mantém a hora em que começamos a processar o comando para calcular o tempo que levamos para enviar a resposta para o servidor. (nanotime)
     final StringBuilder cmdbuff = new StringBuilder(); // Guarda os pedoaços dos comandos que chegarem
-    int expectedlenght = -1;
+    int expectedlength = -1;
     char[] c = new char[1024]; // Bytes a serem lidos por vêz
     int readbytes = -1;
 
@@ -346,11 +346,11 @@ class FWSocketAsyncConnectionThread extends Thread {
         final int firstpipe = cmdbuff.indexOf("|");
         if (firstpipe > 0) {
           // Recuperamos o tamanho esperado do comando - definido pelos números entre o começo do comando e o primeiro pipe
-          expectedlenght = Integer.parseInt(cmdbuff.substring(0, firstpipe));
+          expectedlength = Integer.parseInt(cmdbuff.substring(0, firstpipe));
 
           // Interpretamos se o comando montado tem o tamanho esperado
           // >> Lembre-se que o tamanho descrito no começo e o primeiro pipe, assim como o \n do final, não devem ser considerados para "bater" o tamanho esperado, pos isso devem ser descontados do tamanho do cmdbuffer (ou somados no tamanho do expected)
-          final int fullexpected = expectedlenght + (firstpipe + 1) + 1; // Tamanho total entre o experado e o cabeçalho + '\n' do final
+          final int fullexpected = expectedlength + (firstpipe + 1) + 1; // Tamanho total entre o experado e o cabeçalho + '\n' do final
           if (cmdbuff.length() >= fullexpected) {
             String serialobj = cmdbuff.substring(firstpipe + 1, fullexpected - 1); // Pula o tamanho esperado e o primeiro pipe, e subtrai 1 do tamanho total para remover o '\n' do final
             // Desserializa o objeto
